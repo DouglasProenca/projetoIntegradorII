@@ -83,7 +83,6 @@ public class TelaPrincipal extends JFrame implements ActionListener, KeyListener
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
@@ -95,11 +94,9 @@ public class TelaPrincipal extends JFrame implements ActionListener, KeyListener
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 
     public static void main(String[] args) {
-
         new TelaPrincipal().setVisible(true);
     }
 }
