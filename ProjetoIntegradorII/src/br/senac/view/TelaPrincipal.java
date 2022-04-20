@@ -99,8 +99,7 @@ public class TelaPrincipal extends JFrame implements ActionListener, KeyListener
     }
 
     public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(() -> {
-            new TelaPrincipal().setVisible(true);
-        });
+
+        new TelaPrincipal().setVisible(true);
     }
 }
