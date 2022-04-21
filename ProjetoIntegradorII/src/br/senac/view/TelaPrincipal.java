@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,9 +25,9 @@ public class TelaPrincipal extends JFrame implements ActionListener, KeyListener
         this.setLayout(null);
     }
 
-    private final JButton btnRelatorioCliente = new JButton("Relatório Cliente", new javax.swing.ImageIcon(getClass().getResource("/resources/Users-icon.png")));
-    private final JButton btnRelatorioProduto = new JButton("Relatório Produto", new javax.swing.ImageIcon(getClass().getResource("/resources/product-icon.png")));
-    private final JButton btnRelatorioVendas = new JButton("Relatório Vendas", new javax.swing.ImageIcon(getClass().getResource("/resources/relat.png")));
+    private final JButton btnRelatorioCliente = new JButton("Relatório Cliente", new ImageIcon(getClass().getResource("/resources/Users-icon.png")));
+    private final JButton btnRelatorioProduto = new JButton("Relatório Produto", new ImageIcon(getClass().getResource("/resources/product-icon.png")));
+    private final JButton btnRelatorioVendas = new JButton("Relatório Vendas", new ImageIcon(getClass().getResource("/resources/relat.png")));
     private final JLabel lbltitulo = new JLabel("CR7 Imports");
     private final JPanel titulo = new JPanel(null);
     private final JPanel painel = new JPanel(null);
@@ -77,7 +78,10 @@ public class TelaPrincipal extends JFrame implements ActionListener, KeyListener
         } else if (e.getActionCommand().equals("Vendas")) {
 
         } else if (e.getActionCommand().equals("Produto")) {
-
+            TelaRelatorioProduto telaProduto = new TelaRelatorioProduto();
+            telaProduto.setLocationRelativeTo(null);
+            telaProduto.setVisible(true);
+            this.dispose();
         }
     }
 
@@ -97,6 +101,7 @@ public class TelaPrincipal extends JFrame implements ActionListener, KeyListener
     }
 
     public static void main(String[] args) {
-        new TelaPrincipal().setVisible(true);
+        TelaPrincipal telaInicial = new TelaPrincipal();
+        telaInicial.setVisible(true);
     }
 }
