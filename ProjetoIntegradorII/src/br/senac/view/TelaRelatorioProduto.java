@@ -3,7 +3,9 @@ package br.senac.view;
 import br.senac.geral.menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 
 /**
  *
@@ -15,6 +17,13 @@ public class TelaRelatorioProduto extends JFrame implements ActionListener {
         super("Relatório Produto");
         initialize();
     }
+    
+    private final JTextField txtPesquisa = new JTextField();
+    private final JButton btnNovo = new JButton("Novo");
+    private final JButton btnDeletar = new JButton("Excluir");
+    private final JButton btnExportar = new JButton("Exportar");
+    private final JButton btnExcluir = new JButton("Excluir");
+    private final JButton btnPesquisar = new JButton("Pesquisar");
     
     private void initialize(){
         menu Menu = new menu();

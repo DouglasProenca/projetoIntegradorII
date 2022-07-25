@@ -1,0 +1,2 @@
+objetos.PropertiesSystem$Propriedade
+objetos.PropertiesSystem

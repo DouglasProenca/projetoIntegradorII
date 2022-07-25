@@ -1,6 +1,5 @@
 package br.senac.geral;
 
-import br.senac.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -8,7 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
@@ -16,9 +14,9 @@ import javax.swing.JSeparator;
  *
  * @author Douglas
  */
-public class menu extends JMenuBar implements ActionListener {
+public class Menuantigo extends JMenu implements ActionListener {
 
-    public menu() {
+    public Menu() {
         super();
         initialize();
     }
