@@ -12,12 +12,15 @@ import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import java.io.IOException;
 import javax.swing.JInternalFrame;
+import javax.swing.UnsupportedLookAndFeelException;
+import objetos.PropertiesSystem;
 
 public class LookAndFeelScreen extends JInternalFrame implements ItemListener {
 
     private final JPanel painel = new JPanel(null);
-    private final JComboBox<String> comboLAF = new JComboBox<String>();
+    private final JComboBox<String> comboLAF = new JComboBox<>();
 
     public LookAndFeelScreen() {
         super("Look And Feel", false, true, false, true);
@@ -49,8 +52,8 @@ public class LookAndFeelScreen extends JInternalFrame implements ItemListener {
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             String LAFSelected = (String) e.getItem();
-            // PropertiesSystem ps = new PropertiesSystem();
-            // ps.changeLookAndFeel(LAFSelected);
+            PropertiesSystem ps = new PropertiesSystem();
+            ps.changeLookAndFeel(LAFSelected);
             SwingUtilities.updateComponentTreeUI(MainScreen.desktopPane);
             JOptionPane.showMessageDialog(MainScreen.desktopPane,
                     "O Sistema será fechado para atualização de configurações!");
@@ -59,10 +62,10 @@ public class LookAndFeelScreen extends JInternalFrame implements ItemListener {
     }
 
     public static void initLookAndFeel() {
-        /*try {
+        try {
             String myLAF = PropertiesSystem.Propriedade.getLookAndFeel();
             if (myLAF == null || myLAF.isEmpty()) {
-               // PropertiesSystem.Propriedade.setLookAndFeel(UIManager.getLookAndFeel().getName());
+                // PropertiesSystem.Propriedade.setLookAndFeel(UIManager.getLookAndFeel().getName());
             } else {
 
                 for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -78,9 +81,7 @@ public class LookAndFeelScreen extends JInternalFrame implements ItemListener {
 
                 }
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
         }
-    }*/
     }
 }

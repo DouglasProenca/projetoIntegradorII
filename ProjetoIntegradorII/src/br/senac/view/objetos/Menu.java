@@ -41,18 +41,6 @@ public class Menu extends JMenuBar implements ActionListener, InternalFrameListe
 	private final JMenu banco = new JMenu("Banco de Dados");
 	private final JMenu relatorio = new JMenu("Relatorio");
 	private final JMenuItem rel = new JMenuItem("Relatorio Camisas");
-	private final JMenuItem calc = new JMenuItem("Calculadora",
-			new ImageIcon(getClass().getResource("/resources/Calculator-icon.png")));
-	private final JMenuItem cale = new JMenuItem("Calendario",
-			new ImageIcon(getClass().getResource("/resources/Calendar-icon.png")));
-	private final JMenuItem bloco = new JMenuItem("Bloco de notas",
-			new ImageIcon(getClass().getResource("/resources/Notepad-Bloc-notes-icon.png")));
-	private final JMenu lf = new JMenu("Look And Feel");
-	private final JMenuItem sobre = new JMenuItem("Sobre",
-			(new ImageIcon(getClass().getResource("/Resources/Info-icon.png"))));
-	private final JSeparator sep = new JSeparator();
-	private final JMenuItem sair = new JMenuItem("sair",
-			new ImageIcon(getClass().getResource("/resources/Log-Out-icon.png")));
 	private final JMenuItem itemLookAndFeel = new JMenuItem("Look and Feel");
 	private final JMenuItem itemFundodeTela = new JMenuItem("Fundo de Tela");
 	private final JMenuItem itemConexaoBD = new JMenuItem("JDBC");
@@ -71,16 +59,6 @@ public class Menu extends JMenuBar implements ActionListener, InternalFrameListe
 		itemBackup.addActionListener(this);
 		itemBackup.setActionCommand("backup");
 		banco.add(itemBackup);
-		
-		bloco.addActionListener(this);
-		bloco.setActionCommand("BlocoNotas");
-		opcoes.add(bloco);
-		calc.addActionListener(this);
-		calc.setActionCommand("Calculadora");
-		opcoes.add(calc);
-		cale.addActionListener(this);
-		cale.setActionCommand("calendario");
-		opcoes.add(cale);
 
 		itemLookAndFeel.addActionListener(this);
 		itemLookAndFeel.setActionCommand("LookAndFeel");
@@ -88,10 +66,6 @@ public class Menu extends JMenuBar implements ActionListener, InternalFrameListe
 		itemFundodeTela.addActionListener(this);
 		itemFundodeTela.setActionCommand("FundoTela");
 
-		lf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Look-n-feel-icon.png")));
-		lf.add(itemFundodeTela);
-		lf.add(itemLookAndFeel);
-		opcoes.add(lf);
 		
 		rel.addActionListener(this);
 		rel.setActionCommand("rel");
@@ -110,50 +84,14 @@ public class Menu extends JMenuBar implements ActionListener, InternalFrameListe
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-			if (e.getActionCommand().equals("Sair")) {
-				System.exit(0);
-			} else if (e.getActionCommand().equals("Calculadora")) {
-				Runtime.getRuntime().exec("C:\\windows\\System32\\calc.exe");
-			} else if (e.getActionCommand().equals("BlocoNotas")) {
-				Runtime.getRuntime().exec("C:\\windows\\System32\\notepad.exe");
-			} else if (e.getActionCommand().equals("LookAndFeel")) {
-				objetos.LookAndFeel lookAndFeel = new objetos.LookAndFeel();
-				TelaPrincipal.dkpaneFundoTela.add(lookAndFeel);
-				TelaPrincipal.tbBarraIcone.add(lookAndFeel.getDesktopIcon());
-				lookAndFeel.setVisible(true);
-				lookAndFeel.addInternalFrameListener(this);
-				TelaPrincipal.centralizaForm(lookAndFeel);
-			} else if (e.getActionCommand().equals("Sobre")) {
-				TelaSobre ts = new TelaSobre("Douglas");
-				TelaPrincipal.dkpaneFundoTela.add(ts);
-				TelaPrincipal.tbBarraIcone.add(ts.getDesktopIcon());
-				ts.setVisible(true);
-				TelaPrincipal.centralizaForm(ts);
-				ts.addInternalFrameListener(this);
-			} else if (e.getActionCommand().equals("FundoTela")) {
-				Color newColor = JColorChooser.showDialog(TelaPrincipal.dkpaneFundoTela, "Cor de Fundo",
-						new Color(60, 96, 124));
-				TelaPrincipal.dkpaneFundoTela.setBackground(newColor);
-				PropertiesSystem ps = new PropertiesSystem();
-				int r = newColor.getRed();
-				int g = newColor.getGreen();
-				int b = newColor.getBlue();
-				String rgb = r + "," + g + "," + b;
-				ps.changeColor(rgb);
-			} else if (e.getActionCommand().equals("itemConexaoBD")) {
+		
+			 if (e.getActionCommand().equals("itemConexaoBD")) {
 				view.TelaConexaoBD bd = new view.TelaConexaoBD();
 				TelaPrincipal.dkpaneFundoTela.add(bd);
 				TelaPrincipal.tbBarraIcone.add(bd.getDesktopIcon());
 				bd.setVisible(true);
 				TelaPrincipal.centralizaForm(bd);
 				bd.addInternalFrameListener(this);
-			} else if (e.getActionCommand().equals("calendario")) {
-				CalendarScreen calendario = new CalendarScreen();
-				TelaPrincipal.dkpaneFundoTela.add(calendario);
-				TelaPrincipal.tbBarraIcone.add(calendario.getDesktopIcon());
-				calendario.setVisible(true);
-				calendario.addInternalFrameListener(this);
-				TelaPrincipal.centralizaForm(calendario);
 			} else if(e.getActionCommand().equals("backup")) {
 				TelaBackup tbd = new TelaBackup();
 				TelaPrincipal.dkpaneFundoTela.add(tbd);

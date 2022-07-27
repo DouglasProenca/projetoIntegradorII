@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 public class main {
         public static void main(String[] args) {
         Runnable r = () -> {
-            //LookAndFeel.initLookAndFeel();
+            LookAndFeelScreen.initLookAndFeel();
             MainScreen t = new MainScreen();
             t.setVisible(true);
         };

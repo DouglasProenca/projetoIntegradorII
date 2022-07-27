@@ -2,17 +2,20 @@ package br.senac.geral;
 
 import br.senac.view.LookAndFeelScreen;
 import br.senac.view.MainScreen;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JColorChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+import objetos.PropertiesSystem;
 
 /**
  *
@@ -51,18 +54,26 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
         return calculator;
     }
 
-    private JMenu getMenuLookAndFeel(){
+    private JMenu getMenuLookAndFeel() {
         JMenu lookAndFeel = new JMenu("Look And Feel");
         lookAndFeel.setIcon(images.imagemLookAndFeel());
         lookAndFeel.add(getLookAndFeel());
+        lookAndFeel.add(getCanvasBackground());
         return lookAndFeel;
     }
-    
+
     private JMenuItem getLookAndFeel() {
         JMenuItem lookAndFeel = new JMenuItem("Temas");
         lookAndFeel.addActionListener(this);
         lookAndFeel.setActionCommand("lookAndFeel");
         return lookAndFeel;
+    }
+
+    private JMenuItem getCanvasBackground() {
+        JMenuItem canvas = new JMenuItem("Fundo de Tela");
+        canvas.addActionListener(this);
+        canvas.setActionCommand("CanvasBackground");
+        return canvas;
     }
 
     private JMenuItem getExit() {
@@ -100,13 +111,26 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
                     MainScreen.centralizaForm(laf);
                     laf.addInternalFrameListener(this);
                     break;
+                case "CanvasBackground":
+                    Color newColor = JColorChooser.showDialog(MainScreen.desktopPane, "Cor de Fundo",
+                            new Color(60, 96, 124));
+                    MainScreen.desktopPane.setBackground(newColor);
+                    PropertiesSystem ps = new PropertiesSystem();
+                    if (newColor.getRGB() != 0) {
+                        int r = newColor.getRed();
+                        int g = newColor.getGreen();
+                        int b = newColor.getBlue();
+                        String rgb = r + "," + g + "," + b;
+                        ps.changeColor(rgb);
+                    }
+                    break;
             }
         } catch (IOException ex) {
             Logger.getLogger(JMenuMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-     @Override
+    @Override
     public void internalFrameOpened(InternalFrameEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
