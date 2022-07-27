@@ -1,5 +1,6 @@
 package br.senac.view;
 
+import br.senac.geral.DesktopPane;
 import br.senac.geral.JmenuBar;
 import br.senac.geral.images;
 import java.awt.BorderLayout;
@@ -9,10 +10,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JToolBar;
-import objetos.DesktopPane;
 
 /**
  *
@@ -20,8 +21,8 @@ import objetos.DesktopPane;
  */
 public class MainScreen extends JFrame implements KeyListener, WindowStateListener {
 
-    public static DesktopPane desktopPane = new DesktopPane();
-    public static JToolBar jToolBar = new JToolBar();
+    public static DesktopPane desktopPane;
+    public static JToolBar jToolBar;
 
     public MainScreen() {
         super("CR7 Imports");
@@ -34,17 +35,27 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         this.setLocationRelativeTo(null);
         this.addKeyListener(this);
 
-        desktopPane.setPreferredSize(new Dimension(this.getSize().width, this.getSize().height - 40));
-        this.add(desktopPane, BorderLayout.CENTER);
+        this.add(getDesktopPane(), BorderLayout.CENTER);
 
-        jToolBar.setPreferredSize(new Dimension(this.getSize().width, 40));
-        jToolBar.setFloatable(false);
-        this.add(jToolBar, BorderLayout.PAGE_END);
+        this.add(getJToolBar(), BorderLayout.PAGE_END);
 
         ImageIcon icone = images.imagemPrincipal();
         this.setIconImage(icone.getImage());
 
         this.setJMenuBar(JmenuBar.getInstance());
+    }
+
+    private JDesktopPane getDesktopPane() {
+        desktopPane = new DesktopPane();
+        desktopPane.setPreferredSize(new Dimension(this.getSize().width, this.getSize().height - 40));
+        return desktopPane;
+    }
+
+    private JToolBar getJToolBar() {
+        jToolBar = new JToolBar();
+        jToolBar.setPreferredSize(new Dimension(this.getSize().width, 40));
+        jToolBar.setFloatable(false);
+        return jToolBar;
     }
 
     public static void centralizaForm(JInternalFrame frame) {
@@ -56,7 +67,6 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     @Override
     public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

@@ -37,19 +37,44 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
         this.add(getNotes());
         this.add(getCalculator());
         this.add(getMenuLookAndFeel());
+        this.add(getMail());
+        this.add(getSale());
+        this.add(getMenuUser());
         this.add(new JSeparator());
         this.add(getExit());
+    }
+
+    private JMenu getMenuUser() {
+        JMenu database = new JMenu("Usuário");
+        database.setIcon(images.imagemAdministrator());
+        database.add(getUser());
+        database.add(getLogout());
+        return database;
+    }
+
+    private JMenuItem getLogout() {
+        JMenuItem logout = new JMenuItem("Logout");
+        logout.addActionListener(this);
+        logout.setActionCommand("logout");
+        return logout;
+    }
+
+    private JMenuItem getUser() {
+        JMenuItem user = new JMenuItem("Usuários");
+        user.addActionListener(this);
+        user.setActionCommand("user");
+        return user;
     }
 
     private JMenu getMenuDatabase() {
         JMenu database = new JMenu("Banco de Dados");
         database.setIcon(images.imagemDatabase());
-        database.add(getbackup());
+        database.add(getBackup());
         database.add(getJDBC());
         return database;
     }
 
-    private JMenuItem getbackup() {
+    private JMenuItem getBackup() {
         JMenuItem backup = new JMenuItem("Backup");
         backup.addActionListener(this);
         backup.setActionCommand("backup");
@@ -107,6 +132,21 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
         return exit;
     }
 
+    private JMenuItem getMail() {
+        JMenuItem mail = new JMenuItem("E-mail", images.imagemMail());
+        mail.addActionListener(this);
+        mail.setActionCommand("mail");
+        return mail;
+    }
+
+    private JMenuItem getSale() {
+        JMenuItem sale = new JMenuItem("Venda", images.imagemSale());
+        sale.addActionListener(this);
+        sale.setActionCommand("sale");
+        sale.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
+        return sale;
+    }
+
     public static synchronized JMenu getInstance() {
         if (uniqueInstance == null) {
             uniqueInstance = new JMenuMenu();
@@ -139,17 +179,23 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
                             new Color(60, 96, 124));
                     MainScreen.desktopPane.setBackground(newColor);
                     PropertiesSystem ps = new PropertiesSystem();
-                    if (newColor.getRGB() != 0) {
-                        int r = newColor.getRed();
-                        int g = newColor.getGreen();
-                        int b = newColor.getBlue();
-                        String rgb = r + "," + g + "," + b;
-                        ps.changeColor(rgb);
-                    }
+                    int r = newColor.getRed();
+                    int g = newColor.getGreen();
+                    int b = newColor.getBlue();
+                    String rgb = r + "," + g + "," + b;
+                    ps.changeColor(rgb);
                     break;
                 case "backup":
                     break;
                 case "jdbc":
+                    break;
+                case "mail":
+                    break;
+                case "logout":
+                    break;
+                case "sale":
+                    break;
+                case "user":
                     break;
             }
         } catch (IOException ex) {

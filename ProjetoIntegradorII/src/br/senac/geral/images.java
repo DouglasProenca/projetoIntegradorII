@@ -55,4 +55,28 @@ public class images extends Thread {
     public static ImageIcon imagemLookAndFeel() {
         return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Calendar-icon.png"));
     }
+
+    public static ImageIcon imagemProduct() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/product-icon.png"));
+    }
+
+    public static ImageIcon imagemBrand() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Apple-Store-Tshirt-Red-icon.png"));
+    }
+
+    public static ImageIcon imagemManagement() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Finance-Bill-icon.png"));
+    }
+
+    public static ImageIcon imagemMail() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Mail-icon.png"));
+    }
+
+    public static ImageIcon imagemSale() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Sales-by-payment-method-icon.png"));
+    }
+
+    public static ImageIcon imagemAdministrator() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Administrator-icon.png"));
+    }
 }

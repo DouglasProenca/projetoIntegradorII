@@ -1,4 +1,4 @@
-package objetos;
+package br.senac.view.objetos;
 
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
