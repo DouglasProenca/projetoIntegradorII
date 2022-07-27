@@ -33,11 +33,34 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
     private void initComponents() {
         this.setIcon(images.imagemMenu());
         this.setMnemonic('M');
+        this.add(getMenuDatabase());
         this.add(getNotes());
         this.add(getCalculator());
         this.add(getMenuLookAndFeel());
         this.add(new JSeparator());
         this.add(getExit());
+    }
+
+    private JMenu getMenuDatabase() {
+        JMenu database = new JMenu("Banco de Dados");
+        database.setIcon(images.imagemDatabase());
+        database.add(getbackup());
+        database.add(getJDBC());
+        return database;
+    }
+
+    private JMenuItem getbackup() {
+        JMenuItem backup = new JMenuItem("Backup");
+        backup.addActionListener(this);
+        backup.setActionCommand("backup");
+        return backup;
+    }
+
+    private JMenuItem getJDBC() {
+        JMenuItem backup = new JMenuItem("JDBC");
+        backup.addActionListener(this);
+        backup.setActionCommand("jdbc");
+        return backup;
     }
 
     private JMenuItem getNotes() {
@@ -123,6 +146,10 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
                         String rgb = r + "," + g + "," + b;
                         ps.changeColor(rgb);
                     }
+                    break;
+                case "backup":
+                    break;
+                case "jdbc":
                     break;
             }
         } catch (IOException ex) {

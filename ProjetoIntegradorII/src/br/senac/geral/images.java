@@ -8,6 +8,10 @@ import javax.swing.ImageIcon;
  */
 public class images extends Thread {
 
+    public static ImageIcon imagemDatabase() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/Resources/BancoDados-icon.png"));
+    }
+
     public static ImageIcon imagemPrincipal() {
         return new ImageIcon(Thread.currentThread().getClass().getResource("/Resources/System-computer-icon.png"));
     }
@@ -47,8 +51,8 @@ public class images extends Thread {
     public static ImageIcon imagemCalendar() {
         return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Calendar-icon.png"));
     }
-    
-       public static ImageIcon imagemLookAndFeel() {
+
+    public static ImageIcon imagemLookAndFeel() {
         return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Calendar-icon.png"));
     }
 }
