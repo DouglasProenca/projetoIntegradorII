@@ -16,10 +16,10 @@ import javax.swing.JSeparator;
  */
 public class Menuantigo extends JMenu implements ActionListener {
 
-    public Menu() {
-        super();
-        initialize();
-    }
+    //public Menu() {
+      //  super();
+      //  initialize();
+   // }
 
     private final JMenu opcoes = new JMenu("Opções");
     private final JMenuItem tp = new JMenuItem("Tela Inicial", new ImageIcon(getClass().getResource("/resources/Home-icon.png")));
@@ -68,9 +68,9 @@ public class Menuantigo extends JMenu implements ActionListener {
             } else if (e.getActionCommand().equals("BlocoNotas")) {
                 Runtime.getRuntime().exec("C:\\windows\\System32\\notepad.exe");
             } else if (e.getActionCommand().equals("TelaInicial")) {
-                TelaPrincipal telaInicial = new TelaPrincipal();
-                telaInicial.setLocationRelativeTo(null);
-                telaInicial.setVisible(true);
+               // TelaPrincipal telaInicial = new TelaPrincipal();
+               // telaInicial.setLocationRelativeTo(null);
+               // telaInicial.setVisible(true);
                 //pensar em lógica para fechar a tela anterior
             } else if (e.getActionCommand().equals("LookAndFeel")) {
                 LookAndFeel lf = new LookAndFeel();
@@ -78,7 +78,7 @@ public class Menuantigo extends JMenu implements ActionListener {
                 lf.setVisible(true);
             }
         } catch (IOException ex) {
-            Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

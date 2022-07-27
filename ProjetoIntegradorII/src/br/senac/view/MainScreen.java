@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
@@ -16,7 +18,7 @@ import objetos.DesktopPane;
  *
  * @author Douglas
  */
-public class MainScreen extends JFrame implements KeyListener {
+public class MainScreen extends JFrame implements KeyListener, WindowStateListener {
 
     public static DesktopPane desktopPane = new DesktopPane();
     public static JToolBar jToolBar = new JToolBar();
@@ -41,7 +43,7 @@ public class MainScreen extends JFrame implements KeyListener {
 
         ImageIcon icone = images.imagemPrincipal();
         this.setIconImage(icone.getImage());
-        
+
         this.setJMenuBar(JmenuBar.getInstance());
     }
 
@@ -67,5 +69,20 @@ public class MainScreen extends JFrame implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowStateChanged(WindowEvent e) {
+        if (desktopPane.getSelectedFrame() != null) {
+            JInternalFrame frame = desktopPane.getSelectedFrame();
+            int s1 = e.getNewState();
+            if (s1 == MainScreen.MAXIMIZED_BOTH) {
+                Dimension jInternalFrameSize = frame.getSize();
+                frame.setLocation((1300 - jInternalFrameSize.width) / 2, (600 - jInternalFrameSize.height) / 2);
+            } else {
+                Dimension jInternalFrameSize = frame.getSize();
+                frame.setLocation(400 - jInternalFrameSize.width / 2, (400 - jInternalFrameSize.height) / 2);
+            }
+        }
     }
 }

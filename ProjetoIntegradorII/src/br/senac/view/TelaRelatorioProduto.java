@@ -1,6 +1,5 @@
 package br.senac.view;
 
-import br.senac.geral.menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -26,8 +25,8 @@ public class TelaRelatorioProduto extends JFrame implements ActionListener {
     private final JButton btnPesquisar = new JButton("Pesquisar");
     
     private void initialize(){
-        menu Menu = new menu();
-        setJMenuBar(Menu);
+       // menu Menu = new menu();
+       // setJMenuBar(Menu);
         setSize(820, 512);
     }
     

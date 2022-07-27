@@ -8,14 +8,10 @@ import javax.swing.SwingUtilities;
  */
 public class main {
         public static void main(String[] args) {
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                //LookAndFeel.initLookAndFeel();
-                MainScreen t = new MainScreen();
-                t.setVisible(true);
-            }
-
+        Runnable r = () -> {
+            //LookAndFeel.initLookAndFeel();
+            MainScreen t = new MainScreen();
+            t.setVisible(true);
         };
         SwingUtilities.invokeLater(r);
     }

@@ -35,4 +35,20 @@ public class images extends Thread {
     public static ImageIcon imagemHelp() {
         return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Info-icon.png"));
     }
+
+    public static ImageIcon imagemVersion() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Apps-preferences-system-windows-actions-icon.png"));
+    }
+
+    public static ImageIcon imagemSite() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Categories-applications-internet-icon.png"));
+    }
+
+    public static ImageIcon imagemCalendar() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Calendar-icon.png"));
+    }
+    
+       public static ImageIcon imagemLookAndFeel() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Calendar-icon.png"));
+    }
 }

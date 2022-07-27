@@ -1,5 +1,6 @@
 package objetos;
 
+import br.senac.view.CalendarScreen;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -125,7 +126,7 @@ public class MenuPopup extends JPopupMenu implements ActionListener, InternalFra
 				TelaPrincipal.centralizaForm(bd);
 				bd.addInternalFrameListener(this);
 			} else if (e.getActionCommand().equals("calendario")) {
-				Calendar calendario = new Calendar();
+				CalendarScreen calendario = new CalendarScreen();
 				TelaPrincipal.dkpaneFundoTela.add(calendario);
 				TelaPrincipal.tbBarraIcone.add(calendario.getDesktopIcon());
 				calendario.setVisible(true);
