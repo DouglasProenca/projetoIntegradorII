@@ -1,1 +1,0 @@
-objetos.InternalFrame

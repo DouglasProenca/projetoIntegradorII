@@ -1,7 +1,5 @@
 package br.senac.geral;
 
-import java.awt.Component;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
 /**
