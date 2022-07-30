@@ -1,5 +1,6 @@
 package br.senac.view;
 
+import br.senac.view.objetos.PropertiesSystem;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -15,7 +16,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import java.io.IOException;
 import javax.swing.JInternalFrame;
 import javax.swing.UnsupportedLookAndFeelException;
-import objetos.PropertiesSystem;
+
 
 public class LookAndFeelScreen extends JInternalFrame implements ItemListener {
 

@@ -79,4 +79,8 @@ public class images extends Thread {
     public static ImageIcon imagemAdministrator() {
         return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Administrator-icon.png"));
     }
+
+    public static ImageIcon imagemClose() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/close-icon.png"));
+    }
 }

@@ -2,6 +2,7 @@ package br.senac.geral;
 
 import br.senac.view.LookAndFeelScreen;
 import br.senac.view.MainScreen;
+import br.senac.view.TelaConexaoBD;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +16,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
-import objetos.PropertiesSystem;
+import br.senac.view.objetos.PropertiesSystem;
 
 /**
  *
@@ -128,7 +129,7 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
         JMenuItem exit = new JMenuItem("Sair", images.imagemSair());
         exit.addActionListener(this);
         exit.setActionCommand("exit");
-        exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, 0));
+        exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S,java.awt.event.InputEvent.ALT_MASK));
         return exit;
     }
 
@@ -143,7 +144,7 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
         JMenuItem sale = new JMenuItem("Venda", images.imagemSale());
         sale.addActionListener(this);
         sale.setActionCommand("sale");
-        sale.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
+        sale.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK));
         return sale;
     }
 
@@ -188,6 +189,11 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
                 case "backup":
                     break;
                 case "jdbc":
+                    TelaConexaoBD bd = new TelaConexaoBD();
+                    MainScreen.desktopPane.add(bd);
+                    MainScreen.jToolBar.add(bd.getDesktopIcon());
+                    bd.setVisible(true);
+                    MainScreen.centralizaForm(bd);
                     break;
                 case "mail":
                     break;
