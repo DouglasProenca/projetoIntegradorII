@@ -1,5 +1,6 @@
 package br.senac.view;
 
+import br.senac.view.objetos.InternalFrame;
 import br.senac.view.objetos.PropertiesSystem;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
@@ -14,26 +15,35 @@ import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.io.IOException;
-import javax.swing.JInternalFrame;
 import javax.swing.UnsupportedLookAndFeelException;
 
+public class LookAndFeelScreen extends InternalFrame implements ItemListener {
 
-public class LookAndFeelScreen extends JInternalFrame implements ItemListener {
-
-    private final JPanel painel = new JPanel(null);
-    private final JComboBox<String> comboLAF = new JComboBox<>();
+    private JPanel painel;
+    private JComboBox<String> comboLAF;
 
     public LookAndFeelScreen() {
-        super("Look And Feel", false, true, false, true);
+        super("Look And Feel", false, true, false, true, 324, 232);
         initComponents();
     }
 
     private void initComponents() {
         this.setLayout(null);
-        this.setSize(new Dimension(324, 232));
+        this.getContentPane().add(getPainel());
+    }
+
+    private JPanel getPainel() {
+        painel = new JPanel(null);
         painel.setSize(290, 170);
         painel.setLocation(10, 10);
+        painel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        painel.add(getComboLAF());
+        return painel;
+    }
 
+    private JComboBox<String> getComboLAF() {
+        comboLAF = new JComboBox<>();
+        comboLAF.setBounds(70, 70, 150, 26);
         comboLAF.setPreferredSize(new Dimension(150, 26));
         for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
             comboLAF.addItem(info.getName());
@@ -41,12 +51,8 @@ public class LookAndFeelScreen extends JInternalFrame implements ItemListener {
         comboLAF.addItem(new FlatDarculaLaf().getName());
         comboLAF.addItem(new FlatLightLaf().getName());
         comboLAF.setSelectedItem(UIManager.getLookAndFeel().getName());
-
-        painel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        painel.add(comboLAF);
-        comboLAF.setBounds(70, 70, 150, 26);
         comboLAF.addItemListener(this);
-        getContentPane().add(painel);
+        return comboLAF;
     }
 
     @Override
@@ -66,7 +72,7 @@ public class LookAndFeelScreen extends JInternalFrame implements ItemListener {
         try {
             String myLAF = PropertiesSystem.Propriedade.getLookAndFeel();
             if (myLAF == null || myLAF.isEmpty()) {
-                // PropertiesSystem.Propriedade.setLookAndFeel(UIManager.getLookAndFeel().getName());
+                PropertiesSystem.Propriedade.setLookAndFeel(UIManager.getLookAndFeel().getName());
             } else {
 
                 for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {

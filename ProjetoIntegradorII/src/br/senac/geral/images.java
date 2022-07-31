@@ -99,4 +99,8 @@ public class images extends Thread {
     public static ImageIcon conectionError() {
         return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Database-erro-icon.png"));
     }
+
+    public static ImageIcon backup() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Backup-icon.png"));
+    }
 }

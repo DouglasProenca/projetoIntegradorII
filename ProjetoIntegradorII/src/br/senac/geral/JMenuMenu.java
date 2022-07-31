@@ -1,5 +1,6 @@
 package br.senac.geral;
 
+import br.senac.view.BackupScreen;
 import br.senac.view.LookAndFeelScreen;
 import br.senac.view.MainScreen;
 import br.senac.view.TelaConexaoBD;
@@ -187,6 +188,12 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
                     ps.changeColor(rgb);
                     break;
                 case "backup":
+                    BackupScreen backup = new BackupScreen();
+                    MainScreen.desktopPane.add(backup);
+                    MainScreen.jToolBar.add(backup.getDesktopIcon());
+                    backup.setVisible(true);
+                    MainScreen.centralizaForm(backup);
+                    backup.addInternalFrameListener(this);
                     break;
                 case "jdbc":
                     TelaConexaoBD bd = new TelaConexaoBD();
