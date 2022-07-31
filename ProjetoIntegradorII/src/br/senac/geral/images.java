@@ -83,4 +83,20 @@ public class images extends Thread {
     public static ImageIcon imagemClose() {
         return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/close-icon.png"));
     }
+
+    public static ImageIcon imagemCheck() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/check-1-icon.png"));
+    }
+
+    public static ImageIcon imagemRefresh() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Button-Refresh-icon.png"));
+    }
+
+    public static ImageIcon conectionSucess() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Database-accept-icon.png"));
+    }
+
+    public static ImageIcon conectionError() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Database-erro-icon.png"));
+    }
 }

@@ -129,7 +129,7 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
         JMenuItem exit = new JMenuItem("Sair", images.imagemSair());
         exit.addActionListener(this);
         exit.setActionCommand("exit");
-        exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S,java.awt.event.InputEvent.ALT_MASK));
+        exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
         return exit;
     }
 
@@ -194,6 +194,7 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
                     MainScreen.jToolBar.add(bd.getDesktopIcon());
                     bd.setVisible(true);
                     MainScreen.centralizaForm(bd);
+                    bd.addInternalFrameListener(this);
                     break;
                 case "mail":
                     break;

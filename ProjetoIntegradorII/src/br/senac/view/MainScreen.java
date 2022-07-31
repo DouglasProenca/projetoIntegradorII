@@ -30,7 +30,8 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
     }
 
     private void initComponents() {
-        setSize(new Dimension(800, 400));
+        this.addWindowStateListener(this);
+        this.setSize(new Dimension(800, 500));
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.addKeyListener(this);

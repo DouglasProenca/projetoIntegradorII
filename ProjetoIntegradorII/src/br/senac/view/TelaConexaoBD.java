@@ -10,9 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,13 +28,11 @@ public class TelaConexaoBD extends InternalFrame implements ActionListener {
     private JLabel lblDatabase;
     private JLabel lblLogin;
     private JLabel lblSenha;
-    private JLabel lblImagem = new JLabel();
+    private JLabel lblImagem;
     private JPanel painel;
     private JTextField txtDriver;
-    private JButton btnTestar = new JButton("Testar"/*,
-			new javax.swing.ImageIcon(getClass().getResource("/resources/Button-Refresh-icon.png"))*/);
-    private JButton btnSalvar = new JButton("Salvar"/*,
-			new javax.swing.ImageIcon(getClass().getResource("/resources/Confirmar-icon.png"))*/);
+    private JButton btnTestar;
+    private JButton btnSalvar;
     private JButton btnCancelar;
     private JPasswordField txtSenha;
     private JTextField txtLogin;
@@ -46,6 +42,12 @@ public class TelaConexaoBD extends InternalFrame implements ActionListener {
     public TelaConexaoBD() {
         super("Conexão Banco de Dados", false, true, false, true, 440, 380);
         initComponents();
+    }
+
+    private JLabel getLblImagem() {
+        lblImagem = new JLabel();
+        lblImagem.setBounds(180, 180, 66, 68);
+        return lblImagem;
     }
 
     private JLabel getLblDriver() {
@@ -121,6 +123,22 @@ public class TelaConexaoBD extends InternalFrame implements ActionListener {
         return btnCancelar;
     }
 
+    private JButton getBtnSalvar() {
+        btnSalvar = new JButton("Salvar", images.imagemCheck());
+        btnSalvar.setBounds(145, 270, 125, 48);
+        btnSalvar.addActionListener(this);
+        btnSalvar.setActionCommand("save");
+        return btnSalvar;
+    }
+
+    private JButton getBtnTestar() {
+        btnTestar = new JButton("Testar", images.imagemRefresh());
+        btnTestar.setBounds(10, 270, 125, 48);
+        btnTestar.addActionListener(this);
+        btnTestar.setActionCommand("test");
+        return btnTestar;
+    }
+
     private JPanel getPainel() {
         painel = new JPanel(null);
         painel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -137,26 +155,15 @@ public class TelaConexaoBD extends InternalFrame implements ActionListener {
         painel.add(getTxtLogin());
         painel.add(getTxtSenha());
         painel.add(getBtnCancelar());
+        painel.add(getBtnSalvar());
+        painel.add(getLblImagem());
+        painel.add(getBtnTestar());
         return painel;
     }
 
     private void initComponents() {
         this.setLayout(null);
         this.getContentPane().add(getPainel());
-
-        painel.add(lblImagem);
-        lblImagem.setBounds(180, 180, 66, 68);
-
-        painel.add(btnTestar);
-        btnTestar.setBounds(10, 270, 125, 48);
-        painel.add(btnSalvar);
-        btnSalvar.setBounds(145, 270, 125, 48);
-
-        btnTestar.addActionListener(this);
-        btnTestar.setActionCommand("Testar");
-
-        btnSalvar.addActionListener(this);
-        btnSalvar.setActionCommand("Salvar");
     }
 
     @Override
@@ -165,34 +172,25 @@ public class TelaConexaoBD extends InternalFrame implements ActionListener {
             case "close":
                 this.dispose();
                 break;
-        }
-
-        if ("Testar".equalsIgnoreCase(e.getActionCommand())) {
-            Connection conexao = null;
-            try {
-                String URL = "jdbc:sqlserver://" + txtServer.getText()
-                        + "\\DOUGLAS-PC\\CP_AL_2021:1433;databaseName=" + txtDatabase.getText();
-                conexao = DriverManager.getConnection(URL, txtLogin.getText(),
-                        String.valueOf(txtSenha.getPassword()));
-                conexao = GerenciadorConexao.getConexao();
+            case "save":
+                PropertiesSystem ps = new PropertiesSystem();
+                ps.changeDatabase(txtDatabase.getText());
+                ps.changeLogin(txtLogin.getText());
+                ps.changeServer(txtServer.getText());
+                ps.changeSenha(String.valueOf(txtSenha.getPassword()));
+                JOptionPane.showMessageDialog(this, "Sistema será fechado para atualização");
+                System.exit(0);
+                break;
+            case "test":
+                Connection conexao;
+                conexao = GerenciadorConexao.getConexaoTest(txtLogin.getText(), String.valueOf(txtSenha.getPassword()),
+                        txtDatabase.getText(), txtServer.getText());
                 if (conexao != null) {
-                    System.out.println("deu bom");
-                    //lblImagem.setIcon(new ImageIcon(getClass().getResource("/resources/Database-accept-icon.png")));
+                    lblImagem.setIcon(images.conectionSucess());
+                } else {
+                    lblImagem.setIcon(images.conectionError());
                 }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(),
-                        "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-                //lblImagem.setIcon(new ImageIcon(getClass().getResource("/resources/Database-erro-icon.png")));
-            }
-        }
-        if ("Salvar".equalsIgnoreCase(e.getActionCommand())) {
-            PropertiesSystem ps = new PropertiesSystem();
-            ps.changeDatabase(txtDatabase.getText());
-            ps.changeLogin(txtLogin.getText());
-            ps.changeServer(txtServer.getText());
-            ps.changeSenha(String.valueOf(txtSenha.getPassword()));
-            JOptionPane.showMessageDialog(this, "Sistema ser� fechado para atualiza��o");
-            System.exit(0);
+                break;
         }
     }
 }
