@@ -7,9 +7,7 @@ import br.senac.view.objetos.PropertiesSystem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -139,6 +137,10 @@ public class TelaConexaoBD extends InternalFrame implements ActionListener {
         return btnTestar;
     }
 
+    private void setLblImagem(Icon imagem) {
+        this.lblImagem.setIcon(imagem);
+    }
+
     private JPanel getPainel() {
         painel = new JPanel(null);
         painel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -186,9 +188,9 @@ public class TelaConexaoBD extends InternalFrame implements ActionListener {
                 conexao = GerenciadorConexao.getConexaoTest(txtLogin.getText(), String.valueOf(txtSenha.getPassword()),
                         txtDatabase.getText(), txtServer.getText());
                 if (conexao != null) {
-                    lblImagem.setIcon(images.conectionSucess());
+                    setLblImagem(images.conectionSucess());
                 } else {
-                    lblImagem.setIcon(images.conectionError());
+                    setLblImagem(images.conectionError());
                 }
                 break;
         }

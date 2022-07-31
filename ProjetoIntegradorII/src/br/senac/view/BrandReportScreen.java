@@ -1,5 +1,6 @@
 package br.senac.view;
 
+import br.senac.view.objetos.InternalFrame;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -10,7 +11,6 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -18,7 +18,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class BrandReportScreen extends JInternalFrame implements ActionListener {
+public class BrandReportScreen extends InternalFrame implements ActionListener {
 
     private final JLabel lblNome = new JLabel("Nome:");
     private final String colunas[] = {"ID", "Time", "Liga", "Quantidade", "Valor", "Data"};
@@ -34,7 +34,7 @@ public class BrandReportScreen extends JInternalFrame implements ActionListener 
     private JScrollPane scroll;
 
     public BrandReportScreen() {
-        super("Relatorio Marcas", true, true, true, true);
+        super("Relatorio Marcas", true, true, true, true,707, 400);
         initComponents();
     }
     
@@ -123,7 +123,6 @@ public class BrandReportScreen extends JInternalFrame implements ActionListener 
     }
 
     private void initComponents() {
-        this.setSize(707, 400);
         this.add(BorderLayout.NORTH, getPanelNorth());
         this.add(BorderLayout.LINE_END, getPanelWest());
         this.add(BorderLayout.CENTER, getScrollPane());
