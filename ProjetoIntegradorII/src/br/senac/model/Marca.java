@@ -7,17 +7,22 @@ import java.sql.Date;
  * @author Douglas
  */
 public class Marca {
-    
+
     private int id;
     private String marca;
     private String pais;
     private Date date;
     private String user;
 
-    public Marca(){
-        
+    public Marca() {
+
     }
-    
+
+    public Marca(String marca, String pais) {
+        this.marca = marca;
+        this.pais = pais;
+    }
+
     public Marca(int id, String marca, String pais, Date date, String user) {
         this.id = id;
         this.marca = marca;
@@ -25,7 +30,7 @@ public class Marca {
         this.date = date;
         this.user = user;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -64,5 +69,5 @@ public class Marca {
 
     public void setUser(String user) {
         this.user = user;
-    }    
+    }
 }

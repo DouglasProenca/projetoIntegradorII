@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.senac.controller;
 
 import br.senac.model.Marca;
@@ -22,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class MarcaDao {
 
-    public static boolean excluirMarca(int id) throws IOException {
+    public static boolean excluirMarca(int id) {
         boolean retorno = false;
         try {
             Connection conexao = GerenciadorConexao.getConexao();
@@ -39,7 +34,7 @@ public class MarcaDao {
         return retorno;
     }
 
-    public static ArrayList<Marca> todos() throws IOException {
+    public static ArrayList<Marca> getAllBrands(){
 
         ArrayList<Marca> listaClientes = new ArrayList<Marca>();
 
@@ -48,11 +43,18 @@ public class MarcaDao {
             Connection conexao = GerenciadorConexao.getConexao();
 
             // Passo 3 - Executo a instrução SQL
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("SELECT * FROM rc_marca");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
+                    + "	  , m.marca\n"
+                    + "	  , p.paisNome\n"
+                    + "	  , m.[date]\n"
+                    + "	  , m.[user]\n"
+                    + "from rc_marca m\n"
+                    + "inner join rc_pais p\n"
+                    + "	on p.paisId = m.pais");
 
             ResultSet rs = instrucaoSQL.executeQuery();
             while (rs.next()) {
-                Marca p = new Marca(rs.getInt("id"), rs.getString("marca"), rs.getString("pais"),
+                Marca p = new Marca(rs.getInt("id"), rs.getString("marca"), rs.getString("paisNome"),
                         rs.getDate("date"), rs.getString("user"));
                 listaClientes.add(p);
             }
@@ -64,4 +66,84 @@ public class MarcaDao {
         return listaClientes;
     }
 
+    public static ArrayList<Marca> AllCountry() throws IOException {
+
+        ArrayList<Marca> listCountry = new ArrayList<Marca>();
+
+        try {
+
+            Connection conexao = GerenciadorConexao.getConexao();
+
+            // Passo 3 - Executo a instrução SQL
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("SELECT paisNome FROM rc_pais");
+
+            ResultSet rs = instrucaoSQL.executeQuery();
+            while (rs.next()) {
+                Marca p = new Marca();
+                p.setPais(rs.getString("paisNome"));
+                listCountry.add(p);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            listCountry = null;
+        }
+        return listCountry;
+    }
+
+    public static boolean save(Marca p) {
+        boolean retorno = false;
+
+        try {
+            Connection conexao = GerenciadorConexao.getConexao();
+
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),(select getDate()),1)");
+
+            instrucaoSQL.setString(1, p.getMarca());
+            instrucaoSQL.setString(2, p.getPais());
+
+            retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            retorno = false;
+        }
+
+        return retorno;
+    }
+
+    public static ArrayList<Marca> getBrands(String brand) {
+        ArrayList<Marca> listaClientes = new ArrayList<Marca>();
+
+        try {
+
+            Connection conexao = GerenciadorConexao.getConexao();
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
+                    + "	  , m.marca\n"
+                    + "	  , p.paisNome\n"
+                    + "	  , m.[date]\n"
+                    + "	  , m.[user]\n"
+                    + "from rc_marca m\n"
+                    + "inner join rc_pais p\n"
+                    + "	on p.paisId = m.pais\n"
+                    + "where m.marca like ?");
+
+            //Adiciono os parâmetros ao meu comando SQL
+            instrucaoSQL.setString(1, "%" + brand + '%');
+
+            ResultSet rs = instrucaoSQL.executeQuery();
+
+            while (rs.next()) {
+                Marca p = new Marca(rs.getInt("id"), rs.getString("marca"), rs.getString("paisNome"),
+                        rs.getDate("date"), rs.getString("user"));
+                listaClientes.add(p);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            listaClientes = null;
+        }
+        return listaClientes;
+    }
 }

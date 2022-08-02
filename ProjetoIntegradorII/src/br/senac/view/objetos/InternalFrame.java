@@ -11,5 +11,4 @@ public class InternalFrame extends JInternalFrame {
 		setFrameIcon(new ImageIcon(this.getClass().getResource("/Resources/System-computer-icon.png")));
 		setSize(width, height);
 	}
-
 }

@@ -1,21 +1,26 @@
 package br.senac.view;
 
 import br.senac.controller.MarcaDao;
+import br.senac.geral.Excel;
 import br.senac.model.Marca;
 import br.senac.view.objetos.InternalFrame;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -27,7 +32,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class BrandReportScreen extends InternalFrame implements ActionListener, MouseListener, ListSelectionListener {
+public class BrandReportScreen extends InternalFrame implements ActionListener, MouseListener, ListSelectionListener, KeyListener {
 
     private final JLabel lblNome = new JLabel("Nome:");
     private String colunas[] = {"ID", "Marca", "Pais", "Data", "Usuario"};
@@ -51,6 +56,7 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
         tblResultado = new JTable(getDm());
         tblResultado.getSelectionModel().addListSelectionListener(this);
         tblResultado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblResultado.addMouseListener(this);
         return tblResultado;
     }
 
@@ -66,13 +72,14 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
 
     private JScrollPane getScrollPane() {
         scroll = new JScrollPane(getTblResultado());
-        scroll.addMouseListener(this);
         return scroll;
     }
 
     private JButton getBtnPesquisa() {
         if (btnPesquisa == null) {
             btnPesquisa = new JButton("Pesquisar");
+            btnPesquisa.addActionListener(this);
+            btnPesquisa.setActionCommand("find");
             btnPesquisa.setPreferredSize(new Dimension(100, 30));
         }
         return btnPesquisa;
@@ -82,6 +89,7 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
         if (txtPesquisa == null) {
             txtPesquisa = new JTextField();
             txtPesquisa.setPreferredSize(new Dimension(200, 30));
+            txtPesquisa.addKeyListener(this);
         }
         return txtPesquisa;
     }
@@ -89,6 +97,8 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
     private JButton getbtnExportar() {
         if (btnExportar == null) {
             btnExportar = new JButton("Exportar");
+            btnExportar.addActionListener(this);
+            btnExportar.setActionCommand("Exportar");
             btnExportar.setPreferredSize(new Dimension(100, 30));
             btnExportar.setAlignmentX(Component.CENTER_ALIGNMENT);
         }
@@ -144,16 +154,12 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
         this.CarregarJTable();
     }
 
-    private void CarregarJTable() {
-        try {
-            DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
-            modelo.setRowCount(0);
-            for (Marca p : MarcaDao.todos()) {
-                modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), p.getDate(), p.getUser()});
-            }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+    public void CarregarJTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+        modelo.setRowCount(0);
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
+        for (Marca p : MarcaDao.getAllBrands()) {
+            modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
         }
     }
 
@@ -171,37 +177,57 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
                     }
                     this.CarregarJTable();
                 } catch (Exception ex) {
-                               JOptionPane.showMessageDialog(this, ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, ex.getMessage(),
+                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
+            case "Incluir":
+                RegistrationBrandScreen rbs = new RegistrationBrandScreen("Creation");
+                getParent().add(rbs);
+                rbs.setVisible(true);
+                MainScreen.centralizaForm(rbs);
+                break;
+            case "Exportar":
+                JFileChooser fc = new JFileChooser();
+                fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                fc.showSaveDialog(null);
+                Excel.BrandExcel(fc.getSelectedFile(), MarcaDao.getAllBrands());
+                break;
+            case "find":
+                DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+                modelo.setRowCount(0);
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
+                MarcaDao.getBrands(txtPesquisa.getText()).forEach((p) -> {
+                    modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
+                });
+                break;
         }
-
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        e.getComponent().hasFocus();
+        if (e.getClickCount() == 2) {
+            RegistrationBrandScreen rbs = new RegistrationBrandScreen("Alteration");
+            getParent().add(rbs);
+            rbs.setVisible(true);
+            MainScreen.centralizaForm(rbs);
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -210,5 +236,25 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
             boolean rowsAreSelected = tblResultado.getSelectedRowCount() > 0;
             btnExcluir.setEnabled(rowsAreSelected);
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == Event.ENTER) {
+            DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+            modelo.setRowCount(0);
+            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
+            MarcaDao.getBrands(txtPesquisa.getText()).forEach((p) -> {
+                modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
+            });
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }
