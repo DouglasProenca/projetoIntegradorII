@@ -31,6 +31,12 @@ public class Marca {
         this.user = user;
     }
 
+    public Marca(int id, String marca, String pais) {
+        this.id = id;
+        this.marca = marca;
+        this.pais = pais;
+    }
+
     public int getId() {
         return id;
     }

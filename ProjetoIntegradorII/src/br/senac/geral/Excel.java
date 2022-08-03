@@ -2,12 +2,9 @@ package br.senac.geral;
 
 import br.senac.model.Marca;
 import br.senac.view.MainScreen;
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import jxl.Workbook;
 import jxl.write.Label;

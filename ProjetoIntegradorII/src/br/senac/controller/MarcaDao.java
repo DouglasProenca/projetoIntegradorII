@@ -34,7 +34,7 @@ public class MarcaDao {
         return retorno;
     }
 
-    public static ArrayList<Marca> getAllBrands(){
+    public static ArrayList<Marca> getAllBrands() {
 
         ArrayList<Marca> listaClientes = new ArrayList<Marca>();
 
@@ -145,5 +145,33 @@ public class MarcaDao {
             listaClientes = null;
         }
         return listaClientes;
+    }
+
+    public static boolean AlterBrand(Marca p) {
+        boolean retorno = false;
+
+        try {
+            Connection conexao = GerenciadorConexao.getConexao();
+
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_marca SET marca=?"
+                    + ",pais=(select paisID from rc_pais where paisNome = ?)"
+                    + "WHERE id = ?");
+
+            //Adiciono os parâmetros ao meu comando SQL
+            instrucaoSQL.setString(1, p.getMarca());
+            instrucaoSQL.setString(2, p.getPais());
+            instrucaoSQL.setInt(3, p.getId());
+
+            //Mando executar a instrução SQL
+            int linhasAfetadas = instrucaoSQL.executeUpdate();
+
+            retorno = linhasAfetadas > 0 ? true : false;
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            retorno = false;
+        }
+        return retorno;
     }
 }

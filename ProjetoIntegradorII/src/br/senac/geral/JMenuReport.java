@@ -2,6 +2,7 @@ package br.senac.geral;
 
 import br.senac.view.BrandReportScreen;
 import br.senac.view.MainScreen;
+import br.senac.view.ProductReportScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JInternalFrame;
@@ -97,6 +98,12 @@ public class JMenuReport extends JMenu implements ActionListener, InternalFrameL
                 br.addInternalFrameListener(this);
                 break;
             case "product":
+                ProductReportScreen pr = new ProductReportScreen();
+                MainScreen.desktopPane.add(pr);
+                MainScreen.jToolBar.add(pr.getDesktopIcon());
+                pr.setVisible(true);
+                MainScreen.centralizaForm(pr);
+                pr.addInternalFrameListener(this);
                 break;
             case "managementRep":
                 break;
@@ -106,8 +113,8 @@ public class JMenuReport extends JMenu implements ActionListener, InternalFrameL
                 break;
         }
     }
-    
-     @Override
+
+    @Override
     public void internalFrameOpened(InternalFrameEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

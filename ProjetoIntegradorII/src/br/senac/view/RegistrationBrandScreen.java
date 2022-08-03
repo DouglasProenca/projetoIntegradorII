@@ -26,6 +26,7 @@ public class RegistrationBrandScreen extends InternalFrame implements ActionList
     private JButton btnCheck;
     private JButton btnExcel;
     private JButton btnClose;
+    private int id;
     private JTextField txtBrand;
     private JComboBox<String> jboCountry;
     private JPanel panel;
@@ -33,6 +34,14 @@ public class RegistrationBrandScreen extends InternalFrame implements ActionList
     public RegistrationBrandScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 400, 400);
         InitComponents(formato);
+    }
+
+    public RegistrationBrandScreen(Marca brand, String formato) {
+        super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 400, 400);
+        InitComponents(formato);
+        this.txtBrand.setText(brand.getMarca());
+        this.jboCountry.setSelectedItem(brand.getPais());
+        this.id = brand.getId();
     }
 
     private void InitComponents(String formato) {
@@ -107,12 +116,15 @@ public class RegistrationBrandScreen extends InternalFrame implements ActionList
         switch (e.getActionCommand()) {
             case "save":
                 Marca objMarca = new Marca(txtBrand.getText(), jboCountry.getSelectedItem().toString());
-                if(MarcaDao.save(objMarca)){
+                if (MarcaDao.save(objMarca)) {
                     JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
                     this.dispose();
                 };
                 break;
             case "alter":
+                Marca objMarcaAlt = new Marca(id,txtBrand.getText(), jboCountry.getSelectedItem().toString());
+                MarcaDao.AlterBrand(objMarcaAlt);
+                this.dispose();
                 break;
             case "excel":
                 break;

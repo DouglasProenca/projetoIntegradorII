@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.FlowLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -35,7 +36,7 @@ import javax.swing.table.DefaultTableModel;
 public class BrandReportScreen extends InternalFrame implements ActionListener, MouseListener, ListSelectionListener, KeyListener {
 
     private final JLabel lblNome = new JLabel("Nome:");
-    private String colunas[] = {"ID", "Marca", "Pais", "Data", "Usuario"};
+    private final String colunas[] = {"ID", "Marca", "Pais", "Data", "Usuario"};
     private JPanel panelNorth;
     private JPanel panelWest;
     private JTextField txtPesquisa;
@@ -90,6 +91,7 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
             txtPesquisa = new JTextField();
             txtPesquisa.setPreferredSize(new Dimension(200, 30));
             txtPesquisa.addKeyListener(this);
+            txtPesquisa.setToolTipText("Procure por marca ou digite Refresh, R para atualizar a tabela.");
         }
         return txtPesquisa;
     }
@@ -158,9 +160,9 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
-        for (Marca p : MarcaDao.getAllBrands()) {
+        MarcaDao.getAllBrands().forEach((p) -> {
             modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
-        }
+        });
     }
 
     @Override
@@ -176,7 +178,7 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
                         JOptionPane.showMessageDialog(this, "Falha ao excluir marca!");
                     }
                     this.CarregarJTable();
-                } catch (Exception ex) {
+                } catch (HeadlessException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, ex.getMessage(),
                             "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                 }
@@ -196,7 +198,7 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
             case "find":
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
                 modelo.setRowCount(0);
-                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
                 MarcaDao.getBrands(txtPesquisa.getText()).forEach((p) -> {
                     modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
                 });
@@ -207,7 +209,20 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
-            RegistrationBrandScreen rbs = new RegistrationBrandScreen("Alteration");
+            int numeroLinha = tblResultado.getSelectedRow();
+
+            int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
+            String brand_name = tblResultado.getModel().getValueAt(numeroLinha, 1).toString();
+            String pais = tblResultado.getModel().getValueAt(numeroLinha, 2).toString();
+            String user = tblResultado.getModel().getValueAt(numeroLinha, 4).toString();
+
+            Marca brand = new Marca();
+            brand.setId(id);
+            brand.setMarca(brand_name);
+            brand.setPais(pais);
+            brand.setUser(user);
+
+            RegistrationBrandScreen rbs = new RegistrationBrandScreen(brand, "Alteration");
             getParent().add(rbs);
             rbs.setVisible(true);
             MainScreen.centralizaForm(rbs);
@@ -245,12 +260,16 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == Event.ENTER) {
-            DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
-            modelo.setRowCount(0);
-            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
-            MarcaDao.getBrands(txtPesquisa.getText()).forEach((p) -> {
-                modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
-            });
+            if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
+                CarregarJTable();
+            } else {
+                DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+                modelo.setRowCount(0);
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
+                MarcaDao.getBrands(txtPesquisa.getText()).forEach((p) -> {
+                    modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
+                });
+            }
         }
     }
 
