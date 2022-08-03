@@ -1,18 +1,16 @@
 package br.senac.view;
 
+import br.senac.view.objetos.InternalFrame;
 import com.toedter.calendar.JCalendar;
-import java.awt.Dimension;
-import javax.swing.JInternalFrame;
 
-public class CalendarScreen extends JInternalFrame {
+public class CalendarScreen extends InternalFrame {
 
     public CalendarScreen() {
-        super("Calendario", false, true, true, true);
+        super("Calendario", false, true, true, true,438, 298);
         initComponents();
     }
 
     private void initComponents() {
-        this.setSize(new Dimension(438, 298));
         this.add(new JCalendar());
         pack();
     }

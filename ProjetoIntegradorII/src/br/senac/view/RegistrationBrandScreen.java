@@ -19,7 +19,7 @@ import javax.swing.JTextField;
  *
  * @author Douglas
  */
-public class RegistrationBrandScreen extends InternalFrame implements ActionListener {
+public class RegistrationBrandScreen extends InternalFrame {
 
     private JLabel lblBrand;
     private JLabel lblpais;
@@ -44,6 +44,7 @@ public class RegistrationBrandScreen extends InternalFrame implements ActionList
         this.id = brand.getId();
     }
 
+    
     private void InitComponents(String formato) {
         this.setLayout(null);
         this.getContentPane().add(getPanel(formato));
@@ -133,5 +134,4 @@ public class RegistrationBrandScreen extends InternalFrame implements ActionList
                 break;
         }
     }
-
 }

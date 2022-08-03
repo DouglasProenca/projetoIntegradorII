@@ -1,6 +1,7 @@
 package br.senac.view;
 
 import br.senac.controller.MarcaDao;
+import br.senac.controller.ProductDAO;
 import br.senac.geral.Excel;
 import br.senac.model.Marca;
 import br.senac.view.objetos.InternalFrame;
@@ -33,10 +34,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class ProductReportScreen extends InternalFrame implements ActionListener, MouseListener, ListSelectionListener, KeyListener {
+public class ProductReportScreen extends InternalFrame implements ListSelectionListener {
 
     private final JLabel lblNome = new JLabel("Nome:");
-    private final String colunas[] = {"ID", "Produto","Marca", "valor","Quantidade", "Data", "Usuario"};
+    private final String colunas[] = {"ID", "Produto", "Marca", "valor", "Quantidade", "Data", "Usuario"};
     private JPanel panelNorth;
     private JPanel panelWest;
     private JTextField txtPesquisa;
@@ -91,7 +92,7 @@ public class ProductReportScreen extends InternalFrame implements ActionListener
             txtPesquisa = new JTextField();
             txtPesquisa.setPreferredSize(new Dimension(200, 30));
             txtPesquisa.addKeyListener(this);
-            txtPesquisa.setToolTipText("Procure por marca ou digite Refresh, R para atualizar a tabela.");
+            txtPesquisa.setToolTipText("Procure por produto ou digite Refresh, R e tecle enter para atualizar a tabela.");
         }
         return txtPesquisa;
     }
@@ -149,7 +150,7 @@ public class ProductReportScreen extends InternalFrame implements ActionListener
         return panelNorth;
     }
 
-    private void initComponents() {
+    void initComponents() {
         this.add(BorderLayout.CENTER, getScrollPane());
         this.add(BorderLayout.NORTH, getPanelNorth());
         this.add(BorderLayout.EAST, getPanelWest());
@@ -172,10 +173,10 @@ public class ProductReportScreen extends InternalFrame implements ActionListener
                 try {
                     int numeroLinha = tblResultado.getSelectedRow();
                     int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-                    if (MarcaDao.excluirMarca(id)) {
-                        JOptionPane.showMessageDialog(this, "Marca excluída com sucesso!");
+                    if (ProductDAO.excluirProduct(id)) {
+                        JOptionPane.showMessageDialog(this, "Produto excluído com sucesso!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(this, "Falha ao excluir marca!");
+                        JOptionPane.showMessageDialog(this, "Falha ao excluir Produto!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                     }
                     this.CarregarJTable();
                 } catch (HeadlessException | NumberFormatException ex) {
@@ -230,31 +231,11 @@ public class ProductReportScreen extends InternalFrame implements ActionListener
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
             boolean rowsAreSelected = tblResultado.getSelectedRowCount() > 0;
             btnExcluir.setEnabled(rowsAreSelected);
         }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
     }
 
     @Override
@@ -271,9 +252,5 @@ public class ProductReportScreen extends InternalFrame implements ActionListener
                 });
             }
         }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
     }
 }

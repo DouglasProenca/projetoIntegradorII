@@ -23,6 +23,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -33,7 +34,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class BrandReportScreen extends InternalFrame implements ActionListener, MouseListener, ListSelectionListener, KeyListener {
+public class BrandReportScreen extends InternalFrame implements ListSelectionListener, KeyListener {
 
     private final JLabel lblNome = new JLabel("Nome:");
     private final String colunas[] = {"ID", "Marca", "Pais", "Data", "Usuario"};
@@ -47,6 +48,14 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
     private DefaultTableModel dm;
     private JTable tblResultado;
     private JScrollPane scroll;
+    private static InternalFrame uniqueInstance;
+
+    public static synchronized InternalFrame getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new BrandReportScreen();
+        }
+        return uniqueInstance;
+    }
 
     public BrandReportScreen() {
         super("Relatorio Marcas", true, true, true, true, 707, 400);
@@ -91,7 +100,7 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
             txtPesquisa = new JTextField();
             txtPesquisa.setPreferredSize(new Dimension(200, 30));
             txtPesquisa.addKeyListener(this);
-            txtPesquisa.setToolTipText("Procure por marca ou digite Refresh, R para atualizar a tabela.");
+            txtPesquisa.setToolTipText("Procure por marca ou digite Refresh, R e tecle enter para atualizar a tabela.");
         }
         return txtPesquisa;
     }
@@ -156,7 +165,7 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
         this.CarregarJTable();
     }
 
-    public void CarregarJTable() {
+    void CarregarJTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
@@ -230,31 +239,11 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
             boolean rowsAreSelected = tblResultado.getSelectedRowCount() > 0;
             btnExcluir.setEnabled(rowsAreSelected);
         }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
     }
 
     @Override
@@ -271,9 +260,5 @@ public class BrandReportScreen extends InternalFrame implements ActionListener, 
                 });
             }
         }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
     }
 }
