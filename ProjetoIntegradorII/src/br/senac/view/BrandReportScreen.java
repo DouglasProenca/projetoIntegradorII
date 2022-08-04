@@ -181,7 +181,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
                 try {
                     int numeroLinha = tblResultado.getSelectedRow();
                     int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-                    if (MarcaDao.excluirMarca(id)) {
+                    if (MarcaDao.delete(id)) {
                         JOptionPane.showMessageDialog(this, "Marca excluída com sucesso!");
                     } else {
                         JOptionPane.showMessageDialog(this, "Falha ao excluir marca!");

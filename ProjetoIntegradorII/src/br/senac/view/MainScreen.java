@@ -79,7 +79,6 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     @Override
     public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

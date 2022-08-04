@@ -12,11 +12,8 @@ import java.awt.Event;
 import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
 
 import javax.swing.Box;
@@ -150,7 +147,7 @@ public class ProductReportScreen extends InternalFrame implements ListSelectionL
         return panelNorth;
     }
 
-    void initComponents() {
+    private void initComponents() {
         this.add(BorderLayout.CENTER, getScrollPane());
         this.add(BorderLayout.NORTH, getPanelNorth());
         this.add(BorderLayout.EAST, getPanelWest());
@@ -161,8 +158,9 @@ public class ProductReportScreen extends InternalFrame implements ListSelectionL
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/m/yyyy");
-        MarcaDao.getAllBrands().forEach((p) -> {
-            modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
+        ProductDAO.getAll().forEach((p) -> {
+            modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getMarca(), p.getValor(),
+                p.getQuantidade(),sdf1.format(p.getDate()), p.getUser()});
         });
     }
 
@@ -173,7 +171,7 @@ public class ProductReportScreen extends InternalFrame implements ListSelectionL
                 try {
                     int numeroLinha = tblResultado.getSelectedRow();
                     int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-                    if (ProductDAO.excluirProduct(id)) {
+                    if (ProductDAO.delete(id)) {
                         JOptionPane.showMessageDialog(this, "Produto excluído com sucesso!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(this, "Falha ao excluir Produto!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);

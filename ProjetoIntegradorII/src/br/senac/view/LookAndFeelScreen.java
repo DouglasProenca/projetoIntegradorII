@@ -89,6 +89,8 @@ public class LookAndFeelScreen extends InternalFrame implements ItemListener {
                 }
             }
         } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

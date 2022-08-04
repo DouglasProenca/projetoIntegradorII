@@ -18,7 +18,6 @@ public class PropertiesSystem {
         try {
             Propriedade.setLookAndFeel(name);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

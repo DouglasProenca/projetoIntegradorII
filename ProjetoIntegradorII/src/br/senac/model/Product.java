@@ -1,5 +1,7 @@
 package br.senac.model;
 
+import java.util.Date;
+
 /**
  *
  * @author Douglas
@@ -14,7 +16,8 @@ public class Product extends Marca {
         super();
     }
 
-    public Product(String nome, float valor, int quantidade) {
+    public Product(int id, String nome, float valor, int quantidade, String marca,String pais, String user, Date Data) {
+        super(id, marca, pais, Data, user);
         this.nome = nome;
         this.valor = valor;
         this.quantidade = quantidade;

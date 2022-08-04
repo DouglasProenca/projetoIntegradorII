@@ -5,7 +5,6 @@ import br.senac.geral.images;
 import br.senac.model.Marca;
 import br.senac.view.objetos.InternalFrame;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;

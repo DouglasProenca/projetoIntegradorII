@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
 
-
 public class DesktopPane extends javax.swing.JDesktopPane {
 
     public DesktopPane() {
@@ -16,9 +15,7 @@ public class DesktopPane extends javax.swing.JDesktopPane {
     public void paintComponent(Graphics y) {
         try {
             String cores = Propriedade.getColor();
-            if (cores == null) {
-                cores = "63,100,129";
-            }
+            cores = cores == null ? "63,100,129" : cores;
             String cor[] = cores.split(",");
             int r = Integer.parseInt(cor[0]);
             int g = Integer.parseInt(cor[1]);
@@ -28,7 +25,6 @@ public class DesktopPane extends javax.swing.JDesktopPane {
             y.setColor(new Color(r, g, b));
             y.fillRect(0, 0, getWidth(), getHeight());
         } catch (IOException e) {
-
         }
     }
 };

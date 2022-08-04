@@ -28,7 +28,6 @@ public class JMenuReport extends JMenu implements ActionListener, InternalFrameL
     private void initComponents() {
         this.setIcon(images.imagemReport());
         this.setMnemonic('R');
-
         this.add(getBrand());
         this.add(getProduct());
         this.add(getMenuReport());

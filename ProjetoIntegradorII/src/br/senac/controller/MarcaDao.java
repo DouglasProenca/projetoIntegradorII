@@ -15,9 +15,10 @@ import javax.swing.JOptionPane;
  *
  * @author Douglas
  */
-public class MarcaDao {
-
-    public static boolean excluirMarca(int id) {
+public class MarcaDao{
+    
+    
+    public static boolean delete(int id) {
         boolean retorno = false;
         try {
             Connection conexao = GerenciadorConexao.getConexao();
@@ -36,13 +37,12 @@ public class MarcaDao {
 
     public static ArrayList<Marca> getAllBrands() {
 
-        ArrayList<Marca> listaClientes = new ArrayList<Marca>();
+        ArrayList<Marca> brandList = new ArrayList<>();
 
         try {
 
             Connection conexao = GerenciadorConexao.getConexao();
 
-            // Passo 3 - Executo a instrução SQL
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
                     + "	  , m.marca\n"
                     + "	  , p.paisNome\n"
@@ -56,14 +56,14 @@ public class MarcaDao {
             while (rs.next()) {
                 Marca p = new Marca(rs.getInt("id"), rs.getString("marca"), rs.getString("paisNome"),
                         rs.getDate("date"), rs.getString("user"));
-                listaClientes.add(p);
+                brandList.add(p);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            listaClientes = null;
+            brandList = null;
         }
-        return listaClientes;
+        return brandList;
     }
 
     public static ArrayList<Marca> AllCountry() throws IOException {
