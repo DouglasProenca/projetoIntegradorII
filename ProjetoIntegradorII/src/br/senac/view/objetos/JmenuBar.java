@@ -1,5 +1,8 @@
-package br.senac.geral;
+package br.senac.view.objetos;
 
+import br.senac.geral.JMenuHelp;
+import br.senac.geral.JMenuMenu;
+import br.senac.geral.JMenuReport;
 import javax.swing.JMenuBar;
 
 /**

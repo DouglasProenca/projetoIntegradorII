@@ -4,6 +4,8 @@ import br.senac.view.BackupScreen;
 import br.senac.view.LookAndFeelScreen;
 import br.senac.view.MainScreen;
 import br.senac.view.TelaConexaoBD;
+import br.senac.view.objetos.GerenciadorConexao;
+import br.senac.view.objetos.Menu;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,22 +20,22 @@ import javax.swing.JSeparator;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import br.senac.view.objetos.PropertiesSystem;
+import java.sql.Connection;
 
 /**
  *
  * @author Douglas
  */
-public class JMenuMenu extends JMenu implements ActionListener, InternalFrameListener {
+public class JMenuMenu extends Menu {
 
     private static JMenu uniqueInstance;
 
     public JMenuMenu() {
-        super("Menu");
+        super("Menu",images.imagemMenu());
         this.initComponents();
     }
 
     private void initComponents() {
-        this.setIcon(images.imagemMenu());
         this.setMnemonic('M');
         this.add(getMenuDatabase());
         this.add(getNotes());
@@ -44,6 +46,15 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
         this.add(getMenuUser());
         this.add(new JSeparator());
         this.add(getExit());
+    }
+
+    public ActionEvent connection(Connection connection) {
+        ActionEvent e = null;
+        if (connection == null) {
+            e = new ActionEvent(MainScreen.desktopPane, ActionEvent.ACTION_PERFORMED, "jdbc");
+            actionPerformed(e);
+        }
+        return e;
     }
 
     private JMenu getMenuUser() {
@@ -199,8 +210,8 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
                     TelaConexaoBD bd = new TelaConexaoBD();
                     MainScreen.desktopPane.add(bd);
                     MainScreen.jToolBar.add(bd.getDesktopIcon());
-                    bd.setVisible(true);
                     MainScreen.centralizaForm(bd);
+                    bd.setVisible(true);
                     bd.addInternalFrameListener(this);
                     break;
                 case "mail":
@@ -214,7 +225,7 @@ public class JMenuMenu extends JMenu implements ActionListener, InternalFrameLis
             }
         } catch (IOException ex) {
             Logger.getLogger(JMenuMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
 
     @Override

@@ -3,36 +3,32 @@ package br.senac.geral;
 import br.senac.view.AboutScreen;
 import br.senac.view.CalendarScreen;
 import br.senac.view.MainScreen;
+import br.senac.view.objetos.Menu;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
 
 /**
  *
  * @author Douglas
  */
-public class JMenuHelp extends JMenu implements ActionListener, InternalFrameListener {
+public class JMenuHelp extends Menu {
 
     private static JMenu uniqueInstance;
 
     public JMenuHelp() {
-        super("Ajuda");
+        super("Ajuda",images.imagemHelp());
         this.initComponents();
     }
 
     private void initComponents() {
-        this.setIcon(images.imagemHelp());
         this.setMnemonic('A');
         this.add((getCalendar()));
         this.add(getSite());
@@ -104,49 +100,5 @@ public class JMenuHelp extends JMenu implements ActionListener, InternalFrameLis
         } catch (URISyntaxException | IOException ex) {
             Logger.getLogger(JMenuHelp.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @Override
-    public void internalFrameOpened(InternalFrameEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void internalFrameClosing(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        frame.setClosable(true);
-    }
-
-    @Override
-    public void internalFrameClosed(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        frame.setClosable(true);
-    }
-
-    @Override
-    public void internalFrameIconified(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        frame.setIconifiable(false);
-        MainScreen.jToolBar.add(frame.getDesktopIcon());
-    }
-
-    @Override
-    public void internalFrameDeiconified(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        MainScreen.jToolBar.remove(frame.getDesktopIcon());
-        frame.setIconifiable(true);
-        MainScreen.desktopPane.add(frame);
-    }
-
-    @Override
-    public void internalFrameActivated(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        MainScreen.jToolBar.add(frame.getDesktopIcon());
-    }
-
-    @Override
-    public void internalFrameDeactivated(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        MainScreen.jToolBar.add(frame.getDesktopIcon());
     }
 }

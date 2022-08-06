@@ -1,11 +1,13 @@
 package br.senac.view.objetos;
 
 
+import br.senac.geral.JMenuMenu;
 import br.senac.view.MainScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
@@ -16,6 +18,8 @@ import javax.swing.event.InternalFrameListener;
  */
 public class MenuPopup extends JPopupMenu implements ActionListener, InternalFrameListener {
 
+        private static MenuPopup uniqueInstance;
+    
 	public MenuPopup() {
 		super();
 		initComponents();
@@ -23,9 +27,16 @@ public class MenuPopup extends JPopupMenu implements ActionListener, InternalFra
 
 
 	private void initComponents() {
-		
+            //this.add(JMenuMenu.getInstance());
 	}
 
+        public static synchronized JPopupMenu getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new MenuPopup();
+        }
+        return uniqueInstance;
+    }
+        
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	
