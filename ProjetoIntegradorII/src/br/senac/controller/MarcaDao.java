@@ -1,8 +1,8 @@
 package br.senac.controller;
 
-import br.senac.model.Marca;
+import br.senac.model.Brand;
 import br.senac.view.MainScreen;
-import br.senac.view.objetos.GerenciadorConexao;
+import br.senac.objects.ConnectionManager;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ public class MarcaDao{
     public static boolean delete(int id) {
         boolean retorno = false;
         try {
-            Connection conexao = GerenciadorConexao.getConexao();
+            Connection conexao = ConnectionManager.getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_marca WHERE id = ?");
             instrucaoSQL.setInt(1, id);
 
@@ -35,13 +35,13 @@ public class MarcaDao{
         return retorno;
     }
 
-    public static ArrayList<Marca> getAllBrands() {
+    public static ArrayList<Brand> getAllBrands() {
 
-        ArrayList<Marca> brandList = new ArrayList<>();
+        ArrayList<Brand> brandList = new ArrayList<>();
 
         try {
 
-            Connection conexao = GerenciadorConexao.getConexao();
+            Connection conexao = ConnectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
                     + "	  , m.marca\n"
@@ -54,7 +54,7 @@ public class MarcaDao{
 
             ResultSet rs = instrucaoSQL.executeQuery();
             while (rs.next()) {
-                Marca p = new Marca(rs.getInt("id"), rs.getString("marca"), rs.getString("paisNome"),
+                Brand p = new Brand(rs.getInt("id"), rs.getString("marca"), rs.getString("paisNome"),
                         rs.getDate("date"), rs.getString("user"));
                 brandList.add(p);
             }
@@ -66,20 +66,20 @@ public class MarcaDao{
         return brandList;
     }
 
-    public static ArrayList<Marca> AllCountry() throws IOException {
+    public static ArrayList<Brand> AllCountry() throws IOException {
 
-        ArrayList<Marca> listCountry = new ArrayList<Marca>();
+        ArrayList<Brand> listCountry = new ArrayList<Brand>();
 
         try {
 
-            Connection conexao = GerenciadorConexao.getConexao();
+            Connection conexao = ConnectionManager.getConexao();
 
             // Passo 3 - Executo a instrução SQL
             PreparedStatement instrucaoSQL = conexao.prepareStatement("SELECT paisNome FROM rc_pais");
 
             ResultSet rs = instrucaoSQL.executeQuery();
             while (rs.next()) {
-                Marca p = new Marca();
+                Brand p = new Brand();
                 p.setPais(rs.getString("paisNome"));
                 listCountry.add(p);
             }
@@ -91,11 +91,11 @@ public class MarcaDao{
         return listCountry;
     }
 
-    public static boolean save(Marca p) {
+    public static boolean save(Brand p) {
         boolean retorno = false;
 
         try {
-            Connection conexao = GerenciadorConexao.getConexao();
+            Connection conexao = ConnectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),(select getDate()),1)");
 
@@ -113,12 +113,12 @@ public class MarcaDao{
         return retorno;
     }
 
-    public static ArrayList<Marca> getBrands(String brand) {
-        ArrayList<Marca> listaClientes = new ArrayList<Marca>();
+    public static ArrayList<Brand> getBrands(String brand) {
+        ArrayList<Brand> listaClientes = new ArrayList<Brand>();
 
         try {
 
-            Connection conexao = GerenciadorConexao.getConexao();
+            Connection conexao = ConnectionManager.getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
                     + "	  , m.marca\n"
                     + "	  , p.paisNome\n"
@@ -135,7 +135,7 @@ public class MarcaDao{
             ResultSet rs = instrucaoSQL.executeQuery();
 
             while (rs.next()) {
-                Marca p = new Marca(rs.getInt("id"), rs.getString("marca"), rs.getString("paisNome"),
+                Brand p = new Brand(rs.getInt("id"), rs.getString("marca"), rs.getString("paisNome"),
                         rs.getDate("date"), rs.getString("user"));
                 listaClientes.add(p);
             }
@@ -147,11 +147,11 @@ public class MarcaDao{
         return listaClientes;
     }
 
-    public static boolean AlterBrand(Marca p) {
+    public static boolean AlterBrand(Brand p) {
         boolean retorno = false;
 
         try {
-            Connection conexao = GerenciadorConexao.getConexao();
+            Connection conexao = ConnectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_marca SET marca=?"
                     + ",pais=(select paisID from rc_pais where paisNome = ?)"

@@ -1,7 +1,7 @@
 package br.senac.view;
 
-import br.senac.view.objetos.InternalFrame;
-import br.senac.view.objetos.PropertiesSystem;
+import br.senac.objects.InternalFrame;
+import br.senac.objects.PropertiesSystem;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;

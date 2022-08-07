@@ -1,7 +1,7 @@
 package br.senac.view;
 
-import br.senac.geral.JMenuMenu;
-import br.senac.view.objetos.GerenciadorConexao;
+import br.senac.objects.JMenuMenu;
+import br.senac.objects.ConnectionManager;
 import javax.swing.SwingUtilities;
 
 /**
@@ -16,7 +16,7 @@ public class main {
             MainScreen t = new MainScreen();
             t.setVisible(true);
             JMenuMenu menu = new JMenuMenu();
-            menu.connection(GerenciadorConexao.getConexao());
+            menu.connection(ConnectionManager.getConexao());
         };
         SwingUtilities.invokeLater(r);
     }

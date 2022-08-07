@@ -1,9 +1,9 @@
 package br.senac.view;
 
 import br.senac.controller.MarcaDao;
-import br.senac.geral.images;
-import br.senac.model.Marca;
-import br.senac.view.objetos.InternalFrame;
+import br.senac.objects.images;
+import br.senac.model.Brand;
+import br.senac.objects.InternalFrame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.BorderFactory;
@@ -35,7 +35,7 @@ public class RegistrationBrandScreen extends InternalFrame {
         InitComponents(formato);
     }
 
-    public RegistrationBrandScreen(Marca brand, String formato) {
+    public RegistrationBrandScreen(Brand brand, String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 400, 400);
         InitComponents(formato);
         this.txtBrand.setText(brand.getMarca());
@@ -78,7 +78,7 @@ public class RegistrationBrandScreen extends InternalFrame {
         jboCountry = new JComboBox<String>();
         jboCountry.setBounds(100, 80, 230, 25);
         try {
-            for (Marca p : MarcaDao.AllCountry()) {
+            for (Brand p : MarcaDao.AllCountry()) {
                 String usu = p.getPais();
                 jboCountry.addItem(usu);
             }
@@ -115,14 +115,14 @@ public class RegistrationBrandScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                Marca objMarca = new Marca(txtBrand.getText(), jboCountry.getSelectedItem().toString());
+                Brand objMarca = new Brand(txtBrand.getText(), jboCountry.getSelectedItem().toString());
                 if (MarcaDao.save(objMarca)) {
                     JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
                     this.dispose();
-                };
+                }
                 break;
             case "alter":
-                Marca objMarcaAlt = new Marca(id,txtBrand.getText(), jboCountry.getSelectedItem().toString());
+                Brand objMarcaAlt = new Brand(id,txtBrand.getText(), jboCountry.getSelectedItem().toString());
                 MarcaDao.AlterBrand(objMarcaAlt);
                 this.dispose();
                 break;

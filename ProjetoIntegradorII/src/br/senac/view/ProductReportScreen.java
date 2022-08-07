@@ -2,9 +2,9 @@ package br.senac.view;
 
 import br.senac.controller.MarcaDao;
 import br.senac.controller.ProductDAO;
-import br.senac.geral.Excel;
-import br.senac.model.Marca;
-import br.senac.view.objetos.InternalFrame;
+import br.senac.objects.Excel;
+import br.senac.model.Brand;
+import br.senac.objects.InternalFrame;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -28,13 +28,12 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class ProductReportScreen extends InternalFrame implements ListSelectionListener {
+public class ProductReportScreen extends InternalFrame {
 
     private final JLabel lblNome = new JLabel("Nome:");
-    private final String colunas[] = {"ID", "Produto", "Marca", "valor", "Quantidade", "Data", "Usuario"};
+    private final String colunas[] = {"ID", "Produto", "Marca", "Valor", "Quantidade", "Data", "Usuario"};
     private JPanel panelNorth;
     private JPanel panelWest;
     private JTextField txtPesquisa;
@@ -183,7 +182,7 @@ public class ProductReportScreen extends InternalFrame implements ListSelectionL
                 }
                 break;
             case "Incluir":
-                RegistrationBrandScreen rbs = new RegistrationBrandScreen("Creation");
+                RegistrationProductScreen rbs = new RegistrationProductScreen("Creation");
                 getParent().add(rbs);
                 rbs.setVisible(true);
                 MainScreen.centralizaForm(rbs);
@@ -215,7 +214,7 @@ public class ProductReportScreen extends InternalFrame implements ListSelectionL
             String pais = tblResultado.getModel().getValueAt(numeroLinha, 2).toString();
             String user = tblResultado.getModel().getValueAt(numeroLinha, 4).toString();
 
-            Marca brand = new Marca();
+            Brand brand = new Brand();
             brand.setId(id);
             brand.setMarca(brand_name);
             brand.setPais(pais);

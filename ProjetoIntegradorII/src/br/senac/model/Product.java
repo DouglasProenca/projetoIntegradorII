@@ -6,7 +6,7 @@ import java.util.Date;
  *
  * @author Douglas
  */
-public class Product extends Marca {
+public class Product extends Brand {
 
     private String nome;
     private float valor;

@@ -2,7 +2,7 @@ package br.senac.controller;
 
 import br.senac.model.Product;
 import br.senac.view.MainScreen;
-import br.senac.view.objetos.GerenciadorConexao;
+import br.senac.objects.ConnectionManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ public class ProductDAO {
     public static boolean delete(int id) {
         boolean retorno = false;
         try {
-            Connection conexao = GerenciadorConexao.getConexao();
+            Connection conexao = ConnectionManager.getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_produto WHERE id = ?");
             instrucaoSQL.setInt(1, id);
 
@@ -38,7 +38,7 @@ public class ProductDAO {
 
         try {
 
-            Connection conexao = GerenciadorConexao.getConexao();
+            Connection conexao = ConnectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select p.id\n"
                     + "	 , p.nome\n"
@@ -71,7 +71,7 @@ public class ProductDAO {
         boolean retorno = false;
 
         try {
-            Connection conexao = GerenciadorConexao.getConexao();
+            Connection conexao = ConnectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,(select getDate()),1)");
 

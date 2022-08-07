@@ -1,6 +1,6 @@
 package br.senac.view;
 
-import br.senac.view.objetos.InternalFrame;
+import br.senac.objects.InternalFrame;
 import com.toedter.calendar.JCalendar;
 
 public class CalendarScreen extends InternalFrame {

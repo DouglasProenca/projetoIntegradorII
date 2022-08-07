@@ -1,8 +1,8 @@
 package br.senac.view;
 
-import br.senac.geral.images;
-import br.senac.view.objetos.GerenciadorConexao;
-import br.senac.view.objetos.InternalFrame;
+import br.senac.objects.images;
+import br.senac.objects.ConnectionManager;
+import br.senac.objects.InternalFrame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -124,7 +124,7 @@ public class BackupScreen extends InternalFrame implements ActionListener, KeyLi
             if (i != 1) {
                 File arquivo = fc.getSelectedFile();
                 try {
-                    Connection conexao = GerenciadorConexao.getConexao();
+                    Connection conexao = ConnectionManager.getConexao();
                     PreparedStatement instrucaoSQL = conexao.prepareStatement(
                             "BACKUP DATABASE [ibcp] TO  DISK = N'" + arquivo + "' WITH NOFORMAT, NOINIT,  NAME = N'sistema-Completo Banco de Dados Backup', SKIP, NOREWIND, NOUNLOAD,  STATS = 10");
                     instrucaoSQL.executeUpdate();

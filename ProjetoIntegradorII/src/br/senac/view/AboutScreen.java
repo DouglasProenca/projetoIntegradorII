@@ -1,12 +1,9 @@
 package br.senac.view;
 
-import br.senac.view.objetos.InternalFrame;
+import br.senac.objects.InternalFrame;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;

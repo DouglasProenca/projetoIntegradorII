@@ -1,9 +1,9 @@
 package br.senac.view;
 
 import br.senac.controller.MarcaDao;
-import br.senac.geral.Excel;
-import br.senac.model.Marca;
-import br.senac.view.objetos.InternalFrame;
+import br.senac.objects.Excel;
+import br.senac.model.Brand;
+import br.senac.objects.InternalFrame;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -225,7 +225,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
             String pais = tblResultado.getModel().getValueAt(numeroLinha, 2).toString();
             String user = tblResultado.getModel().getValueAt(numeroLinha, 4).toString();
 
-            Marca brand = new Marca();
+            Brand brand = new Brand();
             brand.setId(id);
             brand.setMarca(brand_name);
             brand.setPais(pais);
