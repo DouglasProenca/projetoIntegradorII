@@ -3,7 +3,7 @@ package br.senac.view;
 import br.senac.controller.MarcaDao;
 import br.senac.controller.ProductDAO;
 import br.senac.objects.Excel;
-import br.senac.model.Brand;
+import br.senac.model.Product;
 import br.senac.objects.InternalFrame;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -156,10 +156,10 @@ public class ProductReportScreen extends InternalFrame {
     public void CarregarJTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/m/yyyy");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
         ProductDAO.getAll().forEach((p) -> {
             modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getMarca(), p.getValor(),
-                p.getQuantidade(),sdf1.format(p.getDate()), p.getUser()});
+                p.getQuantidade(), sdf1.format(p.getDate()), p.getUser()});
         });
     }
 
@@ -191,16 +191,20 @@ public class ProductReportScreen extends InternalFrame {
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 fc.showSaveDialog(null);
-                Excel.BrandExcel(fc.getSelectedFile(), MarcaDao.getAllBrands());
+                Excel.ProductExcel(fc.getSelectedFile(), ProductDAO.getAll());
                 break;
             case "find":
-                DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
-                modelo.setRowCount(0);
-                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
-                MarcaDao.getBrands(txtPesquisa.getText()).forEach((p) -> {
-                    modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
-                });
-                break;
+                if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
+                    CarregarJTable();
+                } else {
+                    DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+                    modelo.setRowCount(0);
+                    SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
+                    MarcaDao.getBrands(txtPesquisa.getText()).forEach((p) -> {
+                        modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
+                    });
+                    break;
+                }
         }
     }
 
@@ -210,17 +214,15 @@ public class ProductReportScreen extends InternalFrame {
             int numeroLinha = tblResultado.getSelectedRow();
 
             int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-            String brand_name = tblResultado.getModel().getValueAt(numeroLinha, 1).toString();
-            String pais = tblResultado.getModel().getValueAt(numeroLinha, 2).toString();
-            String user = tblResultado.getModel().getValueAt(numeroLinha, 4).toString();
+            String product_name = tblResultado.getModel().getValueAt(numeroLinha, 1).toString();
+            String brand = tblResultado.getModel().getValueAt(numeroLinha, 2).toString();
+            String valor = tblResultado.getModel().getValueAt(numeroLinha, 3).toString();
+            String quantidade = tblResultado.getModel().getValueAt(numeroLinha, 4).toString();
+            String user = tblResultado.getModel().getValueAt(numeroLinha, 6).toString();
 
-            Brand brand = new Brand();
-            brand.setId(id);
-            brand.setMarca(brand_name);
-            brand.setPais(pais);
-            brand.setUser(user);
+            Product product = new Product(id, product_name, Float.valueOf(valor), Integer.parseInt(quantidade), brand, null, user, null);
 
-            RegistrationBrandScreen rbs = new RegistrationBrandScreen(brand, "Alteration");
+            RegistrationProductScreen rbs = new RegistrationProductScreen(product, "Alteration");
             getParent().add(rbs);
             rbs.setVisible(true);
             MainScreen.centralizaForm(rbs);
@@ -228,7 +230,8 @@ public class ProductReportScreen extends InternalFrame {
     }
 
     @Override
-    public void valueChanged(ListSelectionEvent e) {
+    public void valueChanged(ListSelectionEvent e
+    ) {
         if (!e.getValueIsAdjusting()) {
             boolean rowsAreSelected = tblResultado.getSelectedRowCount() > 0;
             btnExcluir.setEnabled(rowsAreSelected);
@@ -236,7 +239,8 @@ public class ProductReportScreen extends InternalFrame {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e
+    ) {
         if (e.getKeyCode() == Event.ENTER) {
             if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
                 CarregarJTable();

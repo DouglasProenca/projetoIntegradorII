@@ -15,9 +15,8 @@ import javax.swing.JOptionPane;
  *
  * @author Douglas
  */
-public class MarcaDao{
-    
-    
+public class MarcaDao {
+
     public static boolean delete(int id) {
         boolean retorno = false;
         try {
@@ -145,6 +144,28 @@ public class MarcaDao{
             listaClientes = null;
         }
         return listaClientes;
+    }
+
+    public static boolean saveExcel(ArrayList<Brand> p) {
+        boolean retorno = true;
+        for (int z = 0; z < p.toArray().length; z++) {
+            try {
+                Connection conexao = ConnectionManager.getConexao();
+
+                PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),(select getDate()),1)");
+
+                instrucaoSQL.setString(1, p.get(z).getMarca());
+                instrucaoSQL.setString(2, p.get(z).getPais().toUpperCase());
+
+                instrucaoSQL.executeUpdate();
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                        "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                retorno = false;
+            }
+        }
+        return retorno;
     }
 
     public static boolean AlterBrand(Brand p) {

@@ -1,8 +1,10 @@
 package br.senac.controller;
 
+import br.senac.model.Brand;
 import br.senac.model.Product;
 import br.senac.view.MainScreen;
 import br.senac.objects.ConnectionManager;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -66,9 +68,9 @@ public class ProductDAO {
         }
         return productList;
     }
-    
-        public static boolean save(Product p) {
-        boolean retorno = false;
+
+    public static boolean save(Product p) {
+        boolean retorno = true;
 
         try {
             Connection conexao = ConnectionManager.getConexao();
@@ -78,9 +80,9 @@ public class ProductDAO {
             instrucaoSQL.setString(1, p.getNome());
             instrucaoSQL.setString(2, p.getMarca());
             instrucaoSQL.setFloat(3, p.getValor());
-            instrucaoSQL.setFloat(4, p.getQuantidade());
+            instrucaoSQL.setInt(4, p.getQuantidade());
 
-            retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
+            instrucaoSQL.executeUpdate();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
@@ -89,5 +91,83 @@ public class ProductDAO {
         }
 
         return retorno;
+    }
+
+    public static boolean AlterProduct(Product p) {
+        boolean retorno = false;
+
+        try {
+            Connection conexao = ConnectionManager.getConexao();
+
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_produto SET nome=?"
+                    + ",marca=(select id from rc_marca where marca=?),valor=?,quantidade=?"
+                    + " WHERE id = ?");
+
+            instrucaoSQL.setString(1, p.getNome());
+            instrucaoSQL.setString(2, p.getMarca());
+            instrucaoSQL.setFloat(3, p.getValor());
+            instrucaoSQL.setInt(4, p.getQuantidade());
+            instrucaoSQL.setInt(5, p.getId());
+            
+            //Mando executar a instrução SQL
+            int linhasAfetadas = instrucaoSQL.executeUpdate();
+
+            retorno = linhasAfetadas > 0 ? true : false;
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            retorno = false;
+        }
+        return retorno;
+    }
+
+    public static boolean saveExcel(ArrayList<Product> p) {
+        boolean retorno = true;
+        for (int z = 0; z < p.toArray().length; z++) {
+            try {
+                Connection conexao = ConnectionManager.getConexao();
+
+                PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,(select getDate()),1)");
+
+                instrucaoSQL.setString(1, p.get(z).getNome());
+                instrucaoSQL.setString(2, p.get(z).getMarca());
+                instrucaoSQL.setFloat(3, p.get(z).getValor());
+                instrucaoSQL.setInt(4, p.get(z).getQuantidade());
+
+                instrucaoSQL.executeUpdate();
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                        "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                retorno = false;
+            }
+        }
+        return retorno;
+    }
+
+    public static ArrayList<Brand> AllBrands() throws IOException {
+
+        ArrayList<Brand> listBrand = new ArrayList<Brand>();
+
+        try {
+
+            Connection conexao = ConnectionManager.getConexao();
+
+            // Passo 3 - Executo a instrução SQL
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("SELECT marca FROM rc_marca");
+
+            ResultSet rs = instrucaoSQL.executeQuery();
+            while (rs.next()) {
+                Brand p = new Brand();
+                p.setMarca(rs.getString("marca"));
+                listBrand.add(p);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            listBrand = null;
+        }
+        return listBrand;
     }
 }

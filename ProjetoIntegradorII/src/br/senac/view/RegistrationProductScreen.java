@@ -1,6 +1,6 @@
 package br.senac.view;
 
-import br.senac.controller.MarcaDao;
+import br.senac.controller.ProductDAO;
 import br.senac.objects.images;
 import br.senac.model.Brand;
 import br.senac.model.Product;
@@ -45,26 +45,28 @@ public class RegistrationProductScreen extends InternalFrame {
     private JButton btnCheckExcel;
     private JButton btnExcluirExcel;
     private final String colunas[] = {"Produto", "Valor", "Marca", "Quantidade"};
-    private DefaultTableModel dm;
     private JTable tblExcel;
+    private DefaultTableModel dm;
     private JScrollPane scroll;
     private ArrayList<Product> productsList;
     private JButton btnImportExcel;
 
     private int id;
-    private JComboBox<String> jboCountry;
+    private JComboBox<String> jboBrand;
 
     public RegistrationProductScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 700, 400);
         InitComponents(formato);
     }
 
-    public RegistrationProductScreen(Brand brand, String formato) {
-        super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 400, 400);
+    public RegistrationProductScreen(Product product, String formato) {
+        super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 700, 400);
         InitComponents(formato);
-        this.txtProduct.setText(brand.getMarca());
-        this.jboCountry.setSelectedItem(brand.getPais());
-        this.id = brand.getId();
+        this.txtProduct.setText(product.getNome());
+        this.jboBrand.setSelectedItem(product.getMarca());
+        this.txtValor.setText(String.valueOf(product.getValor()));
+        this.txtQuantidade.setText(String.valueOf(product.getQuantidade()));
+        this.id = product.getId();
     }
 
     private void InitComponents(String formato) {
@@ -77,7 +79,9 @@ public class RegistrationProductScreen extends InternalFrame {
         painelAbas = new JTabbedPane();
         painelAbas.setBounds(10, 10, 670, 350);
         painelAbas.add("Cadastro", getPanelCadastro(formato));
-        painelAbas.add("Excel", getPanelExcel());
+        if (formato.equals("Creation")) {
+            painelAbas.add("Excel", getPanelExcel());
+        }
         return painelAbas;
     }
 
@@ -87,7 +91,7 @@ public class RegistrationProductScreen extends InternalFrame {
         panelCadastro.add(getLblProduct());
         panelCadastro.add(getTxtProduct());
         panelCadastro.add(getLblMarca());
-        panelCadastro.add(getJboCountry());
+        panelCadastro.add(getJboBrand());
         panelCadastro.add(getLblValor());
         panelCadastro.add(getTxtValor());
         panelCadastro.add(getLblQuantidade());
@@ -118,19 +122,19 @@ public class RegistrationProductScreen extends InternalFrame {
         return lblProduct;
     }
 
-    private JComboBox<String> getJboCountry() {
-        jboCountry = new JComboBox<String>();
-        jboCountry.setBounds(410, 30, 230, 25);
+    private JComboBox<String> getJboBrand() {
+        jboBrand = new JComboBox<String>();
+        jboBrand.setBounds(410, 30, 230, 25);
         try {
-            for (Brand p : MarcaDao.AllCountry()) {
-                String usu = p.getPais();
-                jboCountry.addItem(usu);
+            for (Brand p : ProductDAO.AllBrands()) {
+                String usu = p.getMarca();
+                jboBrand.addItem(usu);
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
         }
-        return jboCountry;
+        return jboBrand;
     }
 
     private JLabel getLblMarca() {
@@ -231,15 +235,17 @@ public class RegistrationProductScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                Brand objMarca = new Brand(txtProduct.getText(), jboCountry.getSelectedItem().toString());
-                if (MarcaDao.save(objMarca)) {
+                Product objProduct = new Product(0, txtProduct.getText(), Float.parseFloat(txtValor.getText()),
+                         Integer.parseInt(txtQuantidade.getText()), jboBrand.getSelectedItem().toString(), null, null, null);
+                if (ProductDAO.save(objProduct)) {
                     JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
                     this.dispose();
                 }
                 break;
             case "alter":
-                Brand objMarcaAlt = new Brand(id, txtProduct.getText(), jboCountry.getSelectedItem().toString());
-                MarcaDao.AlterBrand(objMarcaAlt);
+                Product objMarcaAlt = new Product(id, txtProduct.getText(), Float.parseFloat(txtValor.getText()),
+                         Integer.parseInt(txtQuantidade.getText()), jboBrand.getSelectedItem().toString(), null, "1", null);
+                ProductDAO.AlterProduct(objMarcaAlt);
                 this.dispose();
                 break;
             case "import":
@@ -253,7 +259,10 @@ public class RegistrationProductScreen extends InternalFrame {
                 CarregarJTable(productsList, true);
                 break;
             case "saveExcel":
-                
+                boolean ret = ProductDAO.saveExcel(productsList);
+                if (ret) {
+                    JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
+                }
                 break;
             default:
                 this.dispose();
@@ -266,7 +275,7 @@ public class RegistrationProductScreen extends InternalFrame {
             int row = tblExcel.getSelectedRow();
             String nome = tblExcel.getModel().getValueAt(row, 0).toString();
             for (int i = 0; i < productsList.toArray().length; i++) {
-                if(productsList.get(i).getNome().equals(nome)){
+                if (productsList.get(i).getNome().equals(nome)) {
                     productsList.remove(i);
                     break;
                 }
