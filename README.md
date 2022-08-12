@@ -1,7 +1,7 @@
 # projetoIntegradorII
 
-Projeto do Segundo Semestre do curso de Análise e Desenvolvimento de Sistemas do Senac
-Estou fazendo o upload para melhorias no projeto, com bases nos conhecimentos adquiridos nos semestres posteriores e com a experiência profissional
+Projeto do Segundo Semestre do curso de Análise e Desenvolvimento de Sistemas do Senac.
+Estou fazendo o upload para melhorias no projeto, com bases nos conhecimentos adquiridos nos semestres posteriores e com a experiência profissional.
 
 Funções Do Sistema:
 
@@ -26,4 +26,13 @@ Relatório:
 Ajuda:
 
 ![image](https://user-images.githubusercontent.com/78769051/184447930-d8b7ccce-98fa-4b52-b355-b9cbf4cca961.png)
+
+Relatorio Produto:
+
+![image](https://user-images.githubusercontent.com/78769051/184448388-63952b95-2493-4935-96f2-2927d3fd2612.png)
+
+Cadastro De Produtos:
+
+![image](https://user-images.githubusercontent.com/78769051/184448438-2fe123a4-7b1b-4965-a0c0-911eb907c6b8.png)
+
 
