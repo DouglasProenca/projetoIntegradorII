@@ -1,6 +1,5 @@
 package br.senac.objects;
 
-import br.senac.geral.*;
 import br.senac.objects.PropertiesSystem.Propriedade;
 import java.awt.Color;
 import java.awt.Dimension;

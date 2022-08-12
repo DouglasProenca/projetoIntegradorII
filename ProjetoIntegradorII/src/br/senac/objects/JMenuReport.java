@@ -3,10 +3,12 @@ package br.senac.objects;
 import br.senac.view.BrandReportScreen;
 import br.senac.view.MainScreen;
 import br.senac.view.ProductReportScreen;
-import br.senac.objects.Menu;
+import br.senac.view.ReportScreen;
+import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 
 /**
@@ -18,7 +20,7 @@ public class JMenuReport extends Menu {
     private static JMenu uniqueInstance;
 
     public JMenuReport() {
-        super("Relatório",images.imagemReport());
+        super("Relatório", images.imagemReport());
         initComponents();
     }
 
@@ -101,6 +103,18 @@ public class JMenuReport extends Menu {
                 pr.addInternalFrameListener(this);
                 break;
             case "managementRep":
+                JDateChooser jd = new JDateChooser();
+                JDateChooser jdf = new JDateChooser();
+                String message = "Escolha a data inicial:\n";
+                String message2 = "Escolha a data Final:\n";
+                Object[] params = {message, jd, message2, jdf};
+                JOptionPane.showConfirmDialog(null, params, "Relatorio Gerencial", JOptionPane.PLAIN_MESSAGE);
+                InternalFrame rs = ReportScreen.getInstance("Relatorio Gerencial", params);
+                MainScreen.desktopPane.add(rs);
+                MainScreen.jToolBar.add(rs.getDesktopIcon());
+                rs.setVisible(true);
+                MainScreen.centralizaForm(rs);
+                rs.addInternalFrameListener(this);
                 break;
             case "analyticalRep":
                 break;
