@@ -11,6 +11,12 @@ Funções Do Sistema:
 - Cadastro de venda, produtos e marcas por input no sistema ou por Excel.
 - Exportação de Venda, produtos e marcar por excel
 
+Adicionais:
+
+- Permite escolher o tema do sistema
+- Cor de Fundo
+- Abre aplicativos do windows como calculadora e bloco de notas
+
 Tela Inicial do Projeto:
 
 ![image](https://user-images.githubusercontent.com/78769051/184447786-3efc3a51-f0b8-44d1-9ef2-7f2538bdd952.png)
@@ -33,7 +39,7 @@ Relatorio Produto:
 
 Cadastro De Produtos:
 
-![image](https://user-images.githubusercontent.com/78769051/184448438-2fe123a4-7b1b-4965-a0c0-911eb907c6b8.png)
+![image](https://user-images.githubusercontent.com/78769051/184451534-948ca35f-e246-485a-a68b-eb686f2184da.png)
 
 Tela de Backup:
 
