@@ -198,8 +198,10 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
             case "Exportar":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                fc.showSaveDialog(null);
-                Excel.BrandExcel(fc.getSelectedFile(), MarcaDao.getAllBrands());
+                int choice = fc.showSaveDialog(null);
+                if (choice != 1) {
+                    Excel.BrandExcel(fc.getSelectedFile(), MarcaDao.getAllBrands());
+                }
                 break;
             case "find":
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();

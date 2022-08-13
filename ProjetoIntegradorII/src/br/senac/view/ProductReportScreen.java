@@ -189,8 +189,10 @@ public class ProductReportScreen extends InternalFrame {
             case "Exportar":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                fc.showSaveDialog(null);
-                Excel.ProductExcel(fc.getSelectedFile(), ProductDAO.getAll());
+                int choice = fc.showSaveDialog(null);
+                if (choice != 1) {
+                    Excel.ProductExcel(fc.getSelectedFile(), ProductDAO.getAll());
+                }
                 break;
             case "find":
                 if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
@@ -230,8 +232,7 @@ public class ProductReportScreen extends InternalFrame {
     }
 
     @Override
-    public void valueChanged(ListSelectionEvent e
-    ) {
+    public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
             boolean rowsAreSelected = tblResultado.getSelectedRowCount() > 0;
             btnExcluir.setEnabled(rowsAreSelected);

@@ -20,6 +20,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -123,6 +125,7 @@ public class RegistrationBrandScreen extends InternalFrame {
     private JTextField getTxtBrand() {
         txtBrand = new JTextField();
         txtBrand.setBounds(100, 30, 350, 25);
+        txtBrand.getDocument().addDocumentListener(new DocListner());
         return txtBrand;
     }
 
@@ -166,6 +169,7 @@ public class RegistrationBrandScreen extends InternalFrame {
         btnCheck.setBounds(20, 250, 200, 40);
         btnCheck.addActionListener(this);
         btnCheck.setActionCommand(formato.equals("Creation") ? "save" : "alter");
+        btnCheck.setEnabled(false);
         return btnCheck;
     }
 
@@ -255,5 +259,28 @@ public class RegistrationBrandScreen extends InternalFrame {
             boolean rowsAreSelected = tblExcel.getSelectedRowCount() > 0;
             btnExcluirExcel.setEnabled(rowsAreSelected);
         }
+    }
+
+    private class DocListner implements DocumentListener {
+
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            btnCheck.setEnabled(warn());
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            btnCheck.setEnabled(warn());
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            btnCheck.setEnabled(warn());
+        }
+        
+        private boolean warn() {
+                boolean type = txtBrand.getText().length() <= 0 ? false : true;
+                return type;
+            }
     }
 }

@@ -21,6 +21,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -113,6 +115,7 @@ public class RegistrationProductScreen extends InternalFrame {
     private JTextField getTxtProduct() {
         txtProduct = new JTextField();
         txtProduct.setBounds(100, 30, 230, 25);
+        txtProduct.getDocument().addDocumentListener(new DocListner());
         return txtProduct;
     }
 
@@ -152,6 +155,7 @@ public class RegistrationProductScreen extends InternalFrame {
     private JTextField getTxtValor() {
         txtValor = new JTextField();
         txtValor.setBounds(100, 100, 230, 25);
+        txtValor.getDocument().addDocumentListener(new DocListner());
         return txtValor;
     }
 
@@ -164,6 +168,7 @@ public class RegistrationProductScreen extends InternalFrame {
     private JTextField getTxtQuantidade() {
         txtQuantidade = new JTextField();
         txtQuantidade.setBounds(410, 100, 230, 25);
+        txtQuantidade.getDocument().addDocumentListener(new DocListner());
         return txtQuantidade;
     }
 
@@ -180,6 +185,7 @@ public class RegistrationProductScreen extends InternalFrame {
         btnCheck.setBounds(25, 250, 250, 40);
         btnCheck.addActionListener(this);
         btnCheck.setActionCommand(formato.equals("Creation") ? "save" : "alter");
+        btnCheck.setEnabled(false);
         return btnCheck;
     }
 
@@ -236,7 +242,7 @@ public class RegistrationProductScreen extends InternalFrame {
         switch (e.getActionCommand()) {
             case "save":
                 Product objProduct = new Product(0, txtProduct.getText(), Float.parseFloat(txtValor.getText()),
-                         Integer.parseInt(txtQuantidade.getText()), jboBrand.getSelectedItem().toString(), null, null, null);
+                        Integer.parseInt(txtQuantidade.getText()), jboBrand.getSelectedItem().toString(), null, null, null);
                 if (ProductDAO.save(objProduct)) {
                     JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
                     this.dispose();
@@ -244,7 +250,7 @@ public class RegistrationProductScreen extends InternalFrame {
                 break;
             case "alter":
                 Product objMarcaAlt = new Product(id, txtProduct.getText(), Float.parseFloat(txtValor.getText()),
-                         Integer.parseInt(txtQuantidade.getText()), jboBrand.getSelectedItem().toString(), null, "1", null);
+                        Integer.parseInt(txtQuantidade.getText()), jboBrand.getSelectedItem().toString(), null, "1", null);
                 ProductDAO.AlterProduct(objMarcaAlt);
                 this.dispose();
                 break;
@@ -293,6 +299,32 @@ public class RegistrationProductScreen extends InternalFrame {
         if (!e.getValueIsAdjusting()) {
             boolean rowsAreSelected = tblExcel.getSelectedRowCount() > 0;
             btnExcluirExcel.setEnabled(rowsAreSelected);
+        }
+    }
+
+    class DocListner implements DocumentListener {
+
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            btnCheck.setEnabled(warn());
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            btnCheck.setEnabled(warn());
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            btnCheck.setEnabled(warn());
+        }
+
+        private boolean warn() {
+            boolean type = false;
+            if (txtProduct.getText().length() >= 1 && txtValor.getText().length() >= 1 && txtQuantidade.getText().length() >= 1) {
+                type = true;
+            }
+            return type;
         }
     }
 }

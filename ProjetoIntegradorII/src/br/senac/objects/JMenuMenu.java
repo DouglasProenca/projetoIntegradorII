@@ -4,6 +4,7 @@ import br.senac.view.BackupScreen;
 import br.senac.view.LookAndFeelScreen;
 import br.senac.view.MainScreen;
 import br.senac.view.DatabaseConnectionScreen;
+import br.senac.view.SaleScreen;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -15,8 +16,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.event.InternalFrameEvent;
-import javax.swing.event.InternalFrameListener;
-import br.senac.objects.PropertiesSystem;
 import java.sql.Connection;
 
 /**
@@ -28,7 +27,7 @@ public class JMenuMenu extends Menu {
     private static JMenu uniqueInstance;
 
     public JMenuMenu() {
-        super("Menu",images.imagemMenu());
+        super("Menu", images.imagemMenu());
         this.initComponents();
     }
 
@@ -185,15 +184,17 @@ public class JMenuMenu extends Menu {
                     laf.addInternalFrameListener(this);
                     break;
                 case "CanvasBackground":
-                    Color newColor = JColorChooser.showDialog(MainScreen.desktopPane, "Cor de Fundo",
+                    Color newColor = JColorChooser.showDialog(null, "Cor de Fundo",
                             new Color(60, 96, 124));
-                    MainScreen.desktopPane.setBackground(newColor);
-                    PropertiesSystem ps = new PropertiesSystem();
-                    int r = newColor.getRed();
-                    int g = newColor.getGreen();
-                    int b = newColor.getBlue();
-                    String rgb = r + "," + g + "," + b;
-                    ps.changeColor(rgb);
+                    if (newColor != null) {
+                        MainScreen.desktopPane.setBackground(newColor);
+                        PropertiesSystem ps = new PropertiesSystem();
+                        int r = newColor.getRed();
+                        int g = newColor.getGreen();
+                        int b = newColor.getBlue();
+                        String rgb = r + "," + g + "," + b;
+                        ps.changeColor(rgb);
+                    }
                     break;
                 case "backup":
                     BackupScreen backup = new BackupScreen();
@@ -216,13 +217,19 @@ public class JMenuMenu extends Menu {
                 case "logout":
                     break;
                 case "sale":
+                    SaleScreen sl = new SaleScreen();
+                    MainScreen.desktopPane.add(sl);
+                    MainScreen.jToolBar.add(sl.getDesktopIcon());
+                    MainScreen.centralizaForm(sl);
+                    sl.setVisible(true);
+                    sl.addInternalFrameListener(this);
                     break;
                 case "user":
                     break;
             }
         } catch (IOException ex) {
             Logger.getLogger(JMenuMenu.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 
     @Override
