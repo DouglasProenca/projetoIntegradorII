@@ -1,6 +1,5 @@
 package br.senac.view;
 
-import br.senac.controller.MarcaDao;
 import br.senac.controller.ProductDAO;
 import br.senac.objects.Excel;
 import br.senac.model.Product;
@@ -200,8 +199,9 @@ public class ProductReportScreen extends InternalFrame {
                     DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
                     modelo.setRowCount(0);
                     SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
-                    MarcaDao.getBrands(txtPesquisa.getText()).forEach((p) -> {
-                        modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
+                    ProductDAO.getProduct(txtPesquisa.getText()).forEach((p) -> {
+                        modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getMarca(), p.getValor(),
+                            p.getQuantidade(), sdf1.format(p.getDate()), p.getUser()});
                     });
                     break;
                 }
@@ -248,8 +248,9 @@ public class ProductReportScreen extends InternalFrame {
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
                 modelo.setRowCount(0);
                 SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
-                MarcaDao.getBrands(txtPesquisa.getText()).forEach((p) -> {
-                    modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
+                ProductDAO.getProduct(txtPesquisa.getText()).forEach((p) -> {
+                    modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getMarca(), p.getValor(),
+                        p.getQuantidade(), sdf1.format(p.getDate()), p.getUser()});
                 });
             }
         }

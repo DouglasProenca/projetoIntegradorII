@@ -123,7 +123,7 @@ public class RegistrationProductScreen extends InternalFrame {
     }
 
     private JComboBox<String> getJboBrand() {
-        jboBrand = new JComboBox<String>();
+        jboBrand = new JComboBox<>();
         jboBrand.setBounds(410, 30, 230, 25);
         try {
             for (Brand p : ProductDAO.AllBrands()) {

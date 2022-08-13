@@ -251,7 +251,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
             } else {
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
                 modelo.setRowCount(0);
-                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
                 MarcaDao.getBrands(txtPesquisa.getText()).forEach((p) -> {
                     modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
                 });

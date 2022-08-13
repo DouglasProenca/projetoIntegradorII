@@ -170,4 +170,41 @@ public class ProductDAO {
         }
         return listBrand;
     }
+    
+    public static ArrayList<Product> getProduct(String product) {
+        ArrayList<Product> productList = new ArrayList<Product>();
+
+        try {
+
+            Connection conexao = ConnectionManager.getConexao();
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("select p.id\n"
+                    + "	 , p.nome\n"
+                    + "	 , m.marca\n"
+                    + "	 , p.valor\n"
+                    + "	 , p.quantidade\n"
+                    + "	 , p.[date]\n"
+                    + "	 , p.[user]\n"
+                    + "	 , m.pais\n"
+                    + "from rc_produto p\n"
+                    + "inner join rc_marca m\n"
+                    + "	on m.id = p.marca\n"
+                    + "where p.nome like ?");
+            //Adiciono os parâmetros ao meu comando SQL
+            instrucaoSQL.setString(1, "%" + product + '%');
+
+            ResultSet rs = instrucaoSQL.executeQuery();
+
+            while (rs.next()) {
+                Product p = new Product(rs.getInt("id"), rs.getString("nome"), rs.getFloat("valor"), rs.getInt("quantidade"),
+                        rs.getString("marca"), rs.getString("pais"), rs.getString("user"), rs.getDate("date"));
+                
+                productList.add(p);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            productList = null;
+        }
+        return productList;
+    }
 }
