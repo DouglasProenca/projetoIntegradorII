@@ -87,7 +87,7 @@ public class RegistrationProductScreen extends InternalFrame {
 
     private JPanel getPanelCadastro(String formato) {
         panelCadastro = new JPanel(null);
-        panelCadastro.setBorder(BorderFactory.createTitledBorder(formato.equals("Creation") ? "Cadastrar Marca" : "Alterar Marca"));
+        panelCadastro.setBorder(BorderFactory.createTitledBorder(formato.equals("Creation") ? "Cadastrar Produto" : "Alterar Produto"));
         panelCadastro.add(getLblProduct());
         panelCadastro.add(getTxtProduct());
         panelCadastro.add(getLblMarca());
@@ -238,7 +238,7 @@ public class RegistrationProductScreen extends InternalFrame {
                 Product objProduct = new Product(0, txtProduct.getText(), Float.parseFloat(txtValor.getText()),
                          Integer.parseInt(txtQuantidade.getText()), jboBrand.getSelectedItem().toString(), null, null, null);
                 if (ProductDAO.save(objProduct)) {
-                    JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
+                    JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
                     this.dispose();
                 }
                 break;

@@ -21,8 +21,7 @@ public class ReportScreen extends InternalFrame {
     
     private void initComponents(Object[] params) {
         JRViewer jr = new JRViewer(JasperManager.gerarManagetmentReport(params));
-        jr.setZoomRatio((float) 0.5);
-        
+        jr.setZoomRatio((float) 0.5);  
         this.getContentPane().add(jr, BorderLayout.CENTER);
     }
     

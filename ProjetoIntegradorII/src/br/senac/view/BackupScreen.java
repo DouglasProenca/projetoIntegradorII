@@ -120,7 +120,7 @@ public class BackupScreen extends InternalFrame implements ActionListener, KeyLi
             int i = 0;
             fc.setSelectedFile(new File("Backup Sistema.bak"));
             fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            i = fc.showSaveDialog(MainScreen.desktopPane);
+            i = fc.showSaveDialog(null);
             if (i != 1) {
                 File arquivo = fc.getSelectedFile();
                 try {
