@@ -1,5 +1,6 @@
 package br.senac.controller;
 
+import br.senac.interfaces.DAO;
 import br.senac.model.Brand;
 import br.senac.view.MainScreen;
 import br.senac.objects.ConnectionManager;
@@ -15,9 +16,23 @@ import javax.swing.JOptionPane;
  *
  * @author Douglas
  */
-public class MarcaDao {
+public final class MarcaDao implements DAO {
 
-    public static boolean delete(int id) {
+    private static MarcaDao uniqueInstance;
+    
+    private MarcaDao(){
+        
+    }
+
+    public static synchronized MarcaDao getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new MarcaDao();
+        }
+        return uniqueInstance;
+    }
+
+    @Override
+    public boolean delete(int id) {
         boolean retorno = false;
         try {
             Connection conexao = ConnectionManager.getConexao();
@@ -34,8 +49,83 @@ public class MarcaDao {
         return retorno;
     }
 
-    public static ArrayList<Brand> getAllBrands() {
+    public static ArrayList<Brand> AllCountry() throws IOException {
 
+        ArrayList<Brand> listCountry = new ArrayList<Brand>();
+
+        try {
+
+            Connection conexao = ConnectionManager.getConexao();
+
+            // Passo 3 - Executo a instrução SQL
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("SELECT paisNome FROM rc_pais");
+
+            ResultSet rs = instrucaoSQL.executeQuery();
+            while (rs.next()) {
+                Brand p = new Brand();
+                p.setPais(rs.getString("paisNome"));
+                listCountry.add(p);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            listCountry = null;
+        }
+        return listCountry;
+    }
+
+    public boolean save(Brand p) {
+        boolean retorno = false;
+
+        try {
+            Connection conexao = ConnectionManager.getConexao();
+
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),(select getDate()),1)");
+
+            instrucaoSQL.setString(1, p.getMarca());
+            instrucaoSQL.setString(2, p.getPais().toUpperCase());
+
+            retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            retorno = false;
+        }
+
+        return retorno;
+    }
+
+    public boolean Alter(Brand p) {
+        boolean retorno = false;
+
+        try {
+            Connection conexao = ConnectionManager.getConexao();
+
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_marca SET marca=?"
+                    + ",pais=(select paisID from rc_pais where paisNome = ?)"
+                    + "WHERE id = ?");
+
+            //Adiciono os parâmetros ao meu comando SQL
+            instrucaoSQL.setString(1, p.getMarca());
+            instrucaoSQL.setString(2, p.getPais());
+            instrucaoSQL.setInt(3, p.getId());
+
+            //Mando executar a instrução SQL
+            int linhasAfetadas = instrucaoSQL.executeUpdate();
+
+            retorno = linhasAfetadas > 0 ? true : false;
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            retorno = false;
+        }
+        return retorno;
+    }
+
+    @Override
+    public ArrayList<Brand> getAll() {
         ArrayList<Brand> brandList = new ArrayList<>();
 
         try {
@@ -65,54 +155,8 @@ public class MarcaDao {
         return brandList;
     }
 
-    public static ArrayList<Brand> AllCountry() throws IOException {
-
-        ArrayList<Brand> listCountry = new ArrayList<Brand>();
-
-        try {
-
-            Connection conexao = ConnectionManager.getConexao();
-
-            // Passo 3 - Executo a instrução SQL
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("SELECT paisNome FROM rc_pais");
-
-            ResultSet rs = instrucaoSQL.executeQuery();
-            while (rs.next()) {
-                Brand p = new Brand();
-                p.setPais(rs.getString("paisNome"));
-                listCountry.add(p);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            listCountry = null;
-        }
-        return listCountry;
-    }
-
-    public static boolean save(Brand p) {
-        boolean retorno = false;
-
-        try {
-            Connection conexao = ConnectionManager.getConexao();
-
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),(select getDate()),1)");
-
-            instrucaoSQL.setString(1, p.getMarca());
-            instrucaoSQL.setString(2, p.getPais());
-
-            retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
-        }
-
-        return retorno;
-    }
-
-    public static ArrayList<Brand> getBrands(String brand) {
+    @Override
+    public ArrayList<Brand> getBy(String key) {
         ArrayList<Brand> listaClientes = new ArrayList<Brand>();
 
         try {
@@ -129,7 +173,7 @@ public class MarcaDao {
                     + "where m.marca like ?");
 
             //Adiciono os parâmetros ao meu comando SQL
-            instrucaoSQL.setString(1, "%" + brand + '%');
+            instrucaoSQL.setString(1, "%" + key + '%');
 
             ResultSet rs = instrucaoSQL.executeQuery();
 
@@ -144,55 +188,5 @@ public class MarcaDao {
             listaClientes = null;
         }
         return listaClientes;
-    }
-
-    public static boolean saveExcel(ArrayList<Brand> p) {
-        boolean retorno = true;
-        for (int z = 0; z < p.toArray().length; z++) {
-            try {
-                Connection conexao = ConnectionManager.getConexao();
-
-                PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),(select getDate()),1)");
-
-                instrucaoSQL.setString(1, p.get(z).getMarca());
-                instrucaoSQL.setString(2, p.get(z).getPais().toUpperCase());
-
-                instrucaoSQL.executeUpdate();
-
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                        "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-                retorno = false;
-            }
-        }
-        return retorno;
-    }
-
-    public static boolean AlterBrand(Brand p) {
-        boolean retorno = false;
-
-        try {
-            Connection conexao = ConnectionManager.getConexao();
-
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_marca SET marca=?"
-                    + ",pais=(select paisID from rc_pais where paisNome = ?)"
-                    + "WHERE id = ?");
-
-            //Adiciono os parâmetros ao meu comando SQL
-            instrucaoSQL.setString(1, p.getMarca());
-            instrucaoSQL.setString(2, p.getPais());
-            instrucaoSQL.setInt(3, p.getId());
-
-            //Mando executar a instrução SQL
-            int linhasAfetadas = instrucaoSQL.executeUpdate();
-
-            retorno = linhasAfetadas > 0 ? true : false;
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
-        }
-        return retorno;
     }
 }

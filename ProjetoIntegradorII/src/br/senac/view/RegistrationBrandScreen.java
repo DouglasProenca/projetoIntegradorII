@@ -49,6 +49,7 @@ public class RegistrationBrandScreen extends InternalFrame {
     private ArrayList<Brand> brandList;
     private JButton btnExcluirExcel;
     private JButton btnImportExcel;
+    private MarcaDao dao = MarcaDao.getInstance();
 
     public RegistrationBrandScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 500, 400);
@@ -221,14 +222,14 @@ public class RegistrationBrandScreen extends InternalFrame {
         switch (e.getActionCommand()) {
             case "save":
                 Brand objMarca = new Brand(txtBrand.getText(), jboCountry.getSelectedItem().toString());
-                if (MarcaDao.save(objMarca)) {
+                if (dao.save(objMarca)) {
                     JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
                     this.dispose();
                 }
                 break;
             case "alter":
                 Brand objMarcaAlt = new Brand(id, txtBrand.getText(), jboCountry.getSelectedItem().toString());
-                MarcaDao.AlterBrand(objMarcaAlt);
+                dao.Alter(objMarcaAlt);
                 this.dispose();
                 break;
             case "import":
@@ -242,7 +243,10 @@ public class RegistrationBrandScreen extends InternalFrame {
                 CarregarJTable(brandList, true);
                 break;
             case "saveExcel":
-                boolean ret = MarcaDao.saveExcel(brandList);
+                boolean ret = false;
+                for (int i = 0; i < brandList.toArray().length; i++) {
+                    ret = dao.save(brandList.get(i));
+                }
                 if (ret) {
                     JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
                 }
@@ -277,10 +281,10 @@ public class RegistrationBrandScreen extends InternalFrame {
         public void changedUpdate(DocumentEvent e) {
             btnCheck.setEnabled(warn());
         }
-        
+
         private boolean warn() {
-                boolean type = txtBrand.getText().length() <= 0 ? false : true;
-                return type;
-            }
+            boolean type = txtBrand.getText().length() <= 0 ? false : true;
+            return type;
+        }
     }
 }

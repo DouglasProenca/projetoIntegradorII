@@ -10,7 +10,7 @@ public class JmenuBar extends JMenuBar {
 
     private static JmenuBar uniqueInstance;
 
-    public JmenuBar() {
+    private JmenuBar() {
         super();
         this.initComponents();
     }

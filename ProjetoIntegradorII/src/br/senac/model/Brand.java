@@ -17,7 +17,7 @@ public class Brand {
     private String user;
 
     public Brand() {
-
+        
     }
 
     public Brand(String marca, String pais) {

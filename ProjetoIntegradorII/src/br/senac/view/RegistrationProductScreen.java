@@ -1,5 +1,6 @@
 package br.senac.view;
 
+import br.senac.controller.MarcaDao;
 import br.senac.controller.ProductDAO;
 import br.senac.objects.images;
 import br.senac.model.Brand;
@@ -52,9 +53,9 @@ public class RegistrationProductScreen extends InternalFrame {
     private JScrollPane scroll;
     private ArrayList<Product> productsList;
     private JButton btnImportExcel;
-
     private int id;
     private JComboBox<String> jboBrand;
+    private MarcaDao dao = MarcaDao.getInstance();
 
     public RegistrationProductScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 700, 400);
@@ -128,15 +129,9 @@ public class RegistrationProductScreen extends InternalFrame {
     private JComboBox<String> getJboBrand() {
         jboBrand = new JComboBox<>();
         jboBrand.setBounds(410, 30, 230, 25);
-        try {
-            for (Brand p : ProductDAO.AllBrands()) {
-                String usu = p.getMarca();
-                jboBrand.addItem(usu);
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-        }
+        dao.getAll().stream().map((p) -> p.getMarca()).forEachOrdered((usu) -> {
+            jboBrand.addItem(usu);
+        });
         return jboBrand;
     }
 
@@ -302,7 +297,7 @@ public class RegistrationProductScreen extends InternalFrame {
         }
     }
 
-    class DocListner implements DocumentListener {
+    private class DocListner implements DocumentListener {
 
         @Override
         public void insertUpdate(DocumentEvent e) {

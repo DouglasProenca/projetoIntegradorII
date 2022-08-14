@@ -3,7 +3,6 @@ package br.senac.objects;
 import br.senac.view.AboutScreen;
 import br.senac.view.CalendarScreen;
 import br.senac.view.MainScreen;
-import br.senac.objects.Menu;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class JMenuHelp extends Menu {
 
     private static JMenu uniqueInstance;
 
-    public JMenuHelp() {
+    private JMenuHelp() {
         super("Ajuda",images.imagemHelp());
         this.initComponents();
     }

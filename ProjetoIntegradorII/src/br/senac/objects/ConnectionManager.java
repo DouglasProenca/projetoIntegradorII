@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
  *
  * @author Douglas
  */
-public class ConnectionManager {
+public abstract class ConnectionManager {
 
     static {
         try {

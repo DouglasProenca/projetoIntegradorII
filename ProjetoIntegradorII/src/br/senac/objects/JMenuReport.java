@@ -19,7 +19,7 @@ public class JMenuReport extends Menu {
 
     private static JMenu uniqueInstance;
 
-    public JMenuReport() {
+    private JMenuReport() {
         super("Relatório", images.imagemReport());
         initComponents();
     }

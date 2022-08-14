@@ -1,8 +1,6 @@
 package br.senac.view;
 
 import br.senac.objects.InternalFrame;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,13 +8,12 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -40,6 +37,10 @@ public class SaleScreen extends InternalFrame {
     private JLabel lblClientFilterCPF;
     private JTextField txtClientFilterCPF;
     private JButton btnClientFilterFind;
+    private final String colunasClientFilterFind[] = {"CPF", "Nome"};
+    private JTable tblClientClientFilterFind;
+    private DefaultTableModel dm;
+    private JScrollPane scrollClientFilterFind;
 
     public SaleScreen() {
         super("Nova Venda", false, true, false, true, 800, 500);
@@ -49,6 +50,7 @@ public class SaleScreen extends InternalFrame {
     private void initComponents() {
         this.setLayout(null);
         this.add(getClientFilter());
+        this.add(getClientTable());
     }
 
     private JPanel getClientFilter() {
@@ -101,13 +103,38 @@ public class SaleScreen extends InternalFrame {
     private JButton getBtnClientFilterFind() {
         btnClientFilterFind = new JButton("Pesquisar");
         btnClientFilterFind.setBounds(220, 100, 80, 25);
-        btnClientFilterFind.setEnabled(false);
         return btnClientFilterFind;
     }
 
     private JPanel getClientTable() {
         clientTable = new JPanel(null);
+        clientTable.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+        clientTable.setBounds(350, 10, 425, 150);
+        clientTable.add(getScrollClientFilterFind());
         return clientTable;
+    }
+
+    private DefaultTableModel getDm(String[] colunas) {
+        dm = new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
+            }
+        };
+        return dm;
+    }
+
+    private JTable getTblClientClientFilterFind() {
+        tblClientClientFilterFind = new JTable(getDm(colunasClientFilterFind));
+        tblClientClientFilterFind.getSelectionModel().addListSelectionListener(this);
+        tblClientClientFilterFind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        return tblClientClientFilterFind;
+    }
+
+    private JScrollPane getScrollClientFilterFind() {
+        scrollClientFilterFind = new JScrollPane(getTblClientClientFilterFind());
+        scrollClientFilterFind.setBounds(10, 10, 405, 100);
+        return scrollClientFilterFind;
     }
 
     private JPanel getProductFilter() {

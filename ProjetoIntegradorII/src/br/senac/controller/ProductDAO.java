@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Douglas
  */
-public class ProductDAO {
+public abstract class ProductDAO {
 
     public static boolean delete(int id) {
         boolean retorno = false;
@@ -144,31 +144,6 @@ public class ProductDAO {
             }
         }
         return retorno;
-    }
-
-    public static ArrayList<Brand> AllBrands() throws IOException {
-
-        ArrayList<Brand> listBrand = new ArrayList<Brand>();
-
-        try {
-
-            Connection conexao = ConnectionManager.getConexao();
-
-            // Passo 3 - Executo a instrução SQL
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("SELECT marca FROM rc_marca");
-
-            ResultSet rs = instrucaoSQL.executeQuery();
-            while (rs.next()) {
-                Brand p = new Brand();
-                p.setMarca(rs.getString("marca"));
-                listBrand.add(p);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            listBrand = null;
-        }
-        return listBrand;
     }
     
     public static ArrayList<Product> getProduct(String product) {

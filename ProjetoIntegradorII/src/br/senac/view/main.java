@@ -15,7 +15,7 @@ public class main {
             LookAndFeelScreen.initLookAndFeel();
             MainScreen t = new MainScreen();
             t.setVisible(true);
-            JMenuMenu menu = new JMenuMenu();
+            JMenuMenu menu = JMenuMenu.getInstance();
             menu.connection(ConnectionManager.getConexao());
         };
         SwingUtilities.invokeLater(r);

@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
  *
  * @author Douglas
  */
-public class images {
+public abstract class images {
 
     public static ImageIcon imagemDatabase() {
         return new ImageIcon(Thread.currentThread().getClass().getResource("/Resources/BancoDados-icon.png"));

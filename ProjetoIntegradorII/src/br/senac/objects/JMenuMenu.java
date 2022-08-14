@@ -24,9 +24,9 @@ import java.sql.Connection;
  */
 public class JMenuMenu extends Menu {
 
-    private static JMenu uniqueInstance;
+    private static JMenuMenu uniqueInstance;
 
-    public JMenuMenu() {
+    private JMenuMenu() {
         super("Menu", images.imagemMenu());
         this.initComponents();
     }
@@ -156,7 +156,7 @@ public class JMenuMenu extends Menu {
         return sale;
     }
 
-    public static synchronized JMenu getInstance() {
+    public static synchronized JMenuMenu getInstance() {
         if (uniqueInstance == null) {
             uniqueInstance = new JMenuMenu();
         }
