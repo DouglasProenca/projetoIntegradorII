@@ -1,10 +1,9 @@
 package br.senac.controller;
 
-import br.senac.model.Brand;
+import br.senac.interfaces.DAO;
 import br.senac.model.Product;
 import br.senac.view.MainScreen;
 import br.senac.objects.ConnectionManager;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,9 +15,23 @@ import javax.swing.JOptionPane;
  *
  * @author Douglas
  */
-public abstract class ProductDAO {
+public class ProductDAO implements DAO {
 
-    public static boolean delete(int id) {
+    private static ProductDAO uniqueInstance;
+
+    private ProductDAO() {
+
+    }
+
+    public static synchronized ProductDAO getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new ProductDAO();
+        }
+        return uniqueInstance;
+    }
+
+    @Override
+    public boolean delete(int id) {
         boolean retorno = false;
         try {
             Connection conexao = ConnectionManager.getConexao();
@@ -35,7 +48,8 @@ public abstract class ProductDAO {
         return retorno;
     }
 
-    public static ArrayList<Product> getAll() {
+    @Override
+    public ArrayList<Product> getAll() {
         ArrayList<Product> productList = new ArrayList<>();
 
         try {
@@ -69,7 +83,7 @@ public abstract class ProductDAO {
         return productList;
     }
 
-    public static boolean save(Product p) {
+    public boolean save(Product p) {
         boolean retorno = true;
 
         try {
@@ -93,7 +107,7 @@ public abstract class ProductDAO {
         return retorno;
     }
 
-    public static boolean AlterProduct(Product p) {
+    public boolean Alter(Product p) {
         boolean retorno = false;
 
         try {
@@ -108,7 +122,7 @@ public abstract class ProductDAO {
             instrucaoSQL.setFloat(3, p.getValor());
             instrucaoSQL.setInt(4, p.getQuantidade());
             instrucaoSQL.setInt(5, p.getId());
-            
+
             //Mando executar a instrução SQL
             int linhasAfetadas = instrucaoSQL.executeUpdate();
 
@@ -122,31 +136,8 @@ public abstract class ProductDAO {
         return retorno;
     }
 
-    public static boolean saveExcel(ArrayList<Product> p) {
-        boolean retorno = true;
-        for (int z = 0; z < p.toArray().length; z++) {
-            try {
-                Connection conexao = ConnectionManager.getConexao();
-
-                PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,(select getDate()),1)");
-
-                instrucaoSQL.setString(1, p.get(z).getNome());
-                instrucaoSQL.setString(2, p.get(z).getMarca());
-                instrucaoSQL.setFloat(3, p.get(z).getValor());
-                instrucaoSQL.setInt(4, p.get(z).getQuantidade());
-
-                instrucaoSQL.executeUpdate();
-
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                        "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-                retorno = false;
-            }
-        }
-        return retorno;
-    }
-    
-    public static ArrayList<Product> getProduct(String product) {
+    @Override
+    public ArrayList<Product> getBy(String key) {
         ArrayList<Product> productList = new ArrayList<Product>();
 
         try {
@@ -165,14 +156,14 @@ public abstract class ProductDAO {
                     + "	on m.id = p.marca\n"
                     + "where p.nome like ?");
             //Adiciono os parâmetros ao meu comando SQL
-            instrucaoSQL.setString(1, "%" + product + '%');
+            instrucaoSQL.setString(1, "%" + key + '%');
 
             ResultSet rs = instrucaoSQL.executeQuery();
 
             while (rs.next()) {
                 Product p = new Product(rs.getInt("id"), rs.getString("nome"), rs.getFloat("valor"), rs.getInt("quantidade"),
                         rs.getString("marca"), rs.getString("pais"), rs.getString("user"), rs.getDate("date"));
-                
+
                 productList.add(p);
             }
         } catch (SQLException ex) {

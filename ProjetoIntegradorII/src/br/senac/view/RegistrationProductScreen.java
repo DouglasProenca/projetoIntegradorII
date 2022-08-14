@@ -3,12 +3,10 @@ package br.senac.view;
 import br.senac.controller.MarcaDao;
 import br.senac.controller.ProductDAO;
 import br.senac.objects.images;
-import br.senac.model.Brand;
 import br.senac.model.Product;
 import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -56,6 +54,7 @@ public class RegistrationProductScreen extends InternalFrame {
     private int id;
     private JComboBox<String> jboBrand;
     private MarcaDao dao = MarcaDao.getInstance();
+    private ProductDAO daop = ProductDAO.getInstance();
 
     public RegistrationProductScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 700, 400);
@@ -238,7 +237,7 @@ public class RegistrationProductScreen extends InternalFrame {
             case "save":
                 Product objProduct = new Product(0, txtProduct.getText(), Float.parseFloat(txtValor.getText()),
                         Integer.parseInt(txtQuantidade.getText()), jboBrand.getSelectedItem().toString(), null, null, null);
-                if (ProductDAO.save(objProduct)) {
+                if (daop.save(objProduct)) {
                     JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
                     this.dispose();
                 }
@@ -246,7 +245,7 @@ public class RegistrationProductScreen extends InternalFrame {
             case "alter":
                 Product objMarcaAlt = new Product(id, txtProduct.getText(), Float.parseFloat(txtValor.getText()),
                         Integer.parseInt(txtQuantidade.getText()), jboBrand.getSelectedItem().toString(), null, "1", null);
-                ProductDAO.AlterProduct(objMarcaAlt);
+                daop.Alter(objMarcaAlt);
                 this.dispose();
                 break;
             case "import":
@@ -260,7 +259,10 @@ public class RegistrationProductScreen extends InternalFrame {
                 CarregarJTable(productsList, true);
                 break;
             case "saveExcel":
-                boolean ret = ProductDAO.saveExcel(productsList);
+                boolean ret = false;
+                for(int i = 0; i <productsList.toArray().length; i++){
+                    ret = daop.save(productsList.get(i));
+                }
                 if (ret) {
                     JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
                 }

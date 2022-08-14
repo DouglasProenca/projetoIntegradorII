@@ -43,6 +43,7 @@ public class ProductReportScreen extends InternalFrame {
     private DefaultTableModel dm;
     private JTable tblResultado;
     private JScrollPane scroll;
+    private final ProductDAO dao = ProductDAO.getInstance();
 
     public ProductReportScreen() {
         super("Relatorio Produtos", true, true, true, true, 707, 400);
@@ -156,7 +157,7 @@ public class ProductReportScreen extends InternalFrame {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
-        ProductDAO.getAll().forEach((p) -> {
+        dao.getAll().forEach((p) -> {
             modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getMarca(), p.getValor(),
                 p.getQuantidade(), sdf1.format(p.getDate()), p.getUser()});
         });
@@ -169,7 +170,7 @@ public class ProductReportScreen extends InternalFrame {
                 try {
                     int numeroLinha = tblResultado.getSelectedRow();
                     int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-                    if (ProductDAO.delete(id)) {
+                    if (dao.delete(id)) {
                         JOptionPane.showMessageDialog(this, "Produto excluído com sucesso!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(this, "Falha ao excluir Produto!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
@@ -191,7 +192,7 @@ public class ProductReportScreen extends InternalFrame {
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int choice = fc.showSaveDialog(null);
                 if (choice != 1) {
-                    Excel.ProductExcel(fc.getSelectedFile(), ProductDAO.getAll());
+                    Excel.ProductExcel(fc.getSelectedFile(), dao.getAll());
                 }
                 break;
             case "find":
@@ -201,7 +202,7 @@ public class ProductReportScreen extends InternalFrame {
                     DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
                     modelo.setRowCount(0);
                     SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
-                    ProductDAO.getProduct(txtPesquisa.getText()).forEach((p) -> {
+                    dao.getBy(txtPesquisa.getText()).forEach((p) -> {
                         modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getMarca(), p.getValor(),
                             p.getQuantidade(), sdf1.format(p.getDate()), p.getUser()});
                     });
@@ -249,7 +250,7 @@ public class ProductReportScreen extends InternalFrame {
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
                 modelo.setRowCount(0);
                 SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
-                ProductDAO.getProduct(txtPesquisa.getText()).forEach((p) -> {
+                dao.getBy(txtPesquisa.getText()).forEach((p) -> {
                     modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getMarca(), p.getValor(),
                         p.getQuantidade(), sdf1.format(p.getDate()), p.getUser()});
                 });
