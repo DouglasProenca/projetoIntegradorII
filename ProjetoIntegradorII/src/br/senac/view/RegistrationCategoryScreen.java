@@ -45,7 +45,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
     private ArrayList<Category> categoryList;
     private JButton btnExcluirExcel;
     private JButton btnImportExcel;
-    private CategoryDAO dao = CategoryDAO.getInstance();
+    private final CategoryDAO dao = CategoryDAO.getInstance();
 
     public RegistrationCategoryScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 500, 400);

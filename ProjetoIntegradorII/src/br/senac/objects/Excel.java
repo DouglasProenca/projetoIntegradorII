@@ -304,7 +304,7 @@ public class Excel {
                 Cell ce = sheet.getCell(4, z);
 
                 Product p = new Product(ca.getContents(), Float.parseFloat(cb.getContents()),
-                         Integer.parseInt(cc.getContents()), ce.getContents(), 0, cd.getContents(), null, null, null);
+                        Integer.parseInt(cc.getContents()), ce.getContents(), 0, cd.getContents(), null, null, null);
 
                 productList.add(p);
             }

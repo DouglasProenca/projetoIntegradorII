@@ -150,10 +150,11 @@ public class ProductReportScreen extends InternalFrame {
         this.add(BorderLayout.CENTER, getScrollPane());
         this.add(BorderLayout.NORTH, getPanelNorth());
         this.add(BorderLayout.EAST, getPanelWest());
-        this.CarregarJTable();
+        this.loadTable();
     }
 
-    public void CarregarJTable() {
+    @Override
+    protected void loadTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
@@ -175,7 +176,7 @@ public class ProductReportScreen extends InternalFrame {
                     } else {
                         JOptionPane.showMessageDialog(this, "Falha ao excluir Produto!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                     }
-                    this.CarregarJTable();
+                    this.loadTable();
                 } catch (HeadlessException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, ex.getMessage(),
                             "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
@@ -197,7 +198,7 @@ public class ProductReportScreen extends InternalFrame {
                 break;
             case "find":
                 if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
-                    CarregarJTable();
+                    loadTable();
                 } else {
                     DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
                     modelo.setRowCount(0);
@@ -246,7 +247,7 @@ public class ProductReportScreen extends InternalFrame {
     ) {
         if (e.getKeyCode() == Event.ENTER) {
             if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
-                CarregarJTable();
+                loadTable();
             } else {
                 ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "find");
                 actionPerformed(z);

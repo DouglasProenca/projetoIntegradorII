@@ -16,7 +16,8 @@ public class main {
             MainScreen t = new MainScreen();
             t.setVisible(true);
             JMenuMenu menu = JMenuMenu.getInstance();
-            menu.connection(ConnectionManager.getConexao());
+            ConnectionManager connectionManager1 = ConnectionManager.getInstance();
+            menu.connection(connectionManager1.getConexao());
         };
         SwingUtilities.invokeLater(r);
     }

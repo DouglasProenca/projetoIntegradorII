@@ -36,6 +36,7 @@ public class DatabaseConnectionScreen extends InternalFrame implements ActionLis
     private JTextField txtLogin;
     private JTextField txtDatabase;
     private JTextField txtServer;
+    private final ConnectionManager connectionManager = ConnectionManager.getInstance();
 
     public DatabaseConnectionScreen() {
         super("Conexão Banco de Dados", false, true, false, true, 440, 380);
@@ -184,8 +185,7 @@ public class DatabaseConnectionScreen extends InternalFrame implements ActionLis
                 System.exit(0);
                 break;
             case "test":
-                Connection conexao;
-                conexao = ConnectionManager.getConexaoTest(txtLogin.getText(), String.valueOf(txtSenha.getPassword()),
+                Connection conexao = connectionManager.getConexaoTest(txtLogin.getText(), String.valueOf(txtSenha.getPassword()),
                         txtDatabase.getText(), txtServer.getText());
                 if (conexao != null) {
                     setLblImagem(images.conectionSucess());

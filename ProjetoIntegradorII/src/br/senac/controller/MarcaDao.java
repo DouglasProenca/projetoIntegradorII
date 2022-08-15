@@ -4,7 +4,6 @@ import br.senac.interfaces.DAO;
 import br.senac.model.Brand;
 import br.senac.view.MainScreen;
 import br.senac.objects.ConnectionManager;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,9 +18,10 @@ import javax.swing.JOptionPane;
 public final class MarcaDao implements DAO {
 
     private static MarcaDao uniqueInstance;
-    
-    private MarcaDao(){
-        
+    private final ConnectionManager connectionManager = ConnectionManager.getInstance();
+
+    private MarcaDao() {
+
     }
 
     public static synchronized MarcaDao getInstance() {
@@ -35,7 +35,7 @@ public final class MarcaDao implements DAO {
     public boolean delete(int id) {
         boolean retorno = false;
         try {
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_marca WHERE id = ?");
             instrucaoSQL.setInt(1, id);
 
@@ -49,13 +49,12 @@ public final class MarcaDao implements DAO {
         return retorno;
     }
 
-    public static ArrayList<Brand> AllCountry() throws IOException {
+    public ArrayList<Brand> AllCountry() {
 
-        ArrayList<Brand> listCountry = new ArrayList<Brand>();
+        ArrayList<Brand> listCountry = new ArrayList<>();
 
         try {
-
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
 
             // Passo 3 - Executo a instrução SQL
             PreparedStatement instrucaoSQL = conexao.prepareStatement("SELECT paisNome FROM rc_pais");
@@ -78,7 +77,7 @@ public final class MarcaDao implements DAO {
         boolean retorno = false;
 
         try {
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),(select getDate()),1)");
 
@@ -100,7 +99,7 @@ public final class MarcaDao implements DAO {
         boolean retorno = false;
 
         try {
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_marca SET marca=?"
                     + ",pais=(select paisID from rc_pais where paisNome = ?)"
@@ -130,7 +129,7 @@ public final class MarcaDao implements DAO {
 
         try {
 
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
                     + "	  , m.marca\n"
@@ -157,11 +156,11 @@ public final class MarcaDao implements DAO {
 
     @Override
     public ArrayList<Brand> getBy(String key) {
-        ArrayList<Brand> listaClientes = new ArrayList<Brand>();
+        ArrayList<Brand> listaClientes = new ArrayList<>();
 
         try {
 
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
                     + "	  , m.marca\n"
                     + "	  , p.paisNome\n"

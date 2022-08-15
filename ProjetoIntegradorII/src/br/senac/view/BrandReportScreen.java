@@ -160,10 +160,11 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
         this.add(BorderLayout.CENTER, getScrollPane());
         this.add(BorderLayout.NORTH, getPanelNorth());
         this.add(BorderLayout.EAST, getPanelWest());
-        this.CarregarJTable();
+        this.loadTable();
     }
 
-    private void CarregarJTable() {
+    @Override
+    protected void loadTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
@@ -184,7 +185,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
                     } else {
                         JOptionPane.showMessageDialog(this, "Falha ao excluir marca!");
                     }
-                    this.CarregarJTable();
+                    this.loadTable();
                 } catch (HeadlessException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, ex.getMessage(),
                             "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
@@ -250,7 +251,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == Event.ENTER) {
             if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
-                CarregarJTable();
+                loadTable();
             } else {
                 ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "find");
                 actionPerformed(z);

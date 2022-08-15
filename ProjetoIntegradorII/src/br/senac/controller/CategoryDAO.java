@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 public class CategoryDAO implements DAO {
 
     private static CategoryDAO uniqueInstance;
+    private final ConnectionManager connectionManager = ConnectionManager.getInstance();
 
     private CategoryDAO() {
 
@@ -34,7 +35,7 @@ public class CategoryDAO implements DAO {
     public boolean delete(int id) {
         boolean retorno = false;
         try {
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_categoria WHERE id = ?");
             instrucaoSQL.setInt(1, id);
 
@@ -54,7 +55,7 @@ public class CategoryDAO implements DAO {
 
         try {
 
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select * from rc_categoria");
 
@@ -78,7 +79,7 @@ public class CategoryDAO implements DAO {
 
         try {
 
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select * from rc_categoria where categoria like ?");
 
             //Adiciono os parâmetros ao meu comando SQL
@@ -103,7 +104,7 @@ public class CategoryDAO implements DAO {
         boolean retorno = false;
 
         try {
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_categoria values(?,(select getDate()),1)");
 
@@ -124,7 +125,7 @@ public class CategoryDAO implements DAO {
         boolean retorno = false;
 
         try {
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_categoria SET categoria=?\n"
                     + "WHERE id = ?");

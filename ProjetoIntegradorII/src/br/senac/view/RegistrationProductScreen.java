@@ -56,9 +56,9 @@ public class RegistrationProductScreen extends InternalFrame {
     private int id;
     private JComboBox<String> jboBrand;
     private JComboBox<String> jboCategoria;
-    private MarcaDao dao = MarcaDao.getInstance();
-    private ProductDAO daop = ProductDAO.getInstance();
-    private CategoryDAO daoc = CategoryDAO.getInstance();
+    private final MarcaDao dao = MarcaDao.getInstance();
+    private final ProductDAO daop = ProductDAO.getInstance();
+    private final CategoryDAO daoc = CategoryDAO.getInstance();
 
     public RegistrationProductScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 700, 400);

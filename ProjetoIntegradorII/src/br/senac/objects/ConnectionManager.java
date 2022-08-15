@@ -1,5 +1,6 @@
 package br.senac.objects;
 
+import br.senac.interfaces.ConnectionDB;
 import br.senac.view.MainScreen;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +11,12 @@ import javax.swing.JOptionPane;
  *
  * @author Douglas
  */
-public abstract class ConnectionManager {
+public abstract class ConnectionManager implements ConnectionDB {
+
+    private static ConnectionManager uniqueInstance;
+
+    private ConnectionManager() {
+    }
 
     static {
         try {
@@ -21,7 +27,8 @@ public abstract class ConnectionManager {
         }
     }
 
-    public static Connection getConexao() {
+    @Override
+    public Connection getConexao() {
         String user = PropertiesSystem.Propriedade.getLogin();
         String password = PropertiesSystem.Propriedade.getSenha();
         String database = PropertiesSystem.Propriedade.getDatabase();
@@ -38,7 +45,8 @@ public abstract class ConnectionManager {
         return con;
     }
 
-    public static Connection getConexaoTest(String user, String password, String database, String server) {
+    @Override
+    public Connection getConexaoTest(String user, String password, String database, String server) {
         String url = "jdbc:sqlserver://127.0.0.1" + "\\" + server + ":1433;databaseName=" + database;
 
         Connection con = null;
@@ -49,5 +57,13 @@ public abstract class ConnectionManager {
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
         }
         return con;
+    }
+
+    public static synchronized ConnectionManager getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new ConnectionManager() {
+            };
+        }
+        return uniqueInstance;
     }
 }

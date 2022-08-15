@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 public class ProductDAO implements DAO {
 
     private static ProductDAO uniqueInstance;
+    private final ConnectionManager connectionManager = ConnectionManager.getInstance();
 
     private ProductDAO() {
 
@@ -32,9 +33,9 @@ public class ProductDAO implements DAO {
 
     @Override
     public boolean delete(int id) {
-        boolean retorno = false;
+        boolean retorno;
         try {
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_produto WHERE id = ?");
             instrucaoSQL.setInt(1, id);
 
@@ -54,7 +55,7 @@ public class ProductDAO implements DAO {
 
         try {
 
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select p.id\n"
                     + "                    	 , p.nome\n"
@@ -89,10 +90,10 @@ public class ProductDAO implements DAO {
     }
 
     public boolean save(Product p) {
-        boolean retorno = true;
+        boolean retorno = false;
 
         try {
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,(select getDate()),1,(select id from rc_categoria where categoria = ?))");
 
@@ -117,7 +118,7 @@ public class ProductDAO implements DAO {
         boolean retorno = false;
 
         try {
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_produto SET nome=?\n"
                     + ",marca=(select id from rc_marca where marca=?),valor=?,quantidade=?,\n"
@@ -146,11 +147,11 @@ public class ProductDAO implements DAO {
 
     @Override
     public ArrayList<Product> getBy(String key) {
-        ArrayList<Product> productList = new ArrayList<Product>();
+        ArrayList<Product> productList = new ArrayList<>();
 
         try {
 
-            Connection conexao = ConnectionManager.getConexao();
+            Connection conexao = connectionManager.getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select p.id\n"
                     + "                    	 , p.nome\n"
                     + "                     	 , m.marca\n"

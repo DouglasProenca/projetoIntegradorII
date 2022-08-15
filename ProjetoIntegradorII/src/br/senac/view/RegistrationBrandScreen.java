@@ -8,6 +8,7 @@ import br.senac.objects.InternalFrame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -49,7 +50,7 @@ public class RegistrationBrandScreen extends InternalFrame {
     private ArrayList<Brand> brandList;
     private JButton btnExcluirExcel;
     private JButton btnImportExcel;
-    private MarcaDao dao = MarcaDao.getInstance();
+    private final MarcaDao dao = MarcaDao.getInstance();
 
     public RegistrationBrandScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 500, 400);
@@ -137,17 +138,11 @@ public class RegistrationBrandScreen extends InternalFrame {
     }
 
     private JComboBox<String> getJboCountry() {
-        jboCountry = new JComboBox<String>();
+        jboCountry = new JComboBox<>();
         jboCountry.setBounds(100, 80, 350, 25);
-        try {
-            for (Brand p : MarcaDao.AllCountry()) {
-                String usu = p.getPais();
-                jboCountry.addItem(usu);
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-        }
+        dao.AllCountry().stream().map((p) -> p.getPais()).forEachOrdered((String usu) -> {
+            jboCountry.addItem(usu);
+        });
         return jboCountry;
     }
 
@@ -221,14 +216,14 @@ public class RegistrationBrandScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                Brand objMarca = new Brand(0,txtBrand.getText(), jboCountry.getSelectedItem().toString(),null,"1");
+                Brand objMarca = new Brand(0, txtBrand.getText(), jboCountry.getSelectedItem().toString(), null, "1");
                 if (dao.save(objMarca)) {
                     JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
                     this.dispose();
                 }
                 break;
             case "alter":
-                Brand objMarcaAlt = new Brand(id, txtBrand.getText(), jboCountry.getSelectedItem().toString(),null,"1");
+                Brand objMarcaAlt = new Brand(id, txtBrand.getText(), jboCountry.getSelectedItem().toString(), null, "1");
                 dao.Alter(objMarcaAlt);
                 this.dispose();
                 break;

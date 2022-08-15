@@ -12,6 +12,7 @@ import net.sf.jasperreports.swing.JRViewer;
 public class ReportScreen extends InternalFrame {
     
     private static InternalFrame uniqueInstance;
+    private JasperManager jasperManager = new JasperManager();
     
     public ReportScreen(String titulo, Object[] params) {
         super(titulo, true, true, true, true, 707, 400);
@@ -20,7 +21,7 @@ public class ReportScreen extends InternalFrame {
     }
     
     private void initComponents(Object[] params) {
-        JRViewer jr = new JRViewer(JasperManager.gerarManagetmentReport(params));
+        JRViewer jr = new JRViewer(jasperManager.gerarManagetmentReport(params));
         jr.setZoomRatio((float) 0.5);  
         this.getContentPane().add(jr, BorderLayout.CENTER);
     }

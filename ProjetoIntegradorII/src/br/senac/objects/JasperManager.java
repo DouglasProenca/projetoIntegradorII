@@ -12,16 +12,17 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 
-
 /**
  *
  * @author Douglas
  */
 public class JasperManager {
 
-    public static JasperPrint gerarManagetmentReport(Object[] params) {
+    ConnectionManager connectionManager = ConnectionManager.getInstance();
+
+    public  JasperPrint gerarManagetmentReport(Object[] params) {
         HashMap parametros = new HashMap();
-        Connection conn = ConnectionManager.getConexao();
+        Connection conn = connectionManager.getConexao();
 
         InputStream jasperFile = null;
         JasperPrint impressao = null;
@@ -29,9 +30,8 @@ public class JasperManager {
             jasperFile = new FileInputStream("src/jasper/Rel_Managent_Report_Geral.jasper");
 
             parametros.put("cabecalho", "resources/CallCenter.jpg");
-            parametros.put("data1", ((JDateChooser)params[1]).getDate());
-            parametros.put("data2", ((JDateChooser)params[3]).getDate());
-            
+            parametros.put("data1", ((JDateChooser) params[1]).getDate());
+            parametros.put("data2", ((JDateChooser) params[3]).getDate());
 
             impressao = JasperFillManager.fillReport(jasperFile, parametros, conn);
         } catch (JRException | FileNotFoundException ex) {

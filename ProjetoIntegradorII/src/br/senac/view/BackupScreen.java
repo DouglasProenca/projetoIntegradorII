@@ -25,7 +25,6 @@ import javax.swing.JTextField;
  *
  * @author Douglas
  */
-@SuppressWarnings("serial")
 public class BackupScreen extends InternalFrame implements ActionListener, KeyListener {
 
     private JLabel lblDigiteSenha;
@@ -36,6 +35,7 @@ public class BackupScreen extends InternalFrame implements ActionListener, KeyLi
     private JProgressBar progbarProgresso;
     private JLabel lblImagem;
     private JPanel painel;
+    private final ConnectionManager connectionManager = ConnectionManager.getInstance();
 
     public BackupScreen() {
         super("Backup Banco de Dados", false, true, false, true, 379, 325);
@@ -113,40 +113,35 @@ public class BackupScreen extends InternalFrame implements ActionListener, KeyLi
         return btnConfirmar;
     }
 
-    private void backup() {
-        if (String.valueOf(txtSenha.getPassword()).equals("1234")) {
-
-            JFileChooser fc = new JFileChooser();
-            int i = 0;
-            fc.setSelectedFile(new File("Backup Sistema.bak"));
-            fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            i = fc.showSaveDialog(null);
-            if (i != 1) {
-                File arquivo = fc.getSelectedFile();
-                try {
-                    Connection conexao = ConnectionManager.getConexao();
-                    PreparedStatement instrucaoSQL = conexao.prepareStatement(
-                            "BACKUP DATABASE [ibcp] TO  DISK = N'" + arquivo + "' WITH NOFORMAT, NOINIT,  NAME = N'sistema-Completo Banco de Dados Backup', SKIP, NOREWIND, NOUNLOAD,  STATS = 10");
-                    instrucaoSQL.executeUpdate();
-                    progbarProgresso.setMaximum(2);
-                    progbarProgresso.setValue(100);
-                } catch (SQLException ex) {
-                    //ex.printStackTrace();
-                    JOptionPane.showMessageDialog(this, ex.getMessage(),
-                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Senha incorreta!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     @Override
-    public void actionPerformed(ActionEvent e
-    ) {
+    public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Confirmar":
-                backup();
+                if (String.valueOf(txtSenha.getPassword()).equals("1234")) {
+
+                    JFileChooser fc = new JFileChooser();
+                    int i = 0;
+                    fc.setSelectedFile(new File("Backup Sistema.bak"));
+                    fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    i = fc.showSaveDialog(null);
+                    if (i != 1) {
+                        File arquivo = fc.getSelectedFile();
+                        try {
+                            Connection conexao = connectionManager.getConexao();
+                            PreparedStatement instrucaoSQL = conexao.prepareStatement(
+                                    "BACKUP DATABASE [ibcp] TO  DISK = N'" + arquivo + "' WITH NOFORMAT, NOINIT,  NAME = N'sistema-Completo Banco de Dados Backup', SKIP, NOREWIND, NOUNLOAD,  STATS = 10");
+                            instrucaoSQL.executeUpdate();
+                            progbarProgresso.setMaximum(2);
+                            progbarProgresso.setValue(100);
+                        } catch (SQLException ex) {
+                            //ex.printStackTrace();
+                            JOptionPane.showMessageDialog(this, ex.getMessage(),
+                                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Senha incorreta!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                }
                 break;
             default:
                 this.dispose();
@@ -155,22 +150,11 @@ public class BackupScreen extends InternalFrame implements ActionListener, KeyLi
     }
 
     @Override
-    public void keyTyped(KeyEvent e
-    ) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public void keyPressed(KeyEvent e
     ) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            backup();
+            ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Confirmar");
+            actionPerformed(z);
         }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e
-    ) {
-        // TODO Auto-generated method stub
     }
 }

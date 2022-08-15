@@ -10,7 +10,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public abstract class InternalFrame extends JInternalFrame implements ActionListener, MouseListener, KeyListener,ListSelectionListener {
+public abstract class InternalFrame extends JInternalFrame implements ActionListener, MouseListener, KeyListener, ListSelectionListener {
 
     public InternalFrame(String titulo, boolean resizable, boolean closabe, boolean maximizable, boolean iconifiable,
             int width, int height) {
@@ -57,5 +57,12 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
+    }
+
+    /**
+     * @author Douglas Proença
+     * load a table
+     */
+    protected void loadTable() {
     }
 }
