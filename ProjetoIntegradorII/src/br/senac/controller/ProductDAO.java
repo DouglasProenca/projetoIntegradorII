@@ -57,21 +57,26 @@ public class ProductDAO implements DAO {
             Connection conexao = ConnectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select p.id\n"
-                    + "	 , p.nome\n"
-                    + "	 , m.marca\n"
-                    + "	 , p.valor\n"
-                    + "	 , p.quantidade\n"
-                    + "	 , p.[date]\n"
-                    + "	 , p.[user]\n"
-                    + "	 , m.pais\n"
-                    + "from rc_produto p\n"
-                    + "inner join rc_marca m\n"
-                    + "	on m.id = p.marca");
+                    + "                    	 , p.nome\n"
+                    + "                     	 , m.marca\n"
+                    + "                     	 , p.valor\n"
+                    + "                     	 , p.quantidade\n"
+                    + "                     	 , p.[date]\n"
+                    + "                     	 , p.[user]\n"
+                    + "                    	 , m.pais\n"
+                    + "                      , c.categoria\n"
+                    + "                    from rc_produto p\n"
+                    + "                    inner join rc_marca m\n"
+                    + "                     	on m.id = p.marca\n"
+                    + "                     inner join rc_categoria c\n"
+                    + "                      on p.categoria = c.id");
 
             ResultSet rs = instrucaoSQL.executeQuery();
             while (rs.next()) {
-                Product p = new Product(rs.getInt("id"), rs.getString("nome"), rs.getFloat("valor"), rs.getInt("quantidade"),
-                        rs.getString("marca"), rs.getString("pais"), rs.getString("user"), rs.getDate("date"));
+                Product p = new Product(rs.getString("nome"), rs.getFloat("valor"),
+                        rs.getInt("quantidade"), rs.getString("categoria"), rs.getInt("id"),
+                        rs.getString("marca"), rs.getString("pais"), rs.getDate("date"),
+                        rs.getString("user"));
 
                 productList.add(p);
             }
@@ -89,12 +94,13 @@ public class ProductDAO implements DAO {
         try {
             Connection conexao = ConnectionManager.getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,(select getDate()),1)");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,(select getDate()),1,(select id from rc_categoria where categoria = ?))");
 
             instrucaoSQL.setString(1, p.getNome());
             instrucaoSQL.setString(2, p.getMarca());
             instrucaoSQL.setFloat(3, p.getValor());
             instrucaoSQL.setInt(4, p.getQuantidade());
+            instrucaoSQL.setString(5, p.getCategoria());
 
             instrucaoSQL.executeUpdate();
 
@@ -113,15 +119,17 @@ public class ProductDAO implements DAO {
         try {
             Connection conexao = ConnectionManager.getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_produto SET nome=?"
-                    + ",marca=(select id from rc_marca where marca=?),valor=?,quantidade=?"
-                    + " WHERE id = ?");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_produto SET nome=?\n"
+                    + ",marca=(select id from rc_marca where marca=?),valor=?,quantidade=?,\n"
+                    + "categoria = (select id from rc_categoria where categoria=?)\n"
+                    + "WHERE id = ?");
 
             instrucaoSQL.setString(1, p.getNome());
             instrucaoSQL.setString(2, p.getMarca());
             instrucaoSQL.setFloat(3, p.getValor());
             instrucaoSQL.setInt(4, p.getQuantidade());
-            instrucaoSQL.setInt(5, p.getId());
+            instrucaoSQL.setString(5, p.getCategoria());
+            instrucaoSQL.setInt(6, p.getId());
 
             //Mando executar a instrução SQL
             int linhasAfetadas = instrucaoSQL.executeUpdate();
@@ -161,8 +169,10 @@ public class ProductDAO implements DAO {
             ResultSet rs = instrucaoSQL.executeQuery();
 
             while (rs.next()) {
-                Product p = new Product(rs.getInt("id"), rs.getString("nome"), rs.getFloat("valor"), rs.getInt("quantidade"),
-                        rs.getString("marca"), rs.getString("pais"), rs.getString("user"), rs.getDate("date"));
+                Product p = new Product(rs.getString("nome"), rs.getFloat("valor"),
+                        rs.getInt("Quantidade"), rs.getString("categoria"), rs.getInt("id"),
+                        rs.getString("marca"), rs.getString("pais"), rs.getDate("date"),
+                        rs.getString("user"));
 
                 productList.add(p);
             }

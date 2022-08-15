@@ -1,6 +1,7 @@
 package br.senac.objects;
 
 import br.senac.view.BrandReportScreen;
+import br.senac.view.CategoryReportScreen;
 import br.senac.view.MainScreen;
 import br.senac.view.ProductReportScreen;
 import br.senac.view.ReportScreen;
@@ -18,6 +19,7 @@ import javax.swing.JSeparator;
 public class JMenuReport extends Menu {
 
     private static JMenu uniqueInstance;
+    private JMenuItem category;
 
     private JMenuReport() {
         super("Relatório", images.imagemReport());
@@ -27,6 +29,7 @@ public class JMenuReport extends Menu {
     private void initComponents() {
         this.setMnemonic('R');
         this.add(getBrand());
+        this.add(getCategory());
         this.add(getProduct());
         this.add(getMenuReport());
     }
@@ -39,6 +42,13 @@ public class JMenuReport extends Menu {
         report.add(new JSeparator());
         report.add(getManagementRep());
         return report;
+    }
+
+    private JMenuItem getCategory() {
+        category = new JMenuItem("Categoria", images.category());
+        category.addActionListener(this);
+        category.setActionCommand("category");
+        return category;
     }
 
     private JMenuItem getSyntheticRep() {
@@ -119,6 +129,14 @@ public class JMenuReport extends Menu {
             case "analyticalRep":
                 break;
             case "syntheticRep":
+                break;
+            case "category":
+                CategoryReportScreen ct = new CategoryReportScreen();
+                MainScreen.desktopPane.add(ct);
+                MainScreen.jToolBar.add(ct.getDesktopIcon());
+                ct.setVisible(true);
+                MainScreen.centralizaForm(ct);
+                ct.addInternalFrameListener(this);
                 break;
         }
     }

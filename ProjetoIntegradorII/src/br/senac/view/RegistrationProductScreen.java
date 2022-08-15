@@ -1,5 +1,6 @@
 package br.senac.view;
 
+import br.senac.controller.CategoryDAO;
 import br.senac.controller.MarcaDao;
 import br.senac.controller.ProductDAO;
 import br.senac.objects.images;
@@ -38,6 +39,7 @@ public class RegistrationProductScreen extends InternalFrame {
     private JTextField txtProduct;
     private JLabel lblMarca;
     private JLabel lblValor;
+    private JLabel lblCategoria;
     private JLabel lblQuantidade;
     private JTextField txtValor;
     private JTextField txtQuantidade;
@@ -45,7 +47,7 @@ public class RegistrationProductScreen extends InternalFrame {
     private JButton btnClose;
     private JButton btnCheckExcel;
     private JButton btnExcluirExcel;
-    private final String colunas[] = {"Produto", "Valor", "Marca", "Quantidade"};
+    private final String colunas[] = {"Produto", "Valor", "Marca", "Categoria", "Quantidade"};
     private JTable tblExcel;
     private DefaultTableModel dm;
     private JScrollPane scroll;
@@ -53,8 +55,10 @@ public class RegistrationProductScreen extends InternalFrame {
     private JButton btnImportExcel;
     private int id;
     private JComboBox<String> jboBrand;
+    private JComboBox<String> jboCategoria;
     private MarcaDao dao = MarcaDao.getInstance();
     private ProductDAO daop = ProductDAO.getInstance();
+    private CategoryDAO daoc = CategoryDAO.getInstance();
 
     public RegistrationProductScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 700, 400);
@@ -100,6 +104,8 @@ public class RegistrationProductScreen extends InternalFrame {
         panelCadastro.add(getTxtQuantidade());
         panelCadastro.add(getBtnCheck(formato));
         panelCadastro.add(getBtnClose());
+        panelCadastro.add(getLblCategoria());
+        panelCadastro.add(getJboCategoria());
         return panelCadastro;
     }
 
@@ -134,34 +140,49 @@ public class RegistrationProductScreen extends InternalFrame {
         return jboBrand;
     }
 
+    private JComboBox<String> getJboCategoria() {
+        jboCategoria = new JComboBox<>();
+        jboCategoria.setBounds(100, 100, 230, 25);
+        daoc.getAll().stream().map((p) -> p.getCategoria()).forEachOrdered((usu) -> {
+            jboCategoria.addItem(usu);
+        });
+        return jboCategoria;
+    }
+
     private JLabel getLblMarca() {
         lblMarca = new JLabel("Marca:");
         lblMarca.setBounds(350, 30, 50, 25);
         return lblMarca;
     }
 
+    private JLabel getLblCategoria() {
+        lblCategoria = new JLabel("Categoria:");
+        lblCategoria.setBounds(25, 100, 90, 25);
+        return lblCategoria;
+    }
+
     private JLabel getLblValor() {
         lblValor = new JLabel("Valor:");
-        lblValor.setBounds(25, 100, 50, 25);
+        lblValor.setBounds(340, 100, 90, 25);
         return lblValor;
     }
 
     private JTextField getTxtValor() {
         txtValor = new JTextField();
-        txtValor.setBounds(100, 100, 230, 25);
+        txtValor.setBounds(410, 100, 230, 25);
         txtValor.getDocument().addDocumentListener(new DocListner());
         return txtValor;
     }
 
     private JLabel getLblQuantidade() {
         lblQuantidade = new JLabel("Quantidade:");
-        lblQuantidade.setBounds(340, 100, 90, 25);
+        lblQuantidade.setBounds(25, 180, 90, 25);
         return lblQuantidade;
     }
 
     private JTextField getTxtQuantidade() {
         txtQuantidade = new JTextField();
-        txtQuantidade.setBounds(410, 100, 230, 25);
+        txtQuantidade.setBounds(100, 180, 230, 25);
         txtQuantidade.getDocument().addDocumentListener(new DocListner());
         return txtQuantidade;
     }
@@ -235,16 +256,16 @@ public class RegistrationProductScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                Product objProduct = new Product(0, txtProduct.getText(), Float.parseFloat(txtValor.getText()),
-                        Integer.parseInt(txtQuantidade.getText()), jboBrand.getSelectedItem().toString(), null, null, null);
+                Product objProduct = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText())
+                        , jboCategoria.getSelectedItem().toString(), 0, jboBrand.getSelectedItem().toString(), null, null, null);
                 if (daop.save(objProduct)) {
                     JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
                     this.dispose();
                 }
                 break;
             case "alter":
-                Product objMarcaAlt = new Product(id, txtProduct.getText(), Float.parseFloat(txtValor.getText()),
-                        Integer.parseInt(txtQuantidade.getText()), jboBrand.getSelectedItem().toString(), null, "1", null);
+                Product objMarcaAlt = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText())
+                        , jboCategoria.getSelectedItem().toString(), id, jboBrand.getSelectedItem().toString(), null, null, null);
                 daop.Alter(objMarcaAlt);
                 this.dispose();
                 break;
@@ -260,7 +281,7 @@ public class RegistrationProductScreen extends InternalFrame {
                 break;
             case "saveExcel":
                 boolean ret = false;
-                for(int i = 0; i <productsList.toArray().length; i++){
+                for (int i = 0; i < productsList.toArray().length; i++) {
                     ret = daop.save(productsList.get(i));
                 }
                 if (ret) {

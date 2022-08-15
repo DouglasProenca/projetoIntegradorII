@@ -6,7 +6,7 @@ import java.util.Date;
  *
  * @author Douglas
  */
-public class Product extends Brand {
+public class Product extends Category {
 
     private String nome;
     private float valor;
@@ -16,8 +16,8 @@ public class Product extends Brand {
         super();
     }
 
-    public Product(int id, String nome, float valor, int quantidade, String marca,String pais, String user, Date Data) {
-        super(id, marca, pais, Data, user);
+    public Product(String nome, float valor, int quantidade, String Categoria, int id, String marca, String pais, Date date, String user) {
+        super(Categoria, id, marca, pais, date, user);
         this.nome = nome;
         this.valor = valor;
         this.quantidade = quantidade;

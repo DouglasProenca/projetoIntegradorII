@@ -2,8 +2,6 @@ package br.senac.model;
 
 import java.util.Date;
 
-
-
 /**
  *
  * @author Douglas
@@ -17,12 +15,7 @@ public class Brand {
     private String user;
 
     public Brand() {
-        
-    }
 
-    public Brand(String marca, String pais) {
-        this.marca = marca;
-        this.pais = pais;
     }
 
     public Brand(int id, String marca, String pais, Date date, String user) {
@@ -31,12 +24,6 @@ public class Brand {
         this.pais = pais;
         this.date = date;
         this.user = user;
-    }
-
-    public Brand(int id, String marca, String pais) {
-        this.id = id;
-        this.marca = marca;
-        this.pais = pais;
     }
 
     public int getId() {

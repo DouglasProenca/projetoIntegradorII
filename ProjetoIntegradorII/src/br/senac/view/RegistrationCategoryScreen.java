@@ -1,16 +1,14 @@
 package br.senac.view;
 
-import br.senac.controller.MarcaDao;
+import br.senac.controller.CategoryDAO;
 import br.senac.objects.images;
-import br.senac.model.Brand;
+import br.senac.model.Category;
 import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,39 +27,36 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Douglas
  */
-public class RegistrationBrandScreen extends InternalFrame {
+public class RegistrationCategoryScreen extends InternalFrame {
 
     private JTabbedPane painelAbas;
     private JLabel lblBrand;
     private JPanel panelExcel;
-    private JLabel lblpais;
     private JButton btnCheck;
     private JButton btnClose;
     private int id;
     private JTextField txtBrand;
-    private final String colunas[] = {"Marca", "Pais"};
-    private JComboBox<String> jboCountry;
+    private final String colunas[] = {"Categoria"};
     private JPanel panel;
     private DefaultTableModel dm;
     private JTable tblExcel;
     private JScrollPane scroll;
     private JButton btnCheckExcel;
-    private ArrayList<Brand> brandList;
+    private ArrayList<Category> categoryList;
     private JButton btnExcluirExcel;
     private JButton btnImportExcel;
-    private MarcaDao dao = MarcaDao.getInstance();
+    private CategoryDAO dao = CategoryDAO.getInstance();
 
-    public RegistrationBrandScreen(String formato) {
+    public RegistrationCategoryScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 500, 400);
         InitComponents(formato);
     }
 
-    public RegistrationBrandScreen(Brand brand, String formato) {
+    public RegistrationCategoryScreen(Category category, String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 500, 400);
         InitComponents(formato);
-        this.txtBrand.setText(brand.getMarca());
-        this.jboCountry.setSelectedItem(brand.getPais());
-        this.id = brand.getId();
+        this.txtBrand.setText(category.getCategoria());
+        this.id = category.getId();
     }
 
     private void InitComponents(String formato) {
@@ -113,11 +108,9 @@ public class RegistrationBrandScreen extends InternalFrame {
 
     private JPanel getPanelCadastro(String formato) {
         panel = new JPanel(null);
-        panel.setBorder(BorderFactory.createTitledBorder(formato.equals("Creation") ? "Cadastrar Marca" : "Alterar Marca"));
+        panel.setBorder(BorderFactory.createTitledBorder(formato.equals("Creation") ? "Cadastrar Categoria" : "Alterar Categoria"));
         panel.add(getTxtBrand());
         panel.add(getLblBrand());
-        panel.add(getJboCountry());
-        panel.add(getLblpais());
         panel.add(getBtnClose());
         panel.add(getBtnCheck(formato));
         return panel;
@@ -125,36 +118,15 @@ public class RegistrationBrandScreen extends InternalFrame {
 
     private JTextField getTxtBrand() {
         txtBrand = new JTextField();
-        txtBrand.setBounds(100, 30, 350, 25);
+        txtBrand.setBounds(120, 30, 330, 25);
         txtBrand.getDocument().addDocumentListener(new DocListner());
         return txtBrand;
     }
 
     private JLabel getLblBrand() {
-        lblBrand = new JLabel("Marca:");
-        lblBrand.setBounds(25, 30, 40, 25);
+        lblBrand = new JLabel("Categoria:");
+        lblBrand.setBounds(25, 30, 70, 25);
         return lblBrand;
-    }
-
-    private JComboBox<String> getJboCountry() {
-        jboCountry = new JComboBox<String>();
-        jboCountry.setBounds(100, 80, 350, 25);
-        try {
-            for (Brand p : MarcaDao.AllCountry()) {
-                String usu = p.getPais();
-                jboCountry.addItem(usu);
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-        }
-        return jboCountry;
-    }
-
-    private JLabel getLblpais() {
-        lblpais = new JLabel("Pais:");
-        lblpais.setBounds(25, 80, 230, 25);
-        return lblpais;
     }
 
     private JButton getBtnClose() {
@@ -199,12 +171,12 @@ public class RegistrationBrandScreen extends InternalFrame {
         return btnImportExcel;
     }
 
-    private void CarregarJTable(ArrayList<Brand> productsList, boolean excluir) {
+    private void CarregarJTable(ArrayList<Category> productsList, boolean excluir) {
         if (excluir) {
             int row = tblExcel.getSelectedRow();
             String nome = tblExcel.getModel().getValueAt(row, 0).toString();
             for (int i = 0; i < productsList.toArray().length; i++) {
-                if (productsList.get(i).getMarca().equals(nome)) {
+                if (productsList.get(i).getCategoria().equals(nome)) {
                     productsList.remove(i);
                     break;
                 }
@@ -213,7 +185,7 @@ public class RegistrationBrandScreen extends InternalFrame {
         DefaultTableModel modelo = (DefaultTableModel) tblExcel.getModel();
         modelo.setRowCount(0);
         productsList.forEach((p) -> {
-            modelo.addRow(new Object[]{p.getMarca(), p.getPais()});
+            modelo.addRow(new Object[]{p.getCategoria()});
         });
     }
 
@@ -221,14 +193,14 @@ public class RegistrationBrandScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                Brand objMarca = new Brand(0,txtBrand.getText(), jboCountry.getSelectedItem().toString(),null,"1");
+                Category objMarca = new Category(txtBrand.getText(), 0, null, null, null, "1");
                 if (dao.save(objMarca)) {
-                    JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
+                    JOptionPane.showMessageDialog(this, "Categoria Salva Com Sucesso!");
                     this.dispose();
                 }
                 break;
             case "alter":
-                Brand objMarcaAlt = new Brand(id, txtBrand.getText(), jboCountry.getSelectedItem().toString(),null,"1");
+                Category objMarcaAlt = new Category(txtBrand.getText(), id, null, null, null, "1");
                 dao.Alter(objMarcaAlt);
                 this.dispose();
                 break;
@@ -236,16 +208,16 @@ public class RegistrationBrandScreen extends InternalFrame {
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 fc.showOpenDialog(null);
-                brandList = Excel.importBrand(fc.getSelectedFile());
-                CarregarJTable(brandList, false);
+                categoryList = Excel.importCategory(fc.getSelectedFile());
+                CarregarJTable(categoryList, false);
                 break;
             case "delete":
-                CarregarJTable(brandList, true);
+                CarregarJTable(categoryList, true);
                 break;
             case "saveExcel":
                 boolean ret = false;
-                for (int i = 0; i < brandList.toArray().length; i++) {
-                    ret = dao.save(brandList.get(i));
+                for (int i = 0; i < categoryList.toArray().length; i++) {
+                    ret = dao.save(categoryList.get(i));
                 }
                 if (ret) {
                     JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");

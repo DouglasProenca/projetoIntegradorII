@@ -103,4 +103,8 @@ public abstract class images {
     public static ImageIcon backup() {
         return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Backup-icon.png"));
     }
+
+    public static ImageIcon category() {
+        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/sql-join-right-icon.png"));
+    }
 }

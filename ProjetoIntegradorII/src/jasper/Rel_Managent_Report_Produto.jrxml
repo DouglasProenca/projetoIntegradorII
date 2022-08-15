@@ -23,7 +23,7 @@ group by m.marca
 order by valor desc]]>
 	</queryString>
 	<field name="marca" class="java.lang.String"/>
-	<field name="valor" class="java.math.BigDecimal"/>
+	<field name="valor" class="java.lang.Double"/>
 	<columnFooter>
 		<band height="168">
 			<pieChart>
@@ -36,7 +36,7 @@ order by valor desc]]>
 				<pieDataset>
 					<keyExpression><![CDATA[$F{marca}]]></keyExpression>
 					<valueExpression><![CDATA[$F{valor}]]></valueExpression>
-					<labelExpression><![CDATA[$F{marca}]]></labelExpression>
+					<labelExpression><![CDATA[new java.text.DecimalFormat("R$ #,##0.00").format(Double.valueOf($F{valor}))]]></labelExpression>
 				</pieDataset>
 				<piePlot>
 					<plot>

@@ -1,8 +1,8 @@
 package br.senac.view;
 
-import br.senac.controller.ProductDAO;
+import br.senac.controller.CategoryDAO;
 import br.senac.objects.Excel;
-import br.senac.model.Product;
+import br.senac.model.Category;
 import br.senac.objects.InternalFrame;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 
@@ -27,12 +28,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class ProductReportScreen extends InternalFrame {
+public class CategoryReportScreen extends InternalFrame implements ListSelectionListener, KeyListener {
 
     private final JLabel lblNome = new JLabel("Nome:");
-    private final String colunas[] = {"ID", "Produto", "Marca", "Categoria", "Valor", "Quantidade", "Data", "Usuario"};
+    private final String colunas[] = {"ID", "Categoria", "Data", "Usuario"};
     private JPanel panelNorth;
     private JPanel panelWest;
     private JTextField txtPesquisa;
@@ -43,10 +45,18 @@ public class ProductReportScreen extends InternalFrame {
     private DefaultTableModel dm;
     private JTable tblResultado;
     private JScrollPane scroll;
-    private final ProductDAO dao = ProductDAO.getInstance();
+    private static InternalFrame uniqueInstance;
+    private final CategoryDAO dao = CategoryDAO.getInstance();
 
-    public ProductReportScreen() {
-        super("Relatorio Produtos", true, true, true, true, 707, 400);
+    public static synchronized InternalFrame getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new CategoryReportScreen();
+        }
+        return uniqueInstance;
+    }
+
+    public CategoryReportScreen() {
+        super("Relatorio Categorias", true, true, true, true, 707, 400);
         initComponents();
     }
 
@@ -88,7 +98,7 @@ public class ProductReportScreen extends InternalFrame {
             txtPesquisa = new JTextField();
             txtPesquisa.setPreferredSize(new Dimension(200, 30));
             txtPesquisa.addKeyListener(this);
-            txtPesquisa.setToolTipText("Procure por produto ou digite Refresh, R e tecle enter para atualizar a tabela.");
+            txtPesquisa.setToolTipText("Procure por categoria ou digite Refresh, R e tecle enter para atualizar a tabela.");
         }
         return txtPesquisa;
     }
@@ -153,13 +163,12 @@ public class ProductReportScreen extends InternalFrame {
         this.CarregarJTable();
     }
 
-    public void CarregarJTable() {
+    private void CarregarJTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
         dao.getAll().forEach((p) -> {
-            modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getMarca(), p.getCategoria(), p.getValor(),
-                p.getQuantidade(), sdf1.format(p.getDate()), p.getUser()});
+            modelo.addRow(new Object[]{p.getId(), p.getCategoria(), sdf1.format(p.getDate()), p.getUser()});
         });
     }
 
@@ -171,9 +180,9 @@ public class ProductReportScreen extends InternalFrame {
                     int numeroLinha = tblResultado.getSelectedRow();
                     int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
                     if (dao.delete(id)) {
-                        JOptionPane.showMessageDialog(this, "Produto excluído com sucesso!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Categoria excluída com sucesso!");
                     } else {
-                        JOptionPane.showMessageDialog(this, "Falha ao excluir Produto!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Falha ao excluir Categoria!");
                     }
                     this.CarregarJTable();
                 } catch (HeadlessException | NumberFormatException ex) {
@@ -182,7 +191,7 @@ public class ProductReportScreen extends InternalFrame {
                 }
                 break;
             case "Incluir":
-                RegistrationProductScreen rbs = new RegistrationProductScreen("Creation");
+                RegistrationCategoryScreen rbs = new RegistrationCategoryScreen("Creation");
                 getParent().add(rbs);
                 rbs.setVisible(true);
                 MainScreen.centralizaForm(rbs);
@@ -192,22 +201,17 @@ public class ProductReportScreen extends InternalFrame {
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int choice = fc.showSaveDialog(null);
                 if (choice != 1) {
-                    Excel.ProductExcel(fc.getSelectedFile(), dao.getAll());
+                    Excel.CategoryExcel(fc.getSelectedFile(), dao.getAll());
                 }
                 break;
             case "find":
-                if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
-                    CarregarJTable();
-                } else {
-                    DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
-                    modelo.setRowCount(0);
-                    SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
-                    dao.getBy(txtPesquisa.getText()).forEach((p) -> {
-                        modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getMarca(), p.getCategoria(), p.getValor(),
-                            p.getQuantidade(), sdf1.format(p.getDate()), p.getUser()});
-                    });
-                    break;
-                }
+                DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+                modelo.setRowCount(0);
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
+                dao.getBy(txtPesquisa.getText()).forEach((p) -> {
+                    modelo.addRow(new Object[]{p.getId(), p.getCategoria(), sdf1.format(p.getDate()), p.getUser()});
+                });
+                break;
         }
     }
 
@@ -217,16 +221,12 @@ public class ProductReportScreen extends InternalFrame {
             int numeroLinha = tblResultado.getSelectedRow();
 
             int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-            String product_name = tblResultado.getModel().getValueAt(numeroLinha, 1).toString();
-            String brand = tblResultado.getModel().getValueAt(numeroLinha, 2).toString();
-            String categoria = tblResultado.getModel().getValueAt(numeroLinha, 3).toString();
-            String valor = tblResultado.getModel().getValueAt(numeroLinha, 4).toString();
-            String quantidade = tblResultado.getModel().getValueAt(numeroLinha, 5).toString();
-            String user = tblResultado.getModel().getValueAt(numeroLinha, 6).toString();
+            String category = tblResultado.getModel().getValueAt(numeroLinha, 1).toString();
+            String user = tblResultado.getModel().getValueAt(numeroLinha, 3).toString();
 
-            Product product = new Product(product_name, Float.parseFloat(valor), Integer.parseInt(quantidade), categoria, id,
-                    brand, null, null, user);
-            RegistrationProductScreen rbs = new RegistrationProductScreen(product, "Alteration");
+            Category brand = new Category(category, id, null, null, null, user);
+
+            RegistrationCategoryScreen rbs = new RegistrationCategoryScreen(brand, "Alteration");
             getParent().add(rbs);
             rbs.setVisible(true);
             MainScreen.centralizaForm(rbs);
@@ -242,18 +242,16 @@ public class ProductReportScreen extends InternalFrame {
     }
 
     @Override
-    public void keyPressed(KeyEvent e
-    ) {
+    public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == Event.ENTER) {
             if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
                 CarregarJTable();
             } else {
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
                 modelo.setRowCount(0);
-                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
                 dao.getBy(txtPesquisa.getText()).forEach((p) -> {
-                    modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getMarca(),p.getCategoria(), p.getValor(),
-                        p.getQuantidade(), sdf1.format(p.getDate()), p.getUser()});
+                    modelo.addRow(new Object[]{p.getId(), p.getCategoria(), sdf1.format(p.getDate()), p.getUser()});
                 });
             }
         }
