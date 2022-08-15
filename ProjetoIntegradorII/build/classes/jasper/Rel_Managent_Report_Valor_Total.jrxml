@@ -17,7 +17,7 @@
 		<![CDATA[select format(sum(valor),' R$ #,##0.00','pt-br') valor
 from rc_produto]]>
 	</queryString>
-	<field name="valor" class="java.lang.Double"/>
+	<field name="valor" class="java.lang.String"/>
 	<title>
 		<band height="28">
 			<staticText>
