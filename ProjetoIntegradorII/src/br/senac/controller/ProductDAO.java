@@ -152,17 +152,20 @@ public class ProductDAO implements DAO {
 
             Connection conexao = ConnectionManager.getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select p.id\n"
-                    + "	 , p.nome\n"
-                    + "	 , m.marca\n"
-                    + "	 , p.valor\n"
-                    + "	 , p.quantidade\n"
-                    + "	 , p.[date]\n"
-                    + "	 , p.[user]\n"
-                    + "	 , m.pais\n"
-                    + "from rc_produto p\n"
-                    + "inner join rc_marca m\n"
-                    + "	on m.id = p.marca\n"
-                    + "where p.nome like ?");
+                    + "                    	 , p.nome\n"
+                    + "                     	 , m.marca\n"
+                    + "                     	 , p.valor\n"
+                    + "                     	 , p.quantidade\n"
+                    + "                     	 , p.[date]\n"
+                    + "                     	 , p.[user]\n"
+                    + "                    	 , m.pais\n"
+                    + "                      , c.categoria\n"
+                    + "                    from rc_produto p\n"
+                    + "                    inner join rc_marca m\n"
+                    + "                     	on m.id = p.marca\n"
+                    + "                     inner join rc_categoria c\n"
+                    + "                      on p.categoria = c.id"
+                    + "                     where p.nome like ?");
             //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, "%" + key + '%');
 

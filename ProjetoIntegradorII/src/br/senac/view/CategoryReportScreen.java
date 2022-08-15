@@ -247,12 +247,8 @@ public class CategoryReportScreen extends InternalFrame implements ListSelection
             if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
                 CarregarJTable();
             } else {
-                DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
-                modelo.setRowCount(0);
-                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
-                dao.getBy(txtPesquisa.getText()).forEach((p) -> {
-                    modelo.addRow(new Object[]{p.getId(), p.getCategoria(), sdf1.format(p.getDate()), p.getUser()});
-                });
+                ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "find");
+                actionPerformed(z);
             }
         }
     }

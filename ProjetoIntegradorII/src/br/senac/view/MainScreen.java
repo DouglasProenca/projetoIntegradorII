@@ -1,10 +1,8 @@
 package br.senac.view;
 
-
 import br.senac.objects.JmenuBar;
 import br.senac.objects.images;
 import br.senac.objects.DesktopPane;
-import br.senac.objects.MenuPopup;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -50,7 +48,6 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     private JDesktopPane getDesktopPane() {
         desktopPane = new DesktopPane(new Dimension(this.getSize().width, this.getSize().height - 40));
-        desktopPane.add(MenuPopup.getInstance());
         return desktopPane;
     }
 

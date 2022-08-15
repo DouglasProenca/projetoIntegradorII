@@ -248,13 +248,8 @@ public class ProductReportScreen extends InternalFrame {
             if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
                 CarregarJTable();
             } else {
-                DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
-                modelo.setRowCount(0);
-                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/mm/yyyy"); //você pode usar outras máscaras
-                dao.getBy(txtPesquisa.getText()).forEach((p) -> {
-                    modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getMarca(),p.getCategoria(), p.getValor(),
-                        p.getQuantidade(), sdf1.format(p.getDate()), p.getUser()});
-                });
+                ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "find");
+                actionPerformed(z);
             }
         }
     }
