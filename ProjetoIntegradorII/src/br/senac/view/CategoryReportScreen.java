@@ -47,6 +47,7 @@ public class CategoryReportScreen extends InternalFrame implements ListSelection
     private JScrollPane scroll;
     private static InternalFrame uniqueInstance;
     private final CategoryDAO dao = CategoryDAO.getInstance();
+    private final Excel excel = new Excel();
 
     public static synchronized InternalFrame getInstance() {
         if (uniqueInstance == null) {
@@ -202,7 +203,7 @@ public class CategoryReportScreen extends InternalFrame implements ListSelection
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int choice = fc.showSaveDialog(null);
                 if (choice != 1) {
-                    Excel.CategoryExcel(fc.getSelectedFile(), dao.getAll());
+                    excel.CategoryExcel(fc.getSelectedFile(), dao.getAll());
                 }
                 break;
             case "find":

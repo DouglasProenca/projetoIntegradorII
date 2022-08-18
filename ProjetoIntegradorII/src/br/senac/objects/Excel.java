@@ -7,6 +7,8 @@ import br.senac.view.MainScreen;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import jxl.Cell;
 import jxl.Sheet;
@@ -25,20 +27,37 @@ import jxl.write.WriteException;
  */
 public class Excel {
 
-    public static boolean BrandExcel(File arquivo, ArrayList<Brand> lista) {
-        boolean status = true;
-        try {
+    private WritableFont fontbol;
+    private WritableCellFormat cellFormat;
 
-            WritableFont fontbol = new WritableFont(WritableFont.ARIAL, 10);
+    private WritableFont getFontbol() {
+        fontbol = new WritableFont(WritableFont.ARIAL, 10);
+        try {
             fontbol.setBoldStyle(WritableFont.BOLD);
-            WritableCellFormat cellFormat = new WritableCellFormat(fontbol);
-            jxl.format.Colour bckcolor = jxl.format.Colour.AQUA;
+        } catch (WriteException ex) {
+            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return fontbol;
+    }
+
+    private WritableCellFormat getCellFormat() {
+        cellFormat = new WritableCellFormat(getFontbol());
+        try {
             cellFormat.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
             cellFormat.setVerticalAlignment(jxl.format.VerticalAlignment.JUSTIFY);
+            jxl.format.Colour bckcolor = jxl.format.Colour.AQUA;
+            cellFormat.setBackground(bckcolor);
+        } catch (WriteException ex) {
+            Logger.getLogger(Excel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cellFormat;
+    }
+
+    public boolean BrandExcel(File arquivo, ArrayList<Brand> lista) {
+        boolean status = true;
+        try {
             WritableCellFormat cellFormatt = new WritableCellFormat();
             cellFormatt.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
-
-            cellFormat.setBackground(bckcolor);
 
             //Instaciando a classe que gera o novo arquivo do excel
             WritableWorkbook workbook = Workbook.createWorkbook(new File(arquivo.toString() + ".xls"));
@@ -50,27 +69,27 @@ public class Excel {
             Label labelTitulo = new Label(0, 0, "ID");
             sheet.addCell(labelTitulo);
             sheet.setColumnView(0, 12);
-            labelTitulo.setCellFormat(cellFormat);
+            labelTitulo.setCellFormat(getCellFormat());
 
             Label labelTitulo2 = new Label(1, 0, "Marca");
             sheet.addCell(labelTitulo2);
             sheet.setColumnView(1, 45);
-            labelTitulo2.setCellFormat(cellFormat);
+            labelTitulo2.setCellFormat(getCellFormat());
 
             Label labelTitulo3 = new Label(2, 0, "Pais");
             sheet.addCell(labelTitulo3);
             sheet.setColumnView(2, 15);
-            labelTitulo3.setCellFormat(cellFormat);
+            labelTitulo3.setCellFormat(getCellFormat());
 
             Label labelTitulo4 = new Label(3, 0, "Data");
             sheet.addCell(labelTitulo4);
             sheet.setColumnView(3, 11);
-            labelTitulo4.setCellFormat(cellFormat);
+            labelTitulo4.setCellFormat(getCellFormat());
 
             Label labelTitulo5 = new Label(4, 0, "User");
             sheet.addCell(labelTitulo5);
             sheet.setColumnView(4, 10);
-            labelTitulo5.setCellFormat(cellFormat);
+            labelTitulo5.setCellFormat(getCellFormat());
 
             int contador = 1;
             for (Brand p : lista) {
@@ -107,20 +126,12 @@ public class Excel {
         return status;
     }
 
-    public static boolean CategoryExcel(File arquivo, ArrayList<Category> lista) {
+    public boolean CategoryExcel(File arquivo, ArrayList<Category> lista) {
         boolean status = true;
         try {
 
-            WritableFont fontbol = new WritableFont(WritableFont.ARIAL, 10);
-            fontbol.setBoldStyle(WritableFont.BOLD);
-            WritableCellFormat cellFormat = new WritableCellFormat(fontbol);
-            jxl.format.Colour bckcolor = jxl.format.Colour.AQUA;
-            cellFormat.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
-            cellFormat.setVerticalAlignment(jxl.format.VerticalAlignment.JUSTIFY);
             WritableCellFormat cellFormatt = new WritableCellFormat();
             cellFormatt.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
-
-            cellFormat.setBackground(bckcolor);
 
             //Instaciando a classe que gera o novo arquivo do excel
             WritableWorkbook workbook = Workbook.createWorkbook(new File(arquivo.toString() + ".xls"));
@@ -132,22 +143,22 @@ public class Excel {
             Label labelTitulo = new Label(0, 0, "ID");
             sheet.addCell(labelTitulo);
             sheet.setColumnView(0, 12);
-            labelTitulo.setCellFormat(cellFormat);
+            labelTitulo.setCellFormat(getCellFormat());
 
             Label labelTitulo2 = new Label(1, 0, "Categoria");
             sheet.addCell(labelTitulo2);
             sheet.setColumnView(1, 45);
-            labelTitulo2.setCellFormat(cellFormat);
+            labelTitulo2.setCellFormat(getCellFormat());
 
             Label labelTitulo4 = new Label(2, 0, "Data");
             sheet.addCell(labelTitulo4);
             sheet.setColumnView(3, 11);
-            labelTitulo4.setCellFormat(cellFormat);
+            labelTitulo4.setCellFormat(getCellFormat());
 
             Label labelTitulo5 = new Label(3, 0, "User");
             sheet.addCell(labelTitulo5);
             sheet.setColumnView(4, 10);
-            labelTitulo5.setCellFormat(cellFormat);
+            labelTitulo5.setCellFormat(getCellFormat());
 
             int contador = 1;
             for (Category p : lista) {
@@ -181,20 +192,12 @@ public class Excel {
         return status;
     }
 
-    public static boolean ProductExcel(File arquivo, ArrayList<Product> lista) {
+    public boolean ProductExcel(File arquivo, ArrayList<Product> lista) {
         boolean status = true;
         try {
 
-            WritableFont fontbol = new WritableFont(WritableFont.ARIAL, 10);
-            fontbol.setBoldStyle(WritableFont.BOLD);
-            WritableCellFormat cellFormat = new WritableCellFormat(fontbol);
-            jxl.format.Colour bckcolor = jxl.format.Colour.AQUA;
-            cellFormat.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
-            cellFormat.setVerticalAlignment(jxl.format.VerticalAlignment.JUSTIFY);
             WritableCellFormat cellFormatt = new WritableCellFormat();
             cellFormatt.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
-
-            cellFormat.setBackground(bckcolor);
 
             //Instaciando a classe que gera o novo arquivo do excel
             WritableWorkbook workbook = Workbook.createWorkbook(new File(arquivo.toString() + ".xls"));
@@ -206,42 +209,42 @@ public class Excel {
             Label labelTitulo = new Label(0, 0, "ID");
             sheet.addCell(labelTitulo);
             sheet.setColumnView(0, 12);
-            labelTitulo.setCellFormat(cellFormat);
+            labelTitulo.setCellFormat(getCellFormat());
 
             Label labelTitulo2 = new Label(1, 0, "Produto");
             sheet.addCell(labelTitulo2);
             sheet.setColumnView(1, 45);
-            labelTitulo2.setCellFormat(cellFormat);
+            labelTitulo2.setCellFormat(getCellFormat());
 
             Label labelTitulo3 = new Label(2, 0, "Marca");
             sheet.addCell(labelTitulo3);
             sheet.setColumnView(2, 15);
-            labelTitulo3.setCellFormat(cellFormat);
+            labelTitulo3.setCellFormat(getCellFormat());
 
             Label labelTitulo4 = new Label(3, 0, "Categoria");
             sheet.addCell(labelTitulo4);
             sheet.setColumnView(2, 15);
-            labelTitulo4.setCellFormat(cellFormat);
+            labelTitulo4.setCellFormat(getCellFormat());
 
             Label labelTitulo5 = new Label(4, 0, "Valor");
             sheet.addCell(labelTitulo5);
             sheet.setColumnView(3, 11);
-            labelTitulo5.setCellFormat(cellFormat);
+            labelTitulo5.setCellFormat(getCellFormat());
 
             Label labelTitulo6 = new Label(5, 0, "Quantidade");
             sheet.addCell(labelTitulo6);
             sheet.setColumnView(4, 10);
-            labelTitulo6.setCellFormat(cellFormat);
+            labelTitulo6.setCellFormat(getCellFormat());
 
             Label labelTitulo7 = new Label(6, 0, "Data");
             sheet.addCell(labelTitulo7);
             sheet.setColumnView(4, 10);
-            labelTitulo7.setCellFormat(cellFormat);
+            labelTitulo7.setCellFormat(getCellFormat());
 
             Label labelTitulo8 = new Label(7, 0, "Usuario");
             sheet.addCell(labelTitulo8);
             sheet.setColumnView(4, 10);
-            labelTitulo8.setCellFormat(cellFormat);
+            labelTitulo8.setCellFormat(getCellFormat());
 
             int contador = 1;
             for (Product p : lista) {

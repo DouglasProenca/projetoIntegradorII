@@ -47,6 +47,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
     private JScrollPane scroll;
     private static InternalFrame uniqueInstance;
     private final MarcaDao dao = MarcaDao.getInstance();
+    private final Excel excel = new Excel();
 
     public static synchronized InternalFrame getInstance() {
         if (uniqueInstance == null) {
@@ -202,7 +203,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int choice = fc.showSaveDialog(null);
                 if (choice != 1) {
-                    Excel.BrandExcel(fc.getSelectedFile(), dao.getAll());
+                    excel.BrandExcel(fc.getSelectedFile(), dao.getAll());
                 }
                 break;
             case "find":
