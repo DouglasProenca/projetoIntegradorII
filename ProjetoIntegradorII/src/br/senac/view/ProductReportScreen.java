@@ -47,7 +47,7 @@ public class ProductReportScreen extends InternalFrame {
 
     public ProductReportScreen() {
         super("Relatorio Produtos", true, true, true, true, 707, 400);
-        initComponents();
+        this.initComponents();
     }
 
     private JTable getTblResultado() {

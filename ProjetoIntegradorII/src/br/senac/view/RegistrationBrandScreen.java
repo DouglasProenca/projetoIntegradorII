@@ -6,9 +6,7 @@ import br.senac.model.Brand;
 import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -54,12 +52,12 @@ public class RegistrationBrandScreen extends InternalFrame {
 
     public RegistrationBrandScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 500, 400);
-        InitComponents(formato);
+        this.InitComponents(formato);
     }
 
     public RegistrationBrandScreen(Brand brand, String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 500, 400);
-        InitComponents(formato);
+        this.InitComponents(formato);
         this.txtBrand.setText(brand.getMarca());
         this.jboCountry.setSelectedItem(brand.getPais());
         this.id = brand.getId();
@@ -224,7 +222,7 @@ public class RegistrationBrandScreen extends InternalFrame {
                 break;
             case "alter":
                 Brand objMarcaAlt = new Brand(id, txtBrand.getText(), jboCountry.getSelectedItem().toString(), null, "1");
-                dao.Alter(objMarcaAlt);
+                dao.alter(objMarcaAlt);
                 this.dispose();
                 break;
             case "import":

@@ -23,11 +23,18 @@ public interface DAO {
 
     /**
      *
-     * @param p
-     * @return
+     * @param object
+     * @return true or false
      */
-//    public boolean save (Object<> );
-    //public boolean alter(Object Alter);
+    public boolean save(Object object);
+
+    /**
+     *
+     * @param object
+     * @return true or false
+     */
+    public boolean alter(Object object);
+
     /**
      * @author Douglas Proença
      * @param key

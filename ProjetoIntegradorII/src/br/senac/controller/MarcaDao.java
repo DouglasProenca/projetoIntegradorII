@@ -4,11 +4,15 @@ import br.senac.interfaces.DAO;
 import br.senac.model.Brand;
 import br.senac.view.MainScreen;
 import br.senac.objects.ConnectionManager;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -73,16 +77,19 @@ public final class MarcaDao implements DAO {
         return listCountry;
     }
 
-    public boolean save(Brand p) {
+    @Override
+    public boolean save(Object object) {
         boolean retorno = false;
 
         try {
+            Brand brand = (Brand) object;
+
             Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),(select getDate()),1)");
 
-            instrucaoSQL.setString(1, p.getMarca());
-            instrucaoSQL.setString(2, p.getPais().toUpperCase());
+            instrucaoSQL.setString(1, brand.getMarca());
+            instrucaoSQL.setString(2, brand.getPais());
 
             retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
 
@@ -90,15 +97,21 @@ public final class MarcaDao implements DAO {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
             retorno = false;
+        } catch (SecurityException ex) {
+            Logger.getLogger(MarcaDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(MarcaDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return retorno;
     }
 
-    public boolean Alter(Brand p) {
+    @Override
+    public boolean alter(Object object) {
         boolean retorno = false;
 
         try {
+            Brand brand = (Brand) object;
             Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_marca SET marca=?"
@@ -106,9 +119,9 @@ public final class MarcaDao implements DAO {
                     + "WHERE id = ?");
 
             //Adiciono os parâmetros ao meu comando SQL
-            instrucaoSQL.setString(1, p.getMarca());
-            instrucaoSQL.setString(2, p.getPais());
-            instrucaoSQL.setInt(3, p.getId());
+            instrucaoSQL.setString(1, brand.getMarca());
+            instrucaoSQL.setString(2, brand.getPais());
+            instrucaoSQL.setInt(3, brand.getId());
 
             //Mando executar a instrução SQL
             int linhasAfetadas = instrucaoSQL.executeUpdate();

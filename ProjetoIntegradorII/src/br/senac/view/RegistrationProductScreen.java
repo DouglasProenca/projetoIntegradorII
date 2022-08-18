@@ -62,7 +62,7 @@ public class RegistrationProductScreen extends InternalFrame {
 
     public RegistrationProductScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 700, 400);
-        InitComponents(formato);
+        this.InitComponents(formato);
     }
 
     public RegistrationProductScreen(Product product, String formato) {
@@ -266,7 +266,7 @@ public class RegistrationProductScreen extends InternalFrame {
             case "alter":
                 Product objMarcaAlt = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText())
                         , jboCategoria.getSelectedItem().toString(), id, jboBrand.getSelectedItem().toString(), null, null, null);
-                daop.Alter(objMarcaAlt);
+                daop.alter(objMarcaAlt);
                 this.dispose();
                 break;
             case "import":

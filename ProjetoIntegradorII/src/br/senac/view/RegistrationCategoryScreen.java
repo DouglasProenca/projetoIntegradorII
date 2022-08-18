@@ -49,7 +49,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
 
     public RegistrationCategoryScreen(String formato) {
         super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 500, 400);
-        InitComponents(formato);
+        this.InitComponents(formato);
     }
 
     public RegistrationCategoryScreen(Category category, String formato) {
@@ -201,7 +201,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
                 break;
             case "alter":
                 Category objMarcaAlt = new Category(txtBrand.getText(), id, null, null, null, "1");
-                dao.Alter(objMarcaAlt);
+                dao.alter(objMarcaAlt);
                 this.dispose();
                 break;
             case "import":

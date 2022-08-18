@@ -1,7 +1,5 @@
 package br.senac.view;
 
-
-
 /**
  *
  * @author Douglas

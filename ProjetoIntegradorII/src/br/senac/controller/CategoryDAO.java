@@ -100,15 +100,17 @@ public class CategoryDAO implements DAO {
         return categoryList;
     }
 
-    public boolean save(Category p) {
+    @Override
+    public boolean save(Object object) {
         boolean retorno = false;
 
         try {
+            Category category = (Category) object;
             Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_categoria values(?,(select getDate()),1)");
 
-            instrucaoSQL.setString(1, p.getCategoria().toUpperCase());
+            instrucaoSQL.setString(1, category.getCategoria().toUpperCase());
 
             retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
 
@@ -121,18 +123,20 @@ public class CategoryDAO implements DAO {
         return retorno;
     }
 
-    public boolean Alter(Category p) {
+    @Override
+    public boolean alter(Object object) {
         boolean retorno = false;
 
         try {
+            Category category = (Category) object;
             Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_categoria SET categoria=?\n"
                     + "WHERE id = ?");
 
             //Adiciono os parâmetros ao meu comando SQL
-            instrucaoSQL.setString(1, p.getCategoria().toUpperCase());
-            instrucaoSQL.setInt(2, p.getId());
+            instrucaoSQL.setString(1, category.getCategoria().toUpperCase());
+            instrucaoSQL.setInt(2, category.getId());
 
             //Mando executar a instrução SQL
             int linhasAfetadas = instrucaoSQL.executeUpdate();

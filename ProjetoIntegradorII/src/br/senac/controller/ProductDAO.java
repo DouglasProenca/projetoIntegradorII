@@ -89,19 +89,21 @@ public class ProductDAO implements DAO {
         return productList;
     }
 
-    public boolean save(Product p) {
+    @Override
+    public boolean save(Object object) {
         boolean retorno = false;
 
         try {
+            Product product = (Product) object;
             Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,(select getDate()),1,(select id from rc_categoria where categoria = ?))");
 
-            instrucaoSQL.setString(1, p.getNome());
-            instrucaoSQL.setString(2, p.getMarca());
-            instrucaoSQL.setFloat(3, p.getValor());
-            instrucaoSQL.setInt(4, p.getQuantidade());
-            instrucaoSQL.setString(5, p.getCategoria());
+            instrucaoSQL.setString(1, product.getNome());
+            instrucaoSQL.setString(2, product.getMarca());
+            instrucaoSQL.setFloat(3, product.getValor());
+            instrucaoSQL.setInt(4, product.getQuantidade());
+            instrucaoSQL.setString(5, product.getCategoria());
 
             instrucaoSQL.executeUpdate();
 
@@ -114,10 +116,12 @@ public class ProductDAO implements DAO {
         return retorno;
     }
 
-    public boolean Alter(Product p) {
+    @Override
+    public boolean alter(Object object) {
         boolean retorno = false;
 
         try {
+            Product product = (Product) object;
             Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_produto SET nome=?\n"
@@ -125,12 +129,12 @@ public class ProductDAO implements DAO {
                     + "categoria = (select id from rc_categoria where categoria=?)\n"
                     + "WHERE id = ?");
 
-            instrucaoSQL.setString(1, p.getNome());
-            instrucaoSQL.setString(2, p.getMarca());
-            instrucaoSQL.setFloat(3, p.getValor());
-            instrucaoSQL.setInt(4, p.getQuantidade());
-            instrucaoSQL.setString(5, p.getCategoria());
-            instrucaoSQL.setInt(6, p.getId());
+            instrucaoSQL.setString(1, product.getNome());
+            instrucaoSQL.setString(2, product.getMarca());
+            instrucaoSQL.setFloat(3, product.getValor());
+            instrucaoSQL.setInt(4, product.getQuantidade());
+            instrucaoSQL.setString(5, product.getCategoria());
+            instrucaoSQL.setInt(6, product.getId());
 
             //Mando executar a instrução SQL
             int linhasAfetadas = instrucaoSQL.executeUpdate();
