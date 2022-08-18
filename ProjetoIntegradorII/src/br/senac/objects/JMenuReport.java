@@ -97,7 +97,7 @@ public class JMenuReport extends Menu {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "brand":
-                BrandReportScreen br = new BrandReportScreen();
+                BrandReportScreen br = BrandReportScreen.getInstance();
                 MainScreen.desktopPane.add(br);
                 MainScreen.jToolBar.add(br.getDesktopIcon());
                 br.setVisible(true);

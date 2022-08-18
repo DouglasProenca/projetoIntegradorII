@@ -45,18 +45,18 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
     private DefaultTableModel dm;
     private JTable tblResultado;
     private JScrollPane scroll;
-    private static InternalFrame uniqueInstance;
+    private static BrandReportScreen uniqueInstance;
     private final MarcaDao dao = MarcaDao.getInstance();
     private final Excel excel = new Excel();
 
-    public static synchronized InternalFrame getInstance() {
+    public static synchronized BrandReportScreen getInstance() {
         if (uniqueInstance == null) {
             uniqueInstance = new BrandReportScreen();
         }
         return uniqueInstance;
     }
 
-    public BrandReportScreen() {
+    private BrandReportScreen() {
         super("Relatorio Marcas", true, true, true, true, 707, 400);
         initComponents();
     }

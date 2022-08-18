@@ -4,6 +4,7 @@ import br.senac.view.BackupScreen;
 import br.senac.view.LookAndFeelScreen;
 import br.senac.view.MainScreen;
 import br.senac.view.DatabaseConnectionScreen;
+import br.senac.view.MailScreen;
 import br.senac.view.SaleScreen;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -213,6 +214,12 @@ public class JMenuMenu extends Menu {
                     bd.addInternalFrameListener(this);
                     break;
                 case "mail":
+                    MailScreen mail = new MailScreen();
+                    MainScreen.desktopPane.add(mail);
+                    MainScreen.jToolBar.add(mail.getDesktopIcon());
+                    MainScreen.centralizaForm(mail);
+                    mail.setVisible(true);
+                    mail.addInternalFrameListener(this);
                     break;
                 case "logout":
                     break;
