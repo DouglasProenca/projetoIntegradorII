@@ -27,7 +27,7 @@ Menu:
 
 Relatório:
 
-![image](https://user-images.githubusercontent.com/78769051/184447913-be1daa0f-3064-4073-81b0-ecdb50b59db1.png)
+![image](https://user-images.githubusercontent.com/78769051/185472004-d9efa3b3-6090-476f-acb3-0d0026a5e432.png)
 
 Ajuda:
 
@@ -45,5 +45,8 @@ Tela de Backup:
 
 ![image](https://user-images.githubusercontent.com/78769051/184448563-17142c82-b953-4d60-a41c-ee82d7c9b16e.png)
 
+Tela de Envio de e-mail:
+
+![image](https://user-images.githubusercontent.com/78769051/185471918-cc9f3b59-9c5e-4238-b6ac-ed66c0e3757e.png)
 
 
