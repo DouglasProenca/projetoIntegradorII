@@ -1,7 +1,7 @@
 # projetoIntegradorII
 
 Projeto do Segundo Semestre do curso de Análise e Desenvolvimento de Sistemas do Senac.
-Estou fazendo o upload para melhorias no projeto, com bases nos conhecimentos adquiridos nos semestres posteriores e com a experiência profissional.
+Estou fazendo o upload para melhorias, com base nos conhecimentos adquiridos nos semestres posteriores e com a experiência profissional.
 
 Funções Do Sistema:
 
@@ -52,5 +52,3 @@ Tela de Backup:
 Tela de Envio de e-mail:
 
 ![image](https://user-images.githubusercontent.com/78769051/185471918-cc9f3b59-9c5e-4238-b6ac-ed66c0e3757e.png)
-
-
