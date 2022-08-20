@@ -31,11 +31,11 @@ Menu:
 
 Relatório:
 
-![image](https://user-images.githubusercontent.com/78769051/185472004-d9efa3b3-6090-476f-acb3-0d0026a5e432.png)
+![image](https://user-images.githubusercontent.com/78769051/185760060-0da1981a-6c32-415d-88d1-a3bef3d82ce2.png)
 
 Ajuda:
 
-![image](https://user-images.githubusercontent.com/78769051/184447930-d8b7ccce-98fa-4b52-b355-b9cbf4cca961.png)
+![image](https://user-images.githubusercontent.com/78769051/185760075-be198c40-5e7e-484f-9b59-4914f9deac5d.png)
 
 Relatorio Produto:
 
