@@ -6,7 +6,7 @@ import com.toedter.calendar.JCalendar;
 public class CalendarScreen extends InternalFrame {
 
     public CalendarScreen() {
-        super("Calendario", false, true, true, true,438, 298);
+        super("Calendário", false, true, true, true,438, 298);
         initComponents();
     }
 

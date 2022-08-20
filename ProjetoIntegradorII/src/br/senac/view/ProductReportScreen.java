@@ -32,7 +32,7 @@ import javax.swing.table.DefaultTableModel;
 public class ProductReportScreen extends InternalFrame {
 
     private final JLabel lblNome = new JLabel("Nome:");
-    private final String colunas[] = {"ID", "Produto", "Marca", "Categoria", "Valor", "Quantidade", "Data", "Usuario"};
+    private final String colunas[] = {"ID", "Produto", "Marca", "Categoria", "Valor", "Quantidade", "Data", "Usuário"};
     private JPanel panelNorth;
     private JPanel panelWest;
     private JTextField txtPesquisa;
@@ -46,7 +46,7 @@ public class ProductReportScreen extends InternalFrame {
     private final Excel excel = new Excel();
 
     public ProductReportScreen() {
-        super("Relatorio Produtos", true, true, true, true, 707, 400);
+        super("Relatório Produtos", true, true, true, true, 707, 400);
         this.initComponents();
     }
 

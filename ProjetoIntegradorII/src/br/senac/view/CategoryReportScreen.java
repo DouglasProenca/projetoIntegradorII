@@ -34,7 +34,7 @@ import javax.swing.table.DefaultTableModel;
 public class CategoryReportScreen extends InternalFrame implements ListSelectionListener, KeyListener {
 
     private final JLabel lblNome = new JLabel("Nome:");
-    private final String colunas[] = {"ID", "Categoria", "Data", "Usuario"};
+    private final String colunas[] = {"ID", "Categoria", "Data", "Usuário"};
     private JPanel panelNorth;
     private JPanel panelWest;
     private JTextField txtPesquisa;
@@ -57,7 +57,7 @@ public class CategoryReportScreen extends InternalFrame implements ListSelection
     }
 
     public CategoryReportScreen() {
-        super("Relatorio Categorias", true, true, true, true, 707, 400);
+        super("Relatório Categorias", true, true, true, true, 707, 400);
         initComponents();
     }
 

@@ -53,21 +53,21 @@ public class JMenuReport extends Menu {
     }
 
     private JMenuItem getSyntheticRep() {
-        JMenuItem syntheticRep = new JMenuItem("Relatorio Sintetico");
+        JMenuItem syntheticRep = new JMenuItem("Relatório Sintetico");
         syntheticRep.addActionListener(this);
         syntheticRep.setActionCommand("syntheticRep");
         return syntheticRep;
     }
 
     private JMenuItem getAnalyticalRep() {
-        JMenuItem analyticalRep = new JMenuItem("Relatorio Analitico");
+        JMenuItem analyticalRep = new JMenuItem("Relatório Analitico");
         analyticalRep.addActionListener(this);
         analyticalRep.setActionCommand("analyticalRep");
         return analyticalRep;
     }
 
     private JMenuItem getManagementRep() {
-        JMenuItem managementRep = new JMenuItem("Relatorio Gerencial");
+        JMenuItem managementRep = new JMenuItem("Relatório Gerencial");
         managementRep.addActionListener(this);
         managementRep.setActionCommand("managementRep");
         return managementRep;
@@ -120,8 +120,8 @@ public class JMenuReport extends Menu {
                 String message = "Escolha a data inicial:\n";
                 String message2 = "Escolha a data Final:\n";
                 Object[] params = {message, jd, message2, jdf};
-                JOptionPane.showConfirmDialog(null, params, "Relatorio Gerencial", JOptionPane.PLAIN_MESSAGE);
-                InternalFrame rs = ReportScreen.getInstance("Relatorio Gerencial", params);
+                JOptionPane.showConfirmDialog(null, params, "Relatório Gerencial", JOptionPane.PLAIN_MESSAGE);
+                InternalFrame rs = ReportScreen.getInstance("Relatório Gerencial", params);
                 MainScreen.desktopPane.add(rs);
                 MainScreen.jToolBar.add(rs.getDesktopIcon());
                 rs.setVisible(true);

@@ -37,7 +37,7 @@ public class JMenuHelp extends Menu {
     }
 
     private JMenuItem getCalendar() {
-        JMenuItem about = new JMenuItem("Calendario", images.imagemCalendar());
+        JMenuItem about = new JMenuItem("Calendário", images.imagemCalendar());
         about.addActionListener(this);
         about.setActionCommand("calendar");
         return about;

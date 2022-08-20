@@ -34,7 +34,7 @@ import javax.swing.table.DefaultTableModel;
 public class BrandReportScreen extends InternalFrame implements ListSelectionListener, KeyListener {
 
     private final JLabel lblNome = new JLabel("Nome:");
-    private final String colunas[] = {"ID", "Marca", "Pais", "Data", "Usuario"};
+    private final String colunas[] = {"ID", "Marca", "Pais", "Data", "Usuário"};
     private JPanel panelNorth;
     private JPanel panelWest;
     private JTextField txtPesquisa;
@@ -56,7 +56,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
     }
 
     private BrandReportScreen() {
-        super("Relatorio Marcas", true, true, true, true, 707, 400);
+        super("Relatório Marcas", true, true, true, true, 707, 400);
         initComponents();
     }
 
