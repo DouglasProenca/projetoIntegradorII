@@ -5,11 +5,13 @@ import br.senac.model.Product;
 import br.senac.view.MainScreen;
 import br.senac.objects.ConnectionManager;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import static org.xhtmlrenderer.util.Uu.p;
 
 /**
  *
@@ -98,14 +100,15 @@ public class ProductDAO implements DAO {
             Product product = (Product) object;
             Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,(select getDate()),?,(select id from rc_categoria where categoria = ?))");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,?,?,(select id from rc_categoria where categoria = ?))");
 
             instrucaoSQL.setString(1, product.getNome());
             instrucaoSQL.setString(2, product.getMarca());
             instrucaoSQL.setFloat(3, product.getValor());
             instrucaoSQL.setInt(4, product.getQuantidade());
-            instrucaoSQL.setInt(5, Integer.valueOf(product.getUser()));
-            instrucaoSQL.setString(6, product.getCategoria());
+            instrucaoSQL.setDate(5,  new java.sql.Date(product.getDate().getTime()));
+            instrucaoSQL.setInt(6, Integer.valueOf(product.getUser()));
+            instrucaoSQL.setString(7, product.getCategoria());
 
             instrucaoSQL.executeUpdate();
 
@@ -128,7 +131,7 @@ public class ProductDAO implements DAO {
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_produto SET nome=?\n"
                     + ",marca=(select id from rc_marca where marca=?),valor=?,quantidade=?,\n"
-                    + "categoria = (select id from rc_categoria where categoria=?),user?\n"
+                    + "categoria = (select id from rc_categoria where categoria=?),[user]=?\n"
                     + "WHERE id = ?");
 
             instrucaoSQL.setString(1, product.getNome());

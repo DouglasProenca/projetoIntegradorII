@@ -10,6 +10,7 @@ import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -258,7 +259,7 @@ public class RegistrationProductScreen extends InternalFrame {
         switch (e.getActionCommand()) {
             case "save":
                 Product objProduct = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText())
-                        , jboCategoria.getSelectedItem().toString(), 0, jboBrand.getSelectedItem().toString(), null, null, String.valueOf(User.getInstance().getId()));
+                        , jboCategoria.getSelectedItem().toString(), 0, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
                 if (daop.save(objProduct)) {
                     JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
                     this.dispose();
@@ -266,7 +267,7 @@ public class RegistrationProductScreen extends InternalFrame {
                 break;
             case "alter":
                 Product objMarcaAlt = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText())
-                        , jboCategoria.getSelectedItem().toString(), id, jboBrand.getSelectedItem().toString(), null, null, String.valueOf(User.getInstance().getId()));
+                        , jboCategoria.getSelectedItem().toString(), id, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
                 daop.alter(objMarcaAlt);
                 this.dispose();
                 break;
@@ -287,6 +288,7 @@ public class RegistrationProductScreen extends InternalFrame {
                 }
                 if (ret) {
                     JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
+                    this.dispose();
                 }
                 break;
             default:
@@ -309,7 +311,7 @@ public class RegistrationProductScreen extends InternalFrame {
         DefaultTableModel modelo = (DefaultTableModel) tblExcel.getModel();
         modelo.setRowCount(0);
         productsList.forEach((p) -> {
-            modelo.addRow(new Object[]{p.getNome(), p.getValor(), p.getMarca(), p.getQuantidade()});
+            modelo.addRow(new Object[]{p.getNome(), p.getValor(), p.getMarca(), p.getCategoria(), p.getQuantidade()});
         });
     }
 

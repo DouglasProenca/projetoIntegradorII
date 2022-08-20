@@ -8,6 +8,7 @@ import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -215,14 +216,14 @@ public class RegistrationBrandScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                Brand objMarca = new Brand(0, txtBrand.getText(), jboCountry.getSelectedItem().toString(), null, String.valueOf(User.getInstance().getId()));
+                Brand objMarca = new Brand(0, txtBrand.getText(), jboCountry.getSelectedItem().toString(), new Date(), String.valueOf(User.getInstance().getId()));
                 if (dao.save(objMarca)) {
                     JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
                     this.dispose();
                 }
                 break;
             case "alter":
-                Brand objMarcaAlt = new Brand(id, txtBrand.getText(), jboCountry.getSelectedItem().toString(), null, String.valueOf(User.getInstance().getId()));
+                Brand objMarcaAlt = new Brand(id, txtBrand.getText(), jboCountry.getSelectedItem().toString(), new Date(), String.valueOf(User.getInstance().getId()));
                 dao.alter(objMarcaAlt);
                 this.dispose();
                 break;

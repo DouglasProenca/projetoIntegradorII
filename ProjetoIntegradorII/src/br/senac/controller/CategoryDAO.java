@@ -120,10 +120,11 @@ public class CategoryDAO implements DAO {
             Category category = (Category) object;
             Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_categoria values(?,(select getDate()),?)");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_categoria values(?,?,?)");
 
             instrucaoSQL.setString(1, category.getCategoria().toUpperCase());
-            instrucaoSQL.setInt(2, Integer.valueOf(category.getUser()));
+            instrucaoSQL.setDate(2, new java.sql.Date(category.getDate().getTime()));
+            instrucaoSQL.setInt(3, Integer.valueOf(category.getUser()));
 
             retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
 

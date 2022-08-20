@@ -172,9 +172,9 @@ public class ProductReportScreen extends InternalFrame {
                     int numeroLinha = tblResultado.getSelectedRow();
                     int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
                     if (ProductDAO.getInstance().delete(id)) {
-                        JOptionPane.showMessageDialog(this, "Produto excluído com sucesso!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, JOptionPane.ERROR_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(this, "Falha ao excluir Produto!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this, JOptionPane.ERROR_MESSAGE);
                     }
                     this.loadTable();
                 } catch (HeadlessException | NumberFormatException ex) {

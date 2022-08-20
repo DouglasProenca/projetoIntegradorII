@@ -3,10 +3,12 @@ package br.senac.objects;
 import br.senac.model.Brand;
 import br.senac.model.Category;
 import br.senac.model.Product;
+import br.senac.model.User;
 import br.senac.view.MainScreen;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -307,7 +309,7 @@ public class Excel {
                 Cell ce = sheet.getCell(4, z);
 
                 Product p = new Product(ca.getContents(), Float.parseFloat(cb.getContents()),
-                        Integer.parseInt(cc.getContents()), ce.getContents(), 0, cd.getContents(), null, null, null);
+                        Integer.parseInt(ce.getContents()), cd.getContents(), 0, cc.getContents(), null, new Date(), String.valueOf(User.getInstance().getId()));
 
                 productList.add(p);
             }
@@ -332,7 +334,7 @@ public class Excel {
                 Cell ca = sheet.getCell(0, z);
                 Cell cb = sheet.getCell(1, z);
 
-                Brand p = new Brand(0, ca.getContents(), cb.getContents(), null, null);
+                Brand p = new Brand(0, ca.getContents(), cb.getContents(), new Date(), String.valueOf(User.getInstance().getId()));
 
                 brandList.add(p);
             }

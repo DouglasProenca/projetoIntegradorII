@@ -8,6 +8,7 @@ import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -194,14 +195,14 @@ public class RegistrationCategoryScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                Category objMarca = new Category(txtBrand.getText(), 0, null, null, null, String.valueOf(User.getInstance().getId()));
+                Category objMarca = new Category(txtBrand.getText(), 0, null, null, new Date(), String.valueOf(User.getInstance().getId()));
                 if (dao.save(objMarca)) {
                     JOptionPane.showMessageDialog(this, "Categoria Salva Com Sucesso!");
                     this.dispose();
                 }
                 break;
             case "alter":
-                Category objMarcaAlt = new Category(txtBrand.getText(), id, null, null, null, String.valueOf(User.getInstance().getId()));
+                Category objMarcaAlt = new Category(txtBrand.getText(), id, null, null, new Date(), String.valueOf(User.getInstance().getId()));
                 dao.alter(objMarcaAlt);
                 this.dispose();
                 break;

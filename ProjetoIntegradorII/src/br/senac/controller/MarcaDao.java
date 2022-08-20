@@ -81,11 +81,12 @@ public final class MarcaDao implements DAO {
 
             Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),(select getDate()),?)");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),?,?)");
 
             instrucaoSQL.setString(1, brand.getMarca());
             instrucaoSQL.setString(2, brand.getPais());
-            instrucaoSQL.setInt(3, Integer.valueOf(brand.getUser()));
+            instrucaoSQL.setDate(3, new java.sql.Date(brand.getDate().getTime()));
+            instrucaoSQL.setInt(4, Integer.valueOf(brand.getUser()));
 
             retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
 
@@ -110,7 +111,7 @@ public final class MarcaDao implements DAO {
             Connection conexao = ConnectionManager.getInstance().getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_marca SET marca=?"
-                    + ",pais=(select paisID from rc_pais where paisNome = ?),user=?\n"
+                    + ",pais=(select paisID from rc_pais where paisNome = ?),[user]=?\n"
                     + "WHERE id = ?");
 
             //Adiciono os parâmetros ao meu comando SQL
