@@ -17,6 +17,10 @@ Adicionais:
 - Cor de Fundo
 - Abre aplicativos do windows como calculadora e bloco de notas
 
+Tela Login:
+
+![image](https://user-images.githubusercontent.com/78769051/185759985-82b1c02a-1f95-475e-a024-ad70940a092c.png)
+
 Tela Inicial do Projeto:
 
 ![image](https://user-images.githubusercontent.com/78769051/184447786-3efc3a51-f0b8-44d1-9ef2-7f2538bdd952.png)
@@ -35,7 +39,7 @@ Ajuda:
 
 Relatorio Produto:
 
-![image](https://user-images.githubusercontent.com/78769051/184448388-63952b95-2493-4935-96f2-2927d3fd2612.png)
+![image](https://user-images.githubusercontent.com/78769051/185759961-1fb368ae-6971-41d6-85b5-fbda4b933bc5.png)
 
 Cadastro De Produtos:
 
