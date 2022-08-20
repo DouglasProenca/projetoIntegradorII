@@ -1,5 +1,6 @@
 package br.senac.objects;
 
+import br.senac.model.User;
 import br.senac.view.MainScreen;
 import java.util.Date;
 import java.util.Properties;
@@ -24,7 +25,7 @@ import javax.swing.JOptionPane;
 public class Mail {
 
     private Properties props;
-
+    
     private Properties getProps() {
         props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -44,14 +45,13 @@ public class Mail {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
 
-                return new PasswordAuthentication("sist.dv.dg21@gmail.com", "");//email e senha usuÃ¡rio 
-            }
+                return new PasswordAuthentication(User.getInstance().getMail(), User.getInstance().getMailPassword());//email e senha usuÃ¡rio 
+            } 
         });
-
-        //compose message  
+ 
         try {
             MimeMessage message = new MimeMessage(s);
-            message.setFrom(new InternetAddress("sist.dv.dg21@gmail.com"));
+            message.setFrom(new InternetAddress(User.getInstance().getMail()));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailDestinatario));
             message.setSubject(assunto);
 

@@ -28,6 +28,7 @@ public class JMenuHelp extends Menu {
     }
 
     private void initComponents() {
+        this.setEnabled(false);
         this.setMnemonic('A');
         this.add((getCalendar()));
         this.add(getSite());
@@ -81,7 +82,7 @@ public class JMenuHelp extends Menu {
                     Desktop.getDesktop().browse(new URI("www.linkedin.com/in/douglas-proença"));
                     break;
                 case "about":
-                    AboutScreen about = new AboutScreen("Douglas");
+                    AboutScreen about = new AboutScreen();
                     MainScreen.desktopPane.add(about);
                     MainScreen.jToolBar.add(about.getDesktopIcon());
                     about.setVisible(true);

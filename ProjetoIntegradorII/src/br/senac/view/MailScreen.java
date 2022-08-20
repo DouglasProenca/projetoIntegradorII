@@ -3,7 +3,6 @@ package br.senac.view;
 import br.senac.objects.InternalFrame;
 import br.senac.objects.Mail;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -33,6 +32,7 @@ public class MailScreen extends InternalFrame {
     private JPanel panelNorth;
     private JPanel panelPageEnd;
     private final Mail mail = new Mail();
+    private JProgressBar progressBar;
 
     public MailScreen() {
         super("Tela de E-mail", false, true, true, true, 707, 400);
@@ -53,6 +53,7 @@ public class MailScreen extends InternalFrame {
         panelPageEnd.add(getBtnAnexFile());
         panelPageEnd.add(getTxtCaminhoFile());
         panelPageEnd.add(getBtnsend());
+        panelPageEnd.add(getProgressBar());
         return panelPageEnd;
     }
 
@@ -60,6 +61,13 @@ public class MailScreen extends InternalFrame {
         this.add(BorderLayout.NORTH, getPanelNorth());
         this.add(BorderLayout.CENTER, getTxtCorpo());
         this.add(BorderLayout.PAGE_END, getPanelPageEnd());
+    }
+
+    private JProgressBar getProgressBar() {
+        progressBar = new JProgressBar();
+        progressBar.setIndeterminate(true);
+        progressBar.setVisible(false);
+        return progressBar;
     }
 
     private JTextField getTxtDestinatario() {
@@ -112,15 +120,18 @@ public class MailScreen extends InternalFrame {
                 boolean ret = false;
                 if (!txtDestinatario.getText().equals("") && !txtAssunto.getText().equals("")
                         && !txtCorpo.getText().equals("")) {
+                    progressBar.setVisible(true);
                     ret = mail.enviarGmail(txtDestinatario.getText(), txtAssunto.getText(),
                             txtCorpo.getText(), txtCaminhoFile.getText());
                 } else {
                     JOptionPane.showMessageDialog(this, "Campos de Destinario, Assunto e "
                             + "Corpo do E-mail não podem estar Vazios!",
                             "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                    progressBar.setVisible(false);
                 }
                 if (ret) {
                     JOptionPane.showMessageDialog(this, "Email enviado com sucesso!");
+                    progressBar.setVisible(false);
                 }
                 break;
             case "find":

@@ -34,6 +34,7 @@ public class JMenuMenu extends Menu {
 
     private void initComponents() {
         this.setMnemonic('M');
+        this.setEnabled(false);
         this.add(getMenuDatabase());
         this.add(getNotes());
         this.add(getCalculator());

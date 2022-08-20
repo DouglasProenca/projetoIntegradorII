@@ -1,5 +1,6 @@
 package br.senac.view;
 
+import br.senac.model.User;
 import br.senac.objects.InternalFrame;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -39,10 +40,10 @@ public class AboutScreen extends InternalFrame {
     private JLabel lbluser_dir;
     private JLabel lbljava_home;
 
-    public AboutScreen(String user) {
+    public AboutScreen() {
         super("Informações", false, true, false, true, 549, 294);
         initComponents();
-        setLblUsuário_do_Sistema(user);
+
     }
 
     private void initComponents() {
@@ -50,9 +51,6 @@ public class AboutScreen extends InternalFrame {
         this.getContentPane().add(getPainel());
     }
 
-    private void setLblUsuário_do_Sistema(String usuario) {
-        this.lblUsuário_do_Sistema.setText(usuario);
-    }
 
     private JPanel getPainel() {
         painel = new JPanel(null);
@@ -156,6 +154,7 @@ public class AboutScreen extends InternalFrame {
     private JLabel getLblUsuário_do_Sistema() {
         lblUsuário_do_Sistema = new JLabel();
         lblUsuário_do_Sistema.setBounds(190, 10, 130, 26);
+        lblUsuário_do_Sistema.setText(User.getInstance().getUser());
         return lblUsuário_do_Sistema;
     }
 

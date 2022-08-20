@@ -23,6 +23,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     public static DesktopPane desktopPane;
     public static JToolBar jToolBar;
+    private final LoginScreen loginScreen = new LoginScreen();
 
     public MainScreen() {
         super("CR7 Imports");
@@ -37,7 +38,6 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         this.addKeyListener(this);
 
         this.add(getDesktopPane(), BorderLayout.CENTER);
-
         this.add(getJToolBar(), BorderLayout.PAGE_END);
 
         ImageIcon icone = images.imagemPrincipal();
@@ -48,6 +48,8 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     private JDesktopPane getDesktopPane() {
         desktopPane = new DesktopPane(new Dimension(this.getSize().width, this.getSize().height - 40));
+        desktopPane.add(loginScreen);
+        loginScreen.setVisible(true);
         return desktopPane;
     }
 

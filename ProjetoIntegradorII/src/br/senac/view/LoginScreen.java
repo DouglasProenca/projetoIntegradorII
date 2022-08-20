@@ -1,0 +1,138 @@
+package br.senac.view;
+
+import br.senac.controller.UserDAO;
+import br.senac.model.User;
+import br.senac.objects.CryptoUtils;
+import br.senac.objects.InternalFrame;
+import br.senac.objects.JMenuHelp;
+import br.senac.objects.JMenuMenu;
+import br.senac.objects.JMenuReport;
+import java.awt.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+/**
+ *
+ * @author Douglas
+ */
+public class LoginScreen extends InternalFrame {
+
+    private JLabel lblUsuario;
+    private JLabel lblSenha;
+    private JTextField txtUsuario;
+    private JPasswordField txtSenha;
+    private JButton btnConfirmar;
+
+    public LoginScreen() {
+        super("Login", false, false, false, false, 404, 325);
+        initComponents();
+    }
+
+    private void initComponents() {
+        this.setLayout(null);
+        this.setLocation(450, 150);
+        this.getContentPane().add(getLblUsuario());
+        this.getContentPane().add(getLblSenha());
+        this.getContentPane().add(getTxtUsuario());
+        this.getContentPane().add(getTxtSenha());
+        this.getContentPane().add(getBtnConfirmar());
+    }
+
+    private JLabel getLblUsuario() {
+        lblUsuario = new JLabel("Usuário:");
+        lblUsuario.setBounds(50, 50, 90, 26);
+        return lblUsuario;
+    }
+
+    private JLabel getLblSenha() {
+        lblSenha = new JLabel("Senha:");
+        lblSenha.setBounds(50, 130, 90, 26);
+        return lblSenha;
+    }
+
+    private JTextField getTxtUsuario() {
+        txtUsuario = new JTextField();
+        txtUsuario.setBounds(120, 50, 240, 26);
+        txtUsuario.addKeyListener(this);
+        return txtUsuario;
+    }
+
+    private JPasswordField getTxtSenha() {
+        txtSenha = new JPasswordField();
+        txtSenha.setBounds(120, 130, 240, 26);
+        txtSenha.addKeyListener(this);
+        return txtSenha;
+    }
+
+    private JButton getBtnConfirmar() {
+        btnConfirmar = new JButton("Confirmar");
+        btnConfirmar.setBounds(90, 200, 200, 46);
+        btnConfirmar.addActionListener(this);
+        btnConfirmar.setActionCommand("Confirmar");
+        return btnConfirmar;
+    }
+
+    /*private void login() {
+        try {
+            if (txtUsuario.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Aviso de Falha de Acesso",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                PessoaDAO dao = new PessoaDAO();
+                Login login = dao.getUsuario(txtUsuario.getText().trim());
+                if (dao.getUsuario(txtUsuario.getText().trim()) != null) {
+                    boolean senhaOk = CryptoUtils.verificarSenha((String.valueOf(txtSenha.getPassword())), login.getPassword());
+                    if (senhaOk) {
+                        TelaInicial.user = txtUsuario.getText();
+                        Thread.sleep(300);
+                        this.dispose();
+                    } else {
+                        mensagem();
+                    }
+                } else {
+                    mensagem();
+                }
+
+            }
+        } catch (InterruptedException | ClassNotFoundException | SQLException | IOException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void mensagem() {
+        JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Aviso de Falha de Acesso",
+                JOptionPane.ERROR_MESSAGE);
+    }*/
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+            case "Confirmar":
+                UserDAO.getInstance().getBy(txtUsuario.getText());
+                System.out.println(User.getInstance().getPassword());
+                boolean senhaOk = CryptoUtils.verificarSenha((String.valueOf(txtSenha.getPassword())),User.getInstance().getPassword());
+                if (senhaOk) {
+                    JMenuMenu.getInstance().setEnabled(true);
+                    JMenuHelp.getInstance().setEnabled(true);
+                    JMenuReport.getInstance().setEnabled(true);
+                    this.dispose();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
+        }
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Confirmar");
+            actionPerformed(z);
+        }
+    }
+}

@@ -46,7 +46,6 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
     private JTable tblResultado;
     private JScrollPane scroll;
     private static BrandReportScreen uniqueInstance;
-    private final MarcaDao dao = MarcaDao.getInstance();
     private final Excel excel = new Excel();
 
     public static synchronized BrandReportScreen getInstance() {
@@ -169,7 +168,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
-        dao.getAll().forEach((p) -> {
+        MarcaDao.getInstance().getAll().forEach((p) -> {
             modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
         });
     }
@@ -181,7 +180,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
                 try {
                     int numeroLinha = tblResultado.getSelectedRow();
                     int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-                    if (dao.delete(id)) {
+                    if (MarcaDao.getInstance().delete(id)) {
                         JOptionPane.showMessageDialog(this, "Marca excluída com sucesso!");
                     } else {
                         JOptionPane.showMessageDialog(this, "Falha ao excluir marca!");
@@ -203,14 +202,14 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int choice = fc.showSaveDialog(null);
                 if (choice != 1) {
-                    excel.BrandExcel(fc.getSelectedFile(), dao.getAll());
+                    excel.BrandExcel(fc.getSelectedFile(), MarcaDao.getInstance().getAll());
                 }
                 break;
             case "find":
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
                 modelo.setRowCount(0);
                 SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
-                dao.getBy(txtPesquisa.getText()).forEach((p) -> {
+                MarcaDao.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
                     modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
                 });
                 break;

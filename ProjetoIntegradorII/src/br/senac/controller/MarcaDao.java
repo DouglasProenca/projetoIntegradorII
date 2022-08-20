@@ -4,8 +4,6 @@ import br.senac.interfaces.DAO;
 import br.senac.model.Brand;
 import br.senac.view.MainScreen;
 import br.senac.objects.ConnectionManager;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
