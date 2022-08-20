@@ -63,14 +63,16 @@ public class ProductDAO implements DAO {
                     + "                     	 , p.valor\n"
                     + "                     	 , p.quantidade\n"
                     + "                     	 , p.[date]\n"
-                    + "                     	 , p.[user]\n"
+                    + "                     	 , u.[user]\n"
                     + "                    	 , m.pais\n"
                     + "                      , c.categoria\n"
                     + "                    from rc_produto p\n"
                     + "                    inner join rc_marca m\n"
                     + "                     	on m.id = p.marca\n"
                     + "                     inner join rc_categoria c\n"
-                    + "                      on p.categoria = c.id");
+                    + "                      on p.categoria = c.id"
+                    + "                     inner join rc_user u\n"
+                    + "                      on u.id = p.[user]");
 
             ResultSet rs = instrucaoSQL.executeQuery();
             while (rs.next()) {
@@ -162,7 +164,7 @@ public class ProductDAO implements DAO {
                     + "                     	 , p.valor\n"
                     + "                     	 , p.quantidade\n"
                     + "                     	 , p.[date]\n"
-                    + "                     	 , p.[user]\n"
+                    + "                     	 , u.[user]\n"
                     + "                    	 , m.pais\n"
                     + "                      , c.categoria\n"
                     + "                    from rc_produto p\n"
@@ -170,6 +172,8 @@ public class ProductDAO implements DAO {
                     + "                     	on m.id = p.marca\n"
                     + "                     inner join rc_categoria c\n"
                     + "                      on p.categoria = c.id"
+                    + "                     inner join rc_user u\n"
+                    + "                      on u.id = p.[user]"
                     + "                     where p.nome like ?");
             //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, "%" + key + '%');

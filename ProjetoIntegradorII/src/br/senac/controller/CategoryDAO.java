@@ -57,7 +57,13 @@ public class CategoryDAO implements DAO {
 
             Connection conexao = connectionManager.getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("select * from rc_categoria");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("select c.id\n"
+                    + "	  ,c.categoria\n"
+                    + "	  ,c.[data]\n"
+                    + "	  ,u.[user]\n"
+                    + "from rc_categoria c\n"
+                    + "inner join rc_user u\n"
+                    + "   on c.[user] = u.id");
 
             ResultSet rs = instrucaoSQL.executeQuery();
             while (rs.next()) {
@@ -80,7 +86,14 @@ public class CategoryDAO implements DAO {
         try {
 
             Connection conexao = connectionManager.getConexao();
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("select * from rc_categoria where categoria like ?");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("select c.id\n"
+                    + "	  ,c.categoria\n"
+                    + "	  ,c.[data]\n"
+                    + "	  ,u.[user]\n"
+                    + "from rc_categoria c\n"
+                    + "inner join rc_user u\n"
+                    + "   on c.[user] = u.id\n"
+                    + " where c.categoria like ?");
 
             //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, "%" + key + '%');

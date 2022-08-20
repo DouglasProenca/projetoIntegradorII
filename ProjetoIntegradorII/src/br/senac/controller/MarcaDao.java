@@ -143,13 +143,15 @@ public final class MarcaDao implements DAO {
             Connection conexao = connectionManager.getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
-                    + "	  , m.marca\n"
-                    + "	  , p.paisNome\n"
-                    + "	  , m.[date]\n"
-                    + "	  , m.[user]\n"
+                    + "	 , m.marca\n"
+                    + "	 , p.paisNome\n"
+                    + "	 , m.[date]\n"
+                    + "	 , u.[user]\n"
                     + "from rc_marca m\n"
                     + "inner join rc_pais p\n"
-                    + "	on p.paisId = m.pais");
+                    + "	on p.paisId = m.pais\n"
+                    + "inner join rc_user u\n"
+                    + "	on u.id = m.[user]");
 
             ResultSet rs = instrucaoSQL.executeQuery();
             while (rs.next()) {
@@ -176,10 +178,12 @@ public final class MarcaDao implements DAO {
                     + "	  , m.marca\n"
                     + "	  , p.paisNome\n"
                     + "	  , m.[date]\n"
-                    + "	  , m.[user]\n"
+                    + "	  , u.[user]\n"
                     + "from rc_marca m\n"
                     + "inner join rc_pais p\n"
                     + "	on p.paisId = m.pais\n"
+                    + "inner join rc_user u\n"
+                    + "	on u.id = m.[user]\n"
                     + "where m.marca like ?");
 
             //Adiciono os parâmetros ao meu comando SQL

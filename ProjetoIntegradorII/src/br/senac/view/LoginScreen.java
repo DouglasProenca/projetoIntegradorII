@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -77,49 +78,20 @@ public class LoginScreen extends InternalFrame {
         return btnConfirmar;
     }
 
-    /*private void login() {
-        try {
-            if (txtUsuario.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Aviso de Falha de Acesso",
-                        JOptionPane.ERROR_MESSAGE);
-            } else {
-                PessoaDAO dao = new PessoaDAO();
-                Login login = dao.getUsuario(txtUsuario.getText().trim());
-                if (dao.getUsuario(txtUsuario.getText().trim()) != null) {
-                    boolean senhaOk = CryptoUtils.verificarSenha((String.valueOf(txtSenha.getPassword())), login.getPassword());
-                    if (senhaOk) {
-                        TelaInicial.user = txtUsuario.getText();
-                        Thread.sleep(300);
-                        this.dispose();
-                    } else {
-                        mensagem();
-                    }
-                } else {
-                    mensagem();
-                }
-
-            }
-        } catch (InterruptedException | ClassNotFoundException | SQLException | IOException ex) {
-            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void mensagem() {
-        JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Aviso de Falha de Acesso",
-                JOptionPane.ERROR_MESSAGE);
-    }*/
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Confirmar":
                 UserDAO.getInstance().getBy(txtUsuario.getText());
-                System.out.println(User.getInstance().getPassword());
-                boolean senhaOk = CryptoUtils.verificarSenha((String.valueOf(txtSenha.getPassword())),User.getInstance().getPassword());
+                boolean senhaOk = CryptoUtils.verificarSenha((String.valueOf(txtSenha.getPassword())), User.getInstance().getPassword());
                 if (senhaOk) {
                     JMenuMenu.getInstance().setEnabled(true);
                     JMenuHelp.getInstance().setEnabled(true);
                     JMenuReport.getInstance().setEnabled(true);
                     this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Aviso de Falha de Acesso",
+                            JOptionPane.ERROR_MESSAGE);
                 }
                 break;
         }
