@@ -83,7 +83,14 @@ public class LoginScreen extends InternalFrame {
         switch (e.getActionCommand()) {
             case "Confirmar":
                 UserDAO.getInstance().getBy(txtUsuario.getText());
-                boolean senhaOk = CryptoUtils.verificarSenha((String.valueOf(txtSenha.getPassword())), User.getInstance().getPassword());
+                boolean senhaOk = false;
+                try {
+                    senhaOk = CryptoUtils.verificarSenha((String.valueOf(txtSenha.getPassword())), User.getInstance().getPassword());
+                } catch (NullPointerException ex) {
+                    JOptionPane.showMessageDialog(this, "Usuário não encontrado", "Aviso de Falha de Acesso",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
                 if (senhaOk) {
                     JMenuMenu.getInstance().setEnabled(true);
                     JMenuHelp.getInstance().setEnabled(true);
