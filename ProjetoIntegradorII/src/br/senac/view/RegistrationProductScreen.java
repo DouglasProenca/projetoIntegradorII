@@ -5,6 +5,7 @@ import br.senac.controller.MarcaDao;
 import br.senac.controller.ProductDAO;
 import br.senac.objects.images;
 import br.senac.model.Product;
+import br.senac.model.User;
 import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
 import java.awt.event.ActionEvent;
@@ -257,7 +258,7 @@ public class RegistrationProductScreen extends InternalFrame {
         switch (e.getActionCommand()) {
             case "save":
                 Product objProduct = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText())
-                        , jboCategoria.getSelectedItem().toString(), 0, jboBrand.getSelectedItem().toString(), null, null, null);
+                        , jboCategoria.getSelectedItem().toString(), 0, jboBrand.getSelectedItem().toString(), null, null, String.valueOf(User.getInstance().getId()));
                 if (daop.save(objProduct)) {
                     JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
                     this.dispose();
@@ -265,7 +266,7 @@ public class RegistrationProductScreen extends InternalFrame {
                 break;
             case "alter":
                 Product objMarcaAlt = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText())
-                        , jboCategoria.getSelectedItem().toString(), id, jboBrand.getSelectedItem().toString(), null, null, null);
+                        , jboCategoria.getSelectedItem().toString(), id, jboBrand.getSelectedItem().toString(), null, null, String.valueOf(User.getInstance().getId()));
                 daop.alter(objMarcaAlt);
                 this.dispose();
                 break;

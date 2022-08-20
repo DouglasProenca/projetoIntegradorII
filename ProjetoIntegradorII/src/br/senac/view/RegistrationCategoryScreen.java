@@ -3,6 +3,7 @@ package br.senac.view;
 import br.senac.controller.CategoryDAO;
 import br.senac.objects.images;
 import br.senac.model.Category;
+import br.senac.model.User;
 import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
 import java.awt.event.ActionEvent;
@@ -193,14 +194,14 @@ public class RegistrationCategoryScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                Category objMarca = new Category(txtBrand.getText(), 0, null, null, null, "1");
+                Category objMarca = new Category(txtBrand.getText(), 0, null, null, null, String.valueOf(User.getInstance().getId()));
                 if (dao.save(objMarca)) {
                     JOptionPane.showMessageDialog(this, "Categoria Salva Com Sucesso!");
                     this.dispose();
                 }
                 break;
             case "alter":
-                Category objMarcaAlt = new Category(txtBrand.getText(), id, null, null, null, "1");
+                Category objMarcaAlt = new Category(txtBrand.getText(), id, null, null, null, String.valueOf(User.getInstance().getId()));
                 dao.alter(objMarcaAlt);
                 this.dispose();
                 break;

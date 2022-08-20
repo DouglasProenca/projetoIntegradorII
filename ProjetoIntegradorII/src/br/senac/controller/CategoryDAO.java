@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 public class CategoryDAO implements DAO {
 
     private static CategoryDAO uniqueInstance;
-    private final ConnectionManager connectionManager = ConnectionManager.getInstance();
 
     private CategoryDAO() {
 
@@ -35,7 +34,7 @@ public class CategoryDAO implements DAO {
     public boolean delete(int id) {
         boolean retorno = false;
         try {
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_categoria WHERE id = ?");
             instrucaoSQL.setInt(1, id);
 
@@ -55,7 +54,7 @@ public class CategoryDAO implements DAO {
 
         try {
 
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select c.id\n"
                     + "	  ,c.categoria\n"
@@ -85,7 +84,7 @@ public class CategoryDAO implements DAO {
 
         try {
 
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select c.id\n"
                     + "	  ,c.categoria\n"
                     + "	  ,c.[data]\n"
@@ -119,11 +118,12 @@ public class CategoryDAO implements DAO {
 
         try {
             Category category = (Category) object;
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_categoria values(?,(select getDate()),1)");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_categoria values(?,(select getDate()),?)");
 
             instrucaoSQL.setString(1, category.getCategoria().toUpperCase());
+            instrucaoSQL.setInt(2, Integer.valueOf(category.getUser()));
 
             retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
 
@@ -142,14 +142,15 @@ public class CategoryDAO implements DAO {
 
         try {
             Category category = (Category) object;
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_categoria SET categoria=?\n"
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_categoria SET categoria=?,[user]=?\n"
                     + "WHERE id = ?");
 
             //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, category.getCategoria().toUpperCase());
-            instrucaoSQL.setInt(2, category.getId());
+            instrucaoSQL.setInt(2, Integer.valueOf(category.getUser()));
+            instrucaoSQL.setInt(3, category.getId());
 
             //Mando executar a instrução SQL
             int linhasAfetadas = instrucaoSQL.executeUpdate();

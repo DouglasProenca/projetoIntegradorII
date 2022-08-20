@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 public class ProductDAO implements DAO {
 
     private static ProductDAO uniqueInstance;
-    private final ConnectionManager connectionManager = ConnectionManager.getInstance();
 
     private ProductDAO() {
 
@@ -35,7 +34,7 @@ public class ProductDAO implements DAO {
     public boolean delete(int id) {
         boolean retorno;
         try {
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_produto WHERE id = ?");
             instrucaoSQL.setInt(1, id);
 
@@ -55,7 +54,7 @@ public class ProductDAO implements DAO {
 
         try {
 
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select p.id\n"
                     + "                    	 , p.nome\n"
@@ -97,15 +96,16 @@ public class ProductDAO implements DAO {
 
         try {
             Product product = (Product) object;
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,(select getDate()),1,(select id from rc_categoria where categoria = ?))");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,(select getDate()),?,(select id from rc_categoria where categoria = ?))");
 
             instrucaoSQL.setString(1, product.getNome());
             instrucaoSQL.setString(2, product.getMarca());
             instrucaoSQL.setFloat(3, product.getValor());
             instrucaoSQL.setInt(4, product.getQuantidade());
-            instrucaoSQL.setString(5, product.getCategoria());
+            instrucaoSQL.setInt(5, Integer.valueOf(product.getUser()));
+            instrucaoSQL.setString(6, product.getCategoria());
 
             instrucaoSQL.executeUpdate();
 
@@ -124,11 +124,11 @@ public class ProductDAO implements DAO {
 
         try {
             Product product = (Product) object;
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_produto SET nome=?\n"
                     + ",marca=(select id from rc_marca where marca=?),valor=?,quantidade=?,\n"
-                    + "categoria = (select id from rc_categoria where categoria=?)\n"
+                    + "categoria = (select id from rc_categoria where categoria=?),user?\n"
                     + "WHERE id = ?");
 
             instrucaoSQL.setString(1, product.getNome());
@@ -136,7 +136,8 @@ public class ProductDAO implements DAO {
             instrucaoSQL.setFloat(3, product.getValor());
             instrucaoSQL.setInt(4, product.getQuantidade());
             instrucaoSQL.setString(5, product.getCategoria());
-            instrucaoSQL.setInt(6, product.getId());
+            instrucaoSQL.setInt(6, Integer.valueOf(product.getUser()));
+            instrucaoSQL.setInt(7, product.getId());
 
             //Mando executar a instrução SQL
             int linhasAfetadas = instrucaoSQL.executeUpdate();
@@ -157,7 +158,7 @@ public class ProductDAO implements DAO {
 
         try {
 
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select p.id\n"
                     + "                    	 , p.nome\n"
                     + "                     	 , m.marca\n"

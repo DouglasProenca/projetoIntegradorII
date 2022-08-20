@@ -3,6 +3,7 @@ package br.senac.view;
 import br.senac.controller.MarcaDao;
 import br.senac.objects.images;
 import br.senac.model.Brand;
+import br.senac.model.User;
 import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
 import java.awt.event.ActionEvent;
@@ -214,14 +215,14 @@ public class RegistrationBrandScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                Brand objMarca = new Brand(0, txtBrand.getText(), jboCountry.getSelectedItem().toString(), null, "1");
+                Brand objMarca = new Brand(0, txtBrand.getText(), jboCountry.getSelectedItem().toString(), null, String.valueOf(User.getInstance().getId()));
                 if (dao.save(objMarca)) {
                     JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
                     this.dispose();
                 }
                 break;
             case "alter":
-                Brand objMarcaAlt = new Brand(id, txtBrand.getText(), jboCountry.getSelectedItem().toString(), null, "1");
+                Brand objMarcaAlt = new Brand(id, txtBrand.getText(), jboCountry.getSelectedItem().toString(), null, String.valueOf(User.getInstance().getId()));
                 dao.alter(objMarcaAlt);
                 this.dispose();
                 break;

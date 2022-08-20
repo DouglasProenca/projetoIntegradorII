@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
  *
  * @author Douglas
  */
-public class ValidateCpf {
+public abstract class ValidateCpf {
 
     public static boolean isCPF(String CPF) {
         if (CPF.equals("00000000000")

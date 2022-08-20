@@ -222,7 +222,7 @@ public class JMenuMenu extends Menu {
                     mail.setVisible(true);
                     mail.addInternalFrameListener(this);
                     break;
-                case "logout":
+                case "logout": 
                     break;
                 case "sale":
                     SaleScreen sl = new SaleScreen();

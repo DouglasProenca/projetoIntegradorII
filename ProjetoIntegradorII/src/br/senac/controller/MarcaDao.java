@@ -9,8 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,7 +18,6 @@ import javax.swing.JOptionPane;
 public final class MarcaDao implements DAO {
 
     private static MarcaDao uniqueInstance;
-    private final ConnectionManager connectionManager = ConnectionManager.getInstance();
 
     private MarcaDao() {
 
@@ -37,7 +34,7 @@ public final class MarcaDao implements DAO {
     public boolean delete(int id) {
         boolean retorno = false;
         try {
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_marca WHERE id = ?");
             instrucaoSQL.setInt(1, id);
 
@@ -56,7 +53,7 @@ public final class MarcaDao implements DAO {
         ArrayList<Brand> listCountry = new ArrayList<>();
 
         try {
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
 
             // Passo 3 - Executo a instrução SQL
             PreparedStatement instrucaoSQL = conexao.prepareStatement("SELECT paisNome FROM rc_pais");
@@ -82,12 +79,13 @@ public final class MarcaDao implements DAO {
         try {
             Brand brand = (Brand) object;
 
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),(select getDate()),1)");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,(select paisId from rc_pais where paisNome = ?),(select getDate()),?)");
 
             instrucaoSQL.setString(1, brand.getMarca());
             instrucaoSQL.setString(2, brand.getPais());
+            instrucaoSQL.setInt(3, Integer.valueOf(brand.getUser()));
 
             retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
 
@@ -95,10 +93,9 @@ public final class MarcaDao implements DAO {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
             retorno = false;
-        } catch (SecurityException ex) {
-            Logger.getLogger(MarcaDao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {
-            Logger.getLogger(MarcaDao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
         }
 
         return retorno;
@@ -110,16 +107,17 @@ public final class MarcaDao implements DAO {
 
         try {
             Brand brand = (Brand) object;
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_marca SET marca=?"
-                    + ",pais=(select paisID from rc_pais where paisNome = ?)"
+                    + ",pais=(select paisID from rc_pais where paisNome = ?),user=?\n"
                     + "WHERE id = ?");
 
             //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, brand.getMarca());
             instrucaoSQL.setString(2, brand.getPais());
-            instrucaoSQL.setInt(3, brand.getId());
+            instrucaoSQL.setInt(3, Integer.valueOf(brand.getUser()));
+            instrucaoSQL.setInt(4, brand.getId());
 
             //Mando executar a instrução SQL
             int linhasAfetadas = instrucaoSQL.executeUpdate();
@@ -140,7 +138,7 @@ public final class MarcaDao implements DAO {
 
         try {
 
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
                     + "	 , m.marca\n"
@@ -173,7 +171,7 @@ public final class MarcaDao implements DAO {
 
         try {
 
-            Connection conexao = connectionManager.getConexao();
+            Connection conexao = ConnectionManager.getInstance().getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
                     + "	  , m.marca\n"
                     + "	  , p.paisNome\n"
