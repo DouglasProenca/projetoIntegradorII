@@ -12,7 +12,7 @@ import net.sf.jasperreports.swing.JRViewer;
 public class ReportScreen extends InternalFrame {
 
     private static InternalFrame uniqueInstance;
-    private JasperManager jasperManager = new JasperManager();
+    private final JasperManager jasperManager = new JasperManager();
 
     public ReportScreen(String titulo, Object[] params) {
         super(titulo, true, true, true, true, 707, 400);

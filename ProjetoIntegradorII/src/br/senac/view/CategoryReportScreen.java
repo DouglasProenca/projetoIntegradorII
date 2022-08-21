@@ -50,9 +50,7 @@ public class CategoryReportScreen extends InternalFrame implements ListSelection
     private final Excel excel = new Excel();
 
     public static synchronized InternalFrame getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new CategoryReportScreen();
-        }
+        if (uniqueInstance == null) uniqueInstance = new CategoryReportScreen();
         return uniqueInstance;
     }
 
@@ -202,9 +200,7 @@ public class CategoryReportScreen extends InternalFrame implements ListSelection
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int choice = fc.showSaveDialog(null);
-                if (choice != 1) {
-                    excel.CategoryExcel(fc.getSelectedFile(), dao.getAll());
-                }
+                if (choice != 1) excel.CategoryExcel(fc.getSelectedFile(), dao.getAll());
                 break;
             case "find":
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();

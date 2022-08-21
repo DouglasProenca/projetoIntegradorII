@@ -24,9 +24,7 @@ public class UserDAO implements DAO {
     }
 
     public static synchronized UserDAO getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new UserDAO();
-        }
+        if (uniqueInstance == null) uniqueInstance = new UserDAO();
         return uniqueInstance;
     }
 

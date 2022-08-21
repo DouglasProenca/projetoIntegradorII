@@ -80,7 +80,7 @@ public class CategoryDAO implements DAO {
 
     @Override
     public ArrayList<Category> getBy(String key) {
-        ArrayList<Category> categoryList = new ArrayList<Category>();
+        ArrayList<Category> categoryList = new ArrayList<>();
 
         try {
 
@@ -114,7 +114,7 @@ public class CategoryDAO implements DAO {
 
     @Override
     public boolean save(Object object) {
-        boolean retorno = false;
+        boolean retorno = true;
 
         try {
             Category category = (Category) object;
@@ -126,20 +126,20 @@ public class CategoryDAO implements DAO {
             instrucaoSQL.setDate(2, new java.sql.Date(category.getDate().getTime()));
             instrucaoSQL.setInt(3, Integer.valueOf(category.getUser()));
 
-            retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
+            instrucaoSQL.executeUpdate();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
             retorno = false;
         }
-
+        
         return retorno;
     }
 
     @Override
     public boolean alter(Object object) {
-        boolean retorno = false;
+        boolean retorno = true;
 
         try {
             Category category = (Category) object;
@@ -148,15 +148,11 @@ public class CategoryDAO implements DAO {
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_categoria SET categoria=?,[user]=?\n"
                     + "WHERE id = ?");
 
-            //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, category.getCategoria().toUpperCase());
             instrucaoSQL.setInt(2, Integer.valueOf(category.getUser()));
             instrucaoSQL.setInt(3, category.getId());
 
-            //Mando executar a instrução SQL
-            int linhasAfetadas = instrucaoSQL.executeUpdate();
-
-            retorno = linhasAfetadas > 0 ? true : false;
+            instrucaoSQL.executeUpdate();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),

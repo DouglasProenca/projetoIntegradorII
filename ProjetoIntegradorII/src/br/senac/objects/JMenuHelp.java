@@ -65,9 +65,7 @@ public class JMenuHelp extends Menu {
     }
 
     public static synchronized JMenu getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JMenuHelp();
-        }
+        if (uniqueInstance == null) uniqueInstance = new JMenuHelp();
         return uniqueInstance;
     }
 

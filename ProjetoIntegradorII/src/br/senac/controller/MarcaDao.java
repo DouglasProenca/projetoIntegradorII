@@ -24,22 +24,19 @@ public final class MarcaDao implements DAO {
     }
 
     public static synchronized MarcaDao getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new MarcaDao();
-        }
+        if (uniqueInstance == null) uniqueInstance = new MarcaDao();
         return uniqueInstance;
     }
 
     @Override
     public boolean delete(int id) {
-        boolean retorno = false;
+        boolean retorno = true;
         try {
             Connection conexao = ConnectionManager.getInstance().getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_marca WHERE id = ?");
             instrucaoSQL.setInt(1, id);
 
-            int linhasAfetadas = instrucaoSQL.executeUpdate();
-            retorno = linhasAfetadas > 0 ? true : false;
+            instrucaoSQL.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
@@ -74,7 +71,7 @@ public final class MarcaDao implements DAO {
 
     @Override
     public boolean save(Object object) {
-        boolean retorno = false;
+        boolean retorno = true;
 
         try {
             Brand brand = (Brand) object;
@@ -88,7 +85,7 @@ public final class MarcaDao implements DAO {
             instrucaoSQL.setDate(3, new java.sql.Date(brand.getDate().getTime()));
             instrucaoSQL.setInt(4, Integer.valueOf(brand.getUser()));
 
-            retorno = instrucaoSQL.executeUpdate() > 0 ? true : false;
+            instrucaoSQL.executeUpdate();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
@@ -104,7 +101,7 @@ public final class MarcaDao implements DAO {
 
     @Override
     public boolean alter(Object object) {
-        boolean retorno = false;
+        boolean retorno = true;
 
         try {
             Brand brand = (Brand) object;
@@ -121,9 +118,7 @@ public final class MarcaDao implements DAO {
             instrucaoSQL.setInt(4, brand.getId());
 
             //Mando executar a instrução SQL
-            int linhasAfetadas = instrucaoSQL.executeUpdate();
-
-            retorno = linhasAfetadas > 0 ? true : false;
+            instrucaoSQL.executeUpdate();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),

@@ -36,7 +36,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.addKeyListener(this);
-
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.add(getDesktopPane(), BorderLayout.CENTER);
         this.add(getJToolBar(), BorderLayout.PAGE_END);
 

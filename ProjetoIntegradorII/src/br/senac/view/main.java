@@ -8,7 +8,7 @@ import javax.swing.SwingUtilities;
  *
  * @author Douglas
  */
-public class main {
+public abstract class main {
 
     public static void main(String[] args) {
         Runnable r = () -> {

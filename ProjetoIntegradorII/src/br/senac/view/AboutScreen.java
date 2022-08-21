@@ -27,7 +27,7 @@ public class AboutScreen extends InternalFrame {
     private JLabel user_dir;
     private JLabel java_home;
     private JPanel painel;
-    private java.util.Properties p = System.getProperties();
+    private final java.util.Properties p = System.getProperties();
     private JLabel lblUsuário_do_Sistema;
     private JLabel lblhostname;
     private JLabel lblos_name;
@@ -50,7 +50,6 @@ public class AboutScreen extends InternalFrame {
         this.setLayout(null);
         this.getContentPane().add(getPainel());
     }
-
 
     private JPanel getPainel() {
         painel = new JPanel(null);
@@ -223,5 +222,4 @@ public class AboutScreen extends InternalFrame {
         Usuário_do_Sistema.setBounds(10, 10, 130, 26);
         return Usuário_do_Sistema;
     }
-
 }

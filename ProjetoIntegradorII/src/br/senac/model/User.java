@@ -23,14 +23,6 @@ public class User {
         return uniqueInstance;
     }
 
-    public User(int id, String mail, String mailPassword, String user, String password) {
-        this.id = id;
-        this.mail = mail;
-        this.mailPassword = mailPassword;
-        this.user = user;
-        this.password = password;
-    }
-
     public int getId() {
         return id;
     }

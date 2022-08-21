@@ -201,9 +201,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int choice = fc.showSaveDialog(null);
-                if (choice != 1) {
-                    excel.BrandExcel(fc.getSelectedFile(), MarcaDao.getInstance().getAll());
-                }
+                if (choice != 1) excel.BrandExcel(fc.getSelectedFile(), MarcaDao.getInstance().getAll());
                 break;
             case "find":
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();

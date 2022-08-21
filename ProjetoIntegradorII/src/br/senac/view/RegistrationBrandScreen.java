@@ -230,9 +230,11 @@ public class RegistrationBrandScreen extends InternalFrame {
             case "import":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                fc.showOpenDialog(null);
-                brandList = Excel.importBrand(fc.getSelectedFile());
-                CarregarJTable(brandList, false);
+                int choice = fc.showOpenDialog(null);
+                if (choice != 1) {
+                    brandList = Excel.importBrand(fc.getSelectedFile());
+                    CarregarJTable(brandList, false);
+                }
                 break;
             case "delete":
                 CarregarJTable(brandList, true);

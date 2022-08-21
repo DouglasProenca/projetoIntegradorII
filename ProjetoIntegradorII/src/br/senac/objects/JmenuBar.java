@@ -22,9 +22,7 @@ public class JmenuBar extends JMenuBar {
     }
 
     public static synchronized JmenuBar getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JmenuBar();
-        }
+        if (uniqueInstance == null) uniqueInstance = new JmenuBar();
         return uniqueInstance;
     }
 }
