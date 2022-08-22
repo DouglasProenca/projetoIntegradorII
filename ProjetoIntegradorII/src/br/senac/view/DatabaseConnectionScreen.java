@@ -115,7 +115,7 @@ public class DatabaseConnectionScreen extends InternalFrame implements ActionLis
     }
 
     private JButton getBtnCancelar() {
-        btnCancelar = new JButton("Cancelar", images.imagemClose());
+        btnCancelar = new JButton("Cancelar", images.getInstance().imagemClose());
         btnCancelar.setBounds(280, 270, 125, 48);
         btnCancelar.addActionListener(this);
         btnCancelar.setActionCommand("close");
@@ -123,7 +123,7 @@ public class DatabaseConnectionScreen extends InternalFrame implements ActionLis
     }
 
     private JButton getBtnSalvar() {
-        btnSalvar = new JButton("Salvar", images.imagemCheck());
+        btnSalvar = new JButton("Salvar", images.getInstance().imagemCheck());
         btnSalvar.setBounds(145, 270, 125, 48);
         btnSalvar.addActionListener(this);
         btnSalvar.setActionCommand("save");
@@ -131,7 +131,7 @@ public class DatabaseConnectionScreen extends InternalFrame implements ActionLis
     }
 
     private JButton getBtnTestar() {
-        btnTestar = new JButton("Testar", images.imagemRefresh());
+        btnTestar = new JButton("Testar", images.getInstance().imagemRefresh());
         btnTestar.setBounds(10, 270, 125, 48);
         btnTestar.addActionListener(this);
         btnTestar.setActionCommand("test");
@@ -188,9 +188,9 @@ public class DatabaseConnectionScreen extends InternalFrame implements ActionLis
                 Connection conexao = connectionManager.getConexaoTest(txtLogin.getText(), String.valueOf(txtSenha.getPassword()),
                         txtDatabase.getText(), txtServer.getText());
                 if (conexao != null) {
-                    setLblImagem(images.conectionSucess());
+                    setLblImagem(images.getInstance().conectionSucess());
                 } else {
-                    setLblImagem(images.conectionError());
+                    setLblImagem(images.getInstance().conectionError());
                 }
                 break;
         }

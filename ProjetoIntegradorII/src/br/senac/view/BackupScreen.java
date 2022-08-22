@@ -79,7 +79,7 @@ public class BackupScreen extends InternalFrame implements ActionListener, KeyLi
     }
 
     private JLabel getLblImagem() {
-        lblImagem = new JLabel(images.backup());
+        lblImagem = new JLabel(images.getInstance().backup());
         lblImagem.setBounds(140, 20, 50, 70);
         return lblImagem;
     }
@@ -98,7 +98,7 @@ public class BackupScreen extends InternalFrame implements ActionListener, KeyLi
     }
 
     private JButton getbtnCancelar() {
-        btnCancelar = new JButton("Cancelar", images.imagemClose());
+        btnCancelar = new JButton("Cancelar", images.getInstance().imagemClose());
         btnCancelar.setBounds(180, 220, 130, 40);
         btnCancelar.addActionListener(this);
         btnCancelar.setActionCommand("Cancelar");
@@ -106,7 +106,7 @@ public class BackupScreen extends InternalFrame implements ActionListener, KeyLi
     }
 
     private JButton getBtnConfirmar() {
-        btnConfirmar = new JButton("Confirmar", images.imagemCheck());
+        btnConfirmar = new JButton("Confirmar", images.getInstance().imagemCheck());
         btnConfirmar.setBounds(30, 220, 130, 40);
         btnConfirmar.addActionListener(this);
         btnConfirmar.setActionCommand("Confirmar");

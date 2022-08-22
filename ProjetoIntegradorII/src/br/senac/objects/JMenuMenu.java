@@ -28,7 +28,7 @@ public class JMenuMenu extends Menu {
     private static JMenuMenu uniqueInstance;
 
     private JMenuMenu() {
-        super("Menu", images.imagemMenu());
+        super("Menu", images.getInstance().imagemMenu());
         this.initComponents();
     }
 
@@ -57,7 +57,7 @@ public class JMenuMenu extends Menu {
 
     private JMenu getMenuUser() {
         JMenu database = new JMenu("Usuário");
-        database.setIcon(images.imagemAdministrator());
+        database.setIcon(images.getInstance().imagemAdministrator());
         database.add(getUser());
         database.add(getLogout());
         return database;
@@ -79,7 +79,7 @@ public class JMenuMenu extends Menu {
 
     private JMenu getMenuDatabase() {
         JMenu database = new JMenu("Banco de Dados");
-        database.setIcon(images.imagemDatabase());
+        database.setIcon(images.getInstance().imagemDatabase());
         database.add(getBackup());
         database.add(getJDBC());
         return database;
@@ -100,14 +100,14 @@ public class JMenuMenu extends Menu {
     }
 
     private JMenuItem getNotes() {
-        JMenuItem notes = new JMenuItem("Bloco de Notas", images.imagemBlocoNotas());
+        JMenuItem notes = new JMenuItem("Bloco de Notas", images.getInstance().imagemBlocoNotas());
         notes.addActionListener(this);
         notes.setActionCommand("notes");
         return notes;
     }
 
     private JMenuItem getCalculator() {
-        JMenuItem calculator = new JMenuItem("Calculadora", images.imagemCalculadora());
+        JMenuItem calculator = new JMenuItem("Calculadora", images.getInstance().imagemCalculadora());
         calculator.addActionListener(this);
         calculator.setActionCommand("calculator");
         return calculator;
@@ -115,7 +115,7 @@ public class JMenuMenu extends Menu {
 
     private JMenu getMenuLookAndFeel() {
         JMenu lookAndFeel = new JMenu("Look And Feel");
-        lookAndFeel.setIcon(images.imagemLookAndFeel());
+        lookAndFeel.setIcon(images.getInstance().imagemLookAndFeel());
         lookAndFeel.add(getLookAndFeel());
         lookAndFeel.add(getCanvasBackground());
         return lookAndFeel;
@@ -136,7 +136,7 @@ public class JMenuMenu extends Menu {
     }
 
     private JMenuItem getExit() {
-        JMenuItem exit = new JMenuItem("Sair", images.imagemSair());
+        JMenuItem exit = new JMenuItem("Sair", images.getInstance().imagemSair());
         exit.addActionListener(this);
         exit.setActionCommand("exit");
         exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
@@ -144,14 +144,14 @@ public class JMenuMenu extends Menu {
     }
 
     private JMenuItem getMail() {
-        JMenuItem mail = new JMenuItem("E-mail", images.imagemMail());
+        JMenuItem mail = new JMenuItem("E-mail", images.getInstance().imagemMail());
         mail.addActionListener(this);
         mail.setActionCommand("mail");
         return mail;
     }
 
     private JMenuItem getSale() {
-        JMenuItem sale = new JMenuItem("Venda", images.imagemSale());
+        JMenuItem sale = new JMenuItem("Venda", images.getInstance().imagemSale());
         sale.addActionListener(this);
         sale.setActionCommand("sale");
         sale.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK));

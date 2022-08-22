@@ -1,5 +1,10 @@
 package br.senac.objects;
 
+import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 /**
@@ -8,103 +13,266 @@ import javax.swing.ImageIcon;
  */
 public abstract class images {
 
-    public static ImageIcon imagemDatabase() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/Resources/BancoDados-icon.png"));
+    private static images uniqueInstance;
+
+    private images() {
     }
 
-    public static ImageIcon imagemPrincipal() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/Resources/System-computer-icon.png"));
+    public static synchronized images getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new images() {
+            };
+        }
+        return uniqueInstance;
     }
 
-    public static ImageIcon imagemSair() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Log-Out-icon.png"));
+    public ImageIcon imagemDatabase() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/BancoDados-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemBlocoNotas() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Notepad-Bloc-notes-icon.png"));
+    public ImageIcon imagemPrincipal() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/System-computer-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemCalculadora() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Calculator-icon.png"));
+    public ImageIcon imagemSair() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Log-Out-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemMenu() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Menu-icon.png"));
+    public ImageIcon imagemBlocoNotas() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Notepad-Bloc-notes-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemReport() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/chart-icon.png"));
+    public ImageIcon imagemCalculadora() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Calculator-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemHelp() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Info-icon.png"));
+    public ImageIcon imagemMenu() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Menu-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemVersion() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Apps-preferences-system-windows-actions-icon.png"));
+    public ImageIcon imagemReport() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/chart-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemSite() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Categories-applications-internet-icon.png"));
+    public ImageIcon imagemHelp() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Info-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemCalendar() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Calendar-icon.png"));
+    public ImageIcon imagemVersion() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Apps-preferences-system-windows-actions-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemLookAndFeel() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Calendar-icon.png"));
+    public ImageIcon imagemSite() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Categories-applications-internet-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemProduct() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/product-icon.png"));
+    public ImageIcon imagemCalendar() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Calendar-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemBrand() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Apple-Store-Tshirt-Red-icon.png"));
+    public ImageIcon imagemLookAndFeel() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Calendar-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemManagement() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Finance-Bill-icon.png"));
+    public ImageIcon imagemProduct() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/product-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemMail() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Mail-icon.png"));
+    public ImageIcon imagemBrand() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Apple-Store-Tshirt-Red-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemSale() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Sales-by-payment-method-icon.png"));
+    public ImageIcon imagemManagement() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Finance-Bill-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemAdministrator() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Administrator-icon.png"));
+    public ImageIcon imagemMail() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Mail-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemClose() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/close-icon.png"));
+    public ImageIcon imagemSale() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Sales-by-payment-method-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemCheck() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/check-1-icon.png"));
+    public ImageIcon imagemAdministrator() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Administrator-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon imagemRefresh() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Button-Refresh-icon.png"));
+    public ImageIcon imagemClose() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/close-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon conectionSucess() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Database-accept-icon.png"));
+    public ImageIcon imagemCheck() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/check-1-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon conectionError() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Database-erro-icon.png"));
+    public ImageIcon imagemRefresh() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Button-Refresh-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon backup() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/Backup-icon.png"));
+    public ImageIcon conectionSucess() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Database-accept-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 
-    public static ImageIcon category() {
-        return new ImageIcon(Thread.currentThread().getClass().getResource("/resources/sql-join-right-icon.png"));
+    public ImageIcon conectionError() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Database-erro-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
+    }
+
+    public ImageIcon backup() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/Backup-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
+    }
+
+    public ImageIcon category() {
+        Image img = null;
+        try {
+            img = ImageIO.read(getClass().getResource("/resources/sql-join-right-icon.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new ImageIcon(img);
     }
 }

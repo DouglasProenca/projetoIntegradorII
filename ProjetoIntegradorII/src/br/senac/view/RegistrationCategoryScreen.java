@@ -132,7 +132,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
     }
 
     private JButton getBtnClose() {
-        btnClose = new JButton("Cancelar", images.imagemClose());
+        btnClose = new JButton("Cancelar", images.getInstance().imagemClose());
         btnClose.setBounds(250, 250, 200, 40);
         btnClose.addActionListener(this);
         btnClose.setActionCommand("close");
@@ -140,7 +140,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
     }
 
     private JButton getBtnCheck(String formato) {
-        btnCheck = new JButton("Salvar", images.imagemCheck());
+        btnCheck = new JButton("Salvar", images.getInstance().imagemCheck());
         btnCheck.setBounds(20, 250, 200, 40);
         btnCheck.addActionListener(this);
         btnCheck.setActionCommand(formato.equals("Creation") ? "save" : "alter");

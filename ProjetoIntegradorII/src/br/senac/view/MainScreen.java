@@ -1,14 +1,17 @@
 package br.senac.view;
 
 import br.senac.objects.JmenuBar;
-import br.senac.objects.images;
 import br.senac.objects.DesktopPane;
+import br.senac.objects.images;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -40,7 +43,8 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         this.add(getDesktopPane(), BorderLayout.CENTER);
         this.add(getJToolBar(), BorderLayout.PAGE_END);
 
-        ImageIcon icone = images.imagemPrincipal();
+        ImageIcon icone = null;
+        icone = images.getInstance().imagemPrincipal();
         this.setIconImage(icone.getImage());
 
         this.setJMenuBar(JmenuBar.getInstance());

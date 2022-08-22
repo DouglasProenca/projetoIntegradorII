@@ -23,7 +23,7 @@ public class JMenuHelp extends Menu {
     private static JMenu uniqueInstance;
 
     private JMenuHelp() {
-        super("Ajuda",images.imagemHelp());
+        super("Ajuda",images.getInstance().imagemHelp());
         this.initComponents();
     }
 
@@ -37,28 +37,28 @@ public class JMenuHelp extends Menu {
     }
 
     private JMenuItem getCalendar() {
-        JMenuItem about = new JMenuItem("Calendário", images.imagemCalendar());
+        JMenuItem about = new JMenuItem("Calendário", images.getInstance().imagemCalendar());
         about.addActionListener(this);
         about.setActionCommand("calendar");
         return about;
     }
 
     private JMenuItem getAbout() {
-        JMenuItem about = new JMenuItem("Sobre", images.imagemHelp());
+        JMenuItem about = new JMenuItem("Sobre", images.getInstance().imagemHelp());
         about.addActionListener(this);
         about.setActionCommand("about");
         return about;
     }
 
     private JMenuItem getVersion() {
-        JMenuItem version = new JMenuItem("Versão", images.imagemVersion());
+        JMenuItem version = new JMenuItem("Versão", images.getInstance().imagemVersion());
         version.addActionListener(this);
         version.setActionCommand("version");
         return version;
     }
 
     private JMenuItem getSite() {
-        JMenuItem site = new JMenuItem("Site", images.imagemSite());
+        JMenuItem site = new JMenuItem("Site", images.getInstance().imagemSite());
         site.addActionListener(this);
         site.setActionCommand("site");
         return site;
