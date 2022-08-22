@@ -209,9 +209,11 @@ public class RegistrationCategoryScreen extends InternalFrame {
             case "import":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                fc.showOpenDialog(null);
-                categoryList = Excel.importCategory(fc.getSelectedFile());
-                CarregarJTable(categoryList, false);
+                int s = fc.showOpenDialog(null);
+                if (s != 1) {
+                    categoryList = Excel.importCategory(fc.getSelectedFile());
+                    CarregarJTable(categoryList, false);
+                }
                 break;
             case "delete":
                 CarregarJTable(categoryList, true);

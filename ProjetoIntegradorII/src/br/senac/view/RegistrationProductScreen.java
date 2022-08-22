@@ -258,25 +258,27 @@ public class RegistrationProductScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                Product objProduct = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText())
-                        , jboCategoria.getSelectedItem().toString(), 0, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
+                Product objProduct = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText()),
+                         jboCategoria.getSelectedItem().toString(), 0, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
                 if (daop.save(objProduct)) {
                     JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
                     this.dispose();
                 }
                 break;
             case "alter":
-                Product objMarcaAlt = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText())
-                        , jboCategoria.getSelectedItem().toString(), id, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
+                Product objMarcaAlt = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText()),
+                         jboCategoria.getSelectedItem().toString(), id, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
                 daop.alter(objMarcaAlt);
                 this.dispose();
                 break;
             case "import":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                fc.showOpenDialog(null);
-                productsList = Excel.importProduct(fc.getSelectedFile());
-                CarregarJTable(productsList, false);
+                int choice = fc.showOpenDialog(null);
+                if (choice != 1) {
+                    productsList = Excel.importProduct(fc.getSelectedFile());
+                    CarregarJTable(productsList, false);
+                }
                 break;
             case "delete":
                 CarregarJTable(productsList, true);
