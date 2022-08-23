@@ -9,7 +9,7 @@ Funções Do Sistema:
 - Geração de Relatorio Gerencial em Jasper
 - Envio de E-mail
 - Cadastro de venda, produtos e marcas por input no sistema ou por Excel.
-- Exportação de Venda, produtos e marcas por excel
+- Exportação de Caegoria, produtos e marcas por excel
 
 Adicionais:
 
@@ -52,3 +52,8 @@ Tela de Backup:
 Tela de Envio de e-mail:
 
 ![image](https://user-images.githubusercontent.com/78769051/185471918-cc9f3b59-9c5e-4238-b6ac-ed66c0e3757e.png)
+
+Tela de Venda:
+
+![image](https://user-images.githubusercontent.com/78769051/186229327-d935b46e-18f1-4001-a915-e9eb0f2cb349.png)
+
