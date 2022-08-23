@@ -120,10 +120,9 @@ public class BackupScreen extends InternalFrame implements ActionListener, KeyLi
                 if (String.valueOf(txtSenha.getPassword()).equals("1234")) {
 
                     JFileChooser fc = new JFileChooser();
-                    int i;
                     fc.setSelectedFile(new File("Backup Sistema.bak"));
                     fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                    i = fc.showSaveDialog(null);
+                    int i = fc.showSaveDialog(null);
                     if (i != 1) {
                         File arquivo = fc.getSelectedFile();
                         try {
@@ -150,8 +149,7 @@ public class BackupScreen extends InternalFrame implements ActionListener, KeyLi
     }
 
     @Override
-    public void keyPressed(KeyEvent e
-    ) {
+    public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Confirmar");
             actionPerformed(z);
