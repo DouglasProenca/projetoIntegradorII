@@ -2,6 +2,7 @@ package br.senac.view;
 
 import br.senac.objects.JmenuBar;
 import br.senac.objects.DesktopPane;
+import br.senac.objects.InternalFrame;
 import br.senac.objects.images;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -64,6 +65,18 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         Dimension jInternalFrameSize = frame.getSize();
         frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
+    }
+    
+    public static void removeForms(){
+        int qtd = desktopPane.getComponentCount();
+        for(int i = 0; i < qtd; i ++){
+            if(desktopPane.getComponent(i)instanceof InternalFrame){
+                InternalFrame frame = (InternalFrame) desktopPane.getComponent(i);
+                frame.dispose();
+                i = -1;
+                qtd = desktopPane.getComponentCount();
+            }
+        }
     }
 
     @Override

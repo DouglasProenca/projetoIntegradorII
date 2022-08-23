@@ -224,10 +224,7 @@ public class JMenuMenu extends Menu {
                     break;
                 case "logout":
                     LoginScreen login = new LoginScreen();
-                    MainScreen.desktopPane.removeAll();
-                    MainScreen.jToolBar.removeAll();
-                    MainScreen.jToolBar.setBackground(Color.WHITE); // Verificar Também (Dá certo e muda a cor ao fazer)
-                    MainScreen.desktopPane.setBackground(Color.WHITE); //Verificar(Não muda a cor do desktop mas tira todos os frames)
+                    MainScreen.removeForms();
                     MainScreen.desktopPane.add(login);
                     login.setVisible(true);
                     break;
