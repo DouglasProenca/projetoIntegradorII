@@ -12,11 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/ConnectionManager.java</file>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/images.java</file>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/InternalFrame.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/PropertiesSystem.java</file>
             <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/JMenuMenu.java</file>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/view/MainScreen.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/JasperManager.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/view/SaleScreen.java</file>
         </group>
     </open-files>
 </project-private>
