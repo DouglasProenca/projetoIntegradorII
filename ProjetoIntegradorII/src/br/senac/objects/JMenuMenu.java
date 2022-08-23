@@ -4,6 +4,7 @@ import br.senac.view.BackupScreen;
 import br.senac.view.LookAndFeelScreen;
 import br.senac.view.MainScreen;
 import br.senac.view.DatabaseConnectionScreen;
+import br.senac.view.LoginScreen;
 import br.senac.view.MailScreen;
 import br.senac.view.SaleScreen;
 import java.awt.Color;
@@ -34,7 +35,6 @@ public class JMenuMenu extends Menu {
 
     private void initComponents() {
         this.setMnemonic('M');
-        this.setEnabled(false);
         this.add(getMenuDatabase());
         this.add(getNotes());
         this.add(getCalculator());
@@ -222,7 +222,14 @@ public class JMenuMenu extends Menu {
                     mail.setVisible(true);
                     mail.addInternalFrameListener(this);
                     break;
-                case "logout": 
+                case "logout":
+                    LoginScreen login = new LoginScreen();
+                    MainScreen.desktopPane.removeAll();
+                    MainScreen.jToolBar.removeAll();
+                    MainScreen.jToolBar.setBackground(Color.WHITE); // Verificar Também (Dá certo e muda a cor ao fazer)
+                    MainScreen.desktopPane.setBackground(Color.WHITE); //Verificar(Não muda a cor do desktop mas tira todos os frames)
+                    MainScreen.desktopPane.add(login);
+                    login.setVisible(true);
                     break;
                 case "sale":
                     SaleScreen sl = new SaleScreen();

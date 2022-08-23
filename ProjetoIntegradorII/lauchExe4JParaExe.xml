@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>C:\Users\Douglas\Documents\GitHub\projetoIntegradorII\ProjetoIntegradorII\dist\ProjetoIntegradorII.jar</jar>
+  <jar>C:\Users\Douglas\Documents\GitHub\projetoIntegradorII\ProjetoIntegradorII\dist\AllInOneJar.jar</jar>
   <outfile>C:\Users\Douglas\Desktop\Sistema.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>

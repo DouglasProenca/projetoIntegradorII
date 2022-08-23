@@ -1,7 +1,9 @@
 package br.senac.view;
 
 import br.senac.objects.InternalFrame;
+import com.toedter.calendar.JDateChooser;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -13,6 +15,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
@@ -22,138 +27,339 @@ import javax.swing.text.MaskFormatter;
  */
 public class SaleScreen extends InternalFrame {
 
-    private JPanel clientFilter;
-    private JPanel clientTable;
-    private JPanel productFilter;
-    private JPanel productTable;
-    private JPanel saleTable;
-    private JPanel saleInfo;
-    private JTable tblSale;
-    private JTable tblProduct;
-    private JTable tblclient;
-    private JLabel lblFilterClient;
-    private JLabel lblClientFilterNome;
-    private JTextField txtClientFilterNome;
-    private JLabel lblClientFilterCPF;
-    private JTextField txtClientFilterCPF;
-    private JButton btnClientFilterFind;
-    private final String colunasClientFilterFind[] = {"CPF", "Nome"};
-    private JTable tblClientClientFilterFind;
-    private DefaultTableModel dm;
-    private JScrollPane scrollClientFilterFind;
+    private final JPanel clientFilter = new ClientFilter(); //1º esqueda
+    private final JPanel clientTable = new ClientTable(); //1º direita
+    private final JPanel saleTable = new SaleTable(); //2º Painel
+    private final JPanel salesInfo = new SalesInfo(); // 3º Painel
+    private JButton btnConcluir;
+    private JButton btnExcluir;
 
     public SaleScreen() {
-        super("Nova Venda", false, true, false, true, 800, 500);
+        super("Nova Venda", false, true, false, true, 800, 600);
         initComponents();
     }
 
     private void initComponents() {
         this.setLayout(null);
-        this.add(getClientFilter());
-        this.add(getClientTable());
+        this.add(clientFilter);
+        this.add(clientTable);
+        this.add(saleTable);
+        this.add(salesInfo);
+        this.add(getBtnConcluir());
+        this.add(getBtnExcluir());
     }
 
-    private JPanel getClientFilter() {
-        clientFilter = new JPanel(null);
-        clientFilter.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
-        clientFilter.setBounds(10, 10, 310, 150);
-        clientFilter.add(getLblFilterClient());
-        clientFilter.add(getLblClientFilterNome());
-        clientFilter.add(getTxtClientFilterNome());
-        clientFilter.add(getLblClientFilterCPF());
-        clientFilter.add(getTxtClientFilterCPF());
-        clientFilter.add(getBtnClientFilterFind());
-        return clientFilter;
-    }
+    private class ClientFilter extends JPanel {
 
-    private JLabel getLblFilterClient() {
-        lblFilterClient = new JLabel("Filtrar Clientes");
-        lblFilterClient.setBounds(10, 10, 150, 20);
-        return lblFilterClient;
-    }
+        private JLabel lblFilterClient;
+        private JLabel lblClientFilterNome;
+        private JTextField txtClientFilterNome;
+        private JLabel lblClientFilterCPF;
+        private JTextField txtClientFilterCPF;
+        private JButton btnClientFilterFind;
+        private JButton btnAdicionar;
 
-    private JLabel getLblClientFilterNome() {
-        lblClientFilterNome = new JLabel("Nome:");
-        lblClientFilterNome.setBounds(10, 40, 40, 20);
-        return lblClientFilterNome;
-    }
-
-    private JTextField getTxtClientFilterNome() {
-        txtClientFilterNome = new JTextField();
-        txtClientFilterNome.setBounds(50, 40, 250, 20);
-        return txtClientFilterNome;
-    }
-
-    private JLabel getLblClientFilterCPF() {
-        lblClientFilterCPF = new JLabel("CPF:");
-        lblClientFilterCPF.setBounds(10, 70, 40, 20);
-        return lblClientFilterCPF;
-    }
-
-    private JTextField getTxtClientFilterCPF() {
-        try {
-            txtClientFilterCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
-        } catch (ParseException ex) {
-            Logger.getLogger(SaleScreen.class.getName()).log(Level.SEVERE, null, ex);
+        public ClientFilter() {
+            this.setLayout(null);
+            this.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+            this.setBounds(10, 10, 310, 150);
+            this.add(getLblFilterClient());
+            this.add(getLblClientFilterNome());
+            this.add(getTxtClientFilterNome());
+            this.add(getLblClientFilterCPF());
+            this.add(getTxtClientFilterCPF());
+            this.add(getBtnClientFilterFind());
+            this.add(getBtnAdicionar());
         }
-        txtClientFilterCPF.setBounds(50, 70, 250, 20);
-        return txtClientFilterCPF;
-    }
 
-    private JButton getBtnClientFilterFind() {
-        btnClientFilterFind = new JButton("Pesquisar");
-        btnClientFilterFind.setBounds(220, 100, 80, 25);
-        return btnClientFilterFind;
-    }
+        private JLabel getLblFilterClient() {
+            lblFilterClient = new JLabel("Filtrar Clientes");
+            lblFilterClient.setBounds(10, 10, 150, 20);
+            return lblFilterClient;
+        }
 
-    private JPanel getClientTable() {
-        clientTable = new JPanel(null);
-        clientTable.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
-        clientTable.setBounds(350, 10, 425, 150);
-        clientTable.add(getScrollClientFilterFind());
-        return clientTable;
-    }
+        private JLabel getLblClientFilterNome() {
+            lblClientFilterNome = new JLabel("Nome:");
+            lblClientFilterNome.setBounds(10, 40, 40, 20);
+            return lblClientFilterNome;
+        }
 
-    private DefaultTableModel getDm(String[] colunas) {
-        dm = new DefaultTableModel(colunas, 0) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int mColIndex) {
-                return false;
+        private JTextField getTxtClientFilterNome() {
+            txtClientFilterNome = new JTextField();
+            txtClientFilterNome.setBounds(50, 40, 250, 20);
+            return txtClientFilterNome;
+        }
+
+        private JLabel getLblClientFilterCPF() {
+            lblClientFilterCPF = new JLabel("CPF:");
+            lblClientFilterCPF.setBounds(10, 70, 40, 20);
+            return lblClientFilterCPF;
+        }
+
+        private JTextField getTxtClientFilterCPF() {
+            try {
+                txtClientFilterCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
+            } catch (ParseException ex) {
+                Logger.getLogger(SaleScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
-        };
-        return dm;
+            txtClientFilterCPF.setBounds(50, 70, 250, 20);
+            return txtClientFilterCPF;
+        }
+
+        private JButton getBtnClientFilterFind() {
+            btnClientFilterFind = new JButton("Pesquisar");
+            btnClientFilterFind.setBounds(220, 100, 80, 25);
+            return btnClientFilterFind;
+        }
+
+        private JButton getBtnAdicionar() {
+            btnAdicionar = new JButton("Adicionar");
+            btnAdicionar.setBounds(10, 100, 100, 25);
+            return btnAdicionar;
+        }
     }
 
-    private JTable getTblClientClientFilterFind() {
-        tblClientClientFilterFind = new JTable(getDm(colunasClientFilterFind));
-        tblClientClientFilterFind.getSelectionModel().addListSelectionListener(this);
-        tblClientClientFilterFind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        return tblClientClientFilterFind;
+    private class ClientTable extends JPanel implements ListSelectionListener {
+
+        private JScrollPane scrollClientFilterFind;
+        private JTable tblClientClientFilterFind;
+        private final String colunasClientFilterFind[] = {"CPF", "Nome"};
+        private DefaultTableModel dm;
+
+        public ClientTable() {
+            this.setLayout(null);
+            this.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+            this.setBounds(350, 10, 425, 150);
+            this.add(getScrollClientFilterFind());
+        }
+
+        private JTable getTblClientClientFilterFind() {
+            tblClientClientFilterFind = new JTable(getDm(colunasClientFilterFind));
+            tblClientClientFilterFind.getSelectionModel().addListSelectionListener(this);
+            tblClientClientFilterFind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            return tblClientClientFilterFind;
+        }
+
+        private JScrollPane getScrollClientFilterFind() {
+            scrollClientFilterFind = new JScrollPane(getTblClientClientFilterFind());
+            scrollClientFilterFind.setBounds(10, 10, 405, 130);
+            return scrollClientFilterFind;
+        }
+
+        private DefaultTableModel getDm(String[] colunas) {
+            dm = new DefaultTableModel(colunas, 0) {
+                @Override
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                    return false;
+                }
+            };
+            return dm;
+        }
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 
-    private JScrollPane getScrollClientFilterFind() {
-        scrollClientFilterFind = new JScrollPane(getTblClientClientFilterFind());
-        scrollClientFilterFind.setBounds(10, 10, 405, 100);
-        return scrollClientFilterFind;
+    private class SaleTable extends JPanel implements ListSelectionListener {
+
+        private JPanel productFilter;
+        private JPanel productTable;
+        private JTable tblProduct;
+        private final String colunasClientFilterFind[] = {"ID", "Nome", "Preço", "quantidade"};
+        private DefaultTableModel dm;
+        private JScrollPane scroll;
+        private JTextField txtCliente;
+        private JTextField txtCPF;
+        private JLabel lblCliente;
+        private JLabel lblCPF;
+        private JTextField txtProduto;
+        private JButton btnPesquisar;
+
+        public SaleTable() {
+            this.setLayout(null);
+            this.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+            this.setBounds(10, 175, 765, 150);
+            this.add(getProductTable());
+            this.add(getLblCliente());
+            this.add(getTxtCliente());
+            this.add(getlblCPF());
+            this.add(getTxtCPF());
+            this.add(getProductFilter());
+        }
+
+        private JPanel getProductFilter() {
+            productFilter = new JPanel(null);
+            productFilter.setBorder(new TitledBorder(new LineBorder(MainScreen.desktopPane.getBackground()),"Filtrar Produtos"));
+            productFilter.setBounds(10, 60, 294, 86);
+            productFilter.add(getTxtProduto());
+            productFilter.add(getBtnPesquisar());
+            return productFilter;
+        }
+        
+        private JTextField getTxtProduto(){
+            txtProduto = new JTextField();
+            txtProduto.setToolTipText("Pesquise por codigo ou Nome");
+            txtProduto.setBounds(10, 35, 184, 20);
+            return txtProduto;
+        }
+        
+        private JButton getBtnPesquisar(){
+            btnPesquisar = new JButton("Pesquisar");
+            btnPesquisar.setBounds(200, 33, 80, 25);
+            return btnPesquisar;
+        }
+
+        private JPanel getProductTable() {
+            productTable = new JPanel(null);
+            productTable.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+            productTable.setBounds(340, 5, 422, 140);
+            productTable.add(getScroll());
+            return productTable;
+        }
+
+        private JLabel getLblCliente() {
+            lblCliente = new JLabel("Cliente:");
+            lblCliente.setBounds(10, 10, 40, 20);
+            return lblCliente;
+        }
+
+        private JTextField getTxtCliente() {
+            txtCliente = new JTextField();
+            txtCliente.setEnabled(false);
+            txtCliente.setBounds(60, 10, 240, 20);
+            return txtCliente;
+        }
+
+        private JLabel getlblCPF() {
+            lblCPF = new JLabel("CPF:");
+            lblCPF.setBounds(10, 34, 40, 20);
+            return lblCPF;
+        }
+
+        private JTextField getTxtCPF() {
+            txtCPF = new JTextField();
+            txtCPF.setEnabled(false);
+            txtCPF.setBounds(60, 34, 240, 20);
+            return txtCPF;
+        }
+
+        private JScrollPane getScroll() {
+            scroll = new JScrollPane(getTblProduct());
+            scroll.setBounds(10, 10, 405, 120);
+            return scroll;
+        }
+
+        private JTable getTblProduct() {
+            tblProduct = new JTable(getDm(colunasClientFilterFind));
+            tblProduct.getSelectionModel().addListSelectionListener(this);
+            tblProduct.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            return tblProduct;
+        }
+
+        private DefaultTableModel getDm(String[] colunas) {
+            dm = new DefaultTableModel(colunas, 0) {
+                @Override
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                    return false;
+                }
+            };
+            return dm;
+        }
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 
-    private JPanel getProductFilter() {
-        productFilter = new JPanel(null);
-        return productFilter;
+    private class SalesInfo extends JPanel implements ListSelectionListener {
+
+        private JTable table;
+        private final String colunas[] = {"ID", "Nome", "Quantidade", "Preço"};
+        private DefaultTableModel dm;
+        private JScrollPane scrollSaleTable;
+        private JTextField txtTotal;
+        private JLabel lblTotal;
+        private JLabel lblDataVenda;
+        private JDateChooser chooserDate;
+
+        public SalesInfo() {
+            this.setLayout(null);
+            this.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+            this.setBounds(10, 350, 765, 150);
+            this.add(getScroll());
+            this.add(getTxtTotal());
+            this.add(getLblTotal());
+            this.add(getLblDataVenda());
+            this.add(getChooserDate());
+        }
+
+        private DefaultTableModel getDm(String[] colunas) {
+            dm = new DefaultTableModel(colunas, 0) {
+                @Override
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                    return false;
+                }
+            };
+            return dm;
+        }
+
+        private JScrollPane getScroll() {
+            scrollSaleTable = new JScrollPane(getTblSale());
+            scrollSaleTable.setBounds(10, 30, 745, 110);
+            return scrollSaleTable;
+        }
+
+        private JTable getTblSale() {
+            table = new JTable(getDm(colunas));
+            table.getSelectionModel().addListSelectionListener(this);
+            table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            return table;
+        }
+
+        private JTextField getTxtTotal() {
+            txtTotal = new JTextField();
+            txtTotal.setEnabled(false);
+            txtTotal.setBounds(655, 5, 100, 20);
+            return txtTotal;
+        }
+
+        private JLabel getLblTotal() {
+            lblTotal = new JLabel("Valor Total:");
+            lblTotal.setBounds(580, 5, 80, 20);
+            return lblTotal;
+        }
+
+        private JLabel getLblDataVenda() {
+            lblDataVenda = new JLabel("Data da Venda:");
+            lblDataVenda.setBounds(10, 5, 80, 20);
+            return lblDataVenda;
+        }
+
+        private JDateChooser getChooserDate() {
+            chooserDate = new JDateChooser(new Date());
+            chooserDate.setBounds(100, 5, 100, 20);
+            return chooserDate;
+        }
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
     }
 
-    private JPanel getProductTable() {
-        productTable = new JPanel(null);
-        return productTable;
+    private JButton getBtnConcluir() {
+        btnConcluir = new JButton("Concluir");
+        btnConcluir.setBounds(675, 520, 100, 35);
+        return btnConcluir;
     }
 
-    private JPanel getSaleTable() {
-        saleTable = new JPanel(null);
-        return saleTable;
-    }
-
-    private JPanel getSaleInfo() {
-        saleInfo = new JPanel(null);
-        return saleInfo;
+    private JButton getBtnExcluir() {
+        btnExcluir = new JButton("Excluir Item");
+        btnExcluir.setBounds(550, 520, 100, 35);
+        return btnExcluir;
     }
 }

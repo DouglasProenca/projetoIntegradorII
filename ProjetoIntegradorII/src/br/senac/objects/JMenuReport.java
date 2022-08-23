@@ -27,7 +27,6 @@ public class JMenuReport extends Menu {
     }
 
     private void initComponents() {
-        this.setEnabled(false);
         this.setMnemonic('R');
         this.add(getBrand());
         this.add(getCategory());

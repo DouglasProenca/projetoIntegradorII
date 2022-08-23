@@ -28,7 +28,6 @@ public class JMenuHelp extends Menu {
     }
 
     private void initComponents() {
-        this.setEnabled(false);
         this.setMnemonic('A');
         this.add((getCalendar()));
         this.add(getSite());

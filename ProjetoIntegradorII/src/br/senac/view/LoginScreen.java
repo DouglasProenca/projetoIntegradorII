@@ -40,6 +40,9 @@ public class LoginScreen extends InternalFrame {
         this.getContentPane().add(getTxtUsuario());
         this.getContentPane().add(getTxtSenha());
         this.getContentPane().add(getBtnConfirmar());
+        JMenuMenu.getInstance().setEnabled(false);
+        JMenuHelp.getInstance().setEnabled(false);
+        JMenuReport.getInstance().setEnabled(false);
     }
 
     private JLabel getLblUsuario() {
