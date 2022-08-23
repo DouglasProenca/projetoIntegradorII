@@ -66,11 +66,11 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
     }
-    
-    public static void removeForms(){
+
+    public static void removeForms() {
         int qtd = desktopPane.getComponentCount();
-        for(int i = 0; i < qtd; i ++){
-            if(desktopPane.getComponent(i)instanceof InternalFrame){
+        for (int i = 0; i < qtd; i++) {
+            if (desktopPane.getComponent(i) instanceof InternalFrame) {
                 InternalFrame frame = (InternalFrame) desktopPane.getComponent(i);
                 frame.dispose();
                 i = -1;
@@ -96,15 +96,18 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     @Override
     public void windowStateChanged(WindowEvent e) {
-        if (desktopPane.getSelectedFrame() != null) {
-            JInternalFrame frame = desktopPane.getSelectedFrame();
-            int s1 = e.getNewState();
-            if (s1 == MainScreen.MAXIMIZED_BOTH) {
+
+        int s1 = e.getNewState();
+        int qtd = desktopPane.getComponentCount();
+        for (int i = 0; i < qtd; i++) {
+            if (desktopPane.getComponent(i) instanceof InternalFrame) {
+                InternalFrame frame = (InternalFrame) desktopPane.getComponent(i);
                 Dimension jInternalFrameSize = frame.getSize();
-                frame.setLocation((1300 - jInternalFrameSize.width) / 2, (600 - jInternalFrameSize.height) / 2);
-            } else {
-                Dimension jInternalFrameSize = frame.getSize();
-                frame.setLocation(400 - jInternalFrameSize.width / 2, (400 - jInternalFrameSize.height) / 2);
+                if (s1 == MainScreen.MAXIMIZED_BOTH) {
+                    frame.setLocation((1300 - jInternalFrameSize.width) / 2, (600 - jInternalFrameSize.height) / 2);
+                } else {
+                    frame.setLocation(400 - jInternalFrameSize.width / 2, (400 - jInternalFrameSize.height) / 2);
+                }
             }
         }
     }
