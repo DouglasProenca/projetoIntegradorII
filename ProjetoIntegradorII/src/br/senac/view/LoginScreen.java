@@ -90,6 +90,7 @@ public class LoginScreen extends InternalFrame {
                 } catch (NullPointerException ex) {
                     JOptionPane.showMessageDialog(this, "Usuário não encontrado", "Aviso de Falha de Acesso",
                             JOptionPane.ERROR_MESSAGE);
+                    break;
                 }
 
                 if (senhaOk) {

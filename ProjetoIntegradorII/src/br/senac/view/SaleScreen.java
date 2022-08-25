@@ -1,7 +1,14 @@
 package br.senac.view;
 
+import br.senac.controller.ClientDAO;
+import br.senac.controller.ProductDAO;
 import br.senac.objects.InternalFrame;
 import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -49,7 +56,7 @@ public class SaleScreen extends InternalFrame {
         this.add(getBtnExcluir());
     }
 
-    private class ClientFilter extends JPanel {
+    private class ClientFilter extends JPanel implements ActionListener {
 
         private JLabel lblFilterClient;
         private JLabel lblClientFilterNome;
@@ -115,11 +122,25 @@ public class SaleScreen extends InternalFrame {
         private JButton getBtnAdicionar() {
             btnAdicionar = new JButton("Adicionar");
             btnAdicionar.setBounds(10, 100, 100, 25);
+            btnAdicionar.addActionListener(this);
+            btnAdicionar.setActionCommand("adicionar");
             return btnAdicionar;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switch (e.getActionCommand()) {
+                case "adicionar":
+                    RegistrationClientScreen rbs = new RegistrationClientScreen();
+                    MainScreen.desktopPane.add(rbs);
+                    rbs.setVisible(true);
+                    MainScreen.centralizaForm(rbs);
+                    break;
+            }
         }
     }
 
-    private class ClientTable extends JPanel implements ListSelectionListener {
+    private class ClientTable extends JPanel {
 
         private JScrollPane scrollClientFilterFind;
         private JTable tblClientClientFilterFind;
@@ -131,11 +152,27 @@ public class SaleScreen extends InternalFrame {
             this.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
             this.setBounds(350, 10, 425, 150);
             this.add(getScrollClientFilterFind());
+            this.loadTable();
         }
 
         private JTable getTblClientClientFilterFind() {
             tblClientClientFilterFind = new JTable(getDm(colunasClientFilterFind));
-            tblClientClientFilterFind.getSelectionModel().addListSelectionListener(this);
+            tblClientClientFilterFind.addMouseListener(new MouseAdapter() {
+                SaleTable tb = new SaleTable();
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 2) {
+                        int numeroLinha = tblClientClientFilterFind.getSelectedRow();
+
+                        //int id = Integer.parseInt(tblClientClientFilterFind.getModel().getValueAt(numeroLinha, 0).toString());
+                        String cpf = tblClientClientFilterFind.getModel().getValueAt(numeroLinha, 0).toString();
+                        String nome = tblClientClientFilterFind.getModel().getValueAt(numeroLinha, 1).toString();
+                        tb.setNome(nome);
+                        tb.setCPF(cpf);
+                    }
+
+                }
+            });
             tblClientClientFilterFind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             return tblClientClientFilterFind;
         }
@@ -156,9 +193,12 @@ public class SaleScreen extends InternalFrame {
             return dm;
         }
 
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        protected void loadTable() {
+            DefaultTableModel modelo = (DefaultTableModel) tblClientClientFilterFind.getModel();
+            modelo.setRowCount(0);
+            ClientDAO.getInstance().getAll().forEach((p) -> {
+                modelo.addRow(new Object[]{p.getCpf(), p.getNome()});
+            });
         }
     }
 
@@ -187,25 +227,26 @@ public class SaleScreen extends InternalFrame {
             this.add(getlblCPF());
             this.add(getTxtCPF());
             this.add(getProductFilter());
+            this.loadTable();
         }
 
         private JPanel getProductFilter() {
             productFilter = new JPanel(null);
-            productFilter.setBorder(new TitledBorder(new LineBorder(MainScreen.desktopPane.getBackground()),"Filtrar Produtos"));
+            productFilter.setBorder(new TitledBorder(new LineBorder(MainScreen.desktopPane.getBackground()), "Filtrar Produtos"));
             productFilter.setBounds(10, 60, 294, 86);
             productFilter.add(getTxtProduto());
             productFilter.add(getBtnPesquisar());
             return productFilter;
         }
-        
-        private JTextField getTxtProduto(){
+
+        private JTextField getTxtProduto() {
             txtProduto = new JTextField();
             txtProduto.setToolTipText("Pesquise por codigo ou Nome");
             txtProduto.setBounds(10, 35, 184, 20);
             return txtProduto;
         }
-        
-        private JButton getBtnPesquisar(){
+
+        private JButton getBtnPesquisar() {
             btnPesquisar = new JButton("Pesquisar");
             btnPesquisar.setBounds(200, 33, 80, 25);
             return btnPesquisar;
@@ -258,6 +299,14 @@ public class SaleScreen extends InternalFrame {
             return tblProduct;
         }
 
+        public void setNome(String nome) {
+            txtCliente.setText(nome);
+        }
+
+        public void setCPF(String cpf) {
+            txtCPF.setText(cpf);
+        }
+
         private DefaultTableModel getDm(String[] colunas) {
             dm = new DefaultTableModel(colunas, 0) {
                 @Override
@@ -266,6 +315,15 @@ public class SaleScreen extends InternalFrame {
                 }
             };
             return dm;
+        }
+
+        protected void loadTable() {
+            DefaultTableModel modelo = (DefaultTableModel) tblProduct.getModel();
+            modelo.setRowCount(0);
+            ProductDAO.getInstance().getAll().forEach((p) -> {
+                modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getValor(),
+                    p.getQuantidade()});
+            });
         }
 
         @Override
