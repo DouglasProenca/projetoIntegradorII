@@ -7,6 +7,10 @@ import br.senac.view.ProductReportScreen;
 import br.senac.view.ReportScreen;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -92,7 +96,6 @@ public class JMenuReport extends Menu {
         }
         return uniqueInstance;
     }
-    
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -114,18 +117,23 @@ public class JMenuReport extends Menu {
                 pr.addInternalFrameListener(this);
                 break;
             case "managementRep":
-                JDateChooser jd = new JDateChooser();
-                JDateChooser jdf = new JDateChooser();
+                LocalDateTime data = LocalDateTime.now();
+                LocalDateTime ultimoDiaDoMesAnterior = data.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
+                Date mes_ant = Date.from(ultimoDiaDoMesAnterior.atZone(ZoneId.systemDefault()).toInstant());
+                JDateChooser jd = new JDateChooser(mes_ant);
+                JDateChooser jdf = new JDateChooser(new Date());
                 String message = "Escolha a data inicial:\n";
                 String message2 = "Escolha a data Final:\n";
                 Object[] params = {message, jd, message2, jdf};
-                JOptionPane.showConfirmDialog(null, params, "Relatório Gerencial", JOptionPane.PLAIN_MESSAGE);
-                InternalFrame rs = ReportScreen.getInstance("Relatório Gerencial", params);
-                MainScreen.desktopPane.add(rs);
-                MainScreen.jToolBar.add(rs.getDesktopIcon());
-                rs.setVisible(true);
-                MainScreen.centralizaForm(rs);
-                rs.addInternalFrameListener(this);
+                int resposta = JOptionPane.showConfirmDialog(null, params, "Relatório Gerencial", JOptionPane.PLAIN_MESSAGE);
+                if (resposta == 0) {
+                    InternalFrame rs = ReportScreen.getInstance("Relatório Gerencial", params);
+                    MainScreen.desktopPane.add(rs);
+                    MainScreen.jToolBar.add(rs.getDesktopIcon());
+                    rs.setVisible(true);
+                    MainScreen.centralizaForm(rs);
+                    rs.addInternalFrameListener(this);
+                }
                 break;
             case "analyticalRep":
                 break;

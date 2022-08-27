@@ -43,6 +43,11 @@ public class DatabaseConnectionScreen extends InternalFrame implements ActionLis
         initComponents();
     }
 
+    public DatabaseConnectionScreen(boolean closabe, boolean iconifiable) {
+        super("Conexão Banco de Dados", false, closabe, false, iconifiable, 440, 380);
+        initComponents();
+    }
+
     private JLabel getLblImagem() {
         lblImagem = new JLabel();
         lblImagem.setBounds(180, 180, 66, 68);

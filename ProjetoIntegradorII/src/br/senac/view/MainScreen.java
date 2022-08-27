@@ -1,5 +1,6 @@
 package br.senac.view;
 
+import br.senac.objects.ConnectionManager;
 import br.senac.objects.JmenuBar;
 import br.senac.objects.DesktopPane;
 import br.senac.objects.InternalFrame;
@@ -27,6 +28,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
     public static DesktopPane desktopPane;
     public static JToolBar jToolBar;
     private final LoginScreen loginScreen = new LoginScreen();
+    private final DatabaseConnectionScreen bd = new DatabaseConnectionScreen(false,false);
 
     public MainScreen() {
         super("CR7 Imports");
@@ -46,17 +48,31 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         icone = images.getInstance().imagemPrincipal();
         this.setIconImage(icone.getImage());
         this.setJMenuBar(JmenuBar.getInstance());
-                Thread t = new Thread(() -> {
-            try {
-                Thread.sleep(600);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            desktopPane.add(loginScreen);
-            centralizaForm(loginScreen);
-            loginScreen.setVisible(true);
-        });
-        t.start();
+        if (ConnectionManager.getInstance().getConexao() == null) {
+            Thread t = new Thread(() -> {
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                desktopPane.add(bd);
+                centralizaForm(bd);
+                bd.setVisible(true);
+            });
+            t.start();
+        } else {
+            Thread t = new Thread(() -> {
+                try {
+                    Thread.sleep(800);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                desktopPane.add(loginScreen);
+                centralizaForm(loginScreen);
+                loginScreen.setVisible(true);
+            });
+            t.start();
+        }
     }
 
     private JDesktopPane getDesktopPane() {

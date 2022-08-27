@@ -19,7 +19,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.event.InternalFrameEvent;
-import java.sql.Connection;
 
 /**
  *
@@ -45,15 +44,6 @@ public class JMenuMenu extends Menu {
         this.add(getMenuUser());
         this.add(new JSeparator());
         this.add(getExit());
-    }
-
-    public ActionEvent connection(Connection connection) {
-        ActionEvent e = null;
-        if (connection == null) {
-            e = new ActionEvent(MainScreen.desktopPane, ActionEvent.ACTION_PERFORMED, "jdbc");
-            actionPerformed(e);
-        }
-        return e;
     }
 
     private JMenu getMenuUser() {

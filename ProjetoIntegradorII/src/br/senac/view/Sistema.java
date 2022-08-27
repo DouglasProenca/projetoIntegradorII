@@ -1,7 +1,5 @@
 package br.senac.view;
 
-import br.senac.objects.JMenuMenu;
-import br.senac.objects.ConnectionManager;
 import javax.swing.SwingUtilities;
 
 /**
@@ -15,9 +13,6 @@ public final class Sistema {
             LookAndFeelScreen.initLookAndFeel();
             MainScreen t = new MainScreen();
             t.setVisible(true);
-            JMenuMenu menu = JMenuMenu.getInstance();
-            ConnectionManager connectionManager1 = ConnectionManager.getInstance();
-            menu.connection(connectionManager1.getConexao());
         };
         SwingUtilities.invokeLater(r);
     }
