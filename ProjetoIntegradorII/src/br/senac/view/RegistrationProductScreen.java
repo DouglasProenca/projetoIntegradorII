@@ -165,7 +165,7 @@ public class RegistrationProductScreen extends InternalFrame {
 
     private JLabel getLblValor() {
         lblValor = new JLabel("Valor:");
-        lblValor.setBounds(340, 100, 90, 25);
+        lblValor.setBounds(350, 100, 90, 25);
         return lblValor;
     }
 

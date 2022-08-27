@@ -7,6 +7,7 @@ import br.senac.view.MainScreen;
 import br.senac.view.DatabaseConnectionScreen;
 import br.senac.view.LoginScreen;
 import br.senac.view.MailScreen;
+import br.senac.view.ReportUserScreen;
 import br.senac.view.SaleScreen;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -230,6 +231,12 @@ public class JMenuMenu extends Menu {
                     sl.addInternalFrameListener(this);
                     break;
                 case "user":
+                    ReportUserScreen userScreen = new ReportUserScreen();
+                    MainScreen.desktopPane.add(userScreen);
+                    MainScreen.jToolBar.add(userScreen.getDesktopIcon());
+                    MainScreen.centralizaForm(userScreen);
+                    userScreen.setVisible(true);
+                    userScreen.addInternalFrameListener(this);
                     break;
             }
         } catch (IOException ex) {
