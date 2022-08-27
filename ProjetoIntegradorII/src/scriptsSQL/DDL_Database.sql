@@ -57,3 +57,14 @@ GO
 ALTER TABLE rc_produto ADD CONSTRAINT fk_produto_user FOREIGN KEY ([user]) REFERENCES rc_user (id)
 ALTER TABLE rc_produto ADD CONSTRAINT fk_produto_categoria FOREIGN KEY ([categoria]) REFERENCES rc_categoria (id)
 ALTER TABLE rc_produto ADD CONSTRAINT fk_produto_marca FOREIGN KEY ([marca]) REFERENCES rc_marca (id)
+
+CREATE TABLE rc_cliente(
+    id INT PRIMARY KEY IDENTITY,
+    nome VARCHAR(100) NOT NULL,
+    cpf char(14) UNIQUE NOT NULL,
+    [user] INT NOT NULL,
+    [data] DATE NOT NULL,
+)
+GO
+
+ALTER TABLE rc_cliente ADD CONSTRAINT fk_cliente_user FOREIGN KEY ([user]) REFERENCES rc_user (id)

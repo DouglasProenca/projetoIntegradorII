@@ -34,7 +34,6 @@ public class LoginScreen extends InternalFrame {
 
     private void initComponents() {
         this.setLayout(null);
-        this.setLocation(450, 150);
         this.getContentPane().add(getLblUsuario());
         this.getContentPane().add(getLblSenha());
         this.getContentPane().add(getTxtUsuario());

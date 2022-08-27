@@ -10,6 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -44,12 +46,21 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         icone = images.getInstance().imagemPrincipal();
         this.setIconImage(icone.getImage());
         this.setJMenuBar(JmenuBar.getInstance());
+                Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(600);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            desktopPane.add(loginScreen);
+            centralizaForm(loginScreen);
+            loginScreen.setVisible(true);
+        });
+        t.start();
     }
 
     private JDesktopPane getDesktopPane() {
         desktopPane = new DesktopPane(new Dimension(this.getSize().width, this.getSize().height - 40));
-        desktopPane.add(loginScreen);
-        loginScreen.setVisible(true);
         return desktopPane;
     }
 

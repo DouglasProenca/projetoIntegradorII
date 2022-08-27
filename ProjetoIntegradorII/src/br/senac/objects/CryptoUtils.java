@@ -6,7 +6,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
  *
  * @author Douglas
  */
-public abstract class CryptoUtils {
+public final class CryptoUtils {
 
     public static String gerarhashSenha(String senhaAberta) {
         return BCrypt.withDefaults().hashToString(8, senhaAberta.toCharArray());

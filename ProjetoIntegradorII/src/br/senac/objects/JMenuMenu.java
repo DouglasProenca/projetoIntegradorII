@@ -228,6 +228,7 @@ public class JMenuMenu extends Menu {
                     MainScreen.removeForms();
                     User.getInstance().setEmpty();
                     MainScreen.desktopPane.add(login);
+                    MainScreen.centralizaForm(login);
                     login.setVisible(true);
                     break;
                 case "sale":
