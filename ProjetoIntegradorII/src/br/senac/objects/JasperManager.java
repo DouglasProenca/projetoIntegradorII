@@ -1,8 +1,6 @@
 package br.senac.objects;
 
 import com.toedter.calendar.JDateChooser;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.HashMap;
@@ -16,7 +14,7 @@ import net.sf.jasperreports.engine.JasperPrint;
  *
  * @author Douglas
  */
-public class JasperManager {
+public class JasperManager extends Thread {
 
     public JasperPrint gerarManagetmentReport(Object[] params) {
         HashMap parametros = new HashMap();

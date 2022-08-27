@@ -121,8 +121,12 @@ public class MailScreen extends InternalFrame {
                 if (!txtDestinatario.getText().equals("") && !txtAssunto.getText().equals("")
                         && !txtCorpo.getText().equals("")) {
                     progressBar.setVisible(true);
-                    ret = mail.enviarGmail(txtDestinatario.getText(), txtAssunto.getText(),
-                            txtCorpo.getText(), txtCaminhoFile.getText());
+                    Thread t = new Thread(() -> {
+                        mail.enviarGmail(txtDestinatario.getText(), txtAssunto.getText(),
+                                txtCorpo.getText(), txtCaminhoFile.getText());
+                    });
+                    t.start();
+                    ret = true;
                 } else {
                     JOptionPane.showMessageDialog(this, "Campos de Destinario, Assunto e "
                             + "Corpo do E-mail não podem estar Vazios!",

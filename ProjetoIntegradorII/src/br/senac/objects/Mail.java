@@ -24,6 +24,8 @@ import javax.swing.JOptionPane;
  */
 public class Mail {
 
+   
+    
     private Properties props;
     
     private Properties getProps() {

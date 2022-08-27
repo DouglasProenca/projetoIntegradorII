@@ -62,4 +62,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public void setEmpty(){
+        this.user = null;
+        this.password = null;
+        this.id = 0;
+        this.mail = null;
+        this.mailPassword = null;
+    }
 }

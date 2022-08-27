@@ -1,5 +1,6 @@
 package br.senac.objects;
 
+import br.senac.model.User;
 import br.senac.view.BackupScreen;
 import br.senac.view.LookAndFeelScreen;
 import br.senac.view.MainScreen;
@@ -225,6 +226,7 @@ public class JMenuMenu extends Menu {
                 case "logout":
                     LoginScreen login = new LoginScreen();
                     MainScreen.removeForms();
+                    User.getInstance().setEmpty();
                     MainScreen.desktopPane.add(login);
                     login.setVisible(true);
                     break;

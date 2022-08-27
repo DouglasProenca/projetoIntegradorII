@@ -8,7 +8,7 @@ import javax.swing.SwingUtilities;
  *
  * @author Douglas
  */
-public abstract class Sistema {
+public final class Sistema {
 
     public static void main(String[] args) {
         Runnable r = () -> {
