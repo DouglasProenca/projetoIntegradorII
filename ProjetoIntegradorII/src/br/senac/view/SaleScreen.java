@@ -5,7 +5,6 @@ import br.senac.controller.ProductDAO;
 import br.senac.objects.InternalFrame;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.Date;
@@ -14,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -159,22 +159,7 @@ public class SaleScreen extends InternalFrame {
 
     private JTable getTblPanelTwo() {
         tblPanelTwo = new JTable(getDm(columnsTblPanelTwo));
-        tblPanelTwo.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    int numeroLinha = tblPanelTwo.getSelectedRow();
-
-                    //int id = Integer.parseInt(tblClientClientFilterFind.getModel().getValueAt(numeroLinha, 0).toString());
-                    String cpf = tblPanelTwo.getModel().getValueAt(numeroLinha, 0).toString();
-                    String nome = tblPanelTwo.getModel().getValueAt(numeroLinha, 1).toString();
-                    txtClientPanelThree.setText(nome);
-                    txtCPFPanelThree.setText(cpf);
-                }
-
-            }
-        });
+        tblPanelTwo.addMouseListener(this);
         tblPanelTwo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         return tblPanelTwo;
     }
@@ -289,12 +274,8 @@ public class SaleScreen extends InternalFrame {
         tblPanelThree = new JTable(getDm(tblProducts));
         tblPanelThree.getSelectionModel().addListSelectionListener(this);
         tblPanelThree.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblPanelThree.addMouseListener(this);
         return tblPanelThree;
-    }
-
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public JPanel getPanelFour() {
@@ -356,6 +337,8 @@ public class SaleScreen extends InternalFrame {
     private JButton getBtnExcluir() {
         btnExcluir = new JButton("Excluir Item");
         btnExcluir.setBounds(550, 520, 100, 35);
+        btnExcluir.addActionListener(this);
+        btnExcluir.setActionCommand("delete");
         return btnExcluir;
     }
 
@@ -368,6 +351,39 @@ public class SaleScreen extends InternalFrame {
                 rbs.setVisible(true);
                 MainScreen.centralizaForm(rbs);
                 break;
+            case "delete":
+                DefaultTableModel dtm = (DefaultTableModel) tblPanelFour.getModel();
+                if (tblPanelFour.getSelectedRow() >= 0) {
+                    dtm.removeRow(tblPanelFour.getSelectedRow());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 2) {
+            if (e.getSource().equals(tblPanelThree)) {
+                int numeroLinha = tblPanelThree.getSelectedRow();
+                int id = Integer.parseInt(tblPanelThree.getModel().getValueAt(numeroLinha, 0).toString());
+                String nome = tblPanelThree.getModel().getValueAt(numeroLinha, 1).toString();
+                float preco = Float.parseFloat(tblPanelThree.getModel().getValueAt(numeroLinha, 2).toString());
+                int quantidade = Integer.parseInt(tblPanelThree.getModel().getValueAt(numeroLinha, 3).toString());
+
+                DefaultTableModel modelo = (DefaultTableModel) tblPanelFour.getModel();
+                modelo.addRow(new Object[]{id, nome, preco, quantidade});
+
+            } else if (e.getSource().equals(tblPanelTwo)) {
+                int numeroLinha = tblPanelTwo.getSelectedRow();
+                //int id = Integer.parseInt(tblPanelTwo.getModel().getValueAt(numeroLinha, 0).toString());
+                String cpf = tblPanelTwo.getModel().getValueAt(numeroLinha, 0).toString();
+                String nome = tblPanelTwo.getModel().getValueAt(numeroLinha, 1).toString();
+                txtClientPanelThree.setText(nome);
+                txtCPFPanelThree.setText(cpf);
+            }
+
         }
     }
 }
