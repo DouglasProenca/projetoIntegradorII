@@ -48,7 +48,11 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         icone = images.getInstance().imagemPrincipal();
         this.setIconImage(icone.getImage());
         this.setJMenuBar(JmenuBar.getInstance());
-        if (ConnectionManager.getInstance().getConexao() == null) {
+        this.getFirst();
+    }
+    
+    private void getFirst(){
+         if (ConnectionManager.getInstance().getConexao() == null) {
             Thread t = new Thread(() -> {
                 try {
                     Thread.sleep(800);
@@ -123,7 +127,6 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     @Override
     public void windowStateChanged(WindowEvent e) {
-
         int s1 = e.getNewState();
         int qtd = desktopPane.getComponentCount();
         for (int i = 0; i < qtd; i++) {

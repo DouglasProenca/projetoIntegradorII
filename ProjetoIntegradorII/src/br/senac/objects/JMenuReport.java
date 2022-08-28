@@ -97,6 +97,19 @@ public class JMenuReport extends Menu {
         return uniqueInstance;
     }
 
+    private Object[] getParams() {
+        LocalDateTime data = LocalDateTime.now();
+        LocalDateTime ultimoDiaDoMesAnterior = data.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
+        Date mes_ant = Date.from(ultimoDiaDoMesAnterior.atZone(ZoneId.systemDefault()).toInstant());
+        JDateChooser jd = new JDateChooser(mes_ant);
+        JDateChooser jdf = new JDateChooser(new Date());
+        String message = "Escolha a data inicial:\n";
+        String message2 = "Escolha a data Final:\n";
+        Object[] params = {message, jd, message2, jdf};
+        return params;
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -117,17 +130,9 @@ public class JMenuReport extends Menu {
                 pr.addInternalFrameListener(this);
                 break;
             case "managementRep":
-                LocalDateTime data = LocalDateTime.now();
-                LocalDateTime ultimoDiaDoMesAnterior = data.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
-                Date mes_ant = Date.from(ultimoDiaDoMesAnterior.atZone(ZoneId.systemDefault()).toInstant());
-                JDateChooser jd = new JDateChooser(mes_ant);
-                JDateChooser jdf = new JDateChooser(new Date());
-                String message = "Escolha a data inicial:\n";
-                String message2 = "Escolha a data Final:\n";
-                Object[] params = {message, jd, message2, jdf};
-                int resposta = JOptionPane.showConfirmDialog(null, params, "Relatório Gerencial", JOptionPane.PLAIN_MESSAGE);
+                int resposta = JOptionPane.showConfirmDialog(null, getParams(), "Relatório Gerencial", JOptionPane.PLAIN_MESSAGE);
                 if (resposta == 0) {
-                    InternalFrame rs = ReportScreen.getInstance("Relatório Gerencial", params);
+                    InternalFrame rs = ReportScreen.getInstance("Relatório Gerencial", getParams());
                     MainScreen.desktopPane.add(rs);
                     MainScreen.jToolBar.add(rs.getDesktopIcon());
                     rs.setVisible(true);
@@ -136,8 +141,16 @@ public class JMenuReport extends Menu {
                 }
                 break;
             case "analyticalRep":
+                int resposta2 = JOptionPane.showConfirmDialog(null, getParams(), "Relatório Gerencial", JOptionPane.PLAIN_MESSAGE);
+                if (resposta2 == 0) {
+
+                }
                 break;
             case "syntheticRep":
+                int resposta3 = JOptionPane.showConfirmDialog(null, getParams(), "Relatório Gerencial", JOptionPane.PLAIN_MESSAGE);
+                if (resposta3 == 0) {
+
+                }
                 break;
             case "category":
                 CategoryReportScreen ct = new CategoryReportScreen();

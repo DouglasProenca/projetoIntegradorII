@@ -5,10 +5,8 @@ import br.senac.controller.ProductDAO;
 import br.senac.objects.InternalFrame;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -24,7 +22,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
@@ -34,12 +31,45 @@ import javax.swing.text.MaskFormatter;
  */
 public class SaleScreen extends InternalFrame {
 
-    private final JPanel clientFilter = new ClientFilter(); //1º esqueda
-    private final JPanel clientTable = new ClientTable(); //1º direita
-    private final JPanel saleTable = new SaleTable(); //2º Painel
-    private final JPanel salesInfo = new SalesInfo(); // 3º Painel
+    // 1º Painel
+    private JPanel panelOne;
+    private JLabel lblPanelOneTitle;
+    private JButton btnPanelOneAdd;
+    private JLabel lblPanelOneName;
+    private JTextField txtPanelOneName;
+    private JLabel lblPanelOneCPF;
+    private JTextField txtPanelOneCPF;
+    private JButton btnPanelOneFind;
+    // 2º Painel
+    private JPanel panelTwo;
+    private final String columnsTblPanelTwo[] = {"CPF", "Nome"};
+    private JScrollPane scrollPanelTwoClientTable;
+    private JTable tblPanelTwo;
+    // 3º Painel
+    private JPanel panelThree;
+    private JLabel lblClientPanelThree;
+    private JLabel lblCPFPanelThree;
+    private JTextField txtClientPanelThree;
+    private JTextField txtCPFPanelThree;
+    private JPanel FilterPanelThree;
+    private JTextField txtFilterPanelThree;
+    private JButton btnFilterPanelThreeFind;
+    private JPanel paneltblPanelThree;
+    private JScrollPane scrollPanelThreeTbl;
+    private JTable tblPanelThree;
+    // 4º Painel
+    private JPanel panelFour;
+    private JDateChooser chooserDatePanelFour;
+    private JLabel lblChooserDatePanelFour;
+    private JLabel lblTotalPanelFour;
+    private JTextField txtTotalPanelFour;
+    private JScrollPane scrollTblPanelFour;
+    private JTable tblPanelFour;
+    // Internal Frame
     private JButton btnConcluir;
     private JButton btnExcluir;
+    private DefaultTableModel dm;
+    private final String tblProducts[] = {"ID", "Nome", "Preço", "quantidade"};
 
     public SaleScreen() {
         super("Nova Venda", false, true, false, true, 800, 600);
@@ -48,365 +78,273 @@ public class SaleScreen extends InternalFrame {
 
     private void initComponents() {
         this.setLayout(null);
-        this.add(clientFilter);
-        this.add(clientTable);
-        this.add(saleTable);
-        this.add(salesInfo);
+        this.add(getPanelOne());
+        this.add(getPanelTwo());
+        this.add(getPanelThree());
+        this.add(getPanelFour());
         this.add(getBtnConcluir());
         this.add(getBtnExcluir());
+        this.loadTable();
     }
 
-    private class ClientFilter extends JPanel implements ActionListener {
+    private JPanel getPanelOne() {
+        panelOne = new JPanel(null);
+        panelOne.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+        panelOne.setBounds(10, 10, 310, 150);
+        panelOne.add(getLblPanelOneTitle());
+        panelOne.add(getLblPanelOneName());
+        panelOne.add(getTxtPanelOneName());
+        panelOne.add(lblPanelOneCPF());
+        panelOne.add(getTxtPanelOneCPF());
+        panelOne.add(getBtnPanelOneFind());
+        panelOne.add(getBtnPanelOneAdd());
+        return panelOne;
+    }
 
-        private JLabel lblFilterClient;
-        private JLabel lblClientFilterNome;
-        private JTextField txtClientFilterNome;
-        private JLabel lblClientFilterCPF;
-        private JTextField txtClientFilterCPF;
-        private JButton btnClientFilterFind;
-        private JButton btnAdicionar;
+    private JLabel getLblPanelOneTitle() {
+        lblPanelOneTitle = new JLabel("Filtrar Clientes");
+        lblPanelOneTitle.setBounds(10, 10, 150, 20);
+        return lblPanelOneTitle;
+    }
 
-        public ClientFilter() {
-            this.setLayout(null);
-            this.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
-            this.setBounds(10, 10, 310, 150);
-            this.add(getLblFilterClient());
-            this.add(getLblClientFilterNome());
-            this.add(getTxtClientFilterNome());
-            this.add(getLblClientFilterCPF());
-            this.add(getTxtClientFilterCPF());
-            this.add(getBtnClientFilterFind());
-            this.add(getBtnAdicionar());
+    private JLabel getLblPanelOneName() {
+        lblPanelOneName = new JLabel("Nome:");
+        lblPanelOneName.setBounds(10, 40, 40, 20);
+        return lblPanelOneName;
+    }
+
+    private JTextField getTxtPanelOneName() {
+        txtPanelOneName = new JTextField();
+        txtPanelOneName.setBounds(50, 40, 250, 20);
+        return txtPanelOneName;
+    }
+
+    private JLabel lblPanelOneCPF() {
+        lblPanelOneCPF = new JLabel("CPF:");
+        lblPanelOneCPF.setBounds(10, 70, 40, 20);
+        return lblPanelOneCPF;
+    }
+
+    private JTextField getTxtPanelOneCPF() {
+        try {
+            txtPanelOneCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
+        } catch (ParseException ex) {
+            Logger.getLogger(SaleScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
+        txtPanelOneCPF.setBounds(50, 70, 250, 20);
+        return txtPanelOneCPF;
+    }
 
-        private JLabel getLblFilterClient() {
-            lblFilterClient = new JLabel("Filtrar Clientes");
-            lblFilterClient.setBounds(10, 10, 150, 20);
-            return lblFilterClient;
-        }
+    private JButton getBtnPanelOneFind() {
+        btnPanelOneFind = new JButton("Pesquisar");
+        btnPanelOneFind.setBounds(220, 100, 80, 25);
+        return btnPanelOneFind;
+    }
 
-        private JLabel getLblClientFilterNome() {
-            lblClientFilterNome = new JLabel("Nome:");
-            lblClientFilterNome.setBounds(10, 40, 40, 20);
-            return lblClientFilterNome;
-        }
+    private JButton getBtnPanelOneAdd() {
+        btnPanelOneAdd = new JButton("Adicionar");
+        btnPanelOneAdd.setBounds(10, 100, 100, 25);
+        btnPanelOneAdd.addActionListener(this);
+        btnPanelOneAdd.setActionCommand("adicionar");
+        return btnPanelOneAdd;
+    }
 
-        private JTextField getTxtClientFilterNome() {
-            txtClientFilterNome = new JTextField();
-            txtClientFilterNome.setBounds(50, 40, 250, 20);
-            return txtClientFilterNome;
-        }
+    public JPanel getPanelTwo() {
+        panelTwo = new JPanel(null);
+        panelTwo.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+        panelTwo.setBounds(350, 10, 425, 150);
+        panelTwo.add(getScrollPanelTwoClientTable());
+        return panelTwo;
+    }
 
-        private JLabel getLblClientFilterCPF() {
-            lblClientFilterCPF = new JLabel("CPF:");
-            lblClientFilterCPF.setBounds(10, 70, 40, 20);
-            return lblClientFilterCPF;
-        }
+    private JTable getTblPanelTwo() {
+        tblPanelTwo = new JTable(getDm(columnsTblPanelTwo));
+        tblPanelTwo.addMouseListener(new MouseAdapter() {
 
-        private JTextField getTxtClientFilterCPF() {
-            try {
-                txtClientFilterCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
-            } catch (ParseException ex) {
-                Logger.getLogger(SaleScreen.class.getName()).log(Level.SEVERE, null, ex);
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int numeroLinha = tblPanelTwo.getSelectedRow();
+
+                    //int id = Integer.parseInt(tblClientClientFilterFind.getModel().getValueAt(numeroLinha, 0).toString());
+                    String cpf = tblPanelTwo.getModel().getValueAt(numeroLinha, 0).toString();
+                    String nome = tblPanelTwo.getModel().getValueAt(numeroLinha, 1).toString();
+                    txtClientPanelThree.setText(nome);
+                    txtCPFPanelThree.setText(cpf);
+                }
+
             }
-            txtClientFilterCPF.setBounds(50, 70, 250, 20);
-            return txtClientFilterCPF;
-        }
+        });
+        tblPanelTwo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        return tblPanelTwo;
+    }
 
-        private JButton getBtnClientFilterFind() {
-            btnClientFilterFind = new JButton("Pesquisar");
-            btnClientFilterFind.setBounds(220, 100, 80, 25);
-            return btnClientFilterFind;
-        }
+    private JScrollPane getScrollPanelTwoClientTable() {
+        scrollPanelTwoClientTable = new JScrollPane(getTblPanelTwo());
+        scrollPanelTwoClientTable.setBounds(10, 10, 405, 130);
+        return scrollPanelTwoClientTable;
+    }
 
-        private JButton getBtnAdicionar() {
-            btnAdicionar = new JButton("Adicionar");
-            btnAdicionar.setBounds(10, 100, 100, 25);
-            btnAdicionar.addActionListener(this);
-            btnAdicionar.setActionCommand("adicionar");
-            return btnAdicionar;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            switch (e.getActionCommand()) {
-                case "adicionar":
-                    RegistrationClientScreen rbs = new RegistrationClientScreen();
-                    MainScreen.desktopPane.add(rbs);
-                    rbs.setVisible(true);
-                    MainScreen.centralizaForm(rbs);
-                    break;
+    private DefaultTableModel getDm(String[] colunas) {
+        dm = new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
             }
-        }
+        };
+        return dm;
     }
 
-    private class ClientTable extends JPanel {
+    @Override
+    protected void loadTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
+        modelo.setRowCount(0);
+        ClientDAO.getInstance().getAll().forEach((p) -> {
+            modelo.addRow(new Object[]{p.getCpf(), p.getNome()});
+        });
 
-        private JScrollPane scrollClientFilterFind;
-        private JTable tblClientClientFilterFind;
-        private final String colunasClientFilterFind[] = {"CPF", "Nome"};
-        private DefaultTableModel dm;
-
-        public ClientTable() {
-            this.setLayout(null);
-            this.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
-            this.setBounds(350, 10, 425, 150);
-            this.add(getScrollClientFilterFind());
-            this.loadTable();
-        }
-
-        private JTable getTblClientClientFilterFind() {
-            tblClientClientFilterFind = new JTable(getDm(colunasClientFilterFind));
-            tblClientClientFilterFind.addMouseListener(new MouseAdapter() {
-                SaleTable tb = new SaleTable();
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (e.getClickCount() == 2) {
-                        int numeroLinha = tblClientClientFilterFind.getSelectedRow();
-
-                        //int id = Integer.parseInt(tblClientClientFilterFind.getModel().getValueAt(numeroLinha, 0).toString());
-                        String cpf = tblClientClientFilterFind.getModel().getValueAt(numeroLinha, 0).toString();
-                        String nome = tblClientClientFilterFind.getModel().getValueAt(numeroLinha, 1).toString();
-                        tb.setNome(nome);
-                        tb.setCPF(cpf);
-                    }
-
-                }
-            });
-            tblClientClientFilterFind.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            return tblClientClientFilterFind;
-        }
-
-        private JScrollPane getScrollClientFilterFind() {
-            scrollClientFilterFind = new JScrollPane(getTblClientClientFilterFind());
-            scrollClientFilterFind.setBounds(10, 10, 405, 130);
-            return scrollClientFilterFind;
-        }
-
-        private DefaultTableModel getDm(String[] colunas) {
-            dm = new DefaultTableModel(colunas, 0) {
-                @Override
-                public boolean isCellEditable(int rowIndex, int mColIndex) {
-                    return false;
-                }
-            };
-            return dm;
-        }
-
-        protected void loadTable() {
-            DefaultTableModel modelo = (DefaultTableModel) tblClientClientFilterFind.getModel();
-            modelo.setRowCount(0);
-            ClientDAO.getInstance().getAll().forEach((p) -> {
-                modelo.addRow(new Object[]{p.getCpf(), p.getNome()});
-            });
-        }
+        DefaultTableModel modeloTabelThree = (DefaultTableModel) tblPanelThree.getModel();
+        modeloTabelThree.setRowCount(0);
+        ProductDAO.getInstance().getAll().forEach((p) -> {
+            modeloTabelThree.addRow(new Object[]{p.getId(), p.getNome(), p.getValor(), p.getQuantidade()});
+        });
     }
 
-    private class SaleTable extends JPanel implements ListSelectionListener {
-
-        private JPanel productFilter;
-        private JPanel productTable;
-        private JTable tblProduct;
-        private final String colunasClientFilterFind[] = {"ID", "Nome", "Preço", "quantidade"};
-        private DefaultTableModel dm;
-        private JScrollPane scroll;
-        private JTextField txtCliente;
-        private JTextField txtCPF;
-        private JLabel lblCliente;
-        private JLabel lblCPF;
-        private JTextField txtProduto;
-        private JButton btnPesquisar;
-
-        public SaleTable() {
-            this.setLayout(null);
-            this.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
-            this.setBounds(10, 175, 765, 150);
-            this.add(getProductTable());
-            this.add(getLblCliente());
-            this.add(getTxtCliente());
-            this.add(getlblCPF());
-            this.add(getTxtCPF());
-            this.add(getProductFilter());
-            this.loadTable();
-        }
-
-        private JPanel getProductFilter() {
-            productFilter = new JPanel(null);
-            productFilter.setBorder(new TitledBorder(new LineBorder(MainScreen.desktopPane.getBackground()), "Filtrar Produtos"));
-            productFilter.setBounds(10, 60, 294, 86);
-            productFilter.add(getTxtProduto());
-            productFilter.add(getBtnPesquisar());
-            return productFilter;
-        }
-
-        private JTextField getTxtProduto() {
-            txtProduto = new JTextField();
-            txtProduto.setToolTipText("Pesquise por codigo ou Nome");
-            txtProduto.setBounds(10, 35, 184, 20);
-            return txtProduto;
-        }
-
-        private JButton getBtnPesquisar() {
-            btnPesquisar = new JButton("Pesquisar");
-            btnPesquisar.setBounds(200, 33, 80, 25);
-            return btnPesquisar;
-        }
-
-        private JPanel getProductTable() {
-            productTable = new JPanel(null);
-            productTable.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
-            productTable.setBounds(340, 5, 422, 140);
-            productTable.add(getScroll());
-            return productTable;
-        }
-
-        private JLabel getLblCliente() {
-            lblCliente = new JLabel("Cliente:");
-            lblCliente.setBounds(10, 10, 40, 20);
-            return lblCliente;
-        }
-
-        private JTextField getTxtCliente() {
-            txtCliente = new JTextField();
-            txtCliente.setEnabled(false);
-            txtCliente.setBounds(60, 10, 240, 20);
-            return txtCliente;
-        }
-
-        private JLabel getlblCPF() {
-            lblCPF = new JLabel("CPF:");
-            lblCPF.setBounds(10, 34, 40, 20);
-            return lblCPF;
-        }
-
-        private JTextField getTxtCPF() {
-            txtCPF = new JTextField();
-            txtCPF.setEnabled(false);
-            txtCPF.setBounds(60, 34, 240, 20);
-            return txtCPF;
-        }
-
-        private JScrollPane getScroll() {
-            scroll = new JScrollPane(getTblProduct());
-            scroll.setBounds(10, 10, 405, 120);
-            return scroll;
-        }
-
-        private JTable getTblProduct() {
-            tblProduct = new JTable(getDm(colunasClientFilterFind));
-            tblProduct.getSelectionModel().addListSelectionListener(this);
-            tblProduct.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            return tblProduct;
-        }
-
-        public void setNome(String nome) {
-            txtCliente.setText(nome);
-        }
-
-        public void setCPF(String cpf) {
-            txtCPF.setText(cpf);
-        }
-
-        private DefaultTableModel getDm(String[] colunas) {
-            dm = new DefaultTableModel(colunas, 0) {
-                @Override
-                public boolean isCellEditable(int rowIndex, int mColIndex) {
-                    return false;
-                }
-            };
-            return dm;
-        }
-
-        protected void loadTable() {
-            DefaultTableModel modelo = (DefaultTableModel) tblProduct.getModel();
-            modelo.setRowCount(0);
-            ProductDAO.getInstance().getAll().forEach((p) -> {
-                modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getValor(),
-                    p.getQuantidade()});
-            });
-        }
-
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+    public JPanel getPanelThree() {
+        panelThree = new JPanel(null);
+        panelThree.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+        panelThree.setBounds(10, 175, 765, 150);
+        panelThree.add(getPaneltblPanelThree());
+        panelThree.add(getlblClientPanelThree());
+        panelThree.add(getTxtClientPanelThree());
+        panelThree.add(getLblCPFPanelThree());
+        panelThree.add(getTxtCPFPanelThree());
+        panelThree.add(getFilterPanelThree());
+        return panelThree;
     }
 
-    private class SalesInfo extends JPanel implements ListSelectionListener {
+    private JPanel getFilterPanelThree() {
+        FilterPanelThree = new JPanel(null);
+        FilterPanelThree.setBorder(new TitledBorder(new LineBorder(MainScreen.desktopPane.getBackground()), "Filtrar Produtos"));
+        FilterPanelThree.setBounds(10, 60, 294, 86);
+        FilterPanelThree.add(getTxtFilterPanelThree());
+        FilterPanelThree.add(getbtnFilterPanelThreeFind());
+        return FilterPanelThree;
+    }
 
-        private JTable table;
-        private final String colunas[] = {"ID", "Nome", "Quantidade", "Preço"};
-        private DefaultTableModel dm;
-        private JScrollPane scrollSaleTable;
-        private JTextField txtTotal;
-        private JLabel lblTotal;
-        private JLabel lblDataVenda;
-        private JDateChooser chooserDate;
+    private JTextField getTxtFilterPanelThree() {
+        txtFilterPanelThree = new JTextField();
+        txtFilterPanelThree.setToolTipText("Pesquise por codigo ou Nome");
+        txtFilterPanelThree.setBounds(10, 35, 184, 20);
+        return txtFilterPanelThree;
+    }
 
-        public SalesInfo() {
-            this.setLayout(null);
-            this.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
-            this.setBounds(10, 350, 765, 150);
-            this.add(getScroll());
-            this.add(getTxtTotal());
-            this.add(getLblTotal());
-            this.add(getLblDataVenda());
-            this.add(getChooserDate());
-        }
+    private JButton getbtnFilterPanelThreeFind() {
+        btnFilterPanelThreeFind = new JButton("Pesquisar");
+        btnFilterPanelThreeFind.setBounds(200, 33, 80, 25);
+        return btnFilterPanelThreeFind;
+    }
 
-        private DefaultTableModel getDm(String[] colunas) {
-            dm = new DefaultTableModel(colunas, 0) {
-                @Override
-                public boolean isCellEditable(int rowIndex, int mColIndex) {
-                    return false;
-                }
-            };
-            return dm;
-        }
+    private JPanel getPaneltblPanelThree() {
+        paneltblPanelThree = new JPanel(null);
+        paneltblPanelThree.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+        paneltblPanelThree.setBounds(340, 5, 422, 140);
+        paneltblPanelThree.add(getScrollPanelThreeTbl());
+        return paneltblPanelThree;
+    }
 
-        private JScrollPane getScroll() {
-            scrollSaleTable = new JScrollPane(getTblSale());
-            scrollSaleTable.setBounds(10, 30, 745, 110);
-            return scrollSaleTable;
-        }
+    private JLabel getlblClientPanelThree() {
+        lblClientPanelThree = new JLabel("Cliente:");
+        lblClientPanelThree.setBounds(10, 10, 40, 20);
+        return lblClientPanelThree;
+    }
 
-        private JTable getTblSale() {
-            table = new JTable(getDm(colunas));
-            table.getSelectionModel().addListSelectionListener(this);
-            table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-            return table;
-        }
+    private JTextField getTxtClientPanelThree() {
+        txtClientPanelThree = new JTextField();
+        txtClientPanelThree.setEnabled(false);
+        txtClientPanelThree.setBounds(60, 10, 240, 20);
+        return txtClientPanelThree;
+    }
 
-        private JTextField getTxtTotal() {
-            txtTotal = new JTextField();
-            txtTotal.setEnabled(false);
-            txtTotal.setBounds(655, 5, 100, 20);
-            return txtTotal;
-        }
+    private JLabel getLblCPFPanelThree() {
+        lblCPFPanelThree = new JLabel("CPF:");
+        lblCPFPanelThree.setBounds(10, 34, 40, 20);
+        return lblCPFPanelThree;
+    }
 
-        private JLabel getLblTotal() {
-            lblTotal = new JLabel("Valor Total:");
-            lblTotal.setBounds(580, 5, 80, 20);
-            return lblTotal;
-        }
+    private JTextField getTxtCPFPanelThree() {
+        txtCPFPanelThree = new JTextField();
+        txtCPFPanelThree.setEnabled(false);
+        txtCPFPanelThree.setBounds(60, 34, 240, 20);
+        return txtCPFPanelThree;
+    }
 
-        private JLabel getLblDataVenda() {
-            lblDataVenda = new JLabel("Data da Venda:");
-            lblDataVenda.setBounds(10, 5, 80, 20);
-            return lblDataVenda;
-        }
+    private JScrollPane getScrollPanelThreeTbl() {
+        scrollPanelThreeTbl = new JScrollPane(getTblPanelThree());
+        scrollPanelThreeTbl.setBounds(10, 10, 405, 120);
+        return scrollPanelThreeTbl;
+    }
 
-        private JDateChooser getChooserDate() {
-            chooserDate = new JDateChooser(new Date());
-            chooserDate.setBounds(100, 5, 100, 20);
-            return chooserDate;
-        }
+    private JTable getTblPanelThree() {
+        tblPanelThree = new JTable(getDm(tblProducts));
+        tblPanelThree.getSelectionModel().addListSelectionListener(this);
+        tblPanelThree.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        return tblPanelThree;
+    }
 
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
+    public JPanel getPanelFour() {
+        panelFour = new JPanel(null);
+        panelFour.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+        panelFour.setBounds(10, 350, 765, 150);
+        panelFour.add(getScrollTblPanelFour());
+        panelFour.add(getTxtTotalPanelFour());
+        panelFour.add(getLblTotalPanelFour());
+        panelFour.add(getLblChooserDatePanelFour());
+        panelFour.add(getChooserDatePanelFour());
+        return panelFour;
+    }
+
+    private JTable getTblPanelFour() {
+        tblPanelFour = new JTable(getDm(tblProducts));
+        tblPanelFour.getSelectionModel().addListSelectionListener(this);
+        tblPanelFour.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        return tblPanelFour;
+    }
+
+    private JTextField getTxtTotalPanelFour() {
+        txtTotalPanelFour = new JTextField();
+        txtTotalPanelFour.setEnabled(false);
+        txtTotalPanelFour.setBounds(655, 5, 100, 20);
+        return txtTotalPanelFour;
+    }
+
+    private JLabel getLblTotalPanelFour() {
+        lblTotalPanelFour = new JLabel("Valor Total:");
+        lblTotalPanelFour.setBounds(580, 5, 80, 20);
+        return lblTotalPanelFour;
+    }
+
+    private JLabel getLblChooserDatePanelFour() {
+        lblChooserDatePanelFour = new JLabel("Data da Venda:");
+        lblChooserDatePanelFour.setBounds(10, 5, 80, 20);
+        return lblChooserDatePanelFour;
+    }
+
+    private JDateChooser getChooserDatePanelFour() {
+        chooserDatePanelFour = new JDateChooser(new Date());
+        chooserDatePanelFour.setBounds(100, 5, 100, 20);
+        return chooserDatePanelFour;
+    }
+
+    private JScrollPane getScrollTblPanelFour() {
+        scrollTblPanelFour = new JScrollPane(getTblPanelFour());
+        scrollTblPanelFour.setBounds(10, 30, 745, 110);
+        return scrollTblPanelFour;
     }
 
     private JButton getBtnConcluir() {
@@ -419,5 +357,17 @@ public class SaleScreen extends InternalFrame {
         btnExcluir = new JButton("Excluir Item");
         btnExcluir.setBounds(550, 520, 100, 35);
         return btnExcluir;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+            case "adicionar":
+                RegistrationClientScreen rbs = new RegistrationClientScreen();
+                MainScreen.desktopPane.add(rbs);
+                rbs.setVisible(true);
+                MainScreen.centralizaForm(rbs);
+                break;
+        }
     }
 }
