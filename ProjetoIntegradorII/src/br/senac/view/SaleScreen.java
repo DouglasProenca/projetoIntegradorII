@@ -21,7 +21,6 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
@@ -70,6 +69,7 @@ public class SaleScreen extends InternalFrame {
     private JButton btnExcluir;
     private DefaultTableModel dm;
     private final String tblProducts[] = {"ID", "Nome", "Preço", "quantidade"};
+    private float total = 0;
 
     public SaleScreen() {
         super("Nova Venda", false, true, false, true, 800, 600);
@@ -138,6 +138,8 @@ public class SaleScreen extends InternalFrame {
     private JButton getBtnPanelOneFind() {
         btnPanelOneFind = new JButton("Pesquisar");
         btnPanelOneFind.setBounds(220, 100, 80, 25);
+        btnPanelOneFind.addActionListener(this);
+        btnPanelOneFind.setActionCommand("findClient");
         return btnPanelOneFind;
     }
 
@@ -180,21 +182,6 @@ public class SaleScreen extends InternalFrame {
         return dm;
     }
 
-    @Override
-    protected void loadTable() {
-        DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
-        modelo.setRowCount(0);
-        ClientDAO.getInstance().getAll().forEach((p) -> {
-            modelo.addRow(new Object[]{p.getCpf(), p.getNome()});
-        });
-
-        DefaultTableModel modeloTabelThree = (DefaultTableModel) tblPanelThree.getModel();
-        modeloTabelThree.setRowCount(0);
-        ProductDAO.getInstance().getAll().forEach((p) -> {
-            modeloTabelThree.addRow(new Object[]{p.getId(), p.getNome(), p.getValor(), p.getQuantidade()});
-        });
-    }
-
     public JPanel getPanelThree() {
         panelThree = new JPanel(null);
         panelThree.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
@@ -227,6 +214,8 @@ public class SaleScreen extends InternalFrame {
     private JButton getbtnFilterPanelThreeFind() {
         btnFilterPanelThreeFind = new JButton("Pesquisar");
         btnFilterPanelThreeFind.setBounds(200, 33, 80, 25);
+        btnFilterPanelThreeFind.addActionListener(this);
+        btnFilterPanelThreeFind.setActionCommand("findProduct");
         return btnFilterPanelThreeFind;
     }
 
@@ -331,6 +320,8 @@ public class SaleScreen extends InternalFrame {
     private JButton getBtnConcluir() {
         btnConcluir = new JButton("Concluir");
         btnConcluir.setBounds(675, 520, 100, 35);
+        btnConcluir.addActionListener(this);
+        btnConcluir.setActionCommand("conclude");
         return btnConcluir;
     }
 
@@ -354,12 +345,51 @@ public class SaleScreen extends InternalFrame {
             case "delete":
                 DefaultTableModel dtm = (DefaultTableModel) tblPanelFour.getModel();
                 if (tblPanelFour.getSelectedRow() >= 0) {
+                    float preco = Float.parseFloat(tblPanelThree.getModel().getValueAt(tblPanelFour.getSelectedRow(), 2).toString());
+                    total = total - preco;
+                    txtTotalPanelFour.setText(String.valueOf(total));
                     dtm.removeRow(tblPanelFour.getSelectedRow());
                 } else {
                     JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");
                 }
                 break;
+            case "conclude":
+                JOptionPane.showMessageDialog(this, "Venda Realizada Com Sucesso:");
+                break;
+            case "findProduct":
+                if (txtFilterPanelThree.getText().length() > 0) {
+                    DefaultTableModel modelo = (DefaultTableModel) tblPanelThree.getModel();
+                    modelo.setRowCount(0);
+                    ProductDAO.getInstance().getBy(txtFilterPanelThree.getText()).forEach((p) -> {
+                        modelo.addRow(new Object[]{p.getId(), p.getNome(), p.getValor(), p.getQuantidade()});
+                    });
+                } else {
+                    JOptionPane.showMessageDialog(this, "Digite o nome de um produto para pesquisar!");
+                }
+                break;
+            case "findClient":
+                  DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
+                    modelo.setRowCount(0);
+                    ClientDAO.getInstance().getBy(txtPanelOneName.getText()).forEach((p) -> {
+                        modelo.addRow(new Object[]{p.getCpf(), p.getNome()});
+                    });
+                break;
         }
+    }
+
+    @Override
+    protected void loadTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
+        modelo.setRowCount(0);
+        ClientDAO.getInstance().getAll().forEach((p) -> {
+            modelo.addRow(new Object[]{p.getCpf(), p.getNome()});
+        });
+
+        DefaultTableModel modeloTabelThree = (DefaultTableModel) tblPanelThree.getModel();
+        modeloTabelThree.setRowCount(0);
+        ProductDAO.getInstance().getAll().forEach((p) -> {
+            modeloTabelThree.addRow(new Object[]{p.getId(), p.getNome(), p.getValor(), p.getQuantidade()});
+        });
     }
 
     @Override
@@ -374,6 +404,8 @@ public class SaleScreen extends InternalFrame {
 
                 DefaultTableModel modelo = (DefaultTableModel) tblPanelFour.getModel();
                 modelo.addRow(new Object[]{id, nome, preco, quantidade});
+                total = total + preco;
+                txtTotalPanelFour.setText(String.valueOf(total));
 
             } else if (e.getSource().equals(tblPanelTwo)) {
                 int numeroLinha = tblPanelTwo.getSelectedRow();

@@ -99,7 +99,39 @@ public class ClientDAO implements DAO {
 
     @Override
     public ArrayList<Client> getBy(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Client> ClientList = new ArrayList<>();
+
+        try {
+
+            Connection conexao = ConnectionManager.getInstance().getConexao();
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("select c.id\n"
+                    + "	 , c.nome\n"
+                    + "	 , c.cpf\n"
+                    + "	 , c.[data]\n"
+                    + "	 , u.[user]\n"
+                    + "from rc_cliente c\n"
+                    + "inner join rc_user u\n"
+                    + "	on u.id = c.[user]\n"
+                    + "where c.nome like ?\n"
+                    + "or c.cpf like ?");
+
+            //Adiciono os parâmetros ao meu comando SQL
+            instrucaoSQL.setString(1, "%" + key + '%');
+            instrucaoSQL.setString(2, "%" + key + '%');
+
+            ResultSet rs = instrucaoSQL.executeQuery();
+
+            while (rs.next()) {
+                Client p = new Client(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"),
+                        rs.getString("user"), rs.getDate("data"));
+                ClientList.add(p);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            ClientList = null;
+        }
+        return ClientList;
     }
 
 }
