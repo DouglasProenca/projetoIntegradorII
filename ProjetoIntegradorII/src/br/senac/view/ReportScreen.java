@@ -11,7 +11,6 @@ import net.sf.jasperreports.swing.JRViewer;
  */
 public class ReportScreen extends InternalFrame {
 
-    private static InternalFrame uniqueInstance;
     private final JasperManager jasperManager = new JasperManager();
 
     public ReportScreen(String titulo, Object[] params) {
@@ -21,15 +20,19 @@ public class ReportScreen extends InternalFrame {
 
     private void initComponents(Object[] params) {
         jasperManager.start();
-        JRViewer jr = new JRViewer(jasperManager.gerarManagetmentReport(params));
+        JRViewer jr = null;
+        switch (this.getTitle()) {
+            case "Relatório Gerencial":
+                jr = new JRViewer(jasperManager.gerarManagetmentReport(params));
+                break;
+            case "Relatório Sintetico":
+                jr = new JRViewer(jasperManager.gerarSyntheticReport(params));
+                break;
+            default:
+                jr = new JRViewer(jasperManager.gerarAnalyticalReport(params));
+                break;
+        }
         jr.setZoomRatio((float) 0.5);
         this.getContentPane().add(jr, BorderLayout.CENTER);
-    }
-
-    public static synchronized InternalFrame getInstance(String titulo, Object[] params) {
-        if (uniqueInstance == null) {
-            uniqueInstance = new ReportScreen(titulo, params);
-        }
-        return uniqueInstance;
     }
 }

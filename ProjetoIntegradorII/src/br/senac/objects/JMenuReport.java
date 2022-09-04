@@ -24,6 +24,7 @@ public class JMenuReport extends Menu {
 
     private static JMenu uniqueInstance;
     private JMenuItem category;
+    private ReportScreen reportScreen;
 
     private JMenuReport() {
         super("Relatório", images.getInstance().imagemReport());
@@ -132,24 +133,34 @@ public class JMenuReport extends Menu {
             case "managementRep":
                 int resposta = JOptionPane.showConfirmDialog(null, getParams(), "Relatório Gerencial", JOptionPane.PLAIN_MESSAGE);
                 if (resposta == 0) {
-                    InternalFrame rs = ReportScreen.getInstance("Relatório Gerencial", getParams());
-                    MainScreen.desktopPane.add(rs);
-                    MainScreen.jToolBar.add(rs.getDesktopIcon());
-                    rs.setVisible(true);
-                    MainScreen.centralizaForm(rs);
-                    rs.addInternalFrameListener(this);
+                    reportScreen = new ReportScreen("Relatório Gerencial", getParams());
+                    MainScreen.desktopPane.add(reportScreen);
+                    MainScreen.jToolBar.add(reportScreen.getDesktopIcon());
+                    reportScreen.setVisible(true);
+                    MainScreen.centralizaForm(reportScreen);
+                    reportScreen.addInternalFrameListener(this);
                 }
                 break;
             case "analyticalRep":
-                int resposta2 = JOptionPane.showConfirmDialog(null, getParams(), "Relatório Gerencial", JOptionPane.PLAIN_MESSAGE);
+                int resposta2 = JOptionPane.showConfirmDialog(null, getParams(), "Relatório Analitíco", JOptionPane.PLAIN_MESSAGE);
                 if (resposta2 == 0) {
-
+                    reportScreen = new ReportScreen("Relatório Analitíco", getParams());
+                    MainScreen.desktopPane.add(reportScreen);
+                    MainScreen.jToolBar.add(reportScreen.getDesktopIcon());
+                    reportScreen.setVisible(true);
+                    MainScreen.centralizaForm(reportScreen);
+                    reportScreen.addInternalFrameListener(this);
                 }
                 break;
             case "syntheticRep":
-                int resposta3 = JOptionPane.showConfirmDialog(null, getParams(), "Relatório Gerencial", JOptionPane.PLAIN_MESSAGE);
+                int resposta3 = JOptionPane.showConfirmDialog(null, getParams(), "Relatório Sintetico", JOptionPane.PLAIN_MESSAGE);
                 if (resposta3 == 0) {
-
+                    reportScreen = new ReportScreen("Relatório Sintetico", getParams());
+                    MainScreen.desktopPane.add(reportScreen);
+                    MainScreen.jToolBar.add(reportScreen.getDesktopIcon());
+                    reportScreen.setVisible(true);
+                    MainScreen.centralizaForm(reportScreen);
+                    reportScreen.addInternalFrameListener(this);
                 }
                 break;
             case "category":

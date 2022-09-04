@@ -2,6 +2,9 @@ package br.senac.view;
 
 import br.senac.controller.ClientDAO;
 import br.senac.controller.ProductDAO;
+import br.senac.controller.SaleDAO;
+import br.senac.model.Sale;
+import br.senac.model.User;
 import br.senac.objects.InternalFrame;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
@@ -41,7 +44,7 @@ public class SaleScreen extends InternalFrame {
     private JButton btnPanelOneFind;
     // 2º Painel
     private JPanel panelTwo;
-    private final String columnsTblPanelTwo[] = {"CPF", "Nome"};
+    private final String columnsTblPanelTwo[] = {"ID", "CPF", "Nome"};
     private JScrollPane scrollPanelTwoClientTable;
     private JTable tblPanelTwo;
     // 3º Painel
@@ -70,6 +73,7 @@ public class SaleScreen extends InternalFrame {
     private DefaultTableModel dm;
     private final String tblProducts[] = {"ID", "Nome", "Preço", "quantidade"};
     private float total = 0;
+    private int id_cliente;
 
     public SaleScreen() {
         super("Nova Venda", false, true, false, true, 800, 600);
@@ -354,7 +358,22 @@ public class SaleScreen extends InternalFrame {
                 }
                 break;
             case "conclude":
-                JOptionPane.showMessageDialog(this, "Venda Realizada Com Sucesso:");
+                Sale sale = new Sale(0, id_cliente, Float.parseFloat(txtTotalPanelFour.getText()), chooserDatePanelFour.getDate(), User.getInstance().getId());
+                if (tblPanelFour.getRowCount() != 0) {
+                    boolean ret = SaleDAO.getInstance().save(sale);
+                    for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
+                        int id = (int) tblPanelFour.getValueAt(i, 0);
+                        float valor = (float) tblPanelFour.getValueAt(i, 2);
+                        int quantidade = (int) tblPanelFour.getValueAt(i, 3);
+                        SaleDAO.getInstance().saveList(id, valor, quantidade, User.getInstance().getId());
+                    }
+                    if (ret) {
+                        JOptionPane.showMessageDialog(this, "Venda Realizada Com Sucesso!\n" + "ID da Venda: " + SaleDAO.getInstance().returnSale());
+                        this.dispose();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Selecione pelo menos um produto para venda!");
+                }
                 break;
             case "findProduct":
                 if (txtFilterPanelThree.getText().length() > 0) {
@@ -368,11 +387,17 @@ public class SaleScreen extends InternalFrame {
                 }
                 break;
             case "findClient":
-                  DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
-                    modelo.setRowCount(0);
+                DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
+                modelo.setRowCount(0);
+                if (txtPanelOneName.getText().length() > 1) {
                     ClientDAO.getInstance().getBy(txtPanelOneName.getText()).forEach((p) -> {
-                        modelo.addRow(new Object[]{p.getCpf(), p.getNome()});
+                        modelo.addRow(new Object[]{p.getId(), p.getCpf(), p.getNome()});
                     });
+                } else {
+                    ClientDAO.getInstance().getBy(txtPanelOneCPF.getText()).forEach((p) -> {
+                        modelo.addRow(new Object[]{p.getId(), p.getCpf(), p.getNome()});
+                    });
+                }
                 break;
         }
     }
@@ -381,8 +406,11 @@ public class SaleScreen extends InternalFrame {
     protected void loadTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
         modelo.setRowCount(0);
+        tblPanelTwo.getColumnModel().getColumn(0).setMaxWidth(0);
+        tblPanelTwo.getColumnModel().getColumn(0).setMinWidth(0);
+        tblPanelTwo.getColumnModel().getColumn(0).setPreferredWidth(0);  //ID
         ClientDAO.getInstance().getAll().forEach((p) -> {
-            modelo.addRow(new Object[]{p.getCpf(), p.getNome()});
+            modelo.addRow(new Object[]{p.getId(), p.getCpf(), p.getNome()});
         });
 
         DefaultTableModel modeloTabelThree = (DefaultTableModel) tblPanelThree.getModel();
@@ -393,7 +421,8 @@ public class SaleScreen extends InternalFrame {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(MouseEvent e
+    ) {
         if (e.getClickCount() == 2) {
             if (e.getSource().equals(tblPanelThree)) {
                 int numeroLinha = tblPanelThree.getSelectedRow();
@@ -409,9 +438,9 @@ public class SaleScreen extends InternalFrame {
 
             } else if (e.getSource().equals(tblPanelTwo)) {
                 int numeroLinha = tblPanelTwo.getSelectedRow();
-                //int id = Integer.parseInt(tblPanelTwo.getModel().getValueAt(numeroLinha, 0).toString());
-                String cpf = tblPanelTwo.getModel().getValueAt(numeroLinha, 0).toString();
-                String nome = tblPanelTwo.getModel().getValueAt(numeroLinha, 1).toString();
+                id_cliente = Integer.parseInt(tblPanelTwo.getModel().getValueAt(numeroLinha, 0).toString());
+                String cpf = tblPanelTwo.getModel().getValueAt(numeroLinha, 1).toString();
+                String nome = tblPanelTwo.getModel().getValueAt(numeroLinha, 2).toString();
                 txtClientPanelThree.setText(nome);
                 txtCPFPanelThree.setText(cpf);
             }

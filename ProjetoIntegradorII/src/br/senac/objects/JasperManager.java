@@ -34,4 +34,40 @@ public class JasperManager extends Thread {
 
         return impressao;
     }
+
+    public JasperPrint gerarAnalyticalReport(Object[] params) {
+        HashMap parametros = new HashMap();
+        Connection conn = ConnectionManager.getInstance().getConexao();
+
+        JasperPrint impressao = null;
+        InputStream jasperFile = ClassLoader.getSystemResourceAsStream("jasper/Rel_Managent_Report_Geral.jasper");
+
+        parametros.put("data1", ((JDateChooser) params[1]).getDate());
+        parametros.put("data2", ((JDateChooser) params[3]).getDate());
+        try {
+            impressao = JasperFillManager.fillReport(jasperFile, parametros, conn);
+        } catch (JRException ex) {
+            Logger.getLogger(JasperManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return impressao;
+    }
+
+    public JasperPrint gerarSyntheticReport(Object[] params) {
+        HashMap parametros = new HashMap();
+        Connection conn = ConnectionManager.getInstance().getConexao();
+
+        JasperPrint impressao = null;
+        InputStream jasperFile = ClassLoader.getSystemResourceAsStream("jasper/Rel_Managent_Report_Geral.jasper");
+
+        parametros.put("data1", ((JDateChooser) params[1]).getDate());
+        parametros.put("data2", ((JDateChooser) params[3]).getDate());
+        try {
+            impressao = JasperFillManager.fillReport(jasperFile, parametros, conn);
+        } catch (JRException ex) {
+            Logger.getLogger(JasperManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return impressao;
+    }
 }

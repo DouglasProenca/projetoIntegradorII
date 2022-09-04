@@ -33,6 +33,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     public MainScreen() {
         super("CR7 Imports");
+        LookAndFeelScreen.initLookAndFeel();
         initComponents();
     }
 
@@ -56,31 +57,23 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
     }
 
     private void getFirst() {
-        if (ConnectionManager.getInstance().getConexao() == null) {
-            Thread t = new Thread(() -> {
-                try {
-                    Thread.sleep(800);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (ConnectionManager.getInstance().getConexao() == null) {
                 desktopPane.add(bd);
                 centralizaForm(bd);
                 bd.setVisible(true);
-            });
-            t.start();
-        } else {
-            Thread t = new Thread(() -> {
-                try {
-                    Thread.sleep(800);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            } else {
                 desktopPane.add(loginScreen);
                 centralizaForm(loginScreen);
                 loginScreen.setVisible(true);
-            });
-            t.start();
-        }
+            }
+        });
+        t.start();
     }
 
     private JDesktopPane getDesktopPane() {

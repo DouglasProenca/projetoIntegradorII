@@ -68,3 +68,44 @@ CREATE TABLE rc_cliente(
 GO
 
 ALTER TABLE rc_cliente ADD CONSTRAINT fk_cliente_user FOREIGN KEY ([user]) REFERENCES rc_user (id)
+
+CREATE TABLE rc_venda(
+    id INT PRIMARY KEY IDENTITY(10,100),
+    id_cliente INT NOT NULL,
+    total FLOAT NOT NULL,
+    [data] DATE NOT NULL,
+    [user] INT NOT NULL,
+)
+GO
+
+ALTER TABLE rc_venda ADD CONSTRAINT fk_venda_cliente FOREIGN KEY (id_cliente) REFERENCES rc_cliente(id)
+ALTER TABLE rc_venda ADD CONSTRAINT fk_venda_user FOREIGN KEY ([user]) REFERENCES rc_user(id)
+
+CREATE TABLE rc_lista_venda(
+    id_venda INT NOT NULL,
+    id_produto INT NOT NULL,
+    quantidade INT NOT NULL,
+    valor FLOAT NOT NULL,
+    [data] DATE NOT NULL,
+    [user] INT NOT NULL,
+)
+GO
+
+ALTER TABLE rc_lista_venda ADD CONSTRAINT fk_listaVenda_venda FOREIGN KEY (id_venda) REFERENCES rc_venda(id)
+ALTER TABLE rc_lista_venda ADD CONSTRAINT fk_listaVenda_produto FOREIGN KEY (id_produto) REFERENCES rc_produto(id)  
+ALTER TABLE rc_lista_venda ADD CONSTRAINT fk_listaVenda_user FOREIGN KEY ([user]) REFERENCES rc_user(id)
+
+CREATE PROCEDURE sp_insert_lista_venda (@id_produto int, @quantidade int, @valor float,@user int)
+AS
+BEGIN
+
+UPDATE rc_produto SET quantidade = quantidade - @quantidade
+WHERE id = @id_produto
+
+DECLARE @id_venda INT = (SELECT MAX(id) FROM rc_venda)
+
+INSERT INTO rc_lista_venda VALUES (@id_venda,@id_produto, @quantidade,@valor,GETDATE(),@user)
+
+
+END
+GO
