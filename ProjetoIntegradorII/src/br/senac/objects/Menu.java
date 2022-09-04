@@ -15,7 +15,7 @@ import javax.swing.event.InternalFrameListener;
  */
 public class Menu extends JMenu implements ActionListener, InternalFrameListener {
 
-    public Menu(String title,Icon image) {
+    protected Menu(String title,Icon image) {
         super(title);
         this.setIcon(image);
     }

@@ -16,5 +16,4 @@ public final class CryptoUtils {
         BCrypt.Result resultado = BCrypt.verifyer().verify(senhaAberta.toCharArray(), senhaFechada);
         return resultado.verified;
     }
-
 }

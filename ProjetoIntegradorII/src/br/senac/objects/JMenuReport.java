@@ -22,11 +22,10 @@ import javax.swing.JSeparator;
  */
 public class JMenuReport extends Menu {
 
-    private static JMenu uniqueInstance;
     private JMenuItem category;
     private ReportScreen reportScreen;
 
-    private JMenuReport() {
+    protected JMenuReport() {
         super("Relatório", images.getInstance().imagemReport());
         initComponents();
     }
@@ -89,13 +88,6 @@ public class JMenuReport extends Menu {
         marca.addActionListener(this);
         marca.setActionCommand("brand");
         return marca;
-    }
-
-    public static synchronized JMenu getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JMenuReport();
-        }
-        return uniqueInstance;
     }
 
     private Object[] getParams() {

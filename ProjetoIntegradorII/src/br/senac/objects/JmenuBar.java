@@ -9,6 +9,9 @@ import javax.swing.JMenuBar;
 public class JmenuBar extends JMenuBar {
 
     private static JmenuBar uniqueInstance;
+    private final JMenuMenu menu = new JMenuMenu();
+    private final JMenuReport report = new JMenuReport();
+    private final JMenuHelp help = new JMenuHelp();
 
     private JmenuBar() {
         super();
@@ -16,9 +19,9 @@ public class JmenuBar extends JMenuBar {
     }
 
     private void initComponents() {
-        this.add(JMenuMenu.getInstance());
-        this.add(JMenuReport.getInstance());
-        this.add(JMenuHelp.getInstance());
+        this.add(menu);
+        this.add(report);
+        this.add(help);
     }
 
     public static synchronized JmenuBar getInstance() {

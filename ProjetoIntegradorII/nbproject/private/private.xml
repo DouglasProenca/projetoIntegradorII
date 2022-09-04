@@ -12,16 +12,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/images.java</file>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/model/User.java</file>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/controller/ClientDAO.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/view/ReportScreen.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/ValidateCpf.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/ConnectionManager.java</file>
             <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/view/Sistema.java</file>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/view/ProductReportScreen.java</file>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/view/RegistrationCategoryScreen.java</file>
             <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/view/MainScreen.java</file>
             <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/controller/CategoryDAO.java</file>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/view/LookAndFeelScreen.java</file>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/view/SaleScreen.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/JMenuReport.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/view/LoginScreen.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/Excel.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/JmenuBar.java</file>
         </group>
     </open-files>
 </project-private>

@@ -7,6 +7,8 @@ import br.senac.objects.InternalFrame;
 import br.senac.objects.JMenuHelp;
 import br.senac.objects.JMenuMenu;
 import br.senac.objects.JMenuReport;
+import br.senac.objects.JmenuBar;
+import br.senac.objects.Menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
@@ -39,9 +41,7 @@ public class LoginScreen extends InternalFrame {
         this.getContentPane().add(getTxtUsuario());
         this.getContentPane().add(getTxtSenha());
         this.getContentPane().add(getBtnConfirmar());
-        JMenuMenu.getInstance().setEnabled(false);
-        JMenuHelp.getInstance().setEnabled(false);
-        JMenuReport.getInstance().setEnabled(false);
+        lockMenu(false);
     }
 
     private JLabel getLblUsuario() {
@@ -78,6 +78,16 @@ public class LoginScreen extends InternalFrame {
         return btnConfirmar;
     }
 
+    private void lockMenu(boolean ret) {
+        int qtd = JmenuBar.getInstance().getComponentCount();
+        for (int i = 0; i < qtd; i++) {
+            if (JmenuBar.getInstance().getComponent(i) instanceof Menu) {
+                Menu menu = (Menu) JmenuBar.getInstance().getComponent(i);
+                menu.setEnabled(ret);
+            }
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -93,9 +103,7 @@ public class LoginScreen extends InternalFrame {
                 }
 
                 if (senhaOk) {
-                    JMenuMenu.getInstance().setEnabled(true);
-                    JMenuHelp.getInstance().setEnabled(true);
-                    JMenuReport.getInstance().setEnabled(true);
+                    lockMenu(true);
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Aviso de Falha de Acesso",

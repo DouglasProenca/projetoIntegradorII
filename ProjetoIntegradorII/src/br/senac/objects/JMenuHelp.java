@@ -20,16 +20,14 @@ import javax.swing.JOptionPane;
  */
 public class JMenuHelp extends Menu {
 
-    private static JMenu uniqueInstance;
-
-    private JMenuHelp() {
+    protected JMenuHelp() {
         super("Ajuda",images.getInstance().imagemHelp());
         this.initComponents();
     }
 
     private void initComponents() {
         this.setMnemonic('A');
-        this.add((getCalendar()));
+        this.add(getCalendar());
         this.add(getSite());
         this.add(getAbout());
         this.add(getVersion());
@@ -61,11 +59,6 @@ public class JMenuHelp extends Menu {
         site.addActionListener(this);
         site.setActionCommand("site");
         return site;
-    }
-
-    public static synchronized JMenu getInstance() {
-        if (uniqueInstance == null) uniqueInstance = new JMenuHelp();
-        return uniqueInstance;
     }
 
     @Override

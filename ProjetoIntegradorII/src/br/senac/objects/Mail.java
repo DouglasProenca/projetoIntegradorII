@@ -23,8 +23,6 @@ import javax.swing.JOptionPane;
  * @author Douglas
  */
 public class Mail {
-
-   
     
     private Properties props;
     

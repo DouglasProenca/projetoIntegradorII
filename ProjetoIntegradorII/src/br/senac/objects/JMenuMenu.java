@@ -27,9 +27,7 @@ import javax.swing.event.InternalFrameEvent;
  */
 public class JMenuMenu extends Menu {
 
-    private static JMenuMenu uniqueInstance;
-
-    private JMenuMenu() {
+    protected JMenuMenu() {
         super("Menu", images.getInstance().imagemMenu());
         this.initComponents();
     }
@@ -148,13 +146,6 @@ public class JMenuMenu extends Menu {
         sale.setActionCommand("sale");
         sale.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK));
         return sale;
-    }
-
-    public static synchronized JMenuMenu getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JMenuMenu();
-        }
-        return uniqueInstance;
     }
 
     @Override
