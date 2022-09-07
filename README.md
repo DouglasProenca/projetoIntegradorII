@@ -55,5 +55,9 @@ Tela de Envio de e-mail:
 
 Tela de Venda:
 
-![image](https://user-images.githubusercontent.com/78769051/186229327-d935b46e-18f1-4001-a915-e9eb0f2cb349.png)
+![image](https://user-images.githubusercontent.com/78769051/188990556-39e3c800-bb5f-4cc2-aab1-e90e78542141.png)
+
+Tela de Relatório Analitíco:
+
+![image](https://user-images.githubusercontent.com/78769051/188990683-77a5cd79-9b54-4f68-8ab0-26a05fc5d796.png)
 
