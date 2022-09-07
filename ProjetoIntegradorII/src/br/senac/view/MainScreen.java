@@ -27,6 +27,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     public static DesktopPane desktopPane;
     public static JToolBar jToolBar;
+    public static JmenuBar menubar = new JmenuBar();
     private final LoginScreen loginScreen = new LoginScreen();
     private final DatabaseConnectionScreen bd = new DatabaseConnectionScreen(false, false);
     private ImageIcon icone;
@@ -47,10 +48,10 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         this.add(getDesktopPane(), BorderLayout.CENTER);
         this.add(getJToolBar(), BorderLayout.PAGE_END);
         this.setIconImage(getIcone().getImage());
-        this.setJMenuBar(JmenuBar.getInstance());
+        this.setJMenuBar(menubar);
         this.getFirst();
     }
-
+    
     private ImageIcon getIcone() {
         icone = images.getInstance().imagemPrincipal();
         return icone;

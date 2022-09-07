@@ -40,7 +40,7 @@ public class JasperManager extends Thread {
         Connection conn = ConnectionManager.getInstance().getConexao();
 
         JasperPrint impressao = null;
-        InputStream jasperFile = ClassLoader.getSystemResourceAsStream("jasper/Rel_Managent_Report_Geral.jasper");
+        InputStream jasperFile = ClassLoader.getSystemResourceAsStream("jasper/Rel_Analytical_Report_Geral.jasper");
 
         parametros.put("data1", ((JDateChooser) params[1]).getDate());
         parametros.put("data2", ((JDateChooser) params[3]).getDate());
@@ -58,7 +58,7 @@ public class JasperManager extends Thread {
         Connection conn = ConnectionManager.getInstance().getConexao();
 
         JasperPrint impressao = null;
-        InputStream jasperFile = ClassLoader.getSystemResourceAsStream("jasper/Rel_Managent_Report_Geral.jasper");
+        InputStream jasperFile = ClassLoader.getSystemResourceAsStream("jasper/Rel_Synthetic_Report_Geral.jasper");
 
         parametros.put("data1", ((JDateChooser) params[1]).getDate());
         parametros.put("data2", ((JDateChooser) params[3]).getDate());

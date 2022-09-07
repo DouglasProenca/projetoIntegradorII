@@ -4,10 +4,6 @@ import br.senac.controller.UserDAO;
 import br.senac.model.User;
 import br.senac.objects.CryptoUtils;
 import br.senac.objects.InternalFrame;
-import br.senac.objects.JMenuHelp;
-import br.senac.objects.JMenuMenu;
-import br.senac.objects.JMenuReport;
-import br.senac.objects.JmenuBar;
 import br.senac.objects.Menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -41,7 +37,7 @@ public class LoginScreen extends InternalFrame {
         this.getContentPane().add(getTxtUsuario());
         this.getContentPane().add(getTxtSenha());
         this.getContentPane().add(getBtnConfirmar());
-        lockMenu(false);
+        this.lockMenu(false);
     }
 
     private JLabel getLblUsuario() {
@@ -79,10 +75,10 @@ public class LoginScreen extends InternalFrame {
     }
 
     private void lockMenu(boolean ret) {
-        int qtd = JmenuBar.getInstance().getComponentCount();
+        int qtd =  MainScreen.menubar.getComponentCount();
         for (int i = 0; i < qtd; i++) {
-            if (JmenuBar.getInstance().getComponent(i) instanceof Menu) {
-                Menu menu = (Menu) JmenuBar.getInstance().getComponent(i);
+            if (MainScreen.menubar.getComponent(i) instanceof Menu) {
+                Menu menu = (Menu) MainScreen.menubar.getComponent(i);
                 menu.setEnabled(ret);
             }
         }
@@ -101,7 +97,6 @@ public class LoginScreen extends InternalFrame {
                             JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-
                 if (senhaOk) {
                     lockMenu(true);
                     this.dispose();
