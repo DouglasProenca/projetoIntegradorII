@@ -1,7 +1,7 @@
 package br.senac.view;
 
 import br.senac.objects.ConnectionManager;
-import br.senac.objects.JmenuBar;
+import br.senac.objects.MenuBar;
 import br.senac.objects.DesktopPane;
 import br.senac.objects.InternalFrame;
 import br.senac.objects.images;
@@ -27,7 +27,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     public static DesktopPane desktopPane;
     public static JToolBar jToolBar;
-    public static JmenuBar menubar = new JmenuBar();
+    public static MenuBar menubar = new MenuBar();
     private final LoginScreen loginScreen = new LoginScreen();
     private final DatabaseConnectionScreen bd = new DatabaseConnectionScreen(false, false);
     private ImageIcon icone;

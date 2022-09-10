@@ -4,11 +4,15 @@ import br.senac.controller.UserDAO;
 import br.senac.model.User;
 import br.senac.objects.CryptoUtils;
 import br.senac.objects.InternalFrame;
+import br.senac.objects.MenuBar;
 import br.senac.objects.Menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -75,13 +79,13 @@ public class LoginScreen extends InternalFrame {
     }
 
     private void lockMenu(boolean ret) {
-        int qtd =  MainScreen.menubar.getComponentCount();
-        for (int i = 0; i < qtd; i++) {
-            if (MainScreen.menubar.getComponent(i) instanceof Menu) {
-                Menu menu = (Menu) MainScreen.menubar.getComponent(i);
-                menu.setEnabled(ret);
+            int qtd = MainScreen.menubar.getComponentCount();
+            for (int i = 0; i < qtd; i++) {
+                if (MainScreen.menubar.getComponent(i) instanceof Menu) {
+                    Menu menu = (Menu) MainScreen.menubar.getComponent(i);
+                    menu.setEnabled(ret);
+                }
             }
-        }
     }
 
     @Override

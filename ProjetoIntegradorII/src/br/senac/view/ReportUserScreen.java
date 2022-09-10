@@ -113,24 +113,25 @@ public class ReportUserScreen extends InternalFrame {
                 MainScreen.centralizaForm(rbs);
                 break;
             case "edit":
+                if (tblResultado.getSelectedRow() >= 1) {
+                    numeroLinha = tblResultado.getSelectedRow();
 
-                numeroLinha = tblResultado.getSelectedRow();
+                    int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
+                    String user_name = tblResultado.getModel().getValueAt(numeroLinha, 1).toString();
+                    String email = tblResultado.getModel().getValueAt(numeroLinha, 2).toString();
+                    String email_pass = tblResultado.getModel().getValueAt(numeroLinha, 3).toString();
+                    User user = new User(id, email, email_pass, user_name, null, new Date());
 
-                int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-                String user_name = tblResultado.getModel().getValueAt(numeroLinha, 1).toString();
-                String email = tblResultado.getModel().getValueAt(numeroLinha, 2).toString();
-                String email_pass = tblResultado.getModel().getValueAt(numeroLinha, 3).toString();
-                User user = new User(id, email, email_pass, user_name, null, new Date());
-
-                RegisterUserScreen rbsE = new RegisterUserScreen(false, user);
-                getParent().add(rbsE);
-                rbsE.setVisible(true);
-                MainScreen.centralizaForm(rbsE);
+                    RegisterUserScreen rbsE = new RegisterUserScreen(false, user);
+                    getParent().add(rbsE);
+                    rbsE.setVisible(true);
+                    MainScreen.centralizaForm(rbsE);
+                }
                 break;
             case "remove":
                 try {
                     numeroLinha = tblResultado.getSelectedRow();
-                    id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
+                    int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
                     if (UserDAO.getInstance().delete(id)) {
                         JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso!");
                     } else {

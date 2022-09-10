@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Arrays;
 import java.util.Date;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -134,9 +135,10 @@ public class JMenuReport extends Menu {
                 }
                 break;
             case "analyticalRep":
-                int resposta2 = JOptionPane.showConfirmDialog(null, getParams(), "Relatório Analitíco", JOptionPane.PLAIN_MESSAGE);
+                Object vetor[] = getParams();
+                int resposta2 = JOptionPane.showConfirmDialog(null, vetor, "Relatório Analitíco", JOptionPane.PLAIN_MESSAGE);
                 if (resposta2 == 0) {
-                    reportScreen = new ReportScreen("Relatório Analitíco", getParams());
+                    reportScreen = new ReportScreen("Relatório Analitíco", vetor);
                     MainScreen.desktopPane.add(reportScreen);
                     MainScreen.jToolBar.add(reportScreen.getDesktopIcon());
                     reportScreen.setVisible(true);
@@ -145,9 +147,10 @@ public class JMenuReport extends Menu {
                 }
                 break;
             case "syntheticRep":
-                int resposta3 = JOptionPane.showConfirmDialog(null, getParams(), "Relatório Sintetico", JOptionPane.PLAIN_MESSAGE);
+                Object vet[] = getParams();
+                int resposta3 = JOptionPane.showConfirmDialog(null, vet, "Relatório Sintetico", JOptionPane.PLAIN_MESSAGE);
                 if (resposta3 == 0) {
-                    reportScreen = new ReportScreen("Relatório Sintetico", getParams());
+                    reportScreen = new ReportScreen("Relatório Sintetico", vet);
                     MainScreen.desktopPane.add(reportScreen);
                     MainScreen.jToolBar.add(reportScreen.getDesktopIcon());
                     reportScreen.setVisible(true);
