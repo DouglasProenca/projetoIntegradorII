@@ -59,5 +59,5 @@ Tela de Venda:
 
 Tela de Relatório Analitíco:
 
-![image](https://user-images.githubusercontent.com/78769051/188991701-97bc2524-db70-4f82-82d3-ba53f5d3bc95.png)
+![image](https://user-images.githubusercontent.com/78769051/189460608-e28bdb29-c92f-4ffe-909e-f5c36bfebb8b.png)
 
