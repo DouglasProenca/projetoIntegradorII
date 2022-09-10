@@ -12,8 +12,9 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/view/ReportScreen.java</file>
-            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/JMenuReport.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/JMenuHelp.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/JMenuMenu.java</file>
+            <file>file:/C:/Users/Douglas/Documents/GitHub/projetoIntegradorII/ProjetoIntegradorII/src/br/senac/objects/Menu.java</file>
         </group>
     </open-files>
 </project-private>

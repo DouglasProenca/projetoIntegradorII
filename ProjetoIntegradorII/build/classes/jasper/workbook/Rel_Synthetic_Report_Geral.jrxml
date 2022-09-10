@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_Synthetic_Report_Geral" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="1137c2e6-a2bc-4f82-819d-a5e36ec54b64">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="56"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset1" uuid="c5db74e9-d86a-46c8-a9e1-f28d674843ac"/>
 	<parameter name="cabecalho" class="java.lang.String"/>
 	<parameter name="data1" class="java.util.Date">
@@ -22,6 +22,7 @@
 from rc_venda v
 inner join rc_cliente c
  on v.id_cliente = c.id
+where v.[data] BETWEEN $P{data1} and $P{data2}
 order by v.id]]>
 	</queryString>
 	<field name="nome" class="java.lang.String"/>
@@ -73,39 +74,35 @@ order by v.id]]>
 			<band height="28"/>
 		</groupFooter>
 	</group>
-	<title>
-		<band height="137" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="106b04e7-2635-4c8e-8180-0748e639481e" x="0" y="48" width="555" height="48" forecolor="#000000"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="30" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Relatório Sintético]]></text>
-			</staticText>
-		</band>
-	</title>
 	<pageHeader>
-		<band height="20">
+		<band height="137">
 			<staticText>
-				<reportElement uuid="eac4907a-d6e9-4212-803b-6f29f0a2a470" mode="Opaque" x="0" y="0" width="185" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="eac4907a-d6e9-4212-803b-6f29f0a2a470" mode="Opaque" x="0" y="117" width="185" height="20" backcolor="#CCCCCC"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="75b25d83-35b3-4c64-b58b-05e99a9f9089" mode="Opaque" x="185" y="0" width="185" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="75b25d83-35b3-4c64-b58b-05e99a9f9089" mode="Opaque" x="185" y="117" width="185" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="00b23e87-043c-4e40-bf75-68d086f55963" mode="Opaque" x="370" y="0" width="185" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="00b23e87-043c-4e40-bf75-68d086f55963" mode="Opaque" x="370" y="117" width="185" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Right">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="106b04e7-2635-4c8e-8180-0748e639481e" x="0" y="37" width="555" height="48" forecolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Sintético]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -114,7 +111,7 @@ order by v.id]]>
 			<textField>
 				<reportElement uuid="e2d0f993-532a-4af7-90fb-367b65f9b1fe" x="0" y="0" width="555" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["Relatório com datas entre "+$P{data1}+" e "+$P{data2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Relatório com datas entre "+(new SimpleDateFormat("dd/MM/yyyy")).format($P{data1})+" e "+(new SimpleDateFormat("dd/MM/yyyy")).format($P{data2})]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

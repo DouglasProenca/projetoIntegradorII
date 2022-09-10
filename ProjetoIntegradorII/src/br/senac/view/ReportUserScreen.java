@@ -1,11 +1,17 @@
 package br.senac.view;
 
+import br.senac.controller.UserDAO;
+import br.senac.model.User;
 import br.senac.objects.InternalFrame;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,6 +33,7 @@ public class ReportUserScreen extends InternalFrame {
     private DefaultTableModel dm;
     private JTable tblResultado;
     private JScrollPane scroll;
+    private int numeroLinha;
 
     public ReportUserScreen() {
         super("Cadastro Usuarios", false, true, true, true, 707, 400);
@@ -36,6 +43,7 @@ public class ReportUserScreen extends InternalFrame {
     private void initComponents() {
         this.add(BorderLayout.CENTER, getScrollPane());
         this.add(BorderLayout.NORTH, getPanelNorth());
+        this.loadTable();
     }
 
     private JPanel getPanelNorth() {
@@ -105,19 +113,46 @@ public class ReportUserScreen extends InternalFrame {
                 MainScreen.centralizaForm(rbs);
                 break;
             case "edit":
-                RegisterUserScreen rbsE = new RegisterUserScreen(false);
+
+                numeroLinha = tblResultado.getSelectedRow();
+
+                int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
+                String user_name = tblResultado.getModel().getValueAt(numeroLinha, 1).toString();
+                String email = tblResultado.getModel().getValueAt(numeroLinha, 2).toString();
+                String email_pass = tblResultado.getModel().getValueAt(numeroLinha, 3).toString();
+                User user = new User(id, email, email_pass, user_name, null, new Date());
+
+                RegisterUserScreen rbsE = new RegisterUserScreen(false, user);
                 getParent().add(rbsE);
                 rbsE.setVisible(true);
                 MainScreen.centralizaForm(rbsE);
                 break;
             case "remove":
+                try {
+                    numeroLinha = tblResultado.getSelectedRow();
+                    id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
+                    if (UserDAO.getInstance().delete(id)) {
+                        JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Falha ao excluir Usuário!");
+                    }
+                    this.loadTable();
+                } catch (HeadlessException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage(),
+                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                }
                 break;
         }
     }
 
     @Override
     protected void loadTable() {
-
+        DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+        modelo.setRowCount(0);
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
+        UserDAO.getInstance().getAll().forEach((p) -> {
+            modelo.addRow(new Object[]{p.getId(), p.getUser(), p.getMail(), p.getMailPassword(), sdf1.format(p.getDate())});
+        });
     }
 
     @Override

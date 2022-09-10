@@ -1,5 +1,7 @@
 package br.senac.model;
 
+import java.util.Date;
+
 /**
  *
  * @author Douglas
@@ -12,15 +14,33 @@ public class User {
     private String mailPassword;
     private String user;
     private String password;
+    private Date date;
 
-    private User() {
+    public User() {
     }
 
+    public User(int id, String mail, String mailPassword, String user, String password, Date date) {
+        this.id = id;
+        this.mail = mail;
+        this.mailPassword = mailPassword;
+        this.user = user;
+        this.password = password;
+        this.date = date;
+    }
+    
     public static synchronized User getInstance() {
         if (uniqueInstance == null) {
             uniqueInstance = new User();
         }
         return uniqueInstance;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getId() {
@@ -62,8 +82,8 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    public void setEmpty(){
+
+    public void setEmpty() {
         this.user = null;
         this.password = null;
         this.id = 0;

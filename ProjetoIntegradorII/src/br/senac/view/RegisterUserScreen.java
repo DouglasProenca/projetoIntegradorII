@@ -1,11 +1,15 @@
 package br.senac.view;
 
+import br.senac.controller.UserDAO;
+import br.senac.model.User;
 import br.senac.objects.InternalFrame;
 import br.senac.objects.images;
 import java.awt.event.ActionEvent;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -34,6 +38,15 @@ public class RegisterUserScreen extends InternalFrame {
     public RegisterUserScreen(boolean newCad) {
         super(newCad == true ? "Cadastrar Usuário" : "Editar Usuário", false, true, false, false, 700, 400);
         initComponents(newCad);
+    }
+
+    public RegisterUserScreen(boolean newCad, User user) {
+        super(newCad == true ? "Cadastrar Usuário" : "Editar Usuário", false, true, false, false, 700, 400);
+        initComponents(newCad);
+        this.id = user.getId();
+        this.txtUser.setText(user.getUser());
+        this.txtMail.setText(user.getMail());
+        this.txtPasswordMail.setText(user.getMailPassword());
     }
 
     private void initComponents(boolean newCad) {
@@ -126,10 +139,20 @@ public class RegisterUserScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-
+                User u = new User(0, txtMail.getText(), String.valueOf(txtPasswordMail.getPassword()), txtUser.getText(), String.valueOf(txtPassword.getPassword()), new Date());
+                boolean ret = UserDAO.getInstance().save(u);
+                if (ret) {
+                    JOptionPane.showMessageDialog(null, "Usúario Cadastrado Com Sucesso!");
+                    this.dispose();
+                }
                 break;
             case "alter":
-
+                User user = new User(id, txtMail.getText(), String.valueOf(txtPasswordMail.getPassword()), txtUser.getText(), String.valueOf(txtPassword.getPassword()), new Date());
+                boolean retur = UserDAO.getInstance().alter(user);
+                if(retur){
+                    JOptionPane.showMessageDialog(null, "Usúario Alterado Com Sucesso!");
+                    this.dispose();
+                }
                 this.dispose();
                 break;
             default:

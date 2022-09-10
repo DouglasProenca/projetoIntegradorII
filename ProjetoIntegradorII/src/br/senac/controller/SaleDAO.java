@@ -117,7 +117,6 @@ public class SaleDAO implements DAO {
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
         }

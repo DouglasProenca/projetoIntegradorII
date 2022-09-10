@@ -234,48 +234,4 @@ public class JMenuMenu extends Menu {
             Logger.getLogger(JMenuMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    @Override
-    public void internalFrameOpened(InternalFrameEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void internalFrameClosing(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        frame.setClosable(true);
-    }
-
-    @Override
-    public void internalFrameClosed(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        frame.setClosable(true);
-    }
-
-    @Override
-    public void internalFrameIconified(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        frame.setIconifiable(false);
-        MainScreen.jToolBar.add(frame.getDesktopIcon());
-    }
-
-    @Override
-    public void internalFrameDeiconified(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        MainScreen.jToolBar.remove(frame.getDesktopIcon());
-        frame.setIconifiable(true);
-        MainScreen.desktopPane.add(frame);
-    }
-
-    @Override
-    public void internalFrameActivated(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        MainScreen.jToolBar.add(frame.getDesktopIcon());
-    }
-
-    @Override
-    public void internalFrameDeactivated(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
-        MainScreen.jToolBar.add(frame.getDesktopIcon());
-    }
 }

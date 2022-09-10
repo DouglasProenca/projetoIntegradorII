@@ -416,7 +416,9 @@ public class SaleScreen extends InternalFrame {
         DefaultTableModel modeloTabelThree = (DefaultTableModel) tblPanelThree.getModel();
         modeloTabelThree.setRowCount(0);
         ProductDAO.getInstance().getAll().forEach((p) -> {
-            modeloTabelThree.addRow(new Object[]{p.getId(), p.getNome(), p.getValor(), p.getQuantidade()});
+            if (p.getQuantidade() >= 1) {
+                modeloTabelThree.addRow(new Object[]{p.getId(), p.getNome(), p.getValor(), p.getQuantidade()});
+            }
         });
     }
 

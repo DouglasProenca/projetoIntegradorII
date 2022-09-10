@@ -19,6 +19,7 @@
       , c.nome cliente
       ,p.nome produto
       ,v.quantidade
+      ,cat.categoria
       ,v.valor
       ,v.[data]
 from rc_lista_venda v
@@ -28,6 +29,9 @@ inner join rc_venda vend
       on vend.id = v.id_venda
 inner join rc_cliente c
       on c.id = vend.id_cliente
+inner join rc_categoria cat
+      on cat.id = p.categoria
+where vend.[data] between $P{data1} and $P{data2}
 order by  v.id_venda]]>
 	</queryString>
 	<field name="cliente" class="java.lang.String"/>
@@ -36,6 +40,7 @@ order by  v.id_venda]]>
 	<field name="valor" class="java.math.BigDecimal"/>
 	<field name="produto" class="java.lang.String"/>
 	<field name="quantidade" class="java.lang.Integer"/>
+	<field name="categoria" class="java.lang.String"/>
 	<variable name="valor_1" class="java.math.BigDecimal" resetType="Group" resetGroup="sale" calculation="Sum">
 		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
 	</variable>
@@ -80,7 +85,7 @@ order by  v.id_venda]]>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="20">
+			<band height="31">
 				<textField pattern="#,##0.00">
 					<reportElement uuid="cb716bfe-a761-41a3-9dd4-42b8850692f4" x="455" y="0" width="100" height="20"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -112,53 +117,49 @@ order by  v.id_venda]]>
 			</band>
 		</groupFooter>
 	</group>
-	<title>
-		<band height="137" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="106b04e7-2635-4c8e-8180-0748e639481e" x="0" y="48" width="555" height="48" forecolor="#000000"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="30" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Relatório Analitíco]]></text>
-			</staticText>
-		</band>
-	</title>
 	<pageHeader>
-		<band height="20">
+		<band height="137">
 			<staticText>
-				<reportElement uuid="eac4907a-d6e9-4212-803b-6f29f0a2a470" mode="Opaque" x="0" y="0" width="175" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="eac4907a-d6e9-4212-803b-6f29f0a2a470" mode="Opaque" x="0" y="117" width="175" height="20" backcolor="#CCCCCC"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Itens]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="75b25d83-35b3-4c64-b58b-05e99a9f9089" mode="Opaque" x="375" y="0" width="80" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="75b25d83-35b3-4c64-b58b-05e99a9f9089" mode="Opaque" x="375" y="117" width="80" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="00b23e87-043c-4e40-bf75-68d086f55963" mode="Opaque" x="455" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="00b23e87-043c-4e40-bf75-68d086f55963" mode="Opaque" x="455" y="117" width="100" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Right">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Valor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="75b25d83-35b3-4c64-b58b-05e99a9f9089" mode="Opaque" x="275" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="75b25d83-35b3-4c64-b58b-05e99a9f9089" mode="Opaque" x="275" y="117" width="100" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Quantidade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="75b25d83-35b3-4c64-b58b-05e99a9f9089" mode="Opaque" x="175" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="75b25d83-35b3-4c64-b58b-05e99a9f9089" mode="Opaque" x="175" y="117" width="100" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="106b04e7-2635-4c8e-8180-0748e639481e" x="0" y="32" width="555" height="48" forecolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Analitíco]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -192,6 +193,13 @@ order by  v.id_venda]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{produto}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement uuid="3789f07c-5c32-4795-affb-2ca54b602277" x="175" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categoria}.toLowerCase()]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
@@ -199,7 +207,7 @@ order by  v.id_venda]]>
 			<textField>
 				<reportElement uuid="e2d0f993-532a-4af7-90fb-367b65f9b1fe" x="0" y="0" width="555" height="20"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA["Relatório com datas entre "+$P{data1}+" e "+$P{data2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Relatório com datas entre "+(new SimpleDateFormat("dd/MM/yyyy")).format($P{data1})+" e "+(new SimpleDateFormat("dd/MM/yyyy")).format($P{data2})]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
