@@ -191,7 +191,7 @@ public class CategoryReportScreen extends InternalFrame implements ListSelection
                 }
                 break;
             case "Incluir":
-                RegistrationCategoryScreen rbs = new RegistrationCategoryScreen("Creation");
+                RegistrationCategoryScreen rbs = new RegistrationCategoryScreen();
                 getParent().add(rbs);
                 rbs.setVisible(true);
                 MainScreen.centralizaForm(rbs);
@@ -224,7 +224,7 @@ public class CategoryReportScreen extends InternalFrame implements ListSelection
 
             Category brand = new Category(category, id, null, null, null, user);
 
-            RegistrationCategoryScreen rbs = new RegistrationCategoryScreen(brand, "Alteration");
+            RegistrationCategoryScreen rbs = new RegistrationCategoryScreen(brand);
             getParent().add(rbs);
             rbs.setVisible(true);
             MainScreen.centralizaForm(rbs);

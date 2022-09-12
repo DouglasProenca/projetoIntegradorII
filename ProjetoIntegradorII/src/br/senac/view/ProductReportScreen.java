@@ -169,13 +169,11 @@ public class ProductReportScreen extends InternalFrame {
         switch (e.getActionCommand()) {
             case "excluir":
                 try {
-                    int numeroLinha = tblResultado.getSelectedRow();
-                    int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
+                    int lineNumber = tblResultado.getSelectedRow();
+                    int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
                     if (ProductDAO.getInstance().delete(id)) {
-                        JOptionPane.showMessageDialog(this, JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(this, JOptionPane.ERROR_MESSAGE);
-                    }
+                        JOptionPane.showMessageDialog(this, "Produto Excluido com Sucesso!");
+                    } 
                     this.loadTable();
                 } catch (HeadlessException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, ex.getMessage(),
@@ -183,7 +181,7 @@ public class ProductReportScreen extends InternalFrame {
                 }
                 break;
             case "Incluir":
-                RegistrationProductScreen rbs = new RegistrationProductScreen("Creation");
+                RegistrationProductScreen rbs = new RegistrationProductScreen();
                 getParent().add(rbs);
                 rbs.setVisible(true);
                 MainScreen.centralizaForm(rbs);
@@ -215,19 +213,19 @@ public class ProductReportScreen extends InternalFrame {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
-            int numeroLinha = tblResultado.getSelectedRow();
+            int lineNumber = tblResultado.getSelectedRow();
 
-            int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-            String product_name = tblResultado.getModel().getValueAt(numeroLinha, 1).toString();
-            String brand = tblResultado.getModel().getValueAt(numeroLinha, 2).toString();
-            String categoria = tblResultado.getModel().getValueAt(numeroLinha, 3).toString();
-            String valor = tblResultado.getModel().getValueAt(numeroLinha, 4).toString();
-            String quantidade = tblResultado.getModel().getValueAt(numeroLinha, 5).toString();
-            String user = tblResultado.getModel().getValueAt(numeroLinha, 6).toString();
+            int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
+            String product_name = tblResultado.getModel().getValueAt(lineNumber, 1).toString();
+            String brand = tblResultado.getModel().getValueAt(lineNumber, 2).toString();
+            String category = tblResultado.getModel().getValueAt(lineNumber, 3).toString();
+            String value = tblResultado.getModel().getValueAt(lineNumber, 4).toString();
+            String quantity = tblResultado.getModel().getValueAt(lineNumber, 5).toString();
+            String user = tblResultado.getModel().getValueAt(lineNumber, 6).toString();
 
-            Product product = new Product(product_name, Float.parseFloat(valor), Integer.parseInt(quantidade), categoria, id,
+            Product product = new Product(product_name, Float.parseFloat(value), Integer.parseInt(quantity), category, id,
                     brand, null, null, user);
-            RegistrationProductScreen rbs = new RegistrationProductScreen(product, "Alteration");
+            RegistrationProductScreen rbs = new RegistrationProductScreen(product);
             getParent().add(rbs);
             rbs.setVisible(true);
             MainScreen.centralizaForm(rbs);

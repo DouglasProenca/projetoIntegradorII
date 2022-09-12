@@ -62,14 +62,14 @@ public class RegistrationProductScreen extends InternalFrame {
     private final ProductDAO daop = ProductDAO.getInstance();
     private final CategoryDAO daoc = CategoryDAO.getInstance();
 
-    public RegistrationProductScreen(String formato) {
-        super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 700, 400);
-        this.InitComponents(formato);
+    public RegistrationProductScreen() {
+        super("Cadastrar", false, true, false, false, 700, 400);
+        this.InitComponents(false);
     }
 
-    public RegistrationProductScreen(Product product, String formato) {
-        super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 700, 400);
-        InitComponents(formato);
+    public RegistrationProductScreen(Product product) {
+        super("Alterar", false, true, false, false, 700, 400);
+        InitComponents(true);
         this.txtProduct.setText(product.getNome());
         this.jboBrand.setSelectedItem(product.getMarca());
         this.txtValor.setText(String.valueOf(product.getValor()));
@@ -77,25 +77,25 @@ public class RegistrationProductScreen extends InternalFrame {
         this.id = product.getId();
     }
 
-    private void InitComponents(String formato) {
+    private void InitComponents(boolean type) {
         this.setLayout(null);
-        this.getContentPane().add(getPainelAbas(formato));
+        this.getContentPane().add(getPainelAbas(type));
 
     }
 
-    private JTabbedPane getPainelAbas(String formato) {
+    private JTabbedPane getPainelAbas(boolean type) {
         painelAbas = new JTabbedPane();
         painelAbas.setBounds(10, 10, 670, 350);
-        painelAbas.add("Cadastro", getPanelCadastro(formato));
-        if (formato.equals("Creation")) {
+        painelAbas.add("Cadastro", getPanelCadastro(type));
+        if (!type) {
             painelAbas.add("Excel", getPanelExcel());
         }
         return painelAbas;
     }
 
-    private JPanel getPanelCadastro(String formato) {
+    private JPanel getPanelCadastro(boolean type) {
         panelCadastro = new JPanel(null);
-        panelCadastro.setBorder(BorderFactory.createTitledBorder(formato.equals("Creation") ? "Cadastrar Produto" : "Alterar Produto"));
+        panelCadastro.setBorder(BorderFactory.createTitledBorder(!type? "Cadastrar Produto" : "Alterar Produto"));
         panelCadastro.add(getLblProduct());
         panelCadastro.add(getTxtProduct());
         panelCadastro.add(getLblMarca());
@@ -104,7 +104,7 @@ public class RegistrationProductScreen extends InternalFrame {
         panelCadastro.add(getTxtValor());
         panelCadastro.add(getLblQuantidade());
         panelCadastro.add(getTxtQuantidade());
-        panelCadastro.add(getBtnCheck(formato));
+        panelCadastro.add(getBtnCheck(type));
         panelCadastro.add(getBtnClose());
         panelCadastro.add(getLblCategoria());
         panelCadastro.add(getJboCategoria());
@@ -197,11 +197,11 @@ public class RegistrationProductScreen extends InternalFrame {
         return btnClose;
     }
 
-    private JButton getBtnCheck(String formato) {
+    private JButton getBtnCheck(boolean type) {
         btnCheck = new JButton("Salvar", images.getInstance().imagemCheck());
         btnCheck.setBounds(25, 250, 250, 40);
         btnCheck.addActionListener(this);
-        btnCheck.setActionCommand(formato.equals("Creation") ? "save" : "alter");
+        btnCheck.setActionCommand(!type ? "save" : "alter");
         btnCheck.setEnabled(false);
         return btnCheck;
     }

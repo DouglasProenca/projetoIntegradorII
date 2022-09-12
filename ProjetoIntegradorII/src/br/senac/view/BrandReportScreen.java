@@ -178,8 +178,8 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
         switch (e.getActionCommand()) {
             case "excluir":
                 try {
-                    int numeroLinha = tblResultado.getSelectedRow();
-                    int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
+                    int lineNumber = tblResultado.getSelectedRow();
+                    int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
                     if (MarcaDao.getInstance().delete(id)) {
                         JOptionPane.showMessageDialog(this, "Marca excluída com sucesso!");
                     } else {
@@ -192,7 +192,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
                 }
                 break;
             case "Incluir":
-                RegistrationBrandScreen rbs = new RegistrationBrandScreen("Creation");
+                RegistrationBrandScreen rbs = new RegistrationBrandScreen();
                 getParent().add(rbs);
                 rbs.setVisible(true);
                 MainScreen.centralizaForm(rbs);
@@ -217,12 +217,12 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
-            int numeroLinha = tblResultado.getSelectedRow();
+            int lineNumber = tblResultado.getSelectedRow();
 
-            int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-            String brand_name = tblResultado.getModel().getValueAt(numeroLinha, 1).toString();
-            String pais = tblResultado.getModel().getValueAt(numeroLinha, 2).toString();
-            String user = tblResultado.getModel().getValueAt(numeroLinha, 4).toString();
+            int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
+            String brand_name = tblResultado.getModel().getValueAt(lineNumber, 1).toString();
+            String pais = tblResultado.getModel().getValueAt(lineNumber, 2).toString();
+            String user = tblResultado.getModel().getValueAt(lineNumber, 4).toString();
 
             Brand brand = new Brand();
             brand.setId(id);
@@ -230,7 +230,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
             brand.setPais(pais);
             brand.setUser(user);
 
-            RegistrationBrandScreen rbs = new RegistrationBrandScreen(brand, "Alteration");
+            RegistrationBrandScreen rbs = new RegistrationBrandScreen(brand);
             getParent().add(rbs);
             rbs.setVisible(true);
             MainScreen.centralizaForm(rbs);

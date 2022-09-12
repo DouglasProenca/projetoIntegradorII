@@ -27,7 +27,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     public static DesktopPane desktopPane;
     public static JToolBar jToolBar;
-    public static MenuBar menubar = new MenuBar();
+    protected static MenuBar menubar = new MenuBar();
     private final LoginScreen loginScreen = new LoginScreen();
     private final DatabaseConnectionScreen bd = new DatabaseConnectionScreen(false, false);
     private ImageIcon icone;

@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Arrays;
 import java.util.Date;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -124,15 +123,12 @@ public class JMenuReport extends Menu {
                 pr.addInternalFrameListener(this);
                 break;
             case "managementRep":
-                int resposta = JOptionPane.showConfirmDialog(null, getParams(), "Relatório Gerencial", JOptionPane.PLAIN_MESSAGE);
-                if (resposta == 0) {
-                    reportScreen = new ReportScreen("Relatório Gerencial", getParams());
-                    MainScreen.desktopPane.add(reportScreen);
-                    MainScreen.jToolBar.add(reportScreen.getDesktopIcon());
-                    reportScreen.setVisible(true);
-                    MainScreen.centralizaForm(reportScreen);
-                    reportScreen.addInternalFrameListener(this);
-                }
+                reportScreen = new ReportScreen("Relatório Gerencial", getParams());
+                MainScreen.desktopPane.add(reportScreen);
+                MainScreen.jToolBar.add(reportScreen.getDesktopIcon());
+                reportScreen.setVisible(true);
+                MainScreen.centralizaForm(reportScreen);
+                reportScreen.addInternalFrameListener(this);
                 break;
             case "analyticalRep":
                 Object vetor[] = getParams();

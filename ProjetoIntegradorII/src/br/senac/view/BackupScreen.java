@@ -25,7 +25,7 @@ import javax.swing.JTextField;
  *
  * @author Douglas
  */
-public class BackupScreen extends InternalFrame implements ActionListener, KeyListener {
+public class BackupScreen extends InternalFrame {
 
     private JLabel lblDigiteSenha;
     private JButton btnConfirmar;
@@ -128,7 +128,7 @@ public class BackupScreen extends InternalFrame implements ActionListener, KeyLi
                         try {
                             Connection conexao = connectionManager.getConexao();
                             PreparedStatement instrucaoSQL = conexao.prepareStatement(
-                                    "BACKUP DATABASE [ibcp] TO  DISK = N'" + arquivo + "' WITH NOFORMAT, NOINIT,  NAME = N'sistema-Completo Banco de Dados Backup', SKIP, NOREWIND, NOUNLOAD,  STATS = 10");
+                                    "BACKUP DATABASE [cr7imports] TO  DISK = N'" + arquivo + "' WITH NOFORMAT, NOINIT,  NAME = N'sistema-Completo Banco de Dados Backup', SKIP, NOREWIND, NOUNLOAD,  STATS = 10");
                             instrucaoSQL.executeUpdate();
                             progbarProgresso.setMaximum(2);
                             progbarProgresso.setValue(100);

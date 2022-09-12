@@ -35,34 +35,34 @@ public class RegisterUserScreen extends InternalFrame {
     private JPasswordField txtPassword;
     private JTextField txtMail;
 
-    public RegisterUserScreen(boolean newCad) {
-        super(newCad == true ? "Cadastrar Usuário" : "Editar Usuário", false, true, false, false, 700, 400);
-        initComponents(newCad);
+    public RegisterUserScreen() {
+        super("Cadastrar Usuário", false, true, false, false, 700, 400);
+        initComponents(false);
     }
 
-    public RegisterUserScreen(boolean newCad, User user) {
-        super(newCad == true ? "Cadastrar Usuário" : "Editar Usuário", false, true, false, false, 700, 400);
-        initComponents(newCad);
+    public RegisterUserScreen(User user) {
+        super("Editar Usuário", false, true, false, false, 700, 400);
+        initComponents(true);
         this.id = user.getId();
         this.txtUser.setText(user.getUser());
         this.txtMail.setText(user.getMail());
         this.txtPasswordMail.setText(user.getMailPassword());
     }
 
-    private void initComponents(boolean newCad) {
-        this.getContentPane().add(getPanelCadastro(newCad));
+    private void initComponents(boolean type) {
+        this.getContentPane().add(getPanelCadastro(type));
     }
 
-    private JPanel getPanelCadastro(boolean newCad) {
+    private JPanel getPanelCadastro(boolean type) {
         panelCadastro = new JPanel(null);
-        panelCadastro.setBorder(BorderFactory.createTitledBorder(newCad == true ? "Cadastrar Usuário" : "Alterar Usuário"));
+        panelCadastro.setBorder(BorderFactory.createTitledBorder(type? "Cadastrar Usuário" : "Alterar Usuário"));
         panelCadastro.add(getLblUser());
         panelCadastro.add(getTxtUser());
         panelCadastro.add(getLblPassword());
         panelCadastro.add(getTxtPassword());
         panelCadastro.add(getLblPassordMail());
         panelCadastro.add(getTxtPasswordMail());
-        panelCadastro.add(getBtnCheck(newCad));
+        panelCadastro.add(getBtnCheck(type));
         panelCadastro.add(getBtnClose());
         panelCadastro.add(getLblMail());
         panelCadastro.add(getTxtMail());

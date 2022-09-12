@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_Managent_Report_Quantidade_Total" pageWidth="150" pageHeight="595" orientation="Landscape" columnWidth="150" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1137c2e6-a2bc-4f82-819d-a5e36ec54b64">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_Managent_Report_Valor_Total" pageWidth="150" pageHeight="595" orientation="Landscape" columnWidth="150" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1137c2e6-a2bc-4f82-819d-a5e36ec54b64">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -14,7 +14,7 @@
 		<defaultValueExpression><![CDATA["C:\\Users\\Douglas\\Documents\\GitHub\\projetoIntegradorII\\ProjetoIntegradorII\\src\\jasper\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select format(sum(valor),' R$ #,##0.00','pt-br') valor
+		<![CDATA[select sum(quantidade) valor
 from rc_produto]]>
 	</queryString>
 	<field name="valor" class="java.lang.String"/>
@@ -25,7 +25,7 @@ from rc_produto]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="15"/>
 				</textElement>
-				<text><![CDATA[Valor Total]]></text>
+				<text><![CDATA[Quantidade Total]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -36,7 +36,7 @@ from rc_produto]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="15" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{valor}+" Peças"]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>

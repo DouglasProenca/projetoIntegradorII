@@ -49,28 +49,28 @@ public class RegistrationCategoryScreen extends InternalFrame {
     private JButton btnImportExcel;
     private final CategoryDAO dao = CategoryDAO.getInstance();
 
-    public RegistrationCategoryScreen(String formato) {
-        super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 500, 400);
-        this.InitComponents(formato);
+    public RegistrationCategoryScreen() {
+        super("Cadastrar", false, true, false, false, 500, 400);
+        this.InitComponents(false);
     }
 
-    public RegistrationCategoryScreen(Category category, String formato) {
-        super((formato.equals("Creation") ? "Cadastrar" : "Alterar"), false, true, false, false, 500, 400);
-        InitComponents(formato);
+    public RegistrationCategoryScreen(Category category) {
+        super("Alterar", false, true, false, false, 500, 400);
+        InitComponents(true);
         this.txtBrand.setText(category.getCategoria());
         this.id = category.getId();
     }
 
-    private void InitComponents(String formato) {
+    private void InitComponents(boolean type) {
         this.setLayout(null);
-        this.getContentPane().add(getPainelAbas(formato));
+        this.getContentPane().add(getPainelAbas(type));
     }
 
-    private JTabbedPane getPainelAbas(String formato) {
+    private JTabbedPane getPainelAbas(boolean type) {
         painelAbas = new JTabbedPane();
         painelAbas.setBounds(10, 10, 470, 350);
-        painelAbas.add("Cadastro", getPanelCadastro(formato));
-        if (formato.equals("Creation")) {
+        painelAbas.add("Cadastro", getPanelCadastro(type));
+        if (!type) {
             painelAbas.add("Excel", getPanelExcel());
         }
         return painelAbas;
@@ -108,13 +108,13 @@ public class RegistrationCategoryScreen extends InternalFrame {
         return scroll;
     }
 
-    private JPanel getPanelCadastro(String formato) {
+    private JPanel getPanelCadastro(boolean type) {
         panel = new JPanel(null);
-        panel.setBorder(BorderFactory.createTitledBorder(formato.equals("Creation") ? "Cadastrar Categoria" : "Alterar Categoria"));
+        panel.setBorder(BorderFactory.createTitledBorder(!type ? "Cadastrar Categoria" : "Alterar Categoria"));
         panel.add(getTxtBrand());
         panel.add(getLblBrand());
         panel.add(getBtnClose());
-        panel.add(getBtnCheck(formato));
+        panel.add(getBtnCheck(type));
         return panel;
     }
 
@@ -139,11 +139,11 @@ public class RegistrationCategoryScreen extends InternalFrame {
         return btnClose;
     }
 
-    private JButton getBtnCheck(String formato) {
+    private JButton getBtnCheck(boolean type) {
         btnCheck = new JButton("Salvar", images.getInstance().imagemCheck());
         btnCheck.setBounds(20, 250, 200, 40);
         btnCheck.addActionListener(this);
-        btnCheck.setActionCommand(formato.equals("Creation") ? "save" : "alter");
+        btnCheck.setActionCommand(!type ? "save" : "alter");
         btnCheck.setEnabled(false);
         return btnCheck;
     }
