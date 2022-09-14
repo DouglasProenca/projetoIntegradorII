@@ -51,7 +51,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         this.setJMenuBar(menubar);
         this.getFirst();
     }
-    
+
     private ImageIcon getIcone() {
         icone = images.getInstance().imagemPrincipal();
         return icone;

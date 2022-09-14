@@ -34,6 +34,7 @@ public class RegistrationClientScreen extends InternalFrame {
     private JTextField txtName;
     private JTextField txtCPF;
     private JPanel panel;
+    private final ValidateCpf valCPF = new ValidateCpf();
 
     public RegistrationClientScreen() {
         super("Cadastrar Cliente", false, true, false, false, 500, 400);
@@ -110,8 +111,8 @@ public class RegistrationClientScreen extends InternalFrame {
             case "save":
                 boolean sucess = false;
                 String cpf = txtCPF.getText().replaceAll("\\.", "").replaceAll("\\-", "");
-                if (ValidateCpf.isCPF(cpf)) {
-                    Client client = new Client(0, txtName.getText(), ValidateCpf.imprimeCPF(cpf), String.valueOf(User.getInstance().getId()), new Date());
+                if (valCPF.isCPF(cpf)) {
+                    Client client = new Client(0, txtName.getText(), valCPF.imprimeCPF(cpf), String.valueOf(User.getInstance().getId()), new Date());
                     sucess = ClientDAO.getInstance().save(client);
                 } else {
                     JOptionPane.showMessageDialog(this, "CPF inválido!", "Erro de Cadastro",

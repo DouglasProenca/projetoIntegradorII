@@ -6,9 +6,12 @@ import java.util.InputMismatchException;
  *
  * @author Douglas
  */
-public abstract class ValidateCpf {
+public class ValidateCpf {
 
-    public static boolean isCPF(String CPF) {
+    public ValidateCpf() {
+    }
+
+    public boolean isCPF(String CPF) {
         if (CPF.equals("00000000000")
                 || CPF.equals("11111111111")
                 || CPF.equals("22222222222") || CPF.equals("33333333333")
@@ -66,7 +69,7 @@ public abstract class ValidateCpf {
         }
     }
 
-    public static String imprimeCPF(String CPF) {
+    public String imprimeCPF(String CPF) {
         return (CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "."
                 + CPF.substring(6, 9) + "-" + CPF.substring(9, 11));
     }

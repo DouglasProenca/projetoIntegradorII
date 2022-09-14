@@ -13,7 +13,7 @@ import javax.swing.event.InternalFrameListener;
  *
  * @author Douglas
  */
-public class Menu extends JMenu implements ActionListener, InternalFrameListener {
+public abstract class Menu extends JMenu implements ActionListener, InternalFrameListener {
 
     protected Menu(String title, Icon image) {
         super(title);
@@ -27,7 +27,6 @@ public class Menu extends JMenu implements ActionListener, InternalFrameListener
 
     @Override
     public void internalFrameOpened(InternalFrameEvent e) {
-
     }
 
     @Override
@@ -38,19 +37,18 @@ public class Menu extends JMenu implements ActionListener, InternalFrameListener
     public void internalFrameClosed(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
         frame.setClosable(true);
+        MainScreen.jToolBar.remove(frame.getDesktopIcon());
     }
 
     @Override
     public void internalFrameIconified(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
-        frame.setIconifiable(false);
         MainScreen.jToolBar.add(frame.getDesktopIcon());
     }
 
     @Override
     public void internalFrameDeiconified(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
-        MainScreen.jToolBar.remove(frame.getDesktopIcon());
         frame.setIconifiable(true);
         MainScreen.desktopPane.add(frame);
     }
