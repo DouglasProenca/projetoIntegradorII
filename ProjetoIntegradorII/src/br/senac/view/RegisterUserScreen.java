@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.InternalFrameEvent;
 
 /**
  *
@@ -55,7 +57,7 @@ public class RegisterUserScreen extends InternalFrame {
 
     private JPanel getPanelCadastro(boolean type) {
         panelCadastro = new JPanel(null);
-        panelCadastro.setBorder(BorderFactory.createTitledBorder(type? "Cadastrar Usuário" : "Alterar Usuário"));
+        panelCadastro.setBorder(BorderFactory.createTitledBorder(type ? "Cadastrar Usuário" : "Alterar Usuário"));
         panelCadastro.add(getLblUser());
         panelCadastro.add(getTxtUser());
         panelCadastro.add(getLblPassword());
@@ -136,6 +138,12 @@ public class RegisterUserScreen extends InternalFrame {
     }
 
     @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+        JInternalFrame frame = (JInternalFrame) e.getSource();
+        MainScreen.centralizaForm(frame);
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
@@ -149,7 +157,7 @@ public class RegisterUserScreen extends InternalFrame {
             case "alter":
                 User user = new User(id, txtMail.getText(), String.valueOf(txtPasswordMail.getPassword()), txtUser.getText(), String.valueOf(txtPassword.getPassword()), new Date());
                 boolean retur = UserDAO.getInstance().alter(user);
-                if(retur){
+                if (retur) {
                     JOptionPane.showMessageDialog(null, "Usúario Alterado Com Sucesso!");
                     this.dispose();
                 }

@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -232,6 +234,12 @@ public class RegistrationCategoryScreen extends InternalFrame {
                 break;
         }
     }
+    
+     @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+        JInternalFrame frame = (JInternalFrame) e.getSource();
+        MainScreen.centralizaForm(frame);
+    }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -257,6 +265,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
         public void changedUpdate(DocumentEvent e) {
             btnCheck.setEnabled(warn());
         }
+        
 
         private boolean warn() {
             boolean type = txtBrand.getText().length() <= 0 ? false : true;

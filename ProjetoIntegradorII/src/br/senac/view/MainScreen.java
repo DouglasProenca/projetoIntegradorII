@@ -69,8 +69,6 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
                 centralizaForm(bd);
                 bd.setVisible(true);
             } else {
-                desktopPane.add(loginScreen);
-                centralizaForm(loginScreen);
                 loginScreen.setVisible(true);
             }
         });

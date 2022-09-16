@@ -184,7 +184,6 @@ public class ProductReportScreen extends InternalFrame {
                 RegistrationProductScreen rbs = new RegistrationProductScreen();
                 getParent().add(rbs);
                 rbs.setVisible(true);
-                MainScreen.centralizaForm(rbs);
                 break;
             case "Exportar":
                 JFileChooser fc = new JFileChooser();
@@ -228,7 +227,6 @@ public class ProductReportScreen extends InternalFrame {
             RegistrationProductScreen rbs = new RegistrationProductScreen(product);
             getParent().add(rbs);
             rbs.setVisible(true);
-            MainScreen.centralizaForm(rbs);
         }
     }
 

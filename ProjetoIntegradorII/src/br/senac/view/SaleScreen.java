@@ -344,7 +344,6 @@ public class SaleScreen extends InternalFrame {
                 RegistrationClientScreen rbs = new RegistrationClientScreen();
                 MainScreen.desktopPane.add(rbs);
                 rbs.setVisible(true);
-                MainScreen.centralizaForm(rbs);
                 break;
             case "delete":
                 DefaultTableModel dtm = (DefaultTableModel) tblPanelFour.getModel();

@@ -160,11 +160,7 @@ public class JMenuMenu extends Menu {
                     break;
                 case "lookAndFeel":
                     LookAndFeelScreen laf = new LookAndFeelScreen();
-                    MainScreen.desktopPane.add(laf);
-                    MainScreen.jToolBar.add(laf.getDesktopIcon());
                     laf.setVisible(true);
-                    MainScreen.centralizaForm(laf);
-                    laf.addInternalFrameListener(this);
                     break;
                 case "CanvasBackground":
                     Color newColor = JColorChooser.showDialog(null, "Cor de Fundo",
@@ -181,51 +177,29 @@ public class JMenuMenu extends Menu {
                     break;
                 case "backup":
                     BackupScreen backup = new BackupScreen();
-                    MainScreen.desktopPane.add(backup);
-                    MainScreen.jToolBar.add(backup.getDesktopIcon());
                     backup.setVisible(true);
-                    MainScreen.centralizaForm(backup);
-                    backup.addInternalFrameListener(this);
                     break;
                 case "jdbc":
                     DatabaseConnectionScreen bd = new DatabaseConnectionScreen();
-                    MainScreen.desktopPane.add(bd);
-                    MainScreen.jToolBar.add(bd.getDesktopIcon());
-                    MainScreen.centralizaForm(bd);
                     bd.setVisible(true);
-                    bd.addInternalFrameListener(this);
                     break;
                 case "mail":
                     MailScreen mail = new MailScreen();
-                    MainScreen.desktopPane.add(mail);
-                    MainScreen.jToolBar.add(mail.getDesktopIcon());
-                    MainScreen.centralizaForm(mail);
                     mail.setVisible(true);
-                    mail.addInternalFrameListener(this);
                     break;
                 case "logout":
                     LoginScreen login = new LoginScreen();
                     MainScreen.removeForms();
                     User.getInstance().setEmpty();
-                    MainScreen.desktopPane.add(login);
-                    MainScreen.centralizaForm(login);
                     login.setVisible(true);
                     break;
                 case "sale":
                     SaleScreen sl = new SaleScreen();
-                    MainScreen.desktopPane.add(sl);
-                    MainScreen.jToolBar.add(sl.getDesktopIcon());
-                    MainScreen.centralizaForm(sl);
                     sl.setVisible(true);
-                    sl.addInternalFrameListener(this);
                     break;
                 case "user":
                     ReportUserScreen userScreen = new ReportUserScreen();
-                    MainScreen.desktopPane.add(userScreen);
-                    MainScreen.jToolBar.add(userScreen.getDesktopIcon());
-                    MainScreen.centralizaForm(userScreen);
                     userScreen.setVisible(true);
-                    userScreen.addInternalFrameListener(this);
                     break;
             }
         } catch (IOException ex) {

@@ -108,38 +108,23 @@ public class JMenuReport extends Menu {
         switch (e.getActionCommand()) {
             case "brand":
                 BrandReportScreen br = BrandReportScreen.getInstance();
-                MainScreen.desktopPane.add(br);
-                MainScreen.jToolBar.add(br.getDesktopIcon());
                 br.setVisible(true);
-                MainScreen.centralizaForm(br);
-                br.addInternalFrameListener(this);
                 break;
             case "product":
                 ProductReportScreen pr = new ProductReportScreen();
-                MainScreen.desktopPane.add(pr);
-                MainScreen.jToolBar.add(pr.getDesktopIcon());
                 pr.setVisible(true);
-                MainScreen.centralizaForm(pr);
-                pr.addInternalFrameListener(this);
                 break;
             case "managementRep":
                 reportScreen = new ReportScreen("Relatório Gerencial", getParams());
-                MainScreen.desktopPane.add(reportScreen);
-                MainScreen.jToolBar.add(reportScreen.getDesktopIcon());
                 reportScreen.setVisible(true);
                 MainScreen.centralizaForm(reportScreen);
-                reportScreen.addInternalFrameListener(this);
                 break;
             case "analyticalRep":
                 Object vetor[] = getParams();
                 int resposta2 = JOptionPane.showConfirmDialog(null, vetor, "Relatório Analitíco", JOptionPane.PLAIN_MESSAGE);
                 if (resposta2 == 0) {
                     reportScreen = new ReportScreen("Relatório Analitíco", vetor);
-                    MainScreen.desktopPane.add(reportScreen);
-                    MainScreen.jToolBar.add(reportScreen.getDesktopIcon());
                     reportScreen.setVisible(true);
-                    MainScreen.centralizaForm(reportScreen);
-                    reportScreen.addInternalFrameListener(this);
                 }
                 break;
             case "syntheticRep":
@@ -147,20 +132,12 @@ public class JMenuReport extends Menu {
                 int resposta3 = JOptionPane.showConfirmDialog(null, vet, "Relatório Sintetico", JOptionPane.PLAIN_MESSAGE);
                 if (resposta3 == 0) {
                     reportScreen = new ReportScreen("Relatório Sintetico", vet);
-                    MainScreen.desktopPane.add(reportScreen);
-                    MainScreen.jToolBar.add(reportScreen.getDesktopIcon());
                     reportScreen.setVisible(true);
-                    MainScreen.centralizaForm(reportScreen);
-                    reportScreen.addInternalFrameListener(this);
                 }
                 break;
             case "category":
                 CategoryReportScreen ct = new CategoryReportScreen();
-                MainScreen.desktopPane.add(ct);
-                MainScreen.jToolBar.add(ct.getDesktopIcon());
                 ct.setVisible(true);
-                MainScreen.centralizaForm(ct);
-                ct.addInternalFrameListener(this);
                 break;
         }
     }

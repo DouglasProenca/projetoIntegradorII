@@ -195,7 +195,6 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
                 RegistrationBrandScreen rbs = new RegistrationBrandScreen();
                 getParent().add(rbs);
                 rbs.setVisible(true);
-                MainScreen.centralizaForm(rbs);
                 break;
             case "Exportar":
                 JFileChooser fc = new JFileChooser();
@@ -233,7 +232,6 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
             RegistrationBrandScreen rbs = new RegistrationBrandScreen(brand);
             getParent().add(rbs);
             rbs.setVisible(true);
-            MainScreen.centralizaForm(rbs);
         }
     }
 

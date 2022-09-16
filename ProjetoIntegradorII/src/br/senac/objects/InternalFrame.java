@@ -1,5 +1,6 @@
 package br.senac.objects;
 
+import br.senac.view.MainScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -7,10 +8,12 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JInternalFrame;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public abstract class InternalFrame extends JInternalFrame implements ActionListener, MouseListener, KeyListener, ListSelectionListener {
+public abstract class InternalFrame extends JInternalFrame implements ActionListener, MouseListener, KeyListener, ListSelectionListener, InternalFrameListener {
 
     public InternalFrame(String titulo, boolean resizable, boolean closabe, boolean maximizable, boolean iconifiable,
             int width, int height) {
@@ -18,6 +21,7 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
         this.setFrameIcon(images.getInstance().imagemPrincipal());
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(width, height);
+        this.addInternalFrameListener(this);
     }
 
     @Override
@@ -60,9 +64,48 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
     public void valueChanged(ListSelectionEvent e) {
     }
 
+    @Override
+    public void internalFrameClosed(InternalFrameEvent e) {
+        JInternalFrame frame = (JInternalFrame) e.getSource();
+        frame.setClosable(true);
+        MainScreen.jToolBar.remove(frame.getDesktopIcon());
+    }
+
+    @Override
+    public void internalFrameIconified(InternalFrameEvent e) {
+        JInternalFrame frame = (JInternalFrame) e.getSource();
+        MainScreen.jToolBar.add(frame.getDesktopIcon());
+    }
+
+    @Override
+    public void internalFrameDeiconified(InternalFrameEvent e) {
+        JInternalFrame frame = (JInternalFrame) e.getSource();
+        frame.setIconifiable(true);
+        MainScreen.desktopPane.add(frame);
+    }
+
+    @Override
+    public void internalFrameActivated(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameDeactivated(InternalFrameEvent e) {
+    }
+
+    @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+        JInternalFrame frame = (JInternalFrame) e.getSource();
+        MainScreen.centralizaForm(frame);
+        MainScreen.desktopPane.add(frame);
+        MainScreen.jToolBar.add(frame.getDesktopIcon());
+    }
+
+    @Override
+    public void internalFrameClosing(InternalFrameEvent e) {
+    }
+
     /**
-     * @author Douglas Proença
-     * load a table
+     * @author Douglas Proença load a table
      */
     protected void loadTable() {
     }

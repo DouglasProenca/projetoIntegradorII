@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -95,7 +97,7 @@ public class RegistrationProductScreen extends InternalFrame {
 
     private JPanel getPanelCadastro(boolean type) {
         panelCadastro = new JPanel(null);
-        panelCadastro.setBorder(BorderFactory.createTitledBorder(!type? "Cadastrar Produto" : "Alterar Produto"));
+        panelCadastro.setBorder(BorderFactory.createTitledBorder(!type ? "Cadastrar Produto" : "Alterar Produto"));
         panelCadastro.add(getLblProduct());
         panelCadastro.add(getTxtProduct());
         panelCadastro.add(getLblMarca());
@@ -255,11 +257,17 @@ public class RegistrationProductScreen extends InternalFrame {
     }
 
     @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+        JInternalFrame frame = (JInternalFrame) e.getSource();
+        MainScreen.centralizaForm(frame);
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
                 Product objProduct = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText()),
-                         jboCategoria.getSelectedItem().toString(), 0, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
+                        jboCategoria.getSelectedItem().toString(), 0, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
                 if (daop.save(objProduct)) {
                     JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
                     this.dispose();
@@ -267,7 +275,7 @@ public class RegistrationProductScreen extends InternalFrame {
                 break;
             case "alter":
                 Product objMarcaAlt = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText()),
-                         jboCategoria.getSelectedItem().toString(), id, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
+                        jboCategoria.getSelectedItem().toString(), id, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
                 daop.alter(objMarcaAlt);
                 this.dispose();
                 break;

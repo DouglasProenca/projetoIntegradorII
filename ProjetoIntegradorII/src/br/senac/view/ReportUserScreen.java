@@ -110,7 +110,6 @@ public class ReportUserScreen extends InternalFrame {
                 RegisterUserScreen rbs = new RegisterUserScreen();
                 getParent().add(rbs);
                 rbs.setVisible(true);
-                MainScreen.centralizaForm(rbs);
                 break;
             case "edit":
                 if (tblResultado.getSelectedRow() >= 1) {
@@ -125,7 +124,6 @@ public class ReportUserScreen extends InternalFrame {
                     RegisterUserScreen rbsE = new RegisterUserScreen(user);
                     getParent().add(rbsE);
                     rbsE.setVisible(true);
-                    MainScreen.centralizaForm(rbsE);
                 }
                 break;
             case "remove":

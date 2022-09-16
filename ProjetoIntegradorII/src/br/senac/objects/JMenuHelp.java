@@ -72,19 +72,11 @@ public class JMenuHelp extends Menu {
                     break;
                 case "about":
                     AboutScreen about = new AboutScreen();
-                    MainScreen.desktopPane.add(about);
-                    MainScreen.jToolBar.add(about.getDesktopIcon());
                     about.setVisible(true);
-                    MainScreen.centralizaForm(about);
-                    about.addInternalFrameListener(this);
                     break;
                 case "calendar":
                     CalendarScreen calendar = new CalendarScreen();
-                    MainScreen.desktopPane.add(calendar);
-                    MainScreen.jToolBar.add(calendar.getDesktopIcon());
                     calendar.setVisible(true);
-                    MainScreen.centralizaForm(calendar);
-                    calendar.addInternalFrameListener(this);
             }
         } catch (URISyntaxException | IOException ex) {
             Logger.getLogger(JMenuHelp.class.getName()).log(Level.SEVERE, null, ex);

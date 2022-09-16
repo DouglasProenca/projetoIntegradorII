@@ -227,7 +227,6 @@ public class CategoryReportScreen extends InternalFrame implements ListSelection
             RegistrationCategoryScreen rbs = new RegistrationCategoryScreen(brand);
             getParent().add(rbs);
             rbs.setVisible(true);
-            MainScreen.centralizaForm(rbs);
         }
     }
 

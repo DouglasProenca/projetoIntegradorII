@@ -13,12 +13,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -106,6 +108,12 @@ public class RegistrationClientScreen extends InternalFrame {
     }
 
     @Override
+    public void internalFrameOpened(InternalFrameEvent e) {
+        JInternalFrame frame = (JInternalFrame) e.getSource();
+        MainScreen.centralizaForm(frame);
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
@@ -119,7 +127,7 @@ public class RegistrationClientScreen extends InternalFrame {
                             JOptionPane.ERROR_MESSAGE);
                     sucess = false;
                 }
-                if(sucess){
+                if (sucess) {
                     JOptionPane.showMessageDialog(this, "Cliente salvo com sucesso!");
                 }
                 break;
