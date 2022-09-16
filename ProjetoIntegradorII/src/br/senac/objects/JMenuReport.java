@@ -117,7 +117,6 @@ public class JMenuReport extends Menu {
             case "managementRep":
                 reportScreen = new ReportScreen("Relatório Gerencial", getParams());
                 reportScreen.setVisible(true);
-                MainScreen.centralizaForm(reportScreen);
                 break;
             case "analyticalRep":
                 Object vetor[] = getParams();

@@ -194,7 +194,6 @@ public class CategoryReportScreen extends InternalFrame implements ListSelection
                 RegistrationCategoryScreen rbs = new RegistrationCategoryScreen();
                 getParent().add(rbs);
                 rbs.setVisible(true);
-                MainScreen.centralizaForm(rbs);
                 break;
             case "Exportar":
                 JFileChooser fc = new JFileChooser();

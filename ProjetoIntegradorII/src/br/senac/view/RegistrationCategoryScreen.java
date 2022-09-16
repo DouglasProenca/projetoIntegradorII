@@ -238,7 +238,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
      @Override
     public void internalFrameOpened(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
-        MainScreen.centralizaForm(frame);
+        centralizaForm(frame);
     }
 
     @Override

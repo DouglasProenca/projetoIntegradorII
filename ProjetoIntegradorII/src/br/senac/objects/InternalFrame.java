@@ -1,6 +1,8 @@
 package br.senac.objects;
 
 import br.senac.view.MainScreen;
+import static br.senac.view.MainScreen.desktopPane;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,9 +15,11 @@ import javax.swing.event.InternalFrameListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public abstract class InternalFrame extends JInternalFrame implements ActionListener, MouseListener, KeyListener, ListSelectionListener, InternalFrameListener {
+public abstract class InternalFrame extends JInternalFrame implements ActionListener,
+        MouseListener, KeyListener, ListSelectionListener, InternalFrameListener {
 
-    public InternalFrame(String titulo, boolean resizable, boolean closabe, boolean maximizable, boolean iconifiable,
+    public InternalFrame(String titulo, boolean resizable, boolean closabe,
+            boolean maximizable, boolean iconifiable,
             int width, int height) {
         super(titulo, resizable, closabe, maximizable, iconifiable);
         this.setFrameIcon(images.getInstance().imagemPrincipal());
@@ -95,9 +99,16 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
     @Override
     public void internalFrameOpened(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
-        MainScreen.centralizaForm(frame);
+        centralizaForm(frame);
         MainScreen.desktopPane.add(frame);
         MainScreen.jToolBar.add(frame.getDesktopIcon());
+    }
+
+    public void centralizaForm(JInternalFrame frame) {
+        Dimension desktopSize = desktopPane.getSize();
+        Dimension jInternalFrameSize = frame.getSize();
+        frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                (desktopSize.height - jInternalFrameSize.height) / 2);
     }
 
     @Override

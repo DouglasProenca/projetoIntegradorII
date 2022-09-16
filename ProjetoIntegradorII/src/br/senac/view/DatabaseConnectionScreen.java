@@ -5,7 +5,6 @@ import br.senac.objects.ConnectionManager;
 import br.senac.objects.InternalFrame;
 import br.senac.objects.PropertiesSystem;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -19,7 +18,7 @@ import javax.swing.JTextField;
  *
  * @author Douglas
  */
-public class DatabaseConnectionScreen extends InternalFrame implements ActionListener {
+public class DatabaseConnectionScreen extends InternalFrame {
 
     private JLabel lblDriver;
     private JLabel lblServer;

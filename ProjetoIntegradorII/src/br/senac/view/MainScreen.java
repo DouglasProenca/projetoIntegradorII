@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JToolBar;
 
 /**
@@ -65,8 +64,6 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
                 Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (ConnectionManager.getInstance().getConexao() == null) {
-                desktopPane.add(bd);
-                centralizaForm(bd);
                 bd.setVisible(true);
             } else {
                 loginScreen.setVisible(true);
@@ -85,14 +82,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         jToolBar.setPreferredSize(new Dimension(this.getSize().width, 40));
         jToolBar.setFloatable(false);
         return jToolBar;
-    }
-
-    public static void centralizaForm(JInternalFrame frame) {
-        Dimension desktopSize = desktopPane.getSize();
-        Dimension jInternalFrameSize = frame.getSize();
-        frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-                (desktopSize.height - jInternalFrameSize.height) / 2);
-    }
+    } 
 
     public static void removeForms() {
         int qtd = desktopPane.getComponentCount();
