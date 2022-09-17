@@ -21,6 +21,7 @@ public class LookAndFeelScreen extends InternalFrame implements ItemListener {
 
     private JPanel painel;
     private JComboBox<String> comboLAF;
+    private final PropertiesSystem ps = new PropertiesSystem();
 
     public LookAndFeelScreen() {
         super("Look And Feel", false, true, false, true, 324, 232);
@@ -59,8 +60,7 @@ public class LookAndFeelScreen extends InternalFrame implements ItemListener {
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             String LAFSelected = (String) e.getItem();
-            PropertiesSystem ps = new PropertiesSystem();
-            ps.changeLookAndFeel(LAFSelected);
+            PropertiesSystem.setLookAndFeel(LAFSelected);
             SwingUtilities.updateComponentTreeUI(MainScreen.desktopPane);
             JOptionPane.showMessageDialog(MainScreen.desktopPane,
                     "O Sistema será fechado para atualização de configurações!");
@@ -70,9 +70,9 @@ public class LookAndFeelScreen extends InternalFrame implements ItemListener {
 
     public static void initLookAndFeel() {
         try {
-            String myLAF = PropertiesSystem.Propriedade.getLookAndFeel();
+            String myLAF = PropertiesSystem.getLookAndFeel();
             if (myLAF == null || myLAF.isEmpty()) {
-                PropertiesSystem.Propriedade.setLookAndFeel(UIManager.getLookAndFeel().getName());
+                PropertiesSystem.setLookAndFeel(UIManager.getLookAndFeel().getName());
             } else {
 
                 for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -88,7 +88,7 @@ public class LookAndFeelScreen extends InternalFrame implements ItemListener {
 
                 }
             }
-        } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
         }

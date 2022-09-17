@@ -1,10 +1,8 @@
 package br.senac.objects;
 
-import br.senac.objects.PropertiesSystem.Propriedade;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.io.IOException;
 
 public class DesktopPane extends javax.swing.JDesktopPane {
 
@@ -15,8 +13,8 @@ public class DesktopPane extends javax.swing.JDesktopPane {
 
     @Override
     public void paintComponent(Graphics y) {
-        try {
-            String cores = Propriedade.getColor();
+            PropertiesSystem ps = new PropertiesSystem();
+            String cores = ps.getColor();
             cores = cores == null ? "63,100,129" : cores;
             String cor[] = cores.split(",");
             int r = Integer.parseInt(cor[0]);
@@ -26,8 +24,5 @@ public class DesktopPane extends javax.swing.JDesktopPane {
             super.paintComponent(y);
             y.setColor(new Color(r, g, b));
             y.fillRect(0, 0, getWidth(), getHeight());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 };

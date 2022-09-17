@@ -14,65 +14,18 @@ import java.util.logging.Logger;
  */
 public class PropertiesSystem {
 
-    public void changeLookAndFeel(String name) {
+    private static Properties prop;
+    private static final String path = "config.properties";
+
+    private static void LoadPropertiesFile() {
+        prop = new Properties();
+        File f = new File(path);
+
         try {
-            Propriedade.setLookAndFeel(name);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void changeServer(String name) {
-        try {
-            Propriedade.setServer(name);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void changeDatabase(String name) {
-        try {
-            Propriedade.setDatabase(name);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void changeLogin(String name) {
-        try {
-            Propriedade.setLogin(name);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void changeSenha(String name) {
-        try {
-            Propriedade.setSenha(name);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public void changeColor(String name) {
-        try {
-            Propriedade.setColor(name);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public static class Propriedade {
-
-        private static Properties prop;
-        private static String path = "config.properties";
-
-        private static void LoadPropertiesFile() throws IOException {
-            prop = new Properties();
-            File f = new File(path);
-
             if (f.isFile()) {
-                FileInputStream file = new FileInputStream(f);
+                FileInputStream file;
+                file = new FileInputStream(f);
+
                 prop.load(file);
             } else {
                 f.createNewFile();
@@ -80,88 +33,98 @@ public class PropertiesSystem {
                 prop.load(file);
                 setLookAndFeel("");
             }
+        } catch (IOException ex) {
+            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
-        public static String getLookAndFeel() throws IOException {
-            LoadPropertiesFile();
-            return prop.getProperty("lookandfeel.name");
-        }
+    public static String getLookAndFeel() {
+        LoadPropertiesFile();
+        return prop.getProperty("lookandfeel.name");
+    }
 
-        public static void setLookAndFeel(String name) throws IOException {
+    public static void setLookAndFeel(String name) {
+        try {
             LoadPropertiesFile();
             prop.setProperty("lookandfeel.name", name);
             prop.store(new FileOutputStream(path), "");
+        } catch (IOException ex) {
+            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
-        public static String getServer() {
-            try {
-                LoadPropertiesFile();
-            } catch (IOException ex) {
-                Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return prop.getProperty("jdbc.server");
-        }
+    public String getServer() {
+        LoadPropertiesFile();
+        return prop.getProperty("jdbc.server");
+    }
 
-        public static void setServer(String name) throws IOException {
-            LoadPropertiesFile();
-            prop.setProperty("jdbc.server", name);
+    public void setServer(String name) {
+        LoadPropertiesFile();
+        prop.setProperty("jdbc.server", name);
+        try {
             prop.store(new FileOutputStream(path), "");
+        } catch (IOException ex) {
+            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
-        public static String getDatabase() {
-            try {
-                LoadPropertiesFile();
-            } catch (IOException ex) {
-                Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return prop.getProperty("jdbc.database");
-        }
+    public String getDatabase() {
+        LoadPropertiesFile();
+        return prop.getProperty("jdbc.database");
+    }
 
-        public static void setDatabase(String name) throws IOException {
-            LoadPropertiesFile();
-            prop.setProperty("jdbc.database", name);
+    public void setDatabase(String name) {
+        LoadPropertiesFile();
+        prop.setProperty("jdbc.database", name);
+        try {
             prop.store(new FileOutputStream(path), "");
+        } catch (IOException ex) {
+            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
-        public static String getLogin() {
-            try {
-                LoadPropertiesFile();
-            } catch (IOException ex) {
-                Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return prop.getProperty("jdbc.login");
-        }
+    public String getLogin() {
+        LoadPropertiesFile();
+        return prop.getProperty("jdbc.login");
+    }
 
-        public static void setLogin(String name) throws IOException {
-            LoadPropertiesFile();
-            prop.setProperty("jdbc.login", name);
+    public void setLogin(String name) {
+        LoadPropertiesFile();
+        prop.setProperty("jdbc.login", name);
+        try {
             prop.store(new FileOutputStream(path), "");
+        } catch (IOException ex) {
+            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
-        public static String getSenha() {
-            try {
-                LoadPropertiesFile();
-            } catch (IOException ex) {
-                Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return prop.getProperty("jdbc.senha");
-        }
+    public String getSenha() {
+        LoadPropertiesFile();
+        return prop.getProperty("jdbc.senha");
+    }
 
-        public static void setSenha(String name) throws IOException {
-            LoadPropertiesFile();
-            prop.setProperty("jdbc.senha", name);
+    public void setSenha(String name) {
+        LoadPropertiesFile();
+        prop.setProperty("jdbc.senha", name);
+        try {
             prop.store(new FileOutputStream(path), "");
+        } catch (IOException ex) {
+            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
-        public static String getColor() throws IOException {
-            LoadPropertiesFile();
-            return prop.getProperty("lookandfeel.color");
-        }
+    public String getColor() {
+        LoadPropertiesFile();
+        return prop.getProperty("lookandfeel.color");
+    }
 
-        public static void setColor(String name) throws IOException {
-            LoadPropertiesFile();
-            prop.setProperty("lookandfeel.color", name);
+    public void setColor(String name) {
+        LoadPropertiesFile();
+        prop.setProperty("lookandfeel.color", name);
+        try {
             prop.store(new FileOutputStream(path), "");
+        } catch (IOException ex) {
+            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

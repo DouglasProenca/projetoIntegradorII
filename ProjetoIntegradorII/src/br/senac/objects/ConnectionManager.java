@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 public abstract class ConnectionManager implements ConnectionDB {
 
     private static ConnectionManager uniqueInstance;
+    private final PropertiesSystem ps = new PropertiesSystem();
 
     private ConnectionManager() {
     }
@@ -29,10 +30,10 @@ public abstract class ConnectionManager implements ConnectionDB {
 
     @Override
     public Connection getConexao() {
-        String user = PropertiesSystem.Propriedade.getLogin();
-        String password = PropertiesSystem.Propriedade.getSenha();
-        String database = PropertiesSystem.Propriedade.getDatabase();
-        String server = PropertiesSystem.Propriedade.getServer();
+        String user = ps.getLogin();
+        String password = ps.getSenha();
+        String database = ps.getDatabase();
+        String server = ps.getServer();
         String url = "jdbc:sqlserver://127.0.0.1" + "\\" + server + ":1433;databaseName=" + database;
 
         Connection con = null;

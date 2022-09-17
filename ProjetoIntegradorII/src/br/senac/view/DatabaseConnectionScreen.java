@@ -36,6 +36,7 @@ public class DatabaseConnectionScreen extends InternalFrame {
     private JTextField txtDatabase;
     private JTextField txtServer;
     private final ConnectionManager connectionManager = ConnectionManager.getInstance();
+    private final PropertiesSystem ps = new PropertiesSystem();
 
     public DatabaseConnectionScreen() {
         super("Conexão Banco de Dados", false, true, false, true, 440, 380);
@@ -86,28 +87,28 @@ public class DatabaseConnectionScreen extends InternalFrame {
     private JTextField getTxtLogin() {
         txtLogin = new JTextField();
         txtLogin.setBounds(90, 110, 300, 20);
-        txtLogin.setText(PropertiesSystem.Propriedade.getLogin());
+        txtLogin.setText(ps.getLogin());
         return txtLogin;
     }
 
     private JTextField getTxtDatabase() {
         txtDatabase = new JTextField();
         txtDatabase.setBounds(90, 80, 300, 20);
-        txtDatabase.setText(PropertiesSystem.Propriedade.getDatabase());
+        txtDatabase.setText(ps.getDatabase());
         return txtDatabase;
     }
 
     private JTextField getTxtSenha() {
         txtSenha = new JPasswordField();
         txtSenha.setBounds(90, 140, 300, 20);
-        txtSenha.setText(PropertiesSystem.Propriedade.getSenha());
+        txtSenha.setText(ps.getSenha());
         return txtSenha;
     }
 
     private JTextField getTxtServer() {
         txtServer = new JTextField();
         txtServer.setBounds(90, 50, 300, 20);
-        txtServer.setText(PropertiesSystem.Propriedade.getServer());
+        txtServer.setText(ps.getServer());
         return txtServer;
     }
 
@@ -181,10 +182,10 @@ public class DatabaseConnectionScreen extends InternalFrame {
                 break;
             case "save":
                 PropertiesSystem ps = new PropertiesSystem();
-                ps.changeDatabase(txtDatabase.getText());
-                ps.changeLogin(txtLogin.getText());
-                ps.changeServer(txtServer.getText());
-                ps.changeSenha(String.valueOf(txtSenha.getPassword()));
+                ps.setDatabase(txtDatabase.getText());
+                ps.setLogin(txtLogin.getText());
+                ps.setServer(txtServer.getText());
+                ps.setSenha(String.valueOf(txtSenha.getPassword()));
                 JOptionPane.showMessageDialog(this, "Sistema será fechado para atualização");
                 System.exit(0);
                 break;

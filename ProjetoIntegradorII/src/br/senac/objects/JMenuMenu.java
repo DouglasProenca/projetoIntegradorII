@@ -172,7 +172,7 @@ public class JMenuMenu extends Menu {
                         int g = newColor.getGreen();
                         int b = newColor.getBlue();
                         String rgb = r + "," + g + "," + b;
-                        ps.changeColor(rgb);
+                        ps.setColor(rgb);
                     }
                     break;
                 case "backup":
