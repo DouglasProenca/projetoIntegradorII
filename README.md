@@ -57,7 +57,16 @@ Tela de Venda:
 
 ![image](https://user-images.githubusercontent.com/78769051/188990556-39e3c800-bb5f-4cc2-aab1-e90e78542141.png)
 
-Tela de Relatório Analitíco:
+Tela do Relatório Sintético:
+
+![image](https://user-images.githubusercontent.com/78769051/192070399-743d489f-2794-4719-8b80-862b64bf7f18.png)
+
+Tela do Relatório Analitíco:
 
 ![image](https://user-images.githubusercontent.com/78769051/189460608-e28bdb29-c92f-4ffe-909e-f5c36bfebb8b.png)
+
+Tela do Relatório Gerencial:
+
+![image](https://user-images.githubusercontent.com/78769051/192070380-be850e82-d1a0-4a9e-b538-801f6481b3ac.png)
+
 
