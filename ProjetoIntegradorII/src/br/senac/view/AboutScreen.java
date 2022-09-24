@@ -2,7 +2,6 @@ package br.senac.view;
 
 import br.senac.model.User;
 import br.senac.objects.InternalFrame;
-import java.awt.event.ItemEvent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 

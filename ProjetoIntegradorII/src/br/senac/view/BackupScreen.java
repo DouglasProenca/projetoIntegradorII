@@ -131,7 +131,6 @@ public class BackupScreen extends InternalFrame {
                             progbarProgresso.setMaximum(2);
                             progbarProgresso.setValue(100);
                         } catch (SQLException ex) {
-                            //ex.printStackTrace();
                             JOptionPane.showMessageDialog(this, ex.getMessage(),
                                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                         }

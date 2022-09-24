@@ -57,7 +57,7 @@ public class RegisterUserScreen extends InternalFrame {
 
     private JPanel getPanelCadastro(boolean type) {
         panelCadastro = new JPanel(null);
-        panelCadastro.setBorder(BorderFactory.createTitledBorder(type ? "Cadastrar Usuário" : "Alterar Usuário"));
+        panelCadastro.setBorder(BorderFactory.createTitledBorder(!type ? "Cadastrar Usuário" : "Alterar Usuário"));
         panelCadastro.add(getLblUser());
         panelCadastro.add(getTxtUser());
         panelCadastro.add(getLblPassword());
@@ -132,7 +132,7 @@ public class RegisterUserScreen extends InternalFrame {
         btnCheck = new JButton("Salvar", images.getInstance().imagemCheck());
         btnCheck.setBounds(25, 250, 250, 40);
         btnCheck.addActionListener(this);
-        btnCheck.setActionCommand(newCad == true ? "save" : "alter");
+        btnCheck.setActionCommand(!newCad ? "save" : "alter");
         btnCheck.setEnabled(false);
         return btnCheck;
     }

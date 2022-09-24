@@ -33,7 +33,6 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
     public MainScreen() {
         super("CR7 Imports");
-        LookAndFeelScreen.initLookAndFeel();
         initComponents();
     }
 

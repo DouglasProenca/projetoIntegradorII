@@ -112,19 +112,17 @@ public class ReportUserScreen extends InternalFrame {
                 rbs.setVisible(true);
                 break;
             case "edit":
-                if (tblResultado.getSelectedRow() >= 1) {
                     lineNumber = tblResultado.getSelectedRow();
 
-                    int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
+                    int id_edit = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
                     String user_name = tblResultado.getModel().getValueAt(lineNumber, 1).toString();
                     String email = tblResultado.getModel().getValueAt(lineNumber, 2).toString();
                     String email_pass = tblResultado.getModel().getValueAt(lineNumber, 3).toString();
-                    User user = new User(id, email, email_pass, user_name, null, new Date());
+                    User user = new User(id_edit, email, email_pass, user_name, null, new Date());
 
                     RegisterUserScreen rbsE = new RegisterUserScreen(user);
                     getParent().add(rbsE);
                     rbsE.setVisible(true);
-                }
                 break;
             case "remove":
                 try {
