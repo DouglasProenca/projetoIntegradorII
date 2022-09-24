@@ -4,7 +4,6 @@ import br.senac.objects.InternalFrame;
 import br.senac.objects.PropertiesSystem;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -14,14 +13,12 @@ import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import java.io.IOException;
 import javax.swing.UnsupportedLookAndFeelException;
 
-public class LookAndFeelScreen extends InternalFrame implements ItemListener {
+public class LookAndFeelScreen extends InternalFrame {
 
     private JPanel painel;
     private JComboBox<String> comboLAF;
-    private final PropertiesSystem ps = new PropertiesSystem();
 
     public LookAndFeelScreen() {
         super("Look And Feel", false, true, false, true, 324, 232);
@@ -74,7 +71,6 @@ public class LookAndFeelScreen extends InternalFrame implements ItemListener {
             if (myLAF == null || myLAF.isEmpty()) {
                 PropertiesSystem.setLookAndFeel(UIManager.getLookAndFeel().getName());
             } else {
-
                 for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                     if (myLAF.equalsIgnoreCase(info.getName())) {
                         UIManager.setLookAndFeel(info.getClassName());
@@ -82,10 +78,11 @@ public class LookAndFeelScreen extends InternalFrame implements ItemListener {
                     }
                     if (myLAF.equals("FlatLaf Darcula")) {
                         UIManager.setLookAndFeel(new FlatDarculaLaf());
+                        break;
                     } else if (myLAF.equals("FlatLaf Light")) {
                         UIManager.setLookAndFeel(new FlatLightLaf());
+                        break;
                     }
-
                 }
             }
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {

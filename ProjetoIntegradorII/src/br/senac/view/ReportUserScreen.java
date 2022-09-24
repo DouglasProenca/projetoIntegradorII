@@ -37,7 +37,7 @@ public class ReportUserScreen extends InternalFrame {
 
     public ReportUserScreen() {
         super("Cadastro Usuarios", false, true, true, true, 707, 400);
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {

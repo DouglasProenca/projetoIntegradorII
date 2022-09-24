@@ -5,6 +5,8 @@ import static br.senac.view.MainScreen.desktopPane;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -16,7 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public abstract class InternalFrame extends JInternalFrame implements ActionListener,
-        MouseListener, KeyListener, ListSelectionListener, InternalFrameListener {
+        MouseListener, KeyListener, ListSelectionListener, InternalFrameListener, ItemListener {
 
     public InternalFrame(String titulo, boolean resizable, boolean closabe,
             boolean maximizable, boolean iconifiable,
@@ -66,6 +68,10 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
     }
 
     @Override

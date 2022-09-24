@@ -1,6 +1,6 @@
 package br.senac.view;
 
-import br.senac.controller.MarcaDao;
+import br.senac.controller.BrandDao;
 import br.senac.objects.Excel;
 import br.senac.model.Brand;
 import br.senac.objects.InternalFrame;
@@ -168,7 +168,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
-        MarcaDao.getInstance().getAll().forEach((p) -> {
+        BrandDao.getInstance().getAll().forEach((p) -> {
             modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
         });
     }
@@ -180,7 +180,7 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
                 try {
                     int lineNumber = tblResultado.getSelectedRow();
                     int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
-                    if (MarcaDao.getInstance().delete(id)) {
+                    if (BrandDao.getInstance().delete(id)) {
                         JOptionPane.showMessageDialog(this, "Marca excluída com sucesso!");
                     } else {
                         JOptionPane.showMessageDialog(this, "Falha ao excluir marca!");
@@ -200,13 +200,13 @@ public class BrandReportScreen extends InternalFrame implements ListSelectionLis
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 int choice = fc.showSaveDialog(null);
-                if (choice != 1) excel.BrandExcel(fc.getSelectedFile(), MarcaDao.getInstance().getAll());
+                if (choice != 1) excel.BrandExcel(fc.getSelectedFile(), BrandDao.getInstance().getAll());
                 break;
             case "find":
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
                 modelo.setRowCount(0);
                 SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
-                MarcaDao.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
+                BrandDao.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
                     modelo.addRow(new Object[]{p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser()});
                 });
                 break;

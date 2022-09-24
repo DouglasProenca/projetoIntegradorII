@@ -24,6 +24,17 @@ group by m.marca
 	</queryString>
 	<field name="marca" class="java.lang.String"/>
 	<field name="quantidade" class="java.lang.Integer"/>
+	<title>
+		<band height="20">
+			<staticText>
+				<reportElement uuid="c7c0c64f-6fea-431d-859f-f008f54f128f" mode="Opaque" x="0" y="0" width="275" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Top Marcas]]></text>
+			</staticText>
+		</band>
+	</title>
 	<columnFooter>
 		<band height="168">
 			<barChart>

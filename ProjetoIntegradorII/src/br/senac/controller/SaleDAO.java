@@ -91,15 +91,11 @@ public class SaleDAO implements DAO {
 
             instrucaoSQL.executeUpdate();
 
-        } catch (SQLException ex) {
+        } catch (SQLException | IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
             retorno = false;
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-        }
-
+        } 
         return retorno;
     }
 

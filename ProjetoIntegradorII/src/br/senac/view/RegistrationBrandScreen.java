@@ -1,6 +1,6 @@
 package br.senac.view;
 
-import br.senac.controller.MarcaDao;
+import br.senac.controller.BrandDao;
 import br.senac.objects.images;
 import br.senac.model.Brand;
 import br.senac.model.User;
@@ -52,7 +52,7 @@ public class RegistrationBrandScreen extends InternalFrame {
     private ArrayList<Brand> brandList;
     private JButton btnExcluirExcel;
     private JButton btnImportExcel;
-    private final MarcaDao dao = MarcaDao.getInstance();
+    private final BrandDao dao = BrandDao.getInstance();
 
     public RegistrationBrandScreen() {
         super("Cadastrar", false, true, false, false, 500, 400);

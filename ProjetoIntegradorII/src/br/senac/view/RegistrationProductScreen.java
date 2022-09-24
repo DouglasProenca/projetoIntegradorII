@@ -1,7 +1,7 @@
 package br.senac.view;
 
 import br.senac.controller.CategoryDAO;
-import br.senac.controller.MarcaDao;
+import br.senac.controller.BrandDao;
 import br.senac.controller.ProductDAO;
 import br.senac.objects.images;
 import br.senac.model.Product;
@@ -60,7 +60,7 @@ public class RegistrationProductScreen extends InternalFrame {
     private int id;
     private JComboBox<String> jboBrand;
     private JComboBox<String> jboCategoria;
-    private final MarcaDao dao = MarcaDao.getInstance();
+    private final BrandDao dao = BrandDao.getInstance();
     private final ProductDAO daop = ProductDAO.getInstance();
     private final CategoryDAO daoc = CategoryDAO.getInstance();
 

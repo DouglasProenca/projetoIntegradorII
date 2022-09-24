@@ -2,13 +2,13 @@ package br.senac.view;
 
 import br.senac.model.User;
 import br.senac.objects.InternalFrame;
+import java.awt.event.ItemEvent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.InternalFrameEvent;
 
 /**
  *

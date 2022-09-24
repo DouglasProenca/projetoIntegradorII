@@ -2,7 +2,6 @@ package br.senac.objects;
 
 import br.senac.view.BrandReportScreen;
 import br.senac.view.CategoryReportScreen;
-import br.senac.view.MainScreen;
 import br.senac.view.ProductReportScreen;
 import br.senac.view.ReportScreen;
 import com.toedter.calendar.JDateChooser;

@@ -19,6 +19,11 @@ import javax.swing.JOptionPane;
  */
 public class JMenuHelp extends Menu {
 
+    private JMenuItem calendar;
+    private JMenuItem about;
+    private JMenuItem version;
+    private JMenuItem site;
+    
     protected JMenuHelp() {
         super("Ajuda",images.getInstance().imagemHelp());
         this.initComponents();
@@ -33,28 +38,28 @@ public class JMenuHelp extends Menu {
     }
 
     private JMenuItem getCalendar() {
-        JMenuItem about = new JMenuItem("Calendário", images.getInstance().imagemCalendar());
-        about.addActionListener(this);
-        about.setActionCommand("calendar");
-        return about;
+        calendar = new JMenuItem("Calendário", images.getInstance().imagemCalendar());
+        calendar.addActionListener(this);
+        calendar.setActionCommand("calendar");
+        return calendar;
     }
 
     private JMenuItem getAbout() {
-        JMenuItem about = new JMenuItem("Sobre", images.getInstance().imagemHelp());
+        about = new JMenuItem("Sobre", images.getInstance().imagemHelp());
         about.addActionListener(this);
         about.setActionCommand("about");
         return about;
     }
 
     private JMenuItem getVersion() {
-        JMenuItem version = new JMenuItem("Versão", images.getInstance().imagemVersion());
+        version = new JMenuItem("Versão", images.getInstance().imagemVersion());
         version.addActionListener(this);
         version.setActionCommand("version");
         return version;
     }
 
     private JMenuItem getSite() {
-        JMenuItem site = new JMenuItem("Site", images.getInstance().imagemSite());
+        site = new JMenuItem("Site", images.getInstance().imagemSite());
         site.addActionListener(this);
         site.setActionCommand("site");
         return site;

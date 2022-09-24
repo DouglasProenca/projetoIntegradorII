@@ -26,7 +26,7 @@ import javax.swing.JTextField;
 public class BackupScreen extends InternalFrame {
 
     private JLabel lblDigiteSenha;
-    private JButton btnConfirmar;
+    private JButton btnCheck;
     private JButton btnCancelar;
     private JPasswordField txtSenha;
     private JTextField jcbTipo;
@@ -50,7 +50,7 @@ public class BackupScreen extends InternalFrame {
         painel.setSize(350, 270);
         painel.setLocation(10, 10);
         painel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        painel.add(getBtnConfirmar());
+        painel.add(getBtnCheck());
         painel.add(getbtnCancelar());
         painel.add(getTxtSenha());
         painel.add(getLblDigiteSenha());
@@ -103,12 +103,12 @@ public class BackupScreen extends InternalFrame {
         return btnCancelar;
     }
 
-    private JButton getBtnConfirmar() {
-        btnConfirmar = new JButton("Confirmar", images.getInstance().imagemCheck());
-        btnConfirmar.setBounds(30, 220, 130, 40);
-        btnConfirmar.addActionListener(this);
-        btnConfirmar.setActionCommand("Confirmar");
-        return btnConfirmar;
+    private JButton getBtnCheck() {
+        btnCheck = new JButton("Confirmar", images.getInstance().imagemCheck());
+        btnCheck.setBounds(30, 220, 130, 40);
+        btnCheck.addActionListener(this);
+        btnCheck.setActionCommand("Confirmar");
+        return btnCheck;
     }
 
     @Override

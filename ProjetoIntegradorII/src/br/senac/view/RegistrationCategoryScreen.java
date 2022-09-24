@@ -58,7 +58,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
 
     public RegistrationCategoryScreen(Category category) {
         super("Alterar", false, true, false, false, 500, 400);
-        InitComponents(true);
+        this.InitComponents(true);
         this.txtBrand.setText(category.getCategoria());
         this.id = category.getId();
     }
@@ -234,8 +234,8 @@ public class RegistrationCategoryScreen extends InternalFrame {
                 break;
         }
     }
-    
-     @Override
+
+    @Override
     public void internalFrameOpened(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
         centralizaForm(frame);
@@ -265,7 +265,6 @@ public class RegistrationCategoryScreen extends InternalFrame {
         public void changedUpdate(DocumentEvent e) {
             btnCheck.setEnabled(warn());
         }
-        
 
         private boolean warn() {
             boolean type = txtBrand.getText().length() <= 0 ? false : true;

@@ -39,12 +39,12 @@ public class RegisterUserScreen extends InternalFrame {
 
     public RegisterUserScreen() {
         super("Cadastrar Usuário", false, true, false, false, 700, 400);
-        initComponents(false);
+        this.initComponents(false);
     }
 
     public RegisterUserScreen(User user) {
         super("Editar Usuário", false, true, false, false, 700, 400);
-        initComponents(true);
+        this.initComponents(true);
         this.id = user.getId();
         this.txtUser.setText(user.getUser());
         this.txtMail.setText(user.getMail());
