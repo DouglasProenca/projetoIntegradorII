@@ -4,10 +4,13 @@ import br.senac.model.User;
 import br.senac.objects.InternalFrame;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Properties;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
 
 /**
  *
@@ -27,7 +30,7 @@ public class AboutScreen extends InternalFrame {
     private JLabel user_dir;
     private JLabel java_home;
     private JPanel painel;
-    private final java.util.Properties p = System.getProperties();
+    private final Properties p = System.getProperties();
     private JLabel lblUsuário_do_Sistema;
     private JLabel lblhostname;
     private JLabel lblos_name;
@@ -54,7 +57,7 @@ public class AboutScreen extends InternalFrame {
         painel = new JPanel(null);
         painel.setSize(515, 240);
         painel.setLocation(10, 10);
-        painel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        painel.setBorder(new SoftBevelBorder(BevelBorder.RAISED));
         painel.add(getLbljava_home());
         painel.add(getLbluser_dir());
         painel.add(getLbluser_country());

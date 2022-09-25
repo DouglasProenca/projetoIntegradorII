@@ -146,7 +146,7 @@ public class ReportUserScreen extends InternalFrame {
     protected void loadTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); 
         UserDAO.getInstance().getAll().forEach((p) -> {
             modelo.addRow(new Object[]{p.getId(), p.getUser(), p.getMail(), p.getMailPassword(), sdf1.format(p.getDate())});
         });

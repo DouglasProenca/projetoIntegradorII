@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
 
 /**
  *
@@ -49,7 +51,7 @@ public class BackupScreen extends InternalFrame {
         painel = new JPanel(null);
         painel.setSize(350, 270);
         painel.setLocation(10, 10);
-        painel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        painel.setBorder(new SoftBevelBorder(BevelBorder.RAISED));
         painel.add(getBtnCheck());
         painel.add(getbtnCancelar());
         painel.add(getTxtSenha());

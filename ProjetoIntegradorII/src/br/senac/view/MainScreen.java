@@ -81,7 +81,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         jToolBar.setPreferredSize(new Dimension(this.getSize().width, 40));
         jToolBar.setFloatable(false);
         return jToolBar;
-    } 
+    }
 
     public static void removeForms() {
         int qtd = desktopPane.getComponentCount();

@@ -14,6 +14,8 @@ import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
 
 public class LookAndFeelScreen extends InternalFrame {
 
@@ -34,7 +36,7 @@ public class LookAndFeelScreen extends InternalFrame {
         painel = new JPanel(null);
         painel.setSize(290, 170);
         painel.setLocation(10, 10);
-        painel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        painel.setBorder(new SoftBevelBorder(BevelBorder.RAISED));
         painel.add(getComboLAF());
         return painel;
     }

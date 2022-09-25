@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.SoftBevelBorder;
 
 /**
  *
@@ -149,7 +151,7 @@ public class DatabaseConnectionScreen extends InternalFrame {
 
     private JPanel getPainel() {
         painel = new JPanel(null);
-        painel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        painel.setBorder(new SoftBevelBorder(BevelBorder.RAISED));
         painel.setSize(415, 330);
         painel.setLocation(10, 10);
         painel.add(getLblDriver());
@@ -168,7 +170,7 @@ public class DatabaseConnectionScreen extends InternalFrame {
         painel.add(getBtnTestar());
         return painel;
     }
-
+    
     private void initComponents() {
         this.setLayout(null);
         this.getContentPane().add(getPainel());
