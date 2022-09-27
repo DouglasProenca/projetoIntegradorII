@@ -23,6 +23,11 @@ public class JMenuReport extends Menu {
 
     private JMenuItem category;
     private ReportScreen reportScreen;
+    private JMenuItem product;
+    private JMenuItem syntheticRep;
+    private JMenu report;
+    private JMenuItem marca;
+    private JMenuItem analyticalRep;
 
     protected JMenuReport() {
         super("Relatório", images.getInstance().imagemReport());
@@ -38,7 +43,7 @@ public class JMenuReport extends Menu {
     }
 
     private JMenu getMenuReport() {
-        JMenu report = new JMenu("Relatórios");
+        report = new JMenu("Relatórios");
         report.setIcon(images.getInstance().imagemManagement());
         report.add(getAnalyticalRep());
         report.add(getSyntheticRep());
@@ -55,14 +60,14 @@ public class JMenuReport extends Menu {
     }
 
     private JMenuItem getSyntheticRep() {
-        JMenuItem syntheticRep = new JMenuItem("Relatório Sintetico");
+        syntheticRep = new JMenuItem("Relatório Sintetico");
         syntheticRep.addActionListener(this);
         syntheticRep.setActionCommand("syntheticRep");
         return syntheticRep;
     }
 
     private JMenuItem getAnalyticalRep() {
-        JMenuItem analyticalRep = new JMenuItem("Relatório Analitico");
+        analyticalRep = new JMenuItem("Relatório Analitico");
         analyticalRep.addActionListener(this);
         analyticalRep.setActionCommand("analyticalRep");
         return analyticalRep;
@@ -76,14 +81,14 @@ public class JMenuReport extends Menu {
     }
 
     private JMenuItem getProduct() {
-        JMenuItem product = new JMenuItem("Produto", images.getInstance().imagemProduct());
+        product = new JMenuItem("Produto", images.getInstance().imagemProduct());
         product.addActionListener(this);
         product.setActionCommand("product");
         return product;
     }
 
     private JMenuItem getBrand() {
-        JMenuItem marca = new JMenuItem("Marca", images.getInstance().imagemBrand());
+        marca = new JMenuItem("Marca", images.getInstance().imagemBrand());
         marca.addActionListener(this);
         marca.setActionCommand("brand");
         return marca;

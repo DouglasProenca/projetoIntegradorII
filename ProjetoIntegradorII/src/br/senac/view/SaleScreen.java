@@ -77,7 +77,7 @@ public class SaleScreen extends InternalFrame {
 
     public SaleScreen() {
         super("Nova Venda", false, true, false, true, 800, 600);
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {

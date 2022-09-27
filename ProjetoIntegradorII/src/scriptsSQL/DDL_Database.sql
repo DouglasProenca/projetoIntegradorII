@@ -6,7 +6,7 @@ GO
 
 CREATE TABLE rc_user(
     id INT PRIMARY KEY IDENTITY,
-    [user] VARCHAR(100) NOT NULL,
+    [user] VARCHAR(100) UNIQUE NOT NULL,
     [password] VARCHAR(100) NOT NULL,
     mail VARCHAR(100) NOT NULL,
     mailpassword VARCHAR(100) NOT NULL,

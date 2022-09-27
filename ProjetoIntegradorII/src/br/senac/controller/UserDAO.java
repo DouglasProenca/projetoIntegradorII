@@ -138,7 +138,6 @@ public class UserDAO implements DAO {
             Connection conexao = ConnectionManager.getInstance().getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("select * from rc_user where [user] = ?");
 
-            //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, key);
 
             ResultSet rs = instrucaoSQL.executeQuery();

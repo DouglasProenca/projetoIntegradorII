@@ -42,12 +42,12 @@ public class DatabaseConnectionScreen extends InternalFrame {
 
     public DatabaseConnectionScreen() {
         super("Conexão Banco de Dados", false, true, false, true, 440, 380);
-        initComponents();
+        this.initComponents();
     }
 
     public DatabaseConnectionScreen(boolean closabe, boolean iconifiable) {
         super("Conexão Banco de Dados", false, closabe, false, iconifiable, 440, 380);
-        initComponents();
+        this.initComponents();
     }
 
     private JLabel getLblImagem() {

@@ -24,7 +24,7 @@ public class LookAndFeelScreen extends InternalFrame {
 
     public LookAndFeelScreen() {
         super("Look And Feel", false, true, false, true, 324, 232);
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {

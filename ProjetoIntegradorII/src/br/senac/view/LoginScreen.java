@@ -27,7 +27,7 @@ public class LoginScreen extends InternalFrame {
 
     public LoginScreen() {
         super("Login", false, false, false, false, 404, 325);
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {
@@ -75,13 +75,13 @@ public class LoginScreen extends InternalFrame {
     }
 
     private void lockMenu(boolean ret) {
-            int qtd = MainScreen.menubar.getComponentCount();
-            for (int i = 0; i < qtd; i++) {
-                if (MainScreen.menubar.getComponent(i) instanceof Menu) {
-                    Menu menu = (Menu) MainScreen.menubar.getComponent(i);
-                    menu.setEnabled(ret);
-                }
+        int qtd = MainScreen.menubar.getComponentCount();
+        for (int i = 0; i < qtd; i++) {
+            if (MainScreen.menubar.getComponent(i) instanceof Menu) {
+                Menu menu = (Menu) MainScreen.menubar.getComponent(i);
+                menu.setEnabled(ret);
             }
+        }
     }
 
     @Override

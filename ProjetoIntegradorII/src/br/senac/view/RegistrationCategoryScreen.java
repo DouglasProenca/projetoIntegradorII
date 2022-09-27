@@ -218,7 +218,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
                 }
                 break;
             case "delete":
-                CarregarJTable(categoryList, true);
+                this.CarregarJTable(categoryList, true);
                 break;
             case "saveExcel":
                 boolean ret = false;
@@ -238,7 +238,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
     @Override
     public void internalFrameOpened(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
-        centralizaForm(frame);
+        this.centralizaForm(frame);
     }
 
     @Override

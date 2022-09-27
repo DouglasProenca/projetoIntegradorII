@@ -259,7 +259,7 @@ public class RegistrationProductScreen extends InternalFrame {
     @Override
     public void internalFrameOpened(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
-        centralizaForm(frame);
+        this.centralizaForm(frame);
     }
 
     @Override

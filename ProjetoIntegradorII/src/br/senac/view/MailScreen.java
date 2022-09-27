@@ -36,7 +36,7 @@ public class MailScreen extends InternalFrame {
 
     public MailScreen() {
         super("Tela de E-mail", false, true, true, true, 707, 400);
-        initComponents();
+        this.initComponents();
     }
 
     private JPanel getPanelNorth() {

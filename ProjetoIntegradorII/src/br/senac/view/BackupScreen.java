@@ -39,7 +39,7 @@ public class BackupScreen extends InternalFrame {
 
     public BackupScreen() {
         super("Backup Banco de Dados", false, true, false, true, 379, 325);
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {

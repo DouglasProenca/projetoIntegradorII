@@ -7,11 +7,11 @@ public class CalendarScreen extends InternalFrame {
 
     public CalendarScreen() {
         super("Calendário", false, true, true, true,438, 298);
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {
-        this.add(new JCalendar());
-        pack();
+        this.getContentPane().add(new JCalendar());
+        this.pack();
     }
 }

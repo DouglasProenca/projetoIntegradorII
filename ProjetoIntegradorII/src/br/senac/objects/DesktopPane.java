@@ -3,8 +3,9 @@ package br.senac.objects;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import javax.swing.JDesktopPane;
 
-public class DesktopPane extends javax.swing.JDesktopPane {
+public class DesktopPane extends JDesktopPane {
 
     public DesktopPane(Dimension dimension) {
         super();

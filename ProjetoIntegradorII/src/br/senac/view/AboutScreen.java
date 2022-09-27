@@ -45,7 +45,7 @@ public class AboutScreen extends InternalFrame {
 
     public AboutScreen() {
         super("Informações", false, true, false, true, 549, 294);
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {

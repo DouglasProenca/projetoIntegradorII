@@ -55,7 +55,7 @@ public class BrandReportScreen extends InternalFrame  {
 
     private BrandReportScreen() {
         super("Relatório Marcas", true, true, true, true, 707, 400);
-        initComponents();
+        this.initComponents();
     }
 
     private JTable getTblResultado() {
@@ -228,7 +228,7 @@ public class BrandReportScreen extends InternalFrame  {
             brand.setUser(user);
 
             RegistrationBrandScreen rbs = new RegistrationBrandScreen(brand);
-            getParent().add(rbs);
+            this.getParent().add(rbs);
             rbs.setVisible(true);
         }
     }

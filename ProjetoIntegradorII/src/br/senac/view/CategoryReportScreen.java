@@ -54,7 +54,7 @@ public class CategoryReportScreen extends InternalFrame {
 
     public CategoryReportScreen() {
         super("Relatório Categorias", true, true, true, true, 707, 400);
-        initComponents();
+        this.initComponents();
     }
 
     private JTable getTblResultado() {
@@ -190,7 +190,7 @@ public class CategoryReportScreen extends InternalFrame {
                 break;
             case "Incluir":
                 RegistrationCategoryScreen rbs = new RegistrationCategoryScreen();
-                getParent().add(rbs);
+                this.getParent().add(rbs);
                 rbs.setVisible(true);
                 break;
             case "Exportar":
@@ -222,7 +222,7 @@ public class CategoryReportScreen extends InternalFrame {
             Category brand = new Category(category, id, null, null, null, user);
 
             RegistrationCategoryScreen rbs = new RegistrationCategoryScreen(brand);
-            getParent().add(rbs);
+            this.getParent().add(rbs);
             rbs.setVisible(true);
         }
     }
@@ -239,10 +239,10 @@ public class CategoryReportScreen extends InternalFrame {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == Event.ENTER) {
             if (txtPesquisa.getText().toLowerCase().equals("refresh") || txtPesquisa.getText().toLowerCase().equals("r")) {
-                loadTable();
+                this.loadTable();
             } else {
                 ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "find");
-                actionPerformed(z);
+                this.actionPerformed(z);
             }
         }
     }

@@ -108,7 +108,7 @@ public class ReportUserScreen extends InternalFrame {
         switch (e.getActionCommand()) {
             case "new":
                 RegisterUserScreen rbs = new RegisterUserScreen();
-                getParent().add(rbs);
+                this.getParent().add(rbs);
                 rbs.setVisible(true);
                 break;
             case "edit":
@@ -121,7 +121,7 @@ public class ReportUserScreen extends InternalFrame {
                     User user = new User(id_edit, email, email_pass, user_name, null, new Date());
 
                     RegisterUserScreen rbsE = new RegisterUserScreen(user);
-                    getParent().add(rbsE);
+                    this.getParent().add(rbsE);
                     rbsE.setVisible(true);
                 break;
             case "remove":

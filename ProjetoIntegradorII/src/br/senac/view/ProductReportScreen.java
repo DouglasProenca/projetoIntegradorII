@@ -225,7 +225,7 @@ public class ProductReportScreen extends InternalFrame {
             Product product = new Product(product_name, Float.parseFloat(value), Integer.parseInt(quantity), category, id,
                     brand, null, null, user);
             RegistrationProductScreen rbs = new RegistrationProductScreen(product);
-            getParent().add(rbs);
+            this.getParent().add(rbs);
             rbs.setVisible(true);
         }
     }
@@ -246,7 +246,7 @@ public class ProductReportScreen extends InternalFrame {
                 loadTable();
             } else {
                 ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "find");
-                actionPerformed(z);
+                this.actionPerformed(z);
             }
         }
     }
