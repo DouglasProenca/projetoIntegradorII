@@ -358,7 +358,7 @@ public class Excel {
 
                 Cell ca = sheet.getCell(0, z);
 
-                Category p = new Category(ca.getContents(), 0, null, null, null, null);
+                Category p = new Category(ca.getContents(), 0, null, null, new Date(), String.valueOf(User.getInstance().getId()));
 
                 categoryList.add(p);
             }

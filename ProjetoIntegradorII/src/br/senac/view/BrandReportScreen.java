@@ -29,7 +29,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
-public class BrandReportScreen extends InternalFrame  {
+public class BrandReportScreen extends InternalFrame {
 
     private final JLabel lblNome = new JLabel("Nome:");
     private final String colunas[] = {"ID", "Marca", "Pais", "Data", "Usuário"};
@@ -175,19 +175,12 @@ public class BrandReportScreen extends InternalFrame  {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "excluir":
-                try {
-                    int lineNumber = tblResultado.getSelectedRow();
-                    int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
-                    if (BrandDao.getInstance().delete(id)) {
-                        JOptionPane.showMessageDialog(this, "Marca excluída com sucesso!");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Falha ao excluir marca!");
-                    }
-                    this.loadTable();
-                } catch (HeadlessException | NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, ex.getMessage(),
-                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                int lineNumber = tblResultado.getSelectedRow();
+                int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
+                if (BrandDao.getInstance().delete(id)) {
+                    JOptionPane.showMessageDialog(this, "Marca excluída com sucesso!");
                 }
+                this.loadTable();
                 break;
             case "Incluir":
                 RegistrationBrandScreen rbs = new RegistrationBrandScreen();
@@ -197,8 +190,9 @@ public class BrandReportScreen extends InternalFrame  {
             case "Exportar":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int choice = fc.showSaveDialog(null);
-                if (choice != 1) excel.BrandExcel(fc.getSelectedFile(), BrandDao.getInstance().getAll());
+                if (fc.showSaveDialog(null) != 1) {
+                    excel.BrandExcel(fc.getSelectedFile(), BrandDao.getInstance().getAll());
+                }
                 break;
             case "find":
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();

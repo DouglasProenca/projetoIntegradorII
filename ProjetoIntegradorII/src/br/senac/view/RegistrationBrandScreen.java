@@ -232,8 +232,7 @@ public class RegistrationBrandScreen extends InternalFrame {
             case "import":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int choice = fc.showOpenDialog(null);
-                if (choice != 1) {
+                if (fc.showOpenDialog(null) != 1) {
                     brandList = Excel.importBrand(fc.getSelectedFile());
                     CarregarJTable(brandList, false);
                 }
@@ -243,11 +242,16 @@ public class RegistrationBrandScreen extends InternalFrame {
                 break;
             case "saveExcel":
                 boolean ret = false;
-                for (int i = 0; i < brandList.toArray().length; i++) {
-                    ret = dao.save(brandList.get(i));
-                }
-                if (ret) {
-                    JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
+                if (brandList != null) {
+                    for (int i = 0; i < brandList.toArray().length; i++) {
+                        ret = dao.save(brandList.get(i));
+                    }
+                    if (ret) {
+                        JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Selecione uma importação para continuar",
+                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             default:

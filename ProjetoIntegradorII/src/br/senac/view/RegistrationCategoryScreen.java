@@ -211,8 +211,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
             case "import":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int s = fc.showOpenDialog(null);
-                if (s != 1) {
+                if (fc.showOpenDialog(null) != 1) {
                     categoryList = Excel.importCategory(fc.getSelectedFile());
                     CarregarJTable(categoryList, false);
                 }
@@ -222,11 +221,16 @@ public class RegistrationCategoryScreen extends InternalFrame {
                 break;
             case "saveExcel":
                 boolean ret = false;
-                for (int i = 0; i < categoryList.toArray().length; i++) {
-                    ret = dao.save(categoryList.get(i));
-                }
-                if (ret) {
-                    JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
+                if (categoryList != null) {
+                    for (int i = 0; i < categoryList.toArray().length; i++) {
+                        ret = dao.save(categoryList.get(i));
+                    }
+                    if (ret) {
+                        JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Selecione uma importação para continuar",
+                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             default:

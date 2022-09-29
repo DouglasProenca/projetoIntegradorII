@@ -112,32 +112,25 @@ public class ReportUserScreen extends InternalFrame {
                 rbs.setVisible(true);
                 break;
             case "edit":
-                    lineNumber = tblResultado.getSelectedRow();
+                lineNumber = tblResultado.getSelectedRow();
 
-                    int id_edit = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
-                    String user_name = tblResultado.getModel().getValueAt(lineNumber, 1).toString();
-                    String email = tblResultado.getModel().getValueAt(lineNumber, 2).toString();
-                    String email_pass = tblResultado.getModel().getValueAt(lineNumber, 3).toString();
-                    User user = new User(id_edit, email, email_pass, user_name, null, new Date());
+                int id_edit = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
+                String user_name = tblResultado.getModel().getValueAt(lineNumber, 1).toString();
+                String email = tblResultado.getModel().getValueAt(lineNumber, 2).toString();
+                String email_pass = tblResultado.getModel().getValueAt(lineNumber, 3).toString();
+                User user = new User(id_edit, email, email_pass, user_name, null, new Date());
 
-                    RegisterUserScreen rbsE = new RegisterUserScreen(user);
-                    this.getParent().add(rbsE);
-                    rbsE.setVisible(true);
+                RegisterUserScreen rbsE = new RegisterUserScreen(user);
+                this.getParent().add(rbsE);
+                rbsE.setVisible(true);
                 break;
             case "remove":
-                try {
-                    lineNumber = tblResultado.getSelectedRow();
-                    int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
-                    if (UserDAO.getInstance().delete(id)) {
-                        JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso!");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Falha ao excluir Usuário!");
-                    }
-                    this.loadTable();
-                } catch (HeadlessException ex) {
-                    JOptionPane.showMessageDialog(this, ex.getMessage(),
-                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                lineNumber = tblResultado.getSelectedRow();
+                int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
+                if (UserDAO.getInstance().delete(id)) {
+                    JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso!");
                 }
+                this.loadTable();
                 break;
         }
     }
@@ -146,7 +139,7 @@ public class ReportUserScreen extends InternalFrame {
     protected void loadTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); 
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
         UserDAO.getInstance().getAll().forEach((p) -> {
             modelo.addRow(new Object[]{p.getId(), p.getUser(), p.getMail(), p.getMailPassword(), sdf1.format(p.getDate())});
         });

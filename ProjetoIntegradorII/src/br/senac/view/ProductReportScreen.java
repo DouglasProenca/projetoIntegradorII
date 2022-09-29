@@ -168,17 +168,12 @@ public class ProductReportScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "excluir":
-                try {
-                    int lineNumber = tblResultado.getSelectedRow();
-                    int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
-                    if (ProductDAO.getInstance().delete(id)) {
-                        JOptionPane.showMessageDialog(this, "Produto Excluido com Sucesso!");
-                    } 
-                    this.loadTable();
-                } catch (HeadlessException | NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, ex.getMessage(),
-                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+                int lineNumber = tblResultado.getSelectedRow();
+                int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
+                if (ProductDAO.getInstance().delete(id)) {
+                    JOptionPane.showMessageDialog(this, "Produto Excluido com Sucesso!");
                 }
+                this.loadTable();
                 break;
             case "Incluir":
                 RegistrationProductScreen rbs = new RegistrationProductScreen();
@@ -188,8 +183,7 @@ public class ProductReportScreen extends InternalFrame {
             case "Exportar":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int choice = fc.showSaveDialog(null);
-                if (choice != 1) {
+                if (fc.showSaveDialog(null) != 1) {
                     excel.ProductExcel(fc.getSelectedFile(), ProductDAO.getInstance().getAll());
                 }
                 break;

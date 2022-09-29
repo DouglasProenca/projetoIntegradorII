@@ -282,8 +282,7 @@ public class RegistrationProductScreen extends InternalFrame {
             case "import":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int choice = fc.showOpenDialog(null);
-                if (choice != 1) {
+                if (fc.showOpenDialog(null) != 1) {
                     productsList = Excel.importProduct(fc.getSelectedFile());
                     CarregarJTable(productsList, false);
                 }
@@ -293,12 +292,17 @@ public class RegistrationProductScreen extends InternalFrame {
                 break;
             case "saveExcel":
                 boolean ret = false;
-                for (int i = 0; i < productsList.toArray().length; i++) {
-                    ret = daop.save(productsList.get(i));
-                }
-                if (ret) {
-                    JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
-                    this.dispose();
+                if (productsList != null) {
+                    for (int i = 0; i < productsList.toArray().length; i++) {
+                        ret = daop.save(productsList.get(i));
+                    }
+                    if (ret) {
+                        JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
+                        this.dispose();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Selecione uma importação para continuar",
+                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             default:

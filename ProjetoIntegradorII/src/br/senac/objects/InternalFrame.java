@@ -105,7 +105,7 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
     @Override
     public void internalFrameOpened(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
-        centralizaForm(frame);
+        this.centralizaForm(frame);
         MainScreen.desktopPane.add(frame);
         MainScreen.jToolBar.add(frame.getDesktopIcon());
     }

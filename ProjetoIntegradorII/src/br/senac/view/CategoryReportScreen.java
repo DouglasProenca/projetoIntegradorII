@@ -43,14 +43,8 @@ public class CategoryReportScreen extends InternalFrame {
     private DefaultTableModel dm;
     private JTable tblResultado;
     private JScrollPane scroll;
-    private static InternalFrame uniqueInstance;
     private final CategoryDAO dao = CategoryDAO.getInstance();
     private final Excel excel = new Excel();
-
-    public static synchronized InternalFrame getInstance() {
-        if (uniqueInstance == null) uniqueInstance = new CategoryReportScreen();
-        return uniqueInstance;
-    }
 
     public CategoryReportScreen() {
         super("Relatório Categorias", true, true, true, true, 707, 400);
@@ -174,19 +168,12 @@ public class CategoryReportScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "excluir":
-                try {
                     int numeroLinha = tblResultado.getSelectedRow();
                     int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
                     if (dao.delete(id)) {
                         JOptionPane.showMessageDialog(this, "Categoria excluída com sucesso!");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Falha ao excluir Categoria!");
-                    }
-                    this.loadTable();
-                } catch (HeadlessException | NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(this, ex.getMessage(),
-                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-                }
+                    } 
+                    this.loadTable(); 
                 break;
             case "Incluir":
                 RegistrationCategoryScreen rbs = new RegistrationCategoryScreen();
@@ -196,8 +183,7 @@ public class CategoryReportScreen extends InternalFrame {
             case "Exportar":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int choice = fc.showSaveDialog(null);
-                if (choice != 1) excel.CategoryExcel(fc.getSelectedFile(), dao.getAll());
+                if (fc.showSaveDialog(null) != 1) excel.CategoryExcel(fc.getSelectedFile(), dao.getAll());
                 break;
             case "find":
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
