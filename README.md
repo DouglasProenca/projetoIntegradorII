@@ -67,6 +67,6 @@ Tela do Relatório Analitíco:
 
 Tela do Relatório Gerencial:
 
-![image](https://user-images.githubusercontent.com/78769051/192070380-be850e82-d1a0-4a9e-b538-801f6481b3ac.png)
+![image](https://user-images.githubusercontent.com/78769051/193411797-3590e806-3981-42c0-b1ea-e2b1a84ccba0.png)
 
 
