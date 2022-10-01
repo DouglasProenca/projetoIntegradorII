@@ -19,7 +19,7 @@ import javax.swing.JSeparator;
  *
  * @author Douglas
  */
-public class JMenuReport extends Menu {
+public class MenuReport extends Menu {
 
     private JMenuItem category;
     private ReportScreen reportScreen;
@@ -29,7 +29,7 @@ public class JMenuReport extends Menu {
     private JMenuItem marca;
     private JMenuItem analyticalRep;
 
-    protected JMenuReport() {
+    protected MenuReport() {
         super("Relatório", images.getInstance().imagemReport());
         initComponents();
     }
@@ -124,16 +124,14 @@ public class JMenuReport extends Menu {
                 break;
             case "analyticalRep":
                 Object vetor[] = getParams();
-                int resposta2 = JOptionPane.showConfirmDialog(null, vetor, "Relatório Analitíco", JOptionPane.PLAIN_MESSAGE);
-                if (resposta2 == 0) {
+                if (JOptionPane.showConfirmDialog(null, vetor, "Relatório Analitíco", JOptionPane.PLAIN_MESSAGE) == 0) {
                     reportScreen = new ReportScreen("Relatório Analitíco", vetor);
                     reportScreen.setVisible(true);
                 }
                 break;
             case "syntheticRep":
                 Object vet[] = getParams();
-                int resposta3 = JOptionPane.showConfirmDialog(null, vet, "Relatório Sintetico", JOptionPane.PLAIN_MESSAGE);
-                if (resposta3 == 0) {
+                if (JOptionPane.showConfirmDialog(null, vet, "Relatório Sintetico", JOptionPane.PLAIN_MESSAGE) == 0) {
                     reportScreen = new ReportScreen("Relatório Sintetico", vet);
                     reportScreen.setVisible(true);
                 }

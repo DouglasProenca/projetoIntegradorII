@@ -9,7 +9,7 @@ import javax.swing.JMenuBar;
 public class MenuBar extends JMenuBar {
 
     private final JMenuMenu menu = new JMenuMenu();
-    private final JMenuReport report = new JMenuReport();
+    private final MenuReport report = new MenuReport();
     private final JMenuHelp help = new JMenuHelp();
 
     public MenuBar() {

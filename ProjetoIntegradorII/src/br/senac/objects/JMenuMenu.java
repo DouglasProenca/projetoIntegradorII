@@ -1,4 +1,4 @@
- package br.senac.objects;
+package br.senac.objects;
 
 import br.senac.model.User;
 import br.senac.view.BackupScreen;
@@ -11,6 +11,8 @@ import br.senac.view.ReportUserScreen;
 import br.senac.view.SaleScreen;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +20,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -127,7 +130,7 @@ public class JMenuMenu extends Menu {
         JMenuItem exit = new JMenuItem("Sair", images.getInstance().imagemSair());
         exit.addActionListener(this);
         exit.setActionCommand("exit");
-        exit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
+        exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK));
         return exit;
     }
 
@@ -142,8 +145,15 @@ public class JMenuMenu extends Menu {
         JMenuItem sale = new JMenuItem("Venda", images.getInstance().imagemSale());
         sale.addActionListener(this);
         sale.setActionCommand("sale");
-        sale.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK));
+        sale.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.ALT_MASK));
         return sale;
+    }
+
+    private String ColorToString(Color color) {
+        int r = color.getRed();
+        int g = color.getGreen();
+        int b = color.getBlue();
+        return r + "," + g + "," + b;
     }
 
     @Override
@@ -168,11 +178,7 @@ public class JMenuMenu extends Menu {
                     if (newColor != null) {
                         MainScreen.desktopPane.setBackground(newColor);
                         PropertiesSystem ps = new PropertiesSystem();
-                        int r = newColor.getRed();
-                        int g = newColor.getGreen();
-                        int b = newColor.getBlue();
-                        String rgb = r + "," + g + "," + b;
-                        ps.setColor(rgb);
+                        ps.setColor(ColorToString(newColor));
                     }
                     break;
                 case "backup":

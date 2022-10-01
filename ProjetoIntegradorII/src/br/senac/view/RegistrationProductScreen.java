@@ -8,6 +8,7 @@ import br.senac.model.Product;
 import br.senac.model.User;
 import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
+import br.senac.objects.TextFieldNumber;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,8 +46,8 @@ public class RegistrationProductScreen extends InternalFrame {
     private JLabel lblValor;
     private JLabel lblCategoria;
     private JLabel lblQuantidade;
-    private JTextField txtValor;
-    private JTextField txtQuantidade;
+    private TextFieldNumber txtValor;
+    private TextFieldNumber txtQuantidade;
     private JButton btnCheck;
     private JButton btnClose;
     private JButton btnCheckExcel;
@@ -172,7 +173,7 @@ public class RegistrationProductScreen extends InternalFrame {
     }
 
     private JTextField getTxtValor() {
-        txtValor = new JTextField();
+        txtValor = new TextFieldNumber();
         txtValor.setBounds(410, 100, 230, 25);
         txtValor.getDocument().addDocumentListener(new DocListner());
         return txtValor;
@@ -185,7 +186,7 @@ public class RegistrationProductScreen extends InternalFrame {
     }
 
     private JTextField getTxtQuantidade() {
-        txtQuantidade = new JTextField();
+        txtQuantidade = new TextFieldNumber();
         txtQuantidade.setBounds(100, 180, 230, 25);
         txtQuantidade.getDocument().addDocumentListener(new DocListner());
         return txtQuantidade;
