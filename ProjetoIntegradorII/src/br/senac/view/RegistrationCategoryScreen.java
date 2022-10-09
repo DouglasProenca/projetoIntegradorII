@@ -53,17 +53,17 @@ public class RegistrationCategoryScreen extends InternalFrame {
 
     public RegistrationCategoryScreen() {
         super("Cadastrar", false, true, false, false, 500, 400);
-        this.InitComponents(false);
+        this.initComponents(false);
     }
 
     public RegistrationCategoryScreen(Category category) {
         super("Alterar", false, true, false, false, 500, 400);
-        this.InitComponents(true);
+        this.initComponents(true);
         this.txtBrand.setText(category.getCategoria());
         this.id = category.getId();
     }
 
-    private void InitComponents(boolean type) {
+    private void initComponents(boolean type) {
         this.setLayout(null);
         this.getContentPane().add(getPainelAbas(type));
     }
@@ -271,8 +271,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
         }
 
         private boolean warn() {
-            boolean type = txtBrand.getText().length() <= 0 ? false : true;
-            return type;
+            return txtBrand.getText().length() >= 1;
         }
     }
 }

@@ -67,12 +67,12 @@ public class RegistrationProductScreen extends InternalFrame {
 
     public RegistrationProductScreen() {
         super("Cadastrar", false, true, false, false, 700, 400);
-        this.InitComponents(false);
+        this.initComponents(false);
     }
 
     public RegistrationProductScreen(Product product) {
         super("Alterar", false, true, false, false, 700, 400);
-        InitComponents(true);
+        this.initComponents(true);
         this.txtProduct.setText(product.getNome());
         this.jboBrand.setSelectedItem(product.getMarca());
         this.txtValor.setText(String.valueOf(product.getValor()));
@@ -80,10 +80,9 @@ public class RegistrationProductScreen extends InternalFrame {
         this.id = product.getId();
     }
 
-    private void InitComponents(boolean type) {
+    private void initComponents(boolean type) {
         this.setLayout(null);
         this.getContentPane().add(getPainelAbas(type));
-
     }
 
     private JTabbedPane getPainelAbas(boolean type) {

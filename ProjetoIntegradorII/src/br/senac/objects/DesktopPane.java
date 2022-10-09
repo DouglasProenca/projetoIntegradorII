@@ -28,7 +28,6 @@ public class DesktopPane extends JDesktopPane {
         int r = Integer.parseInt(corArray[0]);
         int g = Integer.parseInt(corArray[1]);
         int b = Integer.parseInt(corArray[2]);
-        Color color = new Color(r, g, b);
-        return color;
+        return new Color(r, g, b);
     }
 };

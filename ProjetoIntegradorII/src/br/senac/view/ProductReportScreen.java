@@ -9,7 +9,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.FlowLayout;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -227,8 +226,7 @@ public class ProductReportScreen extends InternalFrame {
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
-            boolean rowsAreSelected = tblResultado.getSelectedRowCount() > 0;
-            btnExcluir.setEnabled(rowsAreSelected);
+            btnExcluir.setEnabled(tblResultado.getSelectedRowCount() > 0);
         }
     }
 

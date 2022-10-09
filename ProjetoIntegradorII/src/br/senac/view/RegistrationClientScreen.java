@@ -40,10 +40,10 @@ public class RegistrationClientScreen extends InternalFrame {
 
     public RegistrationClientScreen() {
         super("Cadastrar Cliente", false, true, false, false, 500, 400);
-        this.InitComponents();
+        this.initComponents();
     }
 
-    private void InitComponents() {
+    private void initComponents() {
         this.setLayout(null);
         this.getContentPane().add(getPanelCadastro());
     }

@@ -22,7 +22,7 @@ GO
 
 CREATE TABLE rc_marca(
     id INT PRIMARY KEY IDENTITY(10,20),
-    marca VARCHAR(100) NOT NULL,
+    marca VARCHAR(100) UNIQUE NOT NULL,
     pais INT NOT NULL,
     [date] DATE NOT NULL,
     [user] INT NOT NULL
@@ -34,7 +34,7 @@ ALTER TABLE rc_marca ADD CONSTRAINT fk_marca_pais FOREIGN KEY ([pais]) REFERENCE
 
 CREATE TABLE rc_categoria(
     id INT PRIMARY KEY IDENTITY (0,10),
-    categoria VARCHAR NOT NULL,
+    categoria VARCHAR UNIQUE NOT NULL,
     [data] DATE NOT NULL,
     [user] INT NOT NULL
 )

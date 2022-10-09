@@ -56,18 +56,18 @@ public class RegistrationBrandScreen extends InternalFrame {
 
     public RegistrationBrandScreen() {
         super("Cadastrar", false, true, false, false, 500, 400);
-        this.InitComponents(false);
+        this.initComponents(false);
     }
 
     public RegistrationBrandScreen(Brand brand) {
         super("Alterar", false, true, false, false, 500, 400);
-        this.InitComponents(true);
+        this.initComponents(true);
         this.txtBrand.setText(brand.getMarca());
         this.jboCountry.setSelectedItem(brand.getPais());
         this.id = brand.getId();
     }
 
-    private void InitComponents(boolean type) {
+    private void initComponents(boolean type) {
         this.setLayout(null);
         this.getContentPane().add(getPainelAbas(type));
     }
@@ -292,8 +292,7 @@ public class RegistrationBrandScreen extends InternalFrame {
         }
 
         private boolean warn() {
-            boolean type = txtBrand.getText().length() <= 0 ? false : true;
-            return type;
+            return txtBrand.getText().length() >= 1;
         }
     }
 }

@@ -26,9 +26,25 @@ import javax.swing.KeyStroke;
  *
  * @author Douglas
  */
-public class JMenuMenu extends Menu {
+public class MainMenu extends Menu {
 
-    protected JMenuMenu() {
+    private JMenu menuUser;
+    private JMenuItem user;
+    private JMenuItem logout;
+    private JMenuItem backup;
+    private JMenuItem notes;
+    private JMenuItem exit;
+    private JMenuItem mail;
+    private JMenuItem sale;
+    private JMenuItem calculator;
+    private JMenuItem jdbc;
+    private JMenu MenuDatabase;
+    private JMenu menuLookAndFeel;
+    private JMenuItem lookAndFeel;
+    private JMenuItem canvas; 
+    
+    
+    protected MainMenu() {
         super("Menu", images.getInstance().imagemMenu());
         this.initComponents();
     }
@@ -47,87 +63,87 @@ public class JMenuMenu extends Menu {
     }
 
     private JMenu getMenuUser() {
-        JMenu database = new JMenu("Usuário");
-        database.setIcon(images.getInstance().imagemAdministrator());
-        database.add(getUser());
-        database.add(getLogout());
-        return database;
+        menuUser = new JMenu("Usuário");
+        menuUser.setIcon(images.getInstance().imagemAdministrator());
+        menuUser.add(getUser());
+        menuUser.add(getLogout());
+        return menuUser;
     }
 
     private JMenuItem getLogout() {
-        JMenuItem logout = new JMenuItem("Logout");
+        logout = new JMenuItem("Logout");
         logout.addActionListener(this);
         logout.setActionCommand("logout");
         return logout;
     }
 
     private JMenuItem getUser() {
-        JMenuItem user = new JMenuItem("Usuários");
+        user = new JMenuItem("Usuários");
         user.addActionListener(this);
         user.setActionCommand("user");
         return user;
     }
 
     private JMenu getMenuDatabase() {
-        JMenu database = new JMenu("Banco de Dados");
-        database.setIcon(images.getInstance().imagemDatabase());
-        database.add(getBackup());
-        database.add(getJDBC());
-        return database;
+        MenuDatabase = new JMenu("Banco de Dados");
+        MenuDatabase.setIcon(images.getInstance().imagemDatabase());
+        MenuDatabase.add(getBackup());
+        MenuDatabase.add(getJDBC());
+        return MenuDatabase;
     }
 
     private JMenuItem getBackup() {
-        JMenuItem backup = new JMenuItem("Backup");
+        backup = new JMenuItem("Backup");
         backup.addActionListener(this);
         backup.setActionCommand("backup");
         return backup;
     }
 
     private JMenuItem getJDBC() {
-        JMenuItem backup = new JMenuItem("JDBC");
-        backup.addActionListener(this);
-        backup.setActionCommand("jdbc");
-        return backup;
+        jdbc = new JMenuItem("JDBC");
+        jdbc.addActionListener(this);
+        jdbc.setActionCommand("jdbc");
+        return jdbc;
     }
 
     private JMenuItem getNotes() {
-        JMenuItem notes = new JMenuItem("Bloco de Notas", images.getInstance().imagemBlocoNotas());
+        notes = new JMenuItem("Bloco de Notas", images.getInstance().imagemBlocoNotas());
         notes.addActionListener(this);
         notes.setActionCommand("notes");
         return notes;
     }
 
     private JMenuItem getCalculator() {
-        JMenuItem calculator = new JMenuItem("Calculadora", images.getInstance().imagemCalculadora());
+        calculator = new JMenuItem("Calculadora", images.getInstance().imagemCalculadora());
         calculator.addActionListener(this);
         calculator.setActionCommand("calculator");
         return calculator;
     }
 
     private JMenu getMenuLookAndFeel() {
-        JMenu lookAndFeel = new JMenu("Look And Feel");
-        lookAndFeel.setIcon(images.getInstance().imagemLookAndFeel());
-        lookAndFeel.add(getLookAndFeel());
-        lookAndFeel.add(getCanvasBackground());
-        return lookAndFeel;
+        menuLookAndFeel = new JMenu("Look And Feel");
+        menuLookAndFeel.setIcon(images.getInstance().imagemLookAndFeel());
+        menuLookAndFeel.add(getLookAndFeel());
+        menuLookAndFeel.add(getCanvasBackground());
+        return menuLookAndFeel;
     }
 
     private JMenuItem getLookAndFeel() {
-        JMenuItem lookAndFeel = new JMenuItem("Temas");
+        lookAndFeel = new JMenuItem("Temas");
         lookAndFeel.addActionListener(this);
         lookAndFeel.setActionCommand("lookAndFeel");
         return lookAndFeel;
     }
 
     private JMenuItem getCanvasBackground() {
-        JMenuItem canvas = new JMenuItem("Fundo de Tela");
+        canvas = new JMenuItem("Fundo de Tela");
         canvas.addActionListener(this);
         canvas.setActionCommand("CanvasBackground");
         return canvas;
     }
 
     private JMenuItem getExit() {
-        JMenuItem exit = new JMenuItem("Sair", images.getInstance().imagemSair());
+        exit = new JMenuItem("Sair", images.getInstance().imagemSair());
         exit.addActionListener(this);
         exit.setActionCommand("exit");
         exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK));
@@ -135,14 +151,14 @@ public class JMenuMenu extends Menu {
     }
 
     private JMenuItem getMail() {
-        JMenuItem mail = new JMenuItem("E-mail", images.getInstance().imagemMail());
+        mail = new JMenuItem("E-mail", images.getInstance().imagemMail());
         mail.addActionListener(this);
         mail.setActionCommand("mail");
         return mail;
     }
 
     private JMenuItem getSale() {
-        JMenuItem sale = new JMenuItem("Venda", images.getInstance().imagemSale());
+        sale = new JMenuItem("Venda", images.getInstance().imagemSale());
         sale.addActionListener(this);
         sale.setActionCommand("sale");
         sale.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.ALT_MASK));
@@ -209,7 +225,7 @@ public class JMenuMenu extends Menu {
                     break;
             }
         } catch (IOException ex) {
-            Logger.getLogger(JMenuMenu.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

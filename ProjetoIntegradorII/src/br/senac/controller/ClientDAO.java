@@ -64,8 +64,6 @@ public class ClientDAO implements DAO {
 
     @Override
     public boolean save(Object object) {
-        boolean retorno = true;
-
         try {
             Client client = (Client) object;
 
@@ -83,9 +81,9 @@ public class ClientDAO implements DAO {
         } catch (SQLException | IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
+            return (false);
         } 
-        return retorno;
+        return (true);
     }
 
     @Override

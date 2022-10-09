@@ -357,21 +357,26 @@ public class SaleScreen extends InternalFrame {
                 }
                 break;
             case "conclude":
-                Sale sale = new Sale(0, id_cliente, Float.parseFloat(txtTotalPanelFour.getText()), chooserDatePanelFour.getDate(), User.getInstance().getId());
-                if (tblPanelFour.getRowCount() != 0) {
-                    boolean ret = SaleDAO.getInstance().save(sale);
-                    for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
-                        int id = (int) tblPanelFour.getValueAt(i, 0);
-                        float valor = (float) tblPanelFour.getValueAt(i, 2);
-                        int quantidade = (int) tblPanelFour.getValueAt(i, 3);
-                        SaleDAO.getInstance().saveList(id, valor, quantidade, User.getInstance().getId());
+                try {
+                    Sale sale = new Sale(0, id_cliente, Float.parseFloat(txtTotalPanelFour.getText()), chooserDatePanelFour.getDate(), User.getInstance().getId());
+                    if (tblPanelFour.getRowCount() != 0) {
+                        boolean ret = SaleDAO.getInstance().save(sale);
+                        for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
+                            int id = (int) tblPanelFour.getValueAt(i, 0);
+                            float valor = (float) tblPanelFour.getValueAt(i, 2);
+                            int quantidade = (int) tblPanelFour.getValueAt(i, 3);
+                            SaleDAO.getInstance().saveList(id, valor, quantidade, User.getInstance().getId());
+                        }
+                        if (ret) {
+                            JOptionPane.showMessageDialog(this, "Venda Realizada Com Sucesso!\n" + "ID da Venda: " + SaleDAO.getInstance().returnSale());
+                            this.dispose();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Selecione pelo menos um produto para venda!");
                     }
-                    if (ret) {
-                        JOptionPane.showMessageDialog(this, "Venda Realizada Com Sucesso!\n" + "ID da Venda: " + SaleDAO.getInstance().returnSale());
-                        this.dispose();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Selecione pelo menos um produto para venda!");
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             case "findProduct":
@@ -422,8 +427,7 @@ public class SaleScreen extends InternalFrame {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e
-    ) {
+    public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
             if (e.getSource().equals(tblPanelThree)) {
                 int numeroLinha = tblPanelThree.getSelectedRow();

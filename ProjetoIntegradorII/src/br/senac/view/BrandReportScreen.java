@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -81,56 +82,46 @@ public class BrandReportScreen extends InternalFrame {
     }
 
     private JButton getBtnPesquisa() {
-        if (btnPesquisa == null) {
-            btnPesquisa = new JButton("Pesquisar");
-            btnPesquisa.addActionListener(this);
-            btnPesquisa.setActionCommand("find");
-            btnPesquisa.setPreferredSize(new Dimension(100, 30));
-        }
+        btnPesquisa = new JButton("Pesquisar");
+        btnPesquisa.addActionListener(this);
+        btnPesquisa.setActionCommand("find");
+        btnPesquisa.setPreferredSize(new Dimension(100, 30));
         return btnPesquisa;
     }
 
     private JTextField getTxtPesquisa() {
-        if (txtPesquisa == null) {
-            txtPesquisa = new JTextField();
-            txtPesquisa.setPreferredSize(new Dimension(200, 30));
-            txtPesquisa.addKeyListener(this);
-            txtPesquisa.setToolTipText("Procure por marca ou digite Refresh, R e tecle enter para atualizar a tabela.");
-        }
+        txtPesquisa = new JTextField();
+        txtPesquisa.setPreferredSize(new Dimension(200, 30));
+        txtPesquisa.addKeyListener(this);
+        txtPesquisa.setToolTipText("Procure por marca ou digite Refresh, R e tecle enter para atualizar a tabela.");
         return txtPesquisa;
     }
 
     private JButton getbtnExportar() {
-        if (btnExportar == null) {
-            btnExportar = new JButton("Exportar");
-            btnExportar.addActionListener(this);
-            btnExportar.setActionCommand("Exportar");
-            btnExportar.setPreferredSize(new Dimension(100, 30));
-            btnExportar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        }
+        btnExportar = new JButton("Exportar");
+        btnExportar.addActionListener(this);
+        btnExportar.setActionCommand("Exportar");
+        btnExportar.setPreferredSize(new Dimension(100, 30));
+        btnExportar.setAlignmentX(Component.CENTER_ALIGNMENT);
         return btnExportar;
     }
 
     private JButton getbtnExcluir() {
-        if (btnExcluir == null) {
-            btnExcluir = new JButton("Excluir");
-            btnExcluir.setAlignmentX(Component.CENTER_ALIGNMENT);
-            btnExcluir.setPreferredSize(new Dimension(100, 30));
-            btnExcluir.addActionListener(this);
-            btnExcluir.setActionCommand("excluir");
-            btnExcluir.setEnabled(false);
-        }
+        btnExcluir = new JButton("Excluir");
+        btnExcluir.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnExcluir.setPreferredSize(new Dimension(100, 30));
+        btnExcluir.addActionListener(this);
+        btnExcluir.setActionCommand("excluir");
+        btnExcluir.setEnabled(false);
         return btnExcluir;
     }
 
     private JButton getBtnIncluir() {
-        if (btnIncluir == null) {
-            btnIncluir = new JButton("Incluir");
-            btnIncluir.setPreferredSize(new Dimension(100, 30));
-            btnIncluir.addActionListener(this);
-            btnIncluir.setActionCommand("Incluir");
-            btnIncluir.setAlignmentX(Component.CENTER_ALIGNMENT);
-        }
+        btnIncluir = new JButton("Incluir");
+        btnIncluir.setPreferredSize(new Dimension(100, 30));
+        btnIncluir.addActionListener(this);
+        btnIncluir.setActionCommand("Incluir");
+        btnIncluir.setAlignmentX(Component.CENTER_ALIGNMENT);
         return btnIncluir;
     }
 
@@ -214,11 +205,7 @@ public class BrandReportScreen extends InternalFrame {
             String pais = tblResultado.getModel().getValueAt(lineNumber, 2).toString();
             String user = tblResultado.getModel().getValueAt(lineNumber, 4).toString();
 
-            Brand brand = new Brand();
-            brand.setId(id);
-            brand.setMarca(brand_name);
-            brand.setPais(pais);
-            brand.setUser(user);
+            Brand brand = new Brand(id, brand_name, pais, new Date(), user);
 
             RegistrationBrandScreen rbs = new RegistrationBrandScreen(brand);
             this.getParent().add(rbs);

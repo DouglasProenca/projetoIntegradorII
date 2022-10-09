@@ -38,8 +38,6 @@ public class SaleDAO implements DAO {
 
     @Override
     public boolean save(Object object) {
-        boolean retorno = true;
-
         try {
             Sale sale = (Sale) object;
 
@@ -57,13 +55,9 @@ public class SaleDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            return (false);
         }
-
-        return retorno;
+        return (true);
     }
 
     @Override
@@ -77,8 +71,6 @@ public class SaleDAO implements DAO {
     }
 
     public boolean saveList(int produto, float valor, int quantidade, int user) {
-        boolean retorno = true;
-
         try {
             Connection conexao = ConnectionManager.getInstance().getConexao();
 
@@ -94,9 +86,9 @@ public class SaleDAO implements DAO {
         } catch (SQLException | IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
-        } 
-        return retorno;
+            return (false);
+        }
+        return (true);
     }
 
     public int returnSale() {
@@ -108,10 +100,7 @@ public class SaleDAO implements DAO {
 
             ResultSet rs = instrucaoSQL.executeQuery();
 
-            while (rs.next()) {
-                id = rs.getInt("id");
-            }
-
+            id = rs.getInt("id");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);

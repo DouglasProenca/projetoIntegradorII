@@ -1,4 +1,4 @@
-package br.senac.objects;
+ package br.senac.objects;
 
 import java.awt.Image;
 import java.io.IOException;

@@ -44,7 +44,7 @@ order by [data] asc]]>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
-				<timeSeriesDataset>
+				<timeSeriesDataset timePeriod="Month">
 					<timeSeries>
 						<seriesExpression><![CDATA["1"]]></seriesExpression>
 						<timePeriodExpression><![CDATA[$F{data}]]></timePeriodExpression>

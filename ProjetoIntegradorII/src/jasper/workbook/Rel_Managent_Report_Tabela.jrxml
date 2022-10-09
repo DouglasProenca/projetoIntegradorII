@@ -83,7 +83,7 @@ from rc_produto]]>
 				<textElement verticalAlignment="Bottom"/>
 				<text><![CDATA[Mediana]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="">
 				<reportElement uuid="cd344564-c80d-4cb6-9bf2-d2cf3bd1c2bd" x="163" y="60" width="100" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{mediana}]]></textFieldExpression>

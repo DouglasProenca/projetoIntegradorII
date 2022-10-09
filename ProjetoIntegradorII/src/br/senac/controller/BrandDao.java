@@ -24,13 +24,14 @@ public final class BrandDao implements DAO {
     }
 
     public static synchronized BrandDao getInstance() {
-        if (uniqueInstance == null) uniqueInstance = new BrandDao();
+        if (uniqueInstance == null) {
+            uniqueInstance = new BrandDao();
+        }
         return uniqueInstance;
     }
 
     @Override
     public boolean delete(int id) {
-        boolean retorno = true;
         try {
             Connection conexao = ConnectionManager.getInstance().getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_marca WHERE id = ?");
@@ -40,9 +41,9 @@ public final class BrandDao implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
+            return (false);
         }
-        return retorno;
+        return (true);
     }
 
     public ArrayList<Brand> AllCountry() {
@@ -71,8 +72,6 @@ public final class BrandDao implements DAO {
 
     @Override
     public boolean save(Object object) {
-        boolean retorno = true;
-
         try {
             Brand brand = (Brand) object;
 
@@ -90,15 +89,13 @@ public final class BrandDao implements DAO {
         } catch (SQLException | IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
+            return (false);
         }
-        return retorno;
+        return true;
     }
 
     @Override
     public boolean alter(Object object) {
-        boolean retorno = true;
-
         try {
             Brand brand = (Brand) object;
             Connection conexao = ConnectionManager.getInstance().getConexao();
@@ -119,9 +116,9 @@ public final class BrandDao implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
+            return (false);
         }
-        return retorno;
+        return (true);
     }
 
     @Override

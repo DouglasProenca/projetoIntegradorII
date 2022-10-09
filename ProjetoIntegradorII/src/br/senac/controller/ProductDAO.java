@@ -32,20 +32,18 @@ public class ProductDAO implements DAO {
 
     @Override
     public boolean delete(int id) {
-        boolean retorno;
         try {
             Connection conexao = ConnectionManager.getInstance().getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_produto WHERE id = ?");
             instrucaoSQL.setInt(1, id);
 
-            int linhasAfetadas = instrucaoSQL.executeUpdate();
-            retorno = linhasAfetadas > 0 ? true : false;
+            instrucaoSQL.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
+            return (false);
         }
-        return retorno;
+        return (true);
     }
 
     @Override
@@ -92,8 +90,6 @@ public class ProductDAO implements DAO {
 
     @Override
     public boolean save(Object object) {
-        boolean retorno = false;
-
         try {
             Product product = (Product) object;
             Connection conexao = ConnectionManager.getInstance().getConexao();
@@ -113,16 +109,14 @@ public class ProductDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
+            return (false);
         }
 
-        return retorno;
+        return (true);
     }
 
     @Override
     public boolean alter(Object object) {
-        boolean retorno = false;
-
         try {
             Product product = (Product) object;
             Connection conexao = ConnectionManager.getInstance().getConexao();
@@ -141,16 +135,14 @@ public class ProductDAO implements DAO {
             instrucaoSQL.setInt(7, product.getId());
 
             //Mando executar a instrução SQL
-            int linhasAfetadas = instrucaoSQL.executeUpdate();
-
-            retorno = linhasAfetadas > 0 ? true : false;
+            instrucaoSQL.executeUpdate();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
+            return (false);
         }
-        return retorno;
+        return (true);
     }
 
     @Override

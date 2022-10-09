@@ -33,7 +33,6 @@ public class UserDAO implements DAO {
 
     @Override
     public boolean delete(int id) {
-       boolean retorno = true;
         try {
             Connection conexao = ConnectionManager.getInstance().getConexao();
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_user WHERE id = ?");
@@ -43,9 +42,9 @@ public class UserDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
+            return (false);
         }
-        return retorno;
+        return (true);
     }
 
     @Override
@@ -74,8 +73,6 @@ public class UserDAO implements DAO {
 
     @Override
     public boolean save(Object object) {
-        boolean retorno = true;
-
         try {
             User user = (User) object;
 
@@ -94,15 +91,13 @@ public class UserDAO implements DAO {
         } catch (SQLException | IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
+            return (false);
         }
-        return retorno;
+        return (true);
     }
 
     @Override
     public boolean alter(Object object) {
-         boolean retorno = true;
-
         try {
             User user = (User) object;
             Connection conexao = ConnectionManager.getInstance().getConexao();
@@ -124,9 +119,9 @@ public class UserDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            retorno = false;
+            return (false);
         }
-        return retorno;
+        return (true);
     }
 
     @Override

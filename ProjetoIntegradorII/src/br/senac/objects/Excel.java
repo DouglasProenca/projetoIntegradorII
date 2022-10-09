@@ -56,7 +56,6 @@ public class Excel {
     }
 
     public boolean BrandExcel(File arquivo, ArrayList<Brand> lista) {
-        boolean status = true;
         try {
             WritableCellFormat cellFormatt = new WritableCellFormat();
             cellFormatt.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
@@ -123,13 +122,13 @@ public class Excel {
         } catch (IOException | WriteException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            return (false);
         }
 
-        return status;
+        return (true);
     }
 
     public boolean CategoryExcel(File arquivo, ArrayList<Category> lista) {
-        boolean status = true;
         try {
 
             WritableCellFormat cellFormatt = new WritableCellFormat();
@@ -189,13 +188,12 @@ public class Excel {
         } catch (IOException | WriteException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            return (false);
         }
-
-        return status;
+        return true;
     }
 
     public boolean ProductExcel(File arquivo, ArrayList<Product> lista) {
-        boolean status = true;
         try {
 
             WritableCellFormat cellFormatt = new WritableCellFormat();
@@ -287,9 +285,10 @@ public class Excel {
         } catch (IOException | WriteException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            return(false);
         }
 
-        return status;
+        return (true);
     }
 
     public static ArrayList<Product> importProduct(File arquivo) {

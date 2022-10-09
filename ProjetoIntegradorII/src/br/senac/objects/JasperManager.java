@@ -31,7 +31,6 @@ public class JasperManager extends Thread {
         } catch (JRException ex) {
             Logger.getLogger(JasperManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return impressao;
     }
 

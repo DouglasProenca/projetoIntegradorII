@@ -38,8 +38,6 @@ public class Mail {
     }
 
     public boolean enviarGmail(String emailDestinatario, String assunto, String msg, String filename) {
-        boolean retorno = false;
-
         Session s = Session.getDefaultInstance(getProps(),
                 new javax.mail.Authenticator() {
             @Override
@@ -82,14 +80,12 @@ public class Mail {
 
             //send message  
             Transport.send(message);
-
-            retorno = true;
-
         } catch (MessagingException e) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), e.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            return (false);
         }
 
-        return retorno;
+        return (true);
     }
 }

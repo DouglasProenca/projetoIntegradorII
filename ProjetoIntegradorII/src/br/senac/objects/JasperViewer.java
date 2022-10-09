@@ -23,8 +23,8 @@ public class JasperViewer extends JRViewer {
 
     @Override
     protected JRViewerToolbar createToolbar() {
-        JRViewerToolbar toolbar = super.createToolbar();
-
+        JasperToolBar toolbar = new JasperToolBar(super.viewerContext);
+        
         Locale locale = viewerContext.getLocale();
         ResourceBundle resBundle = viewerContext.getResourceBundle();
         JRPdfSaveContributor pdf = new JRPdfSaveContributor(locale, resBundle);

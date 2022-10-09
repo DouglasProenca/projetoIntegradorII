@@ -31,7 +31,7 @@ public class MenuReport extends Menu {
 
     protected MenuReport() {
         super("Relatório", images.getInstance().imagemReport());
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {
