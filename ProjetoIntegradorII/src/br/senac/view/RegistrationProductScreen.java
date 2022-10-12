@@ -8,6 +8,7 @@ import br.senac.model.Product;
 import br.senac.model.User;
 import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
+import br.senac.objects.SpinnerNumberInt;
 import br.senac.objects.TextFieldNumber;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -47,7 +49,7 @@ public class RegistrationProductScreen extends InternalFrame {
     private JLabel lblCategoria;
     private JLabel lblQuantidade;
     private TextFieldNumber txtValor;
-    private TextFieldNumber txtQuantidade;
+    private SpinnerNumberInt txtQuantidade;
     private JButton btnCheck;
     private JButton btnClose;
     private JButton btnCheckExcel;
@@ -76,7 +78,7 @@ public class RegistrationProductScreen extends InternalFrame {
         this.txtProduct.setText(product.getNome());
         this.jboBrand.setSelectedItem(product.getMarca());
         this.txtValor.setText(String.valueOf(product.getValor()));
-        this.txtQuantidade.setText(String.valueOf(product.getQuantidade()));
+        this.txtQuantidade.setValue(product.getQuantidade());
         this.id = product.getId();
     }
 
@@ -184,10 +186,9 @@ public class RegistrationProductScreen extends InternalFrame {
         return lblQuantidade;
     }
 
-    private JTextField getTxtQuantidade() {
-        txtQuantidade = new TextFieldNumber();
+    private JSpinner getTxtQuantidade() {
+        txtQuantidade = new SpinnerNumberInt();
         txtQuantidade.setBounds(100, 180, 230, 25);
-        txtQuantidade.getDocument().addDocumentListener(new DocListner());
         return txtQuantidade;
     }
 
@@ -266,7 +267,7 @@ public class RegistrationProductScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                Product objProduct = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText()),
+                Product objProduct = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getValue().toString()),
                         jboCategoria.getSelectedItem().toString(), 0, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
                 if (daop.save(objProduct)) {
                     JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
@@ -274,7 +275,7 @@ public class RegistrationProductScreen extends InternalFrame {
                 }
                 break;
             case "alter":
-                Product objMarcaAlt = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getText()),
+                Product objMarcaAlt = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()), Integer.parseInt(txtQuantidade.getValue().toString()),
                         jboCategoria.getSelectedItem().toString(), id, jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()));
                 daop.alter(objMarcaAlt);
                 this.dispose();
@@ -356,7 +357,7 @@ public class RegistrationProductScreen extends InternalFrame {
 
         private boolean warn() {
             boolean type = false;
-            if (txtProduct.getText().length() >= 1 && txtValor.getText().length() >= 1 && txtQuantidade.getText().length() >= 1) {
+            if (txtProduct.getText().length() >= 1 && txtValor.getText().length() >= 1 && txtQuantidade.getValue().toString().length() >= 1) {
                 type = true;
             }
             return type;

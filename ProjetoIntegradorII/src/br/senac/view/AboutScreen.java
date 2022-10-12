@@ -153,9 +153,8 @@ public class AboutScreen extends InternalFrame {
     }
 
     private JLabel getLblUsuário_do_Sistema() {
-        lblUsuário_do_Sistema = new JLabel();
+        lblUsuário_do_Sistema = new JLabel(User.getInstance().getUser());
         lblUsuário_do_Sistema.setBounds(190, 10, 130, 26);
-        lblUsuário_do_Sistema.setText(User.getInstance().getUser());
         return lblUsuário_do_Sistema;
     }
 

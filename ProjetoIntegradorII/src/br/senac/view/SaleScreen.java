@@ -6,8 +6,12 @@ import br.senac.controller.SaleDAO;
 import br.senac.model.Sale;
 import br.senac.model.User;
 import br.senac.objects.InternalFrame;
+import br.senac.objects.SpinnerEditor;
+import br.senac.objects.SpinnerNumberInt;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.Date;
@@ -24,7 +28,9 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -67,6 +73,7 @@ public class SaleScreen extends InternalFrame {
     private JTextField txtTotalPanelFour;
     private JScrollPane scrollTblPanelFour;
     private JTable tblPanelFour;
+    private DefaultTableModel canEditLastCel;
     // Internal Frame
     private JButton btnConcluir;
     private JButton btnExcluir;
@@ -186,6 +193,19 @@ public class SaleScreen extends InternalFrame {
         return dm;
     }
 
+    private DefaultTableModel canEditLastCel(String[] colunas) {
+        boolean[] canEdit = new boolean[]{
+            false, false, false, true
+        };
+        dm = new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return canEdit[mColIndex];
+            }
+        };
+        return dm;
+    }
+
     public JPanel getPanelThree() {
         panelThree = new JPanel(null);
         panelThree.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
@@ -284,9 +304,27 @@ public class SaleScreen extends InternalFrame {
     }
 
     private JTable getTblPanelFour() {
-        tblPanelFour = new JTable(getDm(tblProducts));
+        tblPanelFour = new JTable(canEditLastCel(tblProducts));
         tblPanelFour.getSelectionModel().addListSelectionListener(this);
         tblPanelFour.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        TableColumn column = tblPanelFour.getColumnModel().getColumn(3);
+        tblPanelFour.setRowHeight(25);
+        column.setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                SpinnerNumberInt spinner = new SpinnerNumberInt();
+                if (component instanceof JLabel) {
+                    spinner.setValue(Integer.valueOf(((JLabel) component).getText()));
+
+                } else if (value != null) {
+                    spinner.setValue(Integer.valueOf(value.toString()));
+                }
+                return spinner;
+            }
+        });
+        column.setCellEditor(new SpinnerEditor());
         return tblPanelFour;
     }
 
