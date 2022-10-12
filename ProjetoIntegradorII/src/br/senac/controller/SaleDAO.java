@@ -96,11 +96,12 @@ public class SaleDAO implements DAO {
         try {
             Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("select max(id) id from rc_venda");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("select top(1)id from rc_venda order by id desc");
 
             ResultSet rs = instrucaoSQL.executeQuery();
-
-            id = rs.getInt("id");
+            while (rs.next()) {
+                id = rs.getInt("id");
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);

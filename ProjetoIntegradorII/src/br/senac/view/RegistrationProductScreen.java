@@ -9,6 +9,7 @@ import br.senac.model.User;
 import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
 import br.senac.objects.SpinnerNumberInt;
+import br.senac.objects.TableModel;
 import br.senac.objects.TextFieldNumber;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -56,7 +57,6 @@ public class RegistrationProductScreen extends InternalFrame {
     private JButton btnExcluirExcel;
     private final String colunas[] = {"Produto", "Valor", "Marca", "Categoria", "Quantidade"};
     private JTable tblExcel;
-    private DefaultTableModel dm;
     private JScrollPane scroll;
     private ArrayList<Product> productsList;
     private JButton btnImportExcel;
@@ -210,20 +210,10 @@ public class RegistrationProductScreen extends InternalFrame {
     }
 
     private JTable getTblExcel() {
-        tblExcel = new JTable(getDm());
+        tblExcel = new JTable(new TableModel(colunas, 0));
         tblExcel.getSelectionModel().addListSelectionListener(this);
         tblExcel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         return tblExcel;
-    }
-
-    private DefaultTableModel getDm() {
-        dm = new DefaultTableModel(colunas, 0) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int mColIndex) {
-                return false;
-            }
-        };
-        return dm;
     }
 
     private JScrollPane getScrollPane() {

@@ -8,10 +8,10 @@ import br.senac.model.User;
 import br.senac.objects.InternalFrame;
 import br.senac.objects.SpinnerEditor;
 import br.senac.objects.SpinnerNumberInt;
+import br.senac.objects.TableModel;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.Date;
@@ -73,11 +73,9 @@ public class SaleScreen extends InternalFrame {
     private JTextField txtTotalPanelFour;
     private JScrollPane scrollTblPanelFour;
     private JTable tblPanelFour;
-    private DefaultTableModel canEditLastCel;
     // Internal Frame
     private JButton btnConcluir;
     private JButton btnExcluir;
-    private DefaultTableModel dm;
     private final String tblProducts[] = {"ID", "Nome", "Preço", "quantidade"};
     private float total = 0;
     private int id_cliente;
@@ -171,7 +169,7 @@ public class SaleScreen extends InternalFrame {
     }
 
     private JTable getTblPanelTwo() {
-        tblPanelTwo = new JTable(getDm(columnsTblPanelTwo));
+        tblPanelTwo = new JTable(new TableModel(columnsTblPanelTwo, 0));
         tblPanelTwo.addMouseListener(this);
         tblPanelTwo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         return tblPanelTwo;
@@ -181,29 +179,6 @@ public class SaleScreen extends InternalFrame {
         scrollPanelTwoClientTable = new JScrollPane(getTblPanelTwo());
         scrollPanelTwoClientTable.setBounds(10, 10, 405, 130);
         return scrollPanelTwoClientTable;
-    }
-
-    private DefaultTableModel getDm(String[] colunas) {
-        dm = new DefaultTableModel(colunas, 0) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int mColIndex) {
-                return false;
-            }
-        };
-        return dm;
-    }
-
-    private DefaultTableModel canEditLastCel(String[] colunas) {
-        boolean[] canEdit = new boolean[]{
-            false, false, false, true
-        };
-        dm = new DefaultTableModel(colunas, 0) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int mColIndex) {
-                return canEdit[mColIndex];
-            }
-        };
-        return dm;
     }
 
     public JPanel getPanelThree() {
@@ -284,7 +259,7 @@ public class SaleScreen extends InternalFrame {
     }
 
     private JTable getTblPanelThree() {
-        tblPanelThree = new JTable(getDm(tblProducts));
+        tblPanelThree = new JTable(new TableModel(tblProducts, 0));
         tblPanelThree.getSelectionModel().addListSelectionListener(this);
         tblPanelThree.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblPanelThree.addMouseListener(this);
@@ -304,9 +279,10 @@ public class SaleScreen extends InternalFrame {
     }
 
     private JTable getTblPanelFour() {
-        tblPanelFour = new JTable(canEditLastCel(tblProducts));
+        tblPanelFour = new JTable(new TableModel(tblProducts, 0, new boolean[]{false, false, false, true}));
         tblPanelFour.getSelectionModel().addListSelectionListener(this);
         tblPanelFour.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tblPanelFour.addMouseListener(this);
         TableColumn column = tblPanelFour.getColumnModel().getColumn(3);
         tblPanelFour.setRowHeight(25);
         column.setCellRenderer(new DefaultTableCellRenderer() {
@@ -395,6 +371,7 @@ public class SaleScreen extends InternalFrame {
                 }
                 break;
             case "conclude":
+                tblPanelFour.getSelectionModel().clearSelection();
                 try {
                     Sale sale = new Sale(0, id_cliente, Float.parseFloat(txtTotalPanelFour.getText()), chooserDatePanelFour.getDate(), User.getInstance().getId());
                     if (tblPanelFour.getRowCount() != 0) {
@@ -402,7 +379,8 @@ public class SaleScreen extends InternalFrame {
                         for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
                             int id = (int) tblPanelFour.getValueAt(i, 0);
                             float valor = (float) tblPanelFour.getValueAt(i, 2);
-                            int quantidade = (int) tblPanelFour.getValueAt(i, 3);
+                            int quantidade = Integer.valueOf(tblPanelFour.getModel().getValueAt(i, 3).toString());
+                          
                             SaleDAO.getInstance().saveList(id, valor, quantidade, User.getInstance().getId());
                         }
                         if (ret) {
@@ -486,8 +464,9 @@ public class SaleScreen extends InternalFrame {
                 String nome = tblPanelTwo.getModel().getValueAt(numeroLinha, 2).toString();
                 txtClientPanelThree.setText(nome);
                 txtCPFPanelThree.setText(cpf);
+            } else if (e.getSource().equals(tblPanelFour)) {
+                tblPanelFour.clearSelection();
             }
-
         }
     }
 }

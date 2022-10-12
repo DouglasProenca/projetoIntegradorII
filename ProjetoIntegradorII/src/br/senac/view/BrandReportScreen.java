@@ -4,6 +4,7 @@ import br.senac.controller.BrandDao;
 import br.senac.objects.Excel;
 import br.senac.model.Brand;
 import br.senac.objects.InternalFrame;
+import br.senac.objects.TableModel;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -40,7 +41,6 @@ public class BrandReportScreen extends InternalFrame {
     private JButton btnExcluir;
     private JButton btnExportar;
     private JButton btnIncluir;
-    private DefaultTableModel dm;
     private JTable tblResultado;
     private JScrollPane scroll;
     private static BrandReportScreen uniqueInstance;
@@ -59,21 +59,11 @@ public class BrandReportScreen extends InternalFrame {
     }
 
     private JTable getTblResultado() {
-        tblResultado = new JTable(getDm());
+        tblResultado = new JTable(new TableModel(colunas, 0));
         tblResultado.getSelectionModel().addListSelectionListener(this);
         tblResultado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblResultado.addMouseListener(this);
         return tblResultado;
-    }
-
-    private DefaultTableModel getDm() {
-        dm = new DefaultTableModel(colunas, 0) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int mColIndex) {
-                return false;
-            }
-        };
-        return dm;
     }
 
     private JScrollPane getScrollPane() {

@@ -6,6 +6,7 @@ import br.senac.model.Category;
 import br.senac.model.User;
 import br.senac.objects.Excel;
 import br.senac.objects.InternalFrame;
+import br.senac.objects.TableModel;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,7 +43,6 @@ public class RegistrationCategoryScreen extends InternalFrame {
     private JTextField txtBrand;
     private final String colunas[] = {"Categoria"};
     private JPanel panel;
-    private DefaultTableModel dm;
     private JTable tblExcel;
     private JScrollPane scroll;
     private JButton btnCheckExcel;
@@ -88,20 +88,10 @@ public class RegistrationCategoryScreen extends InternalFrame {
     }
 
     private JTable getTblExcel() {
-        tblExcel = new JTable(getDm());
+        tblExcel = new JTable(new TableModel(colunas, 0));
         tblExcel.getSelectionModel().addListSelectionListener(this);
         tblExcel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         return tblExcel;
-    }
-
-    private DefaultTableModel getDm() {
-        dm = new DefaultTableModel(colunas, 0) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int mColIndex) {
-                return false;
-            }
-        };
-        return dm;
     }
 
     private JScrollPane getScrollPane() {

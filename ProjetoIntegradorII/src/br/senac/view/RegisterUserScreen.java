@@ -148,16 +148,14 @@ public class RegisterUserScreen extends InternalFrame {
         switch (e.getActionCommand()) {
             case "save":
                 User u = new User(0, txtMail.getText(), String.valueOf(txtPasswordMail.getPassword()), txtUser.getText(), String.valueOf(txtPassword.getPassword()), new Date());
-                boolean ret = UserDAO.getInstance().save(u);
-                if (ret) {
+                if (UserDAO.getInstance().save(u)) {
                     JOptionPane.showMessageDialog(null, "Usúario Cadastrado Com Sucesso!");
                     this.dispose();
                 }
                 break;
             case "alter":
                 User user = new User(id, txtMail.getText(), String.valueOf(txtPasswordMail.getPassword()), txtUser.getText(), String.valueOf(txtPassword.getPassword()), new Date());
-                boolean retur = UserDAO.getInstance().alter(user);
-                if (retur) {
+                if (UserDAO.getInstance().alter(user)) {
                     JOptionPane.showMessageDialog(null, "Usúario Alterado Com Sucesso!");
                     this.dispose();
                 }

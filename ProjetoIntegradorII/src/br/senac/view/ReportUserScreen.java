@@ -3,6 +3,7 @@ package br.senac.view;
 import br.senac.controller.UserDAO;
 import br.senac.model.User;
 import br.senac.objects.InternalFrame;
+import br.senac.objects.TableModel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -29,7 +30,6 @@ public class ReportUserScreen extends InternalFrame {
     private JButton btnRemove;
     private JPanel panelNorth;
     private final String colunas[] = {"ID", "Nome", "Email", "Senha Email", "Data"};
-    private DefaultTableModel dm;
     private JTable tblResultado;
     private JScrollPane scroll;
     private int lineNumber;
@@ -80,21 +80,11 @@ public class ReportUserScreen extends InternalFrame {
     }
 
     private JTable getTblResultado() {
-        tblResultado = new JTable(getDm());
+        tblResultado = new JTable(new TableModel(colunas, 0));
         tblResultado.getSelectionModel().addListSelectionListener(this);
         tblResultado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblResultado.addMouseListener(this);
         return tblResultado;
-    }
-
-    private DefaultTableModel getDm() {
-        dm = new DefaultTableModel(colunas, 0) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int mColIndex) {
-                return false;
-            }
-        };
-        return dm;
     }
 
     private JScrollPane getScrollPane() {
