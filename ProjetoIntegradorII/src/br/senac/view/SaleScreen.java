@@ -300,7 +300,7 @@ public class SaleScreen extends InternalFrame {
                         for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
                             float valor = (float) tblPanelFour.getValueAt(i, 2);
                             int quantidade = Integer.valueOf(tblPanelFour.getModel().getValueAt(i, 3).toString());
-                            total = total + (valor *quantidade);
+                            total = total + (valor * quantidade);
                         }
                         txtTotalPanelFour.setText(String.valueOf(total));
                     }
@@ -395,7 +395,7 @@ public class SaleScreen extends InternalFrame {
                             float valor = (float) tblPanelFour.getValueAt(i, 2);
                             int quantidade = Integer.valueOf(tblPanelFour.getModel().getValueAt(i, 3).toString());
 
-                            SaleDAO.getInstance().saveList(id, valor, quantidade, User.getInstance().getId());
+                            SaleDAO.getInstance().saveList(id, valor * quantidade, quantidade, User.getInstance().getId());
                         }
                         if (ret) {
                             JOptionPane.showMessageDialog(this, "Venda Realizada Com Sucesso!\n" + "ID da Venda: " + SaleDAO.getInstance().returnSale());
