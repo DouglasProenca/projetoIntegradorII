@@ -84,6 +84,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
     }
 
     public static void removeForms() {
+        jToolBar.removeAll();
         int qtd = desktopPane.getComponentCount();
         for (int i = 0; i < qtd; i++) {
             if (desktopPane.getComponent(i) instanceof InternalFrame) {

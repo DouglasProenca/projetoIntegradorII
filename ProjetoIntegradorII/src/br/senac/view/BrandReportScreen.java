@@ -43,17 +43,9 @@ public class BrandReportScreen extends InternalFrame {
     private JButton btnIncluir;
     private JTable tblResultado;
     private JScrollPane scroll;
-    private static BrandReportScreen uniqueInstance;
     private final Excel excel = new Excel();
 
-    public static synchronized BrandReportScreen getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new BrandReportScreen();
-        }
-        return uniqueInstance;
-    }
-
-    private BrandReportScreen() {
+    public BrandReportScreen() {
         super("Relatório Marcas", true, true, true, true, 707, 400);
         this.initComponents();
     }

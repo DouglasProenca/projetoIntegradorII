@@ -111,7 +111,7 @@ public class MenuReport extends Menu {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "brand":
-                BrandReportScreen br = BrandReportScreen.getInstance();
+                BrandReportScreen br = new BrandReportScreen();
                 br.setVisible(true);
                 break;
             case "product":
