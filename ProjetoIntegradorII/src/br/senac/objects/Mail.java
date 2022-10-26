@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -39,7 +40,7 @@ public class Mail {
 
     public boolean enviarGmail(String emailDestinatario, String assunto, String msg, String filename) {
         Session s = Session.getDefaultInstance(getProps(),
-                new javax.mail.Authenticator() {
+                new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
 
