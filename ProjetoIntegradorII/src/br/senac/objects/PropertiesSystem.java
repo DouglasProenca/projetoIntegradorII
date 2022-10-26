@@ -47,7 +47,7 @@ public class PropertiesSystem {
         try {
             LoadPropertiesFile();
             prop.setProperty("lookandfeel.name", name);
-            prop.store(new FileOutputStream(path), "");
+            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
         } catch (IOException ex) {
             Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -62,7 +62,7 @@ public class PropertiesSystem {
         LoadPropertiesFile();
         prop.setProperty("jdbc.server", name);
         try {
-            prop.store(new FileOutputStream(path), "");
+            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
         } catch (IOException ex) {
             Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -77,7 +77,7 @@ public class PropertiesSystem {
         LoadPropertiesFile();
         prop.setProperty("jdbc.database", name);
         try {
-            prop.store(new FileOutputStream(path), "");
+            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
         } catch (IOException ex) {
             Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -92,7 +92,7 @@ public class PropertiesSystem {
         LoadPropertiesFile();
         prop.setProperty("jdbc.login", name);
         try {
-            prop.store(new FileOutputStream(path), "");
+            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
         } catch (IOException ex) {
             Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -107,7 +107,7 @@ public class PropertiesSystem {
         LoadPropertiesFile();
         prop.setProperty("jdbc.senha", name);
         try {
-            prop.store(new FileOutputStream(path), "");
+            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
         } catch (IOException ex) {
             Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -122,7 +122,7 @@ public class PropertiesSystem {
         LoadPropertiesFile();
         prop.setProperty("lookandfeel.color", name);
         try {
-            prop.store(new FileOutputStream(path), "");
+            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
         } catch (IOException ex) {
             Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
