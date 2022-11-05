@@ -24,10 +24,10 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
             boolean maximizable, boolean iconifiable,
             int width, int height) {
         super(titulo, resizable, closabe, maximizable, iconifiable);
-        this.setFrameIcon(images.getInstance().imagemPrincipal());
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setSize(width, height);
-        this.addInternalFrameListener(this);
+        super.setFrameIcon(images.getInstance().imagemPrincipal());
+        super.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        super.setSize(width, height);
+        super.addInternalFrameListener(this);
     }
 
     @Override

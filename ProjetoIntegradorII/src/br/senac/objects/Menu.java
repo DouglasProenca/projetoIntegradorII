@@ -12,6 +12,6 @@ public abstract class Menu extends JMenu implements ActionListener {
 
     protected Menu(String title, Icon image) {
         super(title);
-        this.setIcon(image);
+        super.setIcon(image);
     }
 }

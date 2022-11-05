@@ -50,16 +50,16 @@ public class MainMenu extends Menu {
     }
 
     private void initComponents() {
-        this.setMnemonic('M');
-        this.add(getMenuDatabase());
-        this.add(getNotes());
-        this.add(getCalculator());
-        this.add(getMenuLookAndFeel());
-        this.add(getMail());
-        this.add(getSale());
-        this.add(getMenuUser());
-        this.add(new JSeparator());
-        this.add(getExit());
+        super.setMnemonic('M');
+        super.add(getMenuDatabase());
+        super.add(getNotes());
+        super.add(getCalculator());
+        super.add(getMenuLookAndFeel());
+        super.add(getMail());
+        super.add(getSale());
+        super.add(getMenuUser());
+        super.add(new JSeparator());
+        super.add(getExit());
     }
 
     private JMenu getMenuUser() {

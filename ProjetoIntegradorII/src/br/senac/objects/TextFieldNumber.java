@@ -12,7 +12,7 @@ public class TextFieldNumber extends JTextField implements KeyListener {
 
     public TextFieldNumber() {
         super();
-        this.addKeyListener(this);
+        super.addKeyListener(this);
     }
 
     @Override

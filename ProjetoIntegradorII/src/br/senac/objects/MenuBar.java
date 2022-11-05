@@ -18,8 +18,8 @@ public class MenuBar extends JMenuBar {
     }
 
     private void initComponents() {
-        this.add(menu);
-        this.add(report);
-        this.add(help);
+        super.add(menu);
+        super.add(report);
+        super.add(help);
     }
 }

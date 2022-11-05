@@ -6,6 +6,7 @@ import br.senac.objects.DesktopPane;
 import br.senac.objects.InternalFrame;
 import br.senac.objects.images;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -37,16 +38,16 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
     }
 
     private void initComponents() {
-        this.addWindowStateListener(this);
-        this.setSize(new Dimension(800, 500));
-        this.setExtendedState(MAXIMIZED_BOTH);
-        this.setLocationRelativeTo(null);
-        this.addKeyListener(this);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.add(getDesktopPane(), BorderLayout.CENTER);
-        this.add(getJToolBar(), BorderLayout.PAGE_END);
-        this.setIconImage(getIcone().getImage());
-        this.setJMenuBar(menubar);
+        super.addWindowStateListener(this);
+        super.setSize(new Dimension(800, 500));
+        super.setExtendedState(MAXIMIZED_BOTH);
+        super.setLocationRelativeTo(null);
+        super.addKeyListener(this);
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        super.add(getDesktopPane(), BorderLayout.CENTER);
+        super.add(getJToolBar(), BorderLayout.PAGE_END);
+        super.setIconImage(getIcone().getImage());
+        super.setJMenuBar(menubar);
         this.getFirst();
     }
 
@@ -80,6 +81,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
         jToolBar = new JToolBar();
         jToolBar.setPreferredSize(new Dimension(this.getSize().width, 40));
         jToolBar.setFloatable(false);
+        jToolBar.setRollover(false);
         return jToolBar;
     }
 
@@ -94,6 +96,21 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
                 qtd = desktopPane.getComponentCount();
             }
         }
+    }
+
+    private Thread addIconsToolbar(Component comp[]) {
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            int qtd = comp.length;
+            for (int i = 0; i < qtd; i++) {
+                jToolBar.add(comp[i]);
+            }
+        });
+        return t;
     }
 
     @Override
@@ -115,6 +132,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
     public void windowStateChanged(WindowEvent e) {
         int s1 = e.getNewState();
         int qtd = desktopPane.getComponentCount();
+        jToolBar.repaint();
         for (int i = 0; i < qtd; i++) {
             if (desktopPane.getComponent(i) instanceof InternalFrame) {
                 InternalFrame frame = (InternalFrame) desktopPane.getComponent(i);
@@ -126,5 +144,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
                 }
             }
         }
+        Thread t = this.addIconsToolbar(jToolBar.getComponents());
+        t.start();
     }
 }

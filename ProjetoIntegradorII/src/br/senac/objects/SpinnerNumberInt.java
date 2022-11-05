@@ -13,7 +13,7 @@ public class SpinnerNumberInt extends JSpinner implements KeyListener {
 
     public SpinnerNumberInt() {
         super(new SpinnerNumberModel(0, 0, 999999, 1));
-         ((JSpinner.DefaultEditor) this.getEditor()).getTextField().addKeyListener(this);
+         ((JSpinner.DefaultEditor) super.getEditor()).getTextField().addKeyListener(this);
     }
 
     @Override
