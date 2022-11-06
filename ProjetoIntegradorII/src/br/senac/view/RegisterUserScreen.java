@@ -5,7 +5,10 @@ import br.senac.model.User;
 import br.senac.objects.InternalFrame;
 import br.senac.objects.images;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
 import java.util.Date;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -55,6 +58,16 @@ public class RegisterUserScreen extends InternalFrame {
         this.getContentPane().add(getPanelCadastro(type));
     }
 
+    private boolean isValidEmailAddress(String email) {
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            return (false);
+        }
+        return (true);
+    }
+
     private JPanel getPanelCadastro(boolean type) {
         panelCadastro = new JPanel(null);
         panelCadastro.setBorder(BorderFactory.createTitledBorder(!type ? "Cadastrar Usuário" : "Alterar Usuário"));
@@ -93,6 +106,7 @@ public class RegisterUserScreen extends InternalFrame {
     private JTextField getTxtMail() {
         txtMail = new JTextField();
         txtMail.setBounds(100, 100, 230, 25);
+        txtMail.addFocusListener(this);
         return txtMail;
     }
 
@@ -135,6 +149,17 @@ public class RegisterUserScreen extends InternalFrame {
         btnCheck.setActionCommand(!newCad ? "save" : "alter");
         btnCheck.setEnabled(false);
         return btnCheck;
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        JTextField src = (JTextField) e.getSource();
+        boolean validate = this.isValidEmailAddress(src.getText());
+        btnCheck.setEnabled(validate);
+        if (!validate) {
+            JOptionPane.showMessageDialog(this, "E-mail inválido!",
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override
@@ -185,12 +210,11 @@ public class RegisterUserScreen extends InternalFrame {
         }
 
         private boolean warn() {
-            boolean type = false;
             if (txtUser.getText().length() >= 1 && String.valueOf(txtPassword.getPassword()).length() >= 1
-                    && txtMail.getText().length() >= 1 && String.valueOf(txtPasswordMail.getPassword()).length() >= 1) {
-                type = true;
+                    && String.valueOf(txtPasswordMail.getPassword()).length() >= 1) {
+                return (true);
             }
-            return type;
+            return (false);
         }
     }
 }

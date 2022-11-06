@@ -127,9 +127,9 @@ public class BrandReportScreen extends InternalFrame {
     }
 
     private void initComponents() {
-        this.add(BorderLayout.CENTER, getScrollPane());
-        this.add(BorderLayout.NORTH, getPanelNorth());
-        this.add(BorderLayout.EAST, getPanelWest());
+        super.add(BorderLayout.CENTER, getScrollPane());
+        super.add(BorderLayout.NORTH, getPanelNorth());
+        super.add(BorderLayout.EAST, getPanelWest());
         this.loadTable();
     }
 

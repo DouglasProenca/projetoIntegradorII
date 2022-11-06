@@ -31,12 +31,12 @@ public class LoginScreen extends InternalFrame {
     }
 
     private void initComponents() {
-        this.setLayout(null);
-        this.getContentPane().add(getLblUsuario());
-        this.getContentPane().add(getLblSenha());
-        this.getContentPane().add(getTxtUsuario());
-        this.getContentPane().add(getTxtSenha());
-        this.getContentPane().add(getBtnConfirmar());
+        super.setLayout(null);
+        super.getContentPane().add(getLblUsuario());
+        super.getContentPane().add(getLblSenha());
+        super.getContentPane().add(getTxtUsuario());
+        super.getContentPane().add(getTxtSenha());
+        super.getContentPane().add(getBtnConfirmar());
         this.lockMenu(false);
     }
 
@@ -99,7 +99,7 @@ public class LoginScreen extends InternalFrame {
                 }
                 if (senhaOk) {
                     lockMenu(true);
-                    this.dispose();
+                    super.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Aviso de Falha de Acesso",
                             JOptionPane.ERROR_MESSAGE);

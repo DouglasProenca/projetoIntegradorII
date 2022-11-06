@@ -11,7 +11,7 @@ public class CalendarScreen extends InternalFrame {
     }
 
     private void initComponents() {
-        this.getContentPane().add(new JCalendar());
-        this.pack();
+        super.getContentPane().add(new JCalendar());
+        super.pack();
     }
 }

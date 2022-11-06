@@ -195,9 +195,9 @@ public class DatabaseConnectionScreen extends InternalFrame {
                 Connection conexao = connectionManager.getConexaoTest(txtLogin.getText(), String.valueOf(txtSenha.getPassword()),
                         txtDatabase.getText(), txtServer.getText());
                 if (conexao != null) {
-                    setLblImagem(images.getInstance().conectionSucess());
+                    this.setLblImagem(images.getInstance().conectionSucess());
                 } else {
-                    setLblImagem(images.getInstance().conectionError());
+                    this.setLblImagem(images.getInstance().conectionError());
                 }
                 break;
         }

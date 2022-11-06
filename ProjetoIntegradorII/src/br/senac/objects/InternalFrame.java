@@ -5,6 +5,8 @@ import static br.senac.view.MainScreen.desktopPane;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -18,7 +20,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public abstract class InternalFrame extends JInternalFrame implements ActionListener,
-        MouseListener, KeyListener, ListSelectionListener, InternalFrameListener, ItemListener {
+        MouseListener, KeyListener, ListSelectionListener, InternalFrameListener, ItemListener, FocusListener {
 
     public InternalFrame(String titulo, boolean resizable, boolean closabe,
             boolean maximizable, boolean iconifiable,
@@ -115,6 +117,14 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
         Dimension jInternalFrameSize = frame.getSize();
         frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
+    }
+
+    @Override
+    public void focusGained(FocusEvent e) {
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {  
     }
 
     @Override

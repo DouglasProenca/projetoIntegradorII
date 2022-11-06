@@ -6,6 +6,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -37,6 +40,16 @@ public class MailScreen extends InternalFrame {
     public MailScreen() {
         super("Tela de E-mail", false, true, true, true, 707, 400);
         this.initComponents();
+    }
+
+    private boolean isValidEmailAddress(String email) {
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            return (false);
+        }
+        return (true);
     }
 
     private JPanel getPanelNorth() {
@@ -73,7 +86,7 @@ public class MailScreen extends InternalFrame {
     private JTextField getTxtDestinatario() {
         txtDestinatario = new JTextField();
         txtDestinatario.setPreferredSize(new Dimension(200, 30));
-        txtDestinatario.addKeyListener(this);
+        txtDestinatario.addFocusListener(this);
         return txtDestinatario;
     }
 
@@ -109,8 +122,20 @@ public class MailScreen extends InternalFrame {
         btnsend = new JButton("Enviar");
         btnsend.addActionListener(this);
         btnsend.setActionCommand("enviar");
+        btnsend.setEnabled(false);
         btnsend.setPreferredSize(new Dimension(100, 30));
         return btnsend;
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        JTextField src = (JTextField) e.getSource();
+        boolean validate = this.isValidEmailAddress(src.getText());
+        btnsend.setEnabled(validate);
+        if (!validate) {
+            JOptionPane.showMessageDialog(this, "E-mail inválido!",
+                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override
@@ -118,7 +143,7 @@ public class MailScreen extends InternalFrame {
         switch (e.getActionCommand()) {
             case "enviar":
                 boolean ret = false;
-                if (!txtDestinatario.getText().equals("") && !txtAssunto.getText().equals("")
+                if (!txtAssunto.getText().equals("")
                         && !txtCorpo.getText().equals("")) {
                     progressBar.setVisible(true);
                     Thread t = new Thread(() -> {
@@ -128,7 +153,7 @@ public class MailScreen extends InternalFrame {
                     t.start();
                     ret = true;
                 } else {
-                    JOptionPane.showMessageDialog(this, "Campos de Destinario, Assunto e "
+                    JOptionPane.showMessageDialog(this, "Campos de Assunto e "
                             + "Corpo do E-mail não podem estar Vazios!",
                             "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
                     progressBar.setVisible(false);

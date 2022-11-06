@@ -40,6 +40,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
     private void initComponents() {
         super.addWindowStateListener(this);
         super.setSize(new Dimension(800, 500));
+        super.setMinimumSize(new Dimension(800, 500));
         super.setExtendedState(MAXIMIZED_BOTH);
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
@@ -132,7 +133,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
     public void windowStateChanged(WindowEvent e) {
         int s1 = e.getNewState();
         int qtd = desktopPane.getComponentCount();
-        jToolBar.repaint();
+
         for (int i = 0; i < qtd; i++) {
             if (desktopPane.getComponent(i) instanceof InternalFrame) {
                 InternalFrame frame = (InternalFrame) desktopPane.getComponent(i);
