@@ -110,6 +110,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
             for (int i = 0; i < qtd; i++) {
                 jToolBar.add(comp[i]);
             }
+            jToolBar.validate();
         });
         return t;
     }
