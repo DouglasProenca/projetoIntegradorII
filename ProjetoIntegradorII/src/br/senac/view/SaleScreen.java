@@ -11,7 +11,9 @@ import br.senac.objects.SpinnerNumberInt;
 import br.senac.objects.TableModel;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
+import java.awt.Event;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.Date;
@@ -81,6 +83,7 @@ public class SaleScreen extends InternalFrame {
     private final String tblProducts[] = {"ID", "Nome", "Preço", "quantidade"};
     private float total = 0;
     private int id_cliente;
+    private SpinnerNumberInt spinner = new SpinnerNumberInt();
 
     public SaleScreen() {
         super("Nova Venda", false, true, false, true, 800, 600);
@@ -95,7 +98,7 @@ public class SaleScreen extends InternalFrame {
         this.add(getPanelFour());
         this.add(getBtnConcluir());
         this.add(getBtnExcluir());
-        this.loadTable();
+        this.loadTable("All");
     }
 
     private JPanel getPanelOne() {
@@ -127,12 +130,14 @@ public class SaleScreen extends InternalFrame {
     private JTextField getTxtPanelOneName() {
         txtPanelOneName = new JTextField();
         txtPanelOneName.setBounds(50, 40, 250, 20);
+        txtPanelOneName.addKeyListener(this);
         return txtPanelOneName;
     }
 
     private JLabel lblPanelOneCPF() {
         lblPanelOneCPF = new JLabel("CPF:");
         lblPanelOneCPF.setBounds(10, 70, 40, 20);
+        lblPanelOneCPF.addKeyListener(this);
         return lblPanelOneCPF;
     }
 
@@ -148,7 +153,7 @@ public class SaleScreen extends InternalFrame {
 
     private JButton getBtnPanelOneFind() {
         btnPanelOneFind = new JButton("Pesquisar");
-        btnPanelOneFind.setBounds(220, 100, 80, 25);
+        btnPanelOneFind.setBounds(210, 100, 90, 25);
         btnPanelOneFind.addActionListener(this);
         btnPanelOneFind.setActionCommand("findClient");
         return btnPanelOneFind;
@@ -209,12 +214,13 @@ public class SaleScreen extends InternalFrame {
         txtFilterPanelThree = new JTextField();
         txtFilterPanelThree.setToolTipText("Pesquise por codigo ou Nome");
         txtFilterPanelThree.setBounds(10, 35, 184, 20);
+        txtFilterPanelThree.addKeyListener(this);
         return txtFilterPanelThree;
     }
 
     private JButton getbtnFilterPanelThreeFind() {
         btnFilterPanelThreeFind = new JButton("Pesquisar");
-        btnFilterPanelThreeFind.setBounds(200, 33, 80, 25);
+        btnFilterPanelThreeFind.setBounds(195, 33, 90, 25);
         btnFilterPanelThreeFind.addActionListener(this);
         btnFilterPanelThreeFind.setActionCommand("findProduct");
         return btnFilterPanelThreeFind;
@@ -292,14 +298,13 @@ public class SaleScreen extends InternalFrame {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-                SpinnerNumberInt spinner = new SpinnerNumberInt();
                 spinner.addChangeListener(new ChangeListener() {
                     @Override
                     public void stateChanged(ChangeEvent e) {
                         total = 0;
                         for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
                             float valor = (float) tblPanelFour.getValueAt(i, 2);
-                            int quantidade = Integer.valueOf(tblPanelFour.getModel().getValueAt(i, 3).toString());
+                            int quantidade = (int) tblPanelFour.getModel().getValueAt(i, 3);
                             total = total + (valor * quantidade);
                         }
                         txtTotalPanelFour.setText(String.valueOf(total));
@@ -307,7 +312,6 @@ public class SaleScreen extends InternalFrame {
                 });
                 if (component instanceof JLabel) {
                     spinner.setValue(Integer.valueOf(((JLabel) component).getText()));
-
                 } else if (value != null) {
                     spinner.setValue(Integer.valueOf(value.toString()));
                 }
@@ -377,8 +381,9 @@ public class SaleScreen extends InternalFrame {
                 DefaultTableModel dtm = (DefaultTableModel) tblPanelFour.getModel();
                 if (tblPanelFour.getSelectedRow() >= 0) {
                     float preco = Float.parseFloat(tblPanelThree.getModel().getValueAt(tblPanelFour.getSelectedRow(), 2).toString());
-                    total = total - preco;
-                    txtTotalPanelFour.setText(String.valueOf(total));
+                    int quantidade = (int) tblPanelFour.getModel().getValueAt(tblPanelFour.getSelectedRow(), 3);
+                    total = total - (preco * quantidade);
+                    txtTotalPanelFour.setText(String.valueOf(total >= 0 ? total : 0.00));
                     dtm.removeRow(tblPanelFour.getSelectedRow());
                 } else {
                     JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");
@@ -436,24 +441,26 @@ public class SaleScreen extends InternalFrame {
         }
     }
 
-    @Override
-    protected void loadTable() {
-        DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
-        modelo.setRowCount(0);
-        tblPanelTwo.getColumnModel().getColumn(0).setMaxWidth(0);
-        tblPanelTwo.getColumnModel().getColumn(0).setMinWidth(0);
-        tblPanelTwo.getColumnModel().getColumn(0).setPreferredWidth(0);  //ID
-        ClientDAO.getInstance().getAll().forEach((p) -> {
-            modelo.addRow(new Object[]{p.getId(), p.getCpf(), p.getNome()});
-        });
-
-        DefaultTableModel modeloTabelThree = (DefaultTableModel) tblPanelThree.getModel();
-        modeloTabelThree.setRowCount(0);
-        ProductDAO.getInstance().getAll().forEach((p) -> {
-            if (p.getQuantidade() >= 1) {
-                modeloTabelThree.addRow(new Object[]{p.getId(), p.getNome(), p.getValor(), p.getQuantidade()});
-            }
-        });
+    protected void loadTable(String command) {
+        if (command.equals("All") || command.equals("Client")) {
+            DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
+            modelo.setRowCount(0);
+            tblPanelTwo.getColumnModel().getColumn(0).setMaxWidth(0);
+            tblPanelTwo.getColumnModel().getColumn(0).setMinWidth(0);
+            tblPanelTwo.getColumnModel().getColumn(0).setPreferredWidth(0);  //ID
+            ClientDAO.getInstance().getAll().forEach((p) -> {
+                modelo.addRow(new Object[]{p.getId(), p.getCpf(), p.getNome()});
+            });
+        }
+        if (command.equals("All") || command.equals("Product")) {
+            DefaultTableModel modeloTabelThree = (DefaultTableModel) tblPanelThree.getModel();
+            modeloTabelThree.setRowCount(0);
+            ProductDAO.getInstance().getAll().forEach((p) -> {
+                if (p.getQuantidade() >= 1) {
+                    modeloTabelThree.addRow(new Object[]{p.getId(), p.getNome(), p.getValor(), p.getQuantidade()});
+                }
+            });
+        }
     }
 
     @Override
@@ -465,6 +472,9 @@ public class SaleScreen extends InternalFrame {
                 String nome = tblPanelThree.getModel().getValueAt(numeroLinha, 1).toString();
                 float preco = Float.parseFloat(tblPanelThree.getModel().getValueAt(numeroLinha, 2).toString());
                 int quantidade = Integer.parseInt(tblPanelThree.getModel().getValueAt(numeroLinha, 3).toString());
+
+                total = total + (preco * quantidade);
+                txtTotalPanelFour.setText(String.valueOf(total));
 
                 DefaultTableModel modelo = (DefaultTableModel) tblPanelFour.getModel();
                 modelo.addRow(new Object[]{id, nome, preco, quantidade});
@@ -478,6 +488,31 @@ public class SaleScreen extends InternalFrame {
             } else if (e.getSource().equals(tblPanelFour)) {
                 tblPanelFour.clearSelection();
             }
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if (e.getSource().equals(txtPanelOneName)) {
+            if (txtPanelOneName.getText().length() == 0) {
+                loadTable("Client");
+            }
+        }
+        if (e.getSource().equals(txtFilterPanelThree)) {
+            if (txtFilterPanelThree.getText().length() == 0) {
+                loadTable("Product");
+            }
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if ((e.getKeyCode() == Event.ENTER) && e.getSource().equals(txtFilterPanelThree)) {
+            ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "findProduct");
+            actionPerformed(z);
+        } else if ((e.getKeyCode() == Event.ENTER) && e.getSource().equals(txtPanelOneCPF) || e.getSource().equals(txtPanelOneName)) {
+            ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "findClient");
+            actionPerformed(z);
         }
     }
 }
