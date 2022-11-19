@@ -19,11 +19,11 @@ Adicionais:
 
 Tela Login:
 
-![image](https://user-images.githubusercontent.com/78769051/185759985-82b1c02a-1f95-475e-a024-ad70940a092c.png)
+![image](https://user-images.githubusercontent.com/78769051/202855294-784aceed-fa2f-4e7b-a0a6-69e29309615b.png)
 
 Tela Inicial do Projeto:
 
-![image](https://user-images.githubusercontent.com/78769051/184447786-3efc3a51-f0b8-44d1-9ef2-7f2538bdd952.png)
+![image](https://user-images.githubusercontent.com/78769051/202855275-5dc9f87e-4eac-42f7-9eaf-cdec5a469d3c.png)
 
 Menu:
 
@@ -47,7 +47,7 @@ Cadastro De Produtos:
 
 Tela de Backup:
 
-![image](https://user-images.githubusercontent.com/78769051/184448563-17142c82-b953-4d60-a41c-ee82d7c9b16e.png)
+![image](https://user-images.githubusercontent.com/78769051/202855350-f02ad775-e93c-4ec8-bcc4-a08cd52bd335.png)
 
 Tela de Envio de e-mail:
 
@@ -55,7 +55,7 @@ Tela de Envio de e-mail:
 
 Tela de Venda:
 
-![image](https://user-images.githubusercontent.com/78769051/188990556-39e3c800-bb5f-4cc2-aab1-e90e78542141.png)
+![image](https://user-images.githubusercontent.com/78769051/202855315-111cf540-f9a5-491c-bb42-10b06c2ebb84.png)
 
 Tela do Relatório Sintético:
 
