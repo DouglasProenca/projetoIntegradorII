@@ -27,23 +27,23 @@ Tela Inicial do Projeto:
 
 Menu:
 
-![image](https://user-images.githubusercontent.com/78769051/184447869-c9f65402-8462-4b81-9301-69c23bab9df7.png)
+![image](https://user-images.githubusercontent.com/78769051/202855482-b81c16a3-0b28-4f72-beba-0d50dbac6b41.png)
 
 Relatório:
 
-![image](https://user-images.githubusercontent.com/78769051/185760060-0da1981a-6c32-415d-88d1-a3bef3d82ce2.png)
+![image](https://user-images.githubusercontent.com/78769051/202855496-54c3cb01-dd7c-4d26-86c2-7743ca926f33.png)
 
 Ajuda:
 
-![image](https://user-images.githubusercontent.com/78769051/185760075-be198c40-5e7e-484f-9b59-4914f9deac5d.png)
+![image](https://user-images.githubusercontent.com/78769051/202855521-cf73c48a-87f4-4b90-80ca-68a4a70dd1f2.png)
 
 Relatorio Produto:
 
-![image](https://user-images.githubusercontent.com/78769051/185759961-1fb368ae-6971-41d6-85b5-fbda4b933bc5.png)
+![image](https://user-images.githubusercontent.com/78769051/202855659-18a2c557-70be-4cbb-a5a7-be006e6c81ea.png)
 
 Cadastro De Produtos:
 
-![image](https://user-images.githubusercontent.com/78769051/184451534-948ca35f-e246-485a-a68b-eb686f2184da.png)
+![image](https://user-images.githubusercontent.com/78769051/202855682-8d6227bd-897e-4fe1-8aec-bf8ec549f04b.png)
 
 Tela de Backup:
 
@@ -51,22 +51,22 @@ Tela de Backup:
 
 Tela de Envio de e-mail:
 
-![image](https://user-images.githubusercontent.com/78769051/185471918-cc9f3b59-9c5e-4238-b6ac-ed66c0e3757e.png)
+![image](https://user-images.githubusercontent.com/78769051/202855645-05bd294d-d98b-44e1-be22-b85d15196a57.png)
 
 Tela de Venda:
 
-![image](https://user-images.githubusercontent.com/78769051/202855315-111cf540-f9a5-491c-bb42-10b06c2ebb84.png)
+![image](https://user-images.githubusercontent.com/78769051/202855458-98de3520-e6d7-4ac1-a9b9-de956b0e291c.png)
 
 Tela do Relatório Sintético:
 
-![image](https://user-images.githubusercontent.com/78769051/192070399-743d489f-2794-4719-8b80-862b64bf7f18.png)
+![image](https://user-images.githubusercontent.com/78769051/202855576-3f8bb4a6-ddfd-497c-9f34-e3f8e6988140.png)
 
 Tela do Relatório Analitíco:
 
-![image](https://user-images.githubusercontent.com/78769051/189460608-e28bdb29-c92f-4ffe-909e-f5c36bfebb8b.png)
+![image](https://user-images.githubusercontent.com/78769051/202855619-f74a15fb-00b9-4a82-a1a2-4abe931718a0.png)
 
 Tela do Relatório Gerencial:
 
-![image](https://user-images.githubusercontent.com/78769051/193411797-3590e806-3981-42c0-b1ea-e2b1a84ccba0.png)
+![image](https://user-images.githubusercontent.com/78769051/202855545-308a99f2-2b4d-4fc3-a9c0-6171c5e5e8ad.png)
 
 
