@@ -167,10 +167,12 @@ public class ProductDAO implements DAO {
                     + "                     inner join rc_categoria c\n"
                     + "                      on p.categoria = c.id"
                     + "                     inner join rc_user u\n"
-                    + "                      on u.id = p.[user]"
-                    + "                     where p.nome like ?");
+                    + "                      on u.id = p.[user]\n"
+                    + "                     where p.nome like ?\n"
+                    + "                      or p.id like ?");
             //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, "%" + key + '%');
+            instrucaoSQL.setString(2, "%" + key + '%');
 
             ResultSet rs = instrucaoSQL.executeQuery();
 

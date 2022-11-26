@@ -43,6 +43,7 @@ public class ProductReportScreen extends InternalFrame {
     private JTable tblResultado;
     private JScrollPane scroll;
     private final Excel excel = new Excel();
+    private final ProductDAO dao = ProductDAO.getInstance();
 
     public ProductReportScreen() {
         super("Relatório Produtos", true, true, true, true, 707, 400);
@@ -173,7 +174,7 @@ public class ProductReportScreen extends InternalFrame {
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 if (fc.showSaveDialog(null) != 1) {
-                    excel.ProductExcel(fc.getSelectedFile(), ProductDAO.getInstance().getAll());
+                    excel.exportExcel(fc.getSelectedFile(), dao.getAll(), "Produtos", tblResultado);
                 }
                 break;
             case "find":

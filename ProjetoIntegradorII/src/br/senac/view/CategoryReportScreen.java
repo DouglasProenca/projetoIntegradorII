@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -157,12 +158,12 @@ public class CategoryReportScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "excluir":
-                    int numeroLinha = tblResultado.getSelectedRow();
-                    int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-                    if (dao.delete(id)) {
-                        JOptionPane.showMessageDialog(this, "Categoria excluída com sucesso!");
-                    } 
-                    this.loadTable(); 
+                int numeroLinha = tblResultado.getSelectedRow();
+                int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
+                if (dao.delete(id)) {
+                    JOptionPane.showMessageDialog(this, "Categoria excluída com sucesso!");
+                }
+                this.loadTable();
                 break;
             case "Incluir":
                 RegistrationCategoryScreen rbs = new RegistrationCategoryScreen();
@@ -172,7 +173,9 @@ public class CategoryReportScreen extends InternalFrame {
             case "Exportar":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                if (fc.showSaveDialog(null) != 1) excel.CategoryExcel(fc.getSelectedFile(), dao.getAll());
+                if (fc.showSaveDialog(null) != 1) {
+                    excel.exportExcel(fc.getSelectedFile(), dao.getAll(), "Categorias", tblResultado);
+                }
                 break;
             case "find":
                 DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();

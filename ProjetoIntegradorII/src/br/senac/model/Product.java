@@ -47,4 +47,9 @@ public class Product extends Category {
         this.quantidade = quantidade;
     }
 
+    @Override
+    public String toString() {
+        return getId() + ";" + nome + ";" + getMarca() + ";" + getCategoria() + ";"
+                + valor + ";" + quantidade + ";" + getDate() + ";" + getUser() + ";";
+    }
 }

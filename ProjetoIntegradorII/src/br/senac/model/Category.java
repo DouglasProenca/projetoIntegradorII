@@ -26,4 +26,9 @@ public class Category extends Brand {
         this.Categoria = Categoria;
     }
 
+    @Override
+    public String toString() {
+        return getId() + ";" + Categoria + ";" + getDate() + ";" + getUser();
+    }
+
 }

@@ -46,7 +46,8 @@ public class RegistrationCategoryScreen extends InternalFrame {
     private JTable tblExcel;
     private JScrollPane scroll;
     private JButton btnCheckExcel;
-    private ArrayList<Category> categoryList;
+    private ArrayList<Category> categoryList = new ArrayList<Category>();
+    private final Excel excel = new Excel();
     private JButton btnExcluirExcel;
     private JButton btnImportExcel;
     private final CategoryDAO dao = CategoryDAO.getInstance();
@@ -201,8 +202,15 @@ public class RegistrationCategoryScreen extends InternalFrame {
             case "import":
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
                 if (fc.showOpenDialog(null) != 1) {
-                    categoryList = Excel.importCategory(fc.getSelectedFile());
+                    String dados[][] = excel.importExcel(fc.getSelectedFile(), tblExcel);
+                    for (int i = 0; i < dados.length; i++) {
+                        if (dados[i][0] != null) {
+                            Category p = new Category(dados[i][0], 0, null, null, new Date(), String.valueOf(User.getInstance().getId()));
+                            categoryList.add(p);
+                        }
+                    }
                     CarregarJTable(categoryList, false);
                 }
                 break;

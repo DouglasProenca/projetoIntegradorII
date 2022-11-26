@@ -58,7 +58,7 @@ public class RegistrationProductScreen extends InternalFrame {
     private final String colunas[] = {"Produto", "Valor", "Marca", "Categoria", "Quantidade"};
     private JTable tblExcel;
     private JScrollPane scroll;
-    private ArrayList<Product> productsList;
+    private ArrayList<Product> productsList = new ArrayList<Product>();
     private JButton btnImportExcel;
     private int id;
     private JComboBox<String> jboBrand;
@@ -66,6 +66,7 @@ public class RegistrationProductScreen extends InternalFrame {
     private final BrandDao dao = BrandDao.getInstance();
     private final ProductDAO daop = ProductDAO.getInstance();
     private final CategoryDAO daoc = CategoryDAO.getInstance();
+    private final Excel excel = new Excel();
 
     public RegistrationProductScreen() {
         super("Cadastrar", false, true, false, false, 700, 400);
@@ -274,7 +275,14 @@ public class RegistrationProductScreen extends InternalFrame {
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 if (fc.showOpenDialog(null) != 1) {
-                    productsList = Excel.importProduct(fc.getSelectedFile());
+                    String dados[][] = excel.importExcel(fc.getSelectedFile(), tblExcel);
+                    for (int i = 0; i < dados.length; i++) {
+                        if (dados[i][0] != null) {
+                            Product p = new Product(dados[i][0], Float.parseFloat(dados[i][1]),
+                                    Integer.parseInt(dados[i][4]), dados[i][3], 0, dados[i][2], null, new Date(), String.valueOf(User.getInstance().getId()));
+                            productsList.add(p);
+                        }
+                    }
                     CarregarJTable(productsList, false);
                 }
                 break;

@@ -44,6 +44,7 @@ public class BrandReportScreen extends InternalFrame {
     private JTable tblResultado;
     private JScrollPane scroll;
     private final Excel excel = new Excel();
+    private final BrandDao dao = BrandDao.getInstance();
 
     public BrandReportScreen() {
         super("Relatório Marcas", true, true, true, true, 707, 400);
@@ -163,7 +164,7 @@ public class BrandReportScreen extends InternalFrame {
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 if (fc.showSaveDialog(null) != 1) {
-                    excel.BrandExcel(fc.getSelectedFile(), BrandDao.getInstance().getAll());
+                    excel.exportExcel(fc.getSelectedFile(), dao.getAll(), "Marcas", tblResultado);
                 }
                 break;
             case "find":

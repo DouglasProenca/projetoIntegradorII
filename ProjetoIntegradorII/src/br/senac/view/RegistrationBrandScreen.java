@@ -49,9 +49,10 @@ public class RegistrationBrandScreen extends InternalFrame {
     private JTable tblExcel;
     private JScrollPane scroll;
     private JButton btnCheckExcel;
-    private ArrayList<Brand> brandList;
+    private ArrayList<Brand> brandList = new ArrayList<Brand>();
     private JButton btnExcluirExcel;
     private JButton btnImportExcel;
+    private final Excel excel = new Excel();
     private final BrandDao dao = BrandDao.getInstance();
 
     public RegistrationBrandScreen() {
@@ -223,7 +224,13 @@ public class RegistrationBrandScreen extends InternalFrame {
                 JFileChooser fc = new JFileChooser();
                 fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 if (fc.showOpenDialog(null) != 1) {
-                    brandList = Excel.importBrand(fc.getSelectedFile());
+                    String dados[][] = excel.importExcel(fc.getSelectedFile(), tblExcel);
+                    for (int i = 0; i < dados.length; i++) {
+                        if (dados[i][0] != null) {
+                            Brand p = new Brand(0, dados[i][0], dados[i][1], new Date(), String.valueOf(User.getInstance().getId()));
+                            brandList.add(p);
+                        }
+                    }
                     CarregarJTable(brandList, false);
                 }
                 break;

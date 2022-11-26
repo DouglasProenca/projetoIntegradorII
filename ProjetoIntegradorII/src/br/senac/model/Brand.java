@@ -65,4 +65,10 @@ public class Brand {
     public void setUser(String user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return id + ";" + marca + ";" + pais + ";" + date + ";" + user + ";";
+    }
+
 }

@@ -107,7 +107,7 @@ public class ClientDAO implements DAO {
                     + "inner join rc_user u\n"
                     + "	on u.id = c.[user]\n"
                     + "where c.nome like ?\n"
-                    + "or c.cpf like ?");
+                    + " or c.cpf like ?");
 
             //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, "%" + key + '%');
