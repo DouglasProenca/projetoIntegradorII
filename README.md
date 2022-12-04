@@ -19,7 +19,7 @@ Adicionais:
 
 Tela Login:
 
-![image](https://user-images.githubusercontent.com/78769051/202855294-784aceed-fa2f-4e7b-a0a6-69e29309615b.png)
+![image](https://user-images.githubusercontent.com/78769051/205468143-49c10ece-a8aa-4baa-b85a-63947c13914f.png)
 
 Tela Inicial do Projeto:
 
