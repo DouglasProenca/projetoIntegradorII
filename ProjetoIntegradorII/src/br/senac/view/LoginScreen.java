@@ -68,7 +68,7 @@ public class LoginScreen extends InternalFrame {
 
     private JButton getBtnConfirmar() {
         btnConfirmar = new JButton("Confirmar");
-        btnConfirmar.setBounds(90, 200, 200, 46);
+        btnConfirmar.setBounds(50, 200, 311, 46);
         btnConfirmar.addActionListener(this);
         btnConfirmar.setActionCommand("Confirmar");
         return btnConfirmar;
