@@ -8,4 +8,5 @@ dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
-/ProjetoIntegradorII/nbproject/private/
+ProjetoIntegradorII/nbproject/private/
+config.properties
