@@ -26,6 +26,8 @@ public class JasperManager extends Thread {
         parametros.put("cabecalho", "resources/CallCenter.jpg");
         parametros.put("data1", ((JDateChooser) params[1]).getDate());
         parametros.put("data2", ((JDateChooser) params[3]).getDate());
+        parametros.put("SUBREPORT_DIR", "jasper/");
+        
         try {
             impressao = JasperFillManager.fillReport(jasperFile, parametros, conn);
         } catch (JRException ex) {

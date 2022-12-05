@@ -10,9 +10,6 @@
 	<parameter name="data2" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Douglas\\Documents\\GitHub\\projetoIntegradorII\\ProjetoIntegradorII\\src\\jasper\\"]]></defaultValueExpression>
-	</parameter>
 	<queryString>
 		<![CDATA[select sum(quantidade) valor
 from rc_produto]]>
