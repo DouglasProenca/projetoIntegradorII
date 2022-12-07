@@ -95,6 +95,23 @@ ALTER TABLE rc_lista_venda ADD CONSTRAINT fk_listaVenda_venda FOREIGN KEY (id_ve
 ALTER TABLE rc_lista_venda ADD CONSTRAINT fk_listaVenda_produto FOREIGN KEY (id_produto) REFERENCES rc_produto(id)  
 ALTER TABLE rc_lista_venda ADD CONSTRAINT fk_listaVenda_user FOREIGN KEY ([user]) REFERENCES rc_user(id)
 
+CREATE TABLE rc_endereco_cliente(
+    id INT PRIMARY KEY IDENTITY,
+    id_cliente INT NOT NULL,
+    cep int NOT NULL,
+    logradouro VARCHAR(500),
+    bairro VARCHAR(500),
+    localidade VARCHAR(500),
+    uf CHAR(2) NOT NULL,
+    numero INT NOT NULL,
+    complemento VARCHAR(500),
+    [data] DATE NOT NULL,
+    [user] INT NOT NULL,
+)
+GO
+
+ALTER TABLE rc_endereco_cliente ADD CONSTRAINT fk_endereco_cliente FOREIGN KEY (id_cliente) REFERENCES rc_cliente(id)
+
 CREATE PROCEDURE sp_insert_lista_venda (@id_produto int, @quantidade int, @valor float,@user int)
 AS
 BEGIN

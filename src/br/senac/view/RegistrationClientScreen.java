@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -37,6 +38,7 @@ public class RegistrationClientScreen extends InternalFrame {
     private JTextField txtCPF;
     private JPanel panel;
     private final ValidateCpf valCPF = new ValidateCpf();
+    private JCheckBox checkCEP;
 
     public RegistrationClientScreen() {
         super("Cadastrar Cliente", false, true, false, false, 500, 400);
@@ -57,6 +59,7 @@ public class RegistrationClientScreen extends InternalFrame {
         panel.add(getLblCPF());
         panel.add(getBtnClose());
         panel.add(getBtnCheck());
+        panel.add(getCheckCEP());
         return panel;
     }
 
@@ -107,6 +110,12 @@ public class RegistrationClientScreen extends InternalFrame {
         return btnCheck;
     }
 
+    private JCheckBox getCheckCEP() {
+        checkCEP = new JCheckBox("Adicionar CEP");
+        checkCEP.setBounds(20, 120, 200, 30);
+        return checkCEP;
+    }
+
     @Override
     public void internalFrameOpened(InternalFrameEvent e) {
         JInternalFrame frame = (JInternalFrame) e.getSource();
@@ -129,6 +138,12 @@ public class RegistrationClientScreen extends InternalFrame {
                 }
                 if (sucess) {
                     JOptionPane.showMessageDialog(this, "Cliente salvo com sucesso!");
+                    if (checkCEP.isSelected()) {
+                        RegistrationCepScreen rbs = new RegistrationCepScreen();
+                        getParent().add(rbs);
+                        rbs.setVisible(true);
+                    }
+                    this.dispose();
                 }
                 break;
             default:

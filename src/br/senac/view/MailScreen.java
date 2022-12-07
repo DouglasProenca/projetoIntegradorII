@@ -130,11 +130,13 @@ public class MailScreen extends InternalFrame {
     @Override
     public void focusLost(FocusEvent e) {
         JTextField src = (JTextField) e.getSource();
-        boolean validate = this.isValidEmailAddress(src.getText());
-        btnsend.setEnabled(validate);
-        if (!validate) {
-            JOptionPane.showMessageDialog(this, "E-mail inválido!",
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+        if (txtDestinatario.getText().length() > 0) {
+            boolean validate = this.isValidEmailAddress(src.getText());
+            btnsend.setEnabled(validate);
+            if (!validate) {
+                JOptionPane.showMessageDialog(this, "E-mail inválido!",
+                        "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 

@@ -42,33 +42,33 @@ public class LoginScreen extends InternalFrame {
 
     private JLabel getLblUsuario() {
         lblUsuario = new JLabel("Usuário:");
-        lblUsuario.setBounds(50, 50, 90, 26);
+        lblUsuario.setBounds(40, 50, 90, 26);
         return lblUsuario;
     }
 
     private JLabel getLblSenha() {
         lblSenha = new JLabel("Senha:");
-        lblSenha.setBounds(50, 130, 90, 26);
+        lblSenha.setBounds(40, 130, 90, 26);
         return lblSenha;
     }
 
     private JTextField getTxtUsuario() {
         txtUsuario = new JTextField();
-        txtUsuario.setBounds(120, 50, 240, 26);
+        txtUsuario.setBounds(110, 50, 240, 26);
         txtUsuario.addKeyListener(this);
         return txtUsuario;
     }
 
     private JPasswordField getTxtSenha() {
         txtSenha = new JPasswordField();
-        txtSenha.setBounds(120, 130, 240, 26);
+        txtSenha.setBounds(110, 130, 240, 26);
         txtSenha.addKeyListener(this);
         return txtSenha;
     }
 
     private JButton getBtnConfirmar() {
         btnConfirmar = new JButton("Confirmar");
-        btnConfirmar.setBounds(50, 200, 311, 46);
+        btnConfirmar.setBounds(40, 200, 311, 46);
         btnConfirmar.addActionListener(this);
         btnConfirmar.setActionCommand("Confirmar");
         return btnConfirmar;
