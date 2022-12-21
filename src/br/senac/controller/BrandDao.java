@@ -5,6 +5,7 @@ import br.senac.model.Brand;
 import br.senac.view.MainScreen;
 import br.senac.objects.ConnectionManager;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,10 +25,7 @@ public final class BrandDao implements DAO {
     }
 
     public static synchronized BrandDao getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new BrandDao();
-        }
-        return uniqueInstance;
+        return uniqueInstance == null ? uniqueInstance = new BrandDao() : uniqueInstance;
     }
 
     @Override
@@ -65,7 +63,7 @@ public final class BrandDao implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            listCountry = null;
+            return null;
         }
         return listCountry;
     }
@@ -81,7 +79,7 @@ public final class BrandDao implements DAO {
 
             instrucaoSQL.setString(1, brand.getMarca());
             instrucaoSQL.setString(2, brand.getPais());
-            instrucaoSQL.setDate(3, new java.sql.Date(brand.getDate().getTime()));
+            instrucaoSQL.setDate(3, new Date(brand.getDate().getTime()));
             instrucaoSQL.setInt(4, Integer.valueOf(brand.getUser()));
 
             instrucaoSQL.executeUpdate();
@@ -149,7 +147,7 @@ public final class BrandDao implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            brandList = null;
+            return null;
         }
         return brandList;
     }
@@ -186,7 +184,7 @@ public final class BrandDao implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            listaClientes = null;
+            return null;
         }
         return listaClientes;
     }

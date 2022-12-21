@@ -143,8 +143,7 @@ public class ProductReportScreen extends InternalFrame {
         this.loadTable();
     }
 
-    @Override
-    protected void loadTable() {
+    public void loadTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");

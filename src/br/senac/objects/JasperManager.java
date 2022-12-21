@@ -23,7 +23,7 @@ public class JasperManager extends Thread {
         parametros.put("data1", ((JDateChooser) params[1]).getDate());
         parametros.put("data2", ((JDateChooser) params[3]).getDate());
         parametros.put("SUBREPORT_DIR", "jasper/");
-     
+
         return JasperFillManager.fillReport(jasperFile, parametros, conn);
     }
 

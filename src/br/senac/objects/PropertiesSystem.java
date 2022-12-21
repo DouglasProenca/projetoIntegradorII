@@ -12,117 +12,95 @@ import java.util.logging.Logger;
  *
  * @author Douglas
  */
-public class PropertiesSystem {
+public class PropertiesSystem extends Properties {
 
-    private static Properties prop;
-    private static final String path = "config.properties";
+    private final String path = "config.properties";
+    private final String name = "Configurações de Propriedades Sistema";
 
-    private static void LoadPropertiesFile() {
-        prop = new Properties();
+    public PropertiesSystem() {
+    }
+
+    private void LoadPropertiesFile() {
         File f = new File(path);
 
         try {
             if (f.isFile()) {
-                FileInputStream file;
-                file = new FileInputStream(f);
-
-                prop.load(file);
+                FileInputStream file = new FileInputStream(f);
+                this.load(file);
             } else {
                 f.createNewFile();
                 FileInputStream file = new FileInputStream(f);
-                prop.load(file);
-                setLookAndFeel("");
+                this.load(file);
             }
         } catch (IOException ex) {
             Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static String getLookAndFeel() {
-        LoadPropertiesFile();
-        return prop.getProperty("lookandfeel.name");
+    public String getLookAndFeel() {
+        return this.getProperty("lookandfeel.name");
     }
 
-    public static void setLookAndFeel(String name) {
-        try {
-            LoadPropertiesFile();
-            prop.setProperty("lookandfeel.name", name);
-            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
-        } catch (IOException ex) {
-            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void setLookAndFeel(String stylus) {
+        gravar("lookandfeel.name", stylus);
     }
 
     public String getServer() {
-        LoadPropertiesFile();
-        return prop.getProperty("jdbc.server");
+        return this.getProperty("jdbc.server");
     }
 
-    public void setServer(String name) {
-        LoadPropertiesFile();
-        prop.setProperty("jdbc.server", name);
-        try {
-            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
-        } catch (IOException ex) {
-            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void setServer(String server) {
+        gravar("jdbc.server", server);
     }
 
     public String getDatabase() {
-        LoadPropertiesFile();
-        return prop.getProperty("jdbc.database");
+        return this.getProperty("jdbc.database");
     }
 
-    public void setDatabase(String name) {
-        LoadPropertiesFile();
-        prop.setProperty("jdbc.database", name);
-        try {
-            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
-        } catch (IOException ex) {
-            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void setDatabase(String database) {
+        gravar("jdbc.database", database);
     }
 
     public String getLogin() {
-        LoadPropertiesFile();
-        return prop.getProperty("jdbc.login");
+        return this.getProperty("jdbc.login");
     }
 
-    public void setLogin(String name) {
-        LoadPropertiesFile();
-        prop.setProperty("jdbc.login", name);
-        try {
-            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
-        } catch (IOException ex) {
-            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void setLogin(String login) {
+        gravar("jdbc.login", login);
     }
 
     public String getSenha() {
-        LoadPropertiesFile();
-        return prop.getProperty("jdbc.senha");
+        return this.getProperty("jdbc.senha");
     }
 
-    public void setSenha(String name) {
-        LoadPropertiesFile();
-        prop.setProperty("jdbc.senha", name);
-        try {
-            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
-        } catch (IOException ex) {
-            Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void setSenha(String password) {
+        gravar("jdbc.senha", password);
     }
 
     public String getColor() {
-        LoadPropertiesFile();
-        return prop.getProperty("lookandfeel.color");
+        return this.getProperty("lookandfeel.color");
     }
 
-    public void setColor(String name) {
+    public void setColor(String color) {
+        gravar("lookandfeel.color", color);
+    }
+
+    @Override
+    public synchronized Object setProperty(String key, String value) {
         LoadPropertiesFile();
-        prop.setProperty("lookandfeel.color", name);
+        return super.setProperty(key, value);
+    }
+
+    @Override
+    public String getProperty(String key) {
+        LoadPropertiesFile();
+        return super.getProperty(key);
+    }
+
+    private void gravar(String key, String value) {
+        this.setProperty(key,value);
         try {
-            prop.store(new FileOutputStream(path), "Configurações de Propriedades Sistema");
+            this.store(new FileOutputStream(path), name);
         } catch (IOException ex) {
             Logger.getLogger(PropertiesSystem.class.getName()).log(Level.SEVERE, null, ex);
         }

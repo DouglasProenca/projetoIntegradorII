@@ -1,6 +1,6 @@
- package br.senac.objects;
+package br.senac.objects;
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,260 +19,116 @@ public abstract class images {
     }
 
     public static synchronized images getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new images() {
-            };
-        }
-        return uniqueInstance;
+        return uniqueInstance == null ? uniqueInstance = new images() {
+        } : uniqueInstance;
     }
 
     public ImageIcon imagemDatabase() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/BancoDados-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/BancoDados-icon.png"));
     }
 
     public ImageIcon imagemPrincipal() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/System-computer-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/System-computer-icon.png"));
     }
 
     public ImageIcon imagemSair() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Log-Out-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Log-Out-icon.png"));
     }
 
     public ImageIcon imagemBlocoNotas() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Notepad-Bloc-notes-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Notepad-Bloc-notes-icon.png"));
     }
 
     public ImageIcon imagemCalculadora() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Calculator-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Calculator-icon.png"));
     }
 
     public ImageIcon imagemMenu() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Menu-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Menu-icon.png"));
     }
 
     public ImageIcon imagemReport() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/chart-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/chart-icon.png"));
     }
 
     public ImageIcon imagemHelp() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Info-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Info-icon.png"));
     }
 
     public ImageIcon imagemVersion() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Apps-preferences-system-windows-actions-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Apps-preferences-system-windows-actions-icon.png"));
     }
 
     public ImageIcon imagemSite() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Categories-applications-internet-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Categories-applications-internet-icon.png"));
     }
 
     public ImageIcon imagemCalendar() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Calendar-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Calendar-icon.png"));
     }
 
     public ImageIcon imagemLookAndFeel() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Calendar-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Calendar-icon.png"));
     }
 
     public ImageIcon imagemProduct() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/product-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/product-icon.png"));
     }
 
     public ImageIcon imagemBrand() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Apple-Store-Tshirt-Red-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Apple-Store-Tshirt-Red-icon.png"));
     }
 
     public ImageIcon imagemManagement() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Finance-Bill-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Finance-Bill-icon.png"));
     }
 
     public ImageIcon imagemMail() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Mail-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Mail-icon.png"));
     }
 
     public ImageIcon imagemSale() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Sales-by-payment-method-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Sales-by-payment-method-icon.png"));
     }
 
     public ImageIcon imagemAdministrator() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Administrator-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Administrator-icon.png"));
     }
 
     public ImageIcon imagemClose() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/close-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/close-icon.png"));
     }
 
     public ImageIcon imagemCheck() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/check-1-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/check-1-icon.png"));
     }
 
     public ImageIcon imagemRefresh() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Button-Refresh-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Button-Refresh-icon.png"));
     }
 
     public ImageIcon conectionSucess() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Database-accept-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Database-accept-icon.png"));
     }
 
     public ImageIcon conectionError() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Database-erro-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Database-erro-icon.png"));
     }
 
     public ImageIcon backup() {
-        Image img = null;
-        try {
-            img = ImageIO.read(getClass().getResource("/resources/Backup-icon.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ImageIcon(img);
+        return new ImageIcon(readImg("/resources/Backup-icon.png"));
     }
 
     public ImageIcon category() {
-        Image img = null;
+        return new ImageIcon(readImg("/resources/sql-join-right-icon.png"));
+    }
+
+    private BufferedImage readImg(String adress) {
         try {
-            img = ImageIO.read(getClass().getResource("/resources/sql-join-right-icon.png"));
+            return ImageIO.read(getClass().getResource(adress));
         } catch (IOException ex) {
             Logger.getLogger(images.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ImageIcon(img);
+        return null;
     }
 }

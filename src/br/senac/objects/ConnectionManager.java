@@ -23,8 +23,7 @@ public abstract class ConnectionManager implements ConnectionDB {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            msg(ex);
         }
     }
 
@@ -35,36 +34,31 @@ public abstract class ConnectionManager implements ConnectionDB {
         String database = ps.getDatabase();
         String server = ps.getServer();
         String url = "jdbc:sqlserver://127.0.0.1" + "\\" + server + ":1433;databaseName=" + database;
-
-        Connection con = null;
-        try {
-            con = DriverManager.getConnection(url, user, password);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-        }
-        return con;
+        return connection(url, user, password);
     }
 
     @Override
     public Connection getConexaoTest(String user, String password, String database, String server) {
         String url = "jdbc:sqlserver://127.0.0.1" + "\\" + server + ":1433;databaseName=" + database;
+        return connection(url, user, password);
+    }
 
-        Connection con = null;
+    private Connection connection(String url, String user, String password) {
         try {
-            con = DriverManager.getConnection(url, user, password);
+            return DriverManager.getConnection(url, user, password);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+            msg(ex);
         }
-        return con;
+        return null;
     }
 
     public static synchronized ConnectionManager getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new ConnectionManager() {
-            };
-        }
-        return uniqueInstance;
+        return uniqueInstance == null ? uniqueInstance = new ConnectionManager() {
+        } : uniqueInstance;
+    }
+
+    private static void msg(Exception ex) {
+        JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+                "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
     }
 }

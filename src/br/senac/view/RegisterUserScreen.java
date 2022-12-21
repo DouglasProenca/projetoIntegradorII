@@ -100,6 +100,7 @@ public class RegisterUserScreen extends InternalFrame {
     private JPasswordField getTxtPassword() {
         txtPassword = new JPasswordField();
         txtPassword.setBounds(410, 30, 230, 25);
+        txtPassword.getDocument().addDocumentListener(new DocListner());
         return txtPassword;
     }
 
@@ -107,6 +108,7 @@ public class RegisterUserScreen extends InternalFrame {
         txtMail = new JTextField();
         txtMail.setBounds(100, 100, 230, 25);
         txtMail.addFocusListener(this);
+        txtMail.getDocument().addDocumentListener(new DocListner());
         return txtMail;
     }
 
@@ -131,6 +133,7 @@ public class RegisterUserScreen extends InternalFrame {
     private JPasswordField getTxtPasswordMail() {
         txtPasswordMail = new JPasswordField();
         txtPasswordMail.setBounds(410, 100, 230, 25);
+        txtPasswordMail.getDocument().addDocumentListener(new DocListner());
         return txtPasswordMail;
     }
 

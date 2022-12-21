@@ -2,9 +2,9 @@ package br.senac.view;
 
 import br.senac.controller.UserDAO;
 import br.senac.model.User;
-import br.senac.objects.CryptoUtils;
 import br.senac.objects.InternalFrame;
 import br.senac.objects.Menu;
+import br.senac.objects.Utils;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
@@ -89,9 +89,9 @@ public class LoginScreen extends InternalFrame {
         switch (e.getActionCommand()) {
             case "Confirmar":
                 UserDAO.getInstance().getBy(txtUsuario.getText());
-                boolean senhaOk = false;
+                boolean senhaOk;
                 try {
-                    senhaOk = CryptoUtils.verificarSenha((String.valueOf(txtSenha.getPassword())), User.getInstance().getPassword());
+                    senhaOk = Utils.verificarSenha((String.valueOf(txtSenha.getPassword())), User.getInstance().getPassword());
                 } catch (NullPointerException ex) {
                     JOptionPane.showMessageDialog(this, "Usuário não encontrado", "Aviso de Falha de Acesso",
                             JOptionPane.ERROR_MESSAGE);

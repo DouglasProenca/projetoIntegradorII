@@ -84,6 +84,7 @@ public class RegistrationClientScreen extends InternalFrame {
             Logger.getLogger(SaleScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
         txtCPF.setBounds(100, 80, 350, 25);
+        txtCPF.getDocument().addDocumentListener(new DocListner());
         return txtCPF;
     }
 
@@ -126,17 +127,10 @@ public class RegistrationClientScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "save":
-                boolean sucess = false;
                 String cpf = txtCPF.getText().replaceAll("\\.", "").replaceAll("\\-", "");
                 if (valCPF.isCPF(cpf)) {
                     Client client = new Client(0, txtName.getText(), valCPF.imprimeCPF(cpf), String.valueOf(User.getInstance().getId()), new Date());
-                    sucess = ClientDAO.getInstance().save(client);
-                } else {
-                    JOptionPane.showMessageDialog(this, "CPF inválido!", "Erro de Cadastro",
-                            JOptionPane.ERROR_MESSAGE);
-                    sucess = false;
-                }
-                if (sucess) {
+                    ClientDAO.getInstance().save(client);
                     JOptionPane.showMessageDialog(this, "Cliente salvo com sucesso!");
                     if (checkCEP.isSelected()) {
                         RegistrationCepScreen rbs = new RegistrationCepScreen();
@@ -144,6 +138,9 @@ public class RegistrationClientScreen extends InternalFrame {
                         rbs.setVisible(true);
                     }
                     this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "CPF inválido!", "Erro de Cadastro",
+                            JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             default:
@@ -170,11 +167,12 @@ public class RegistrationClientScreen extends InternalFrame {
         }
 
         private boolean warn() {
-            boolean type = false;
-            if (txtName.getText().length() >= 5 && txtCPF.getText().length() >= 11) {
-                type = true;
+            if (txtName.getText().length() >= 1
+                    && txtCPF.getText().replaceAll("\\.", "").replaceAll("\\-", "")
+                            .replaceAll(" ", "").length() >= 11) {
+                return true;
             }
-            return type;
+            return (false);
         }
     }
 }

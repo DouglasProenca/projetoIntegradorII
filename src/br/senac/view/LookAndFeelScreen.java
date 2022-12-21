@@ -21,6 +21,7 @@ public class LookAndFeelScreen extends InternalFrame {
 
     private JPanel painel;
     private JComboBox<String> comboLAF;
+    private PropertiesSystem prop = new PropertiesSystem();
 
     public LookAndFeelScreen() {
         super("Look And Feel", false, true, false, true, 324, 232);
@@ -59,7 +60,7 @@ public class LookAndFeelScreen extends InternalFrame {
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             String LAFSelected = (String) e.getItem();
-            PropertiesSystem.setLookAndFeel(LAFSelected);
+            prop.setLookAndFeel(LAFSelected);
             SwingUtilities.updateComponentTreeUI(MainScreen.desktopPane);
             JOptionPane.showMessageDialog(MainScreen.desktopPane,
                     "O Sistema será fechado para atualização de configurações!");
@@ -69,9 +70,10 @@ public class LookAndFeelScreen extends InternalFrame {
 
     public static void initLookAndFeel() {
         try {
-            String myLAF = PropertiesSystem.getLookAndFeel();
+            PropertiesSystem sy = new PropertiesSystem();
+            String myLAF = sy.getLookAndFeel();
             if (myLAF == null || myLAF.isEmpty()) {
-                PropertiesSystem.setLookAndFeel(UIManager.getLookAndFeel().getName());
+                sy.setLookAndFeel(UIManager.getLookAndFeel().getName());
             } else {
                 for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                     if (myLAF.equalsIgnoreCase(info.getName())) {

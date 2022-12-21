@@ -3,9 +3,10 @@ package br.senac.controller;
 import br.senac.interfaces.DAO;
 import br.senac.model.User;
 import br.senac.objects.ConnectionManager;
-import br.senac.objects.CryptoUtils;
+import br.senac.objects.Utils;
 import br.senac.view.MainScreen;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,10 +26,7 @@ public class UserDAO implements DAO {
     }
 
     public static synchronized UserDAO getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new UserDAO();
-        }
-        return uniqueInstance;
+        return uniqueInstance  == null ? uniqueInstance = new UserDAO() : uniqueInstance;
     }
 
     @Override
@@ -50,7 +48,6 @@ public class UserDAO implements DAO {
     @Override
     public ArrayList<User> getAll() {
         ArrayList<User> userList = new ArrayList<>();
-
         try {
 
             Connection conexao = ConnectionManager.getInstance().getConexao();
@@ -66,7 +63,7 @@ public class UserDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            userList = null;
+            return null;
         }
         return userList;
     }
@@ -81,10 +78,10 @@ public class UserDAO implements DAO {
             PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_user values(?,?,?,?,?)");
 
             instrucaoSQL.setString(1, user.getUser());
-            instrucaoSQL.setString(2, CryptoUtils.gerarhashSenha(user.getPassword()));
+            instrucaoSQL.setString(2, Utils.gerarhashSenha(user.getPassword()));
             instrucaoSQL.setString(3, user.getMail());
             instrucaoSQL.setString(4, user.getMailPassword());
-            instrucaoSQL.setDate(5, new java.sql.Date(user.getDate().getTime()));
+            instrucaoSQL.setDate(5, new Date(user.getDate().getTime()));
 
             instrucaoSQL.executeUpdate();
 
@@ -110,7 +107,7 @@ public class UserDAO implements DAO {
             instrucaoSQL.setString(1, user.getUser());
             instrucaoSQL.setString(2, user.getMail());
             instrucaoSQL.setString(3, user.getMailPassword());
-            instrucaoSQL.setDate(4, new java.sql.Date(user.getDate().getTime()));
+            instrucaoSQL.setDate(4, new Date(user.getDate().getTime()));
             instrucaoSQL.setInt(5, user.getId());
 
             //Mando executar a instrução SQL
@@ -152,7 +149,7 @@ public class UserDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            listaUser = null;
+            return null;
         }
         return listaUser;
     }

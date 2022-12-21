@@ -20,10 +20,7 @@ public class SaleDAO implements DAO {
     private static SaleDAO uniqueInstance;
 
     public static synchronized SaleDAO getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new SaleDAO();
-        }
-        return uniqueInstance;
+        return uniqueInstance == null ? uniqueInstance = new SaleDAO() : uniqueInstance;
     }
 
     @Override

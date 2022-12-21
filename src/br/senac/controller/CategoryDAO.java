@@ -24,10 +24,7 @@ public class CategoryDAO implements DAO {
     }
 
     public static synchronized CategoryDAO getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new CategoryDAO();
-        }
-        return uniqueInstance;
+        return uniqueInstance == null ? uniqueInstance = new CategoryDAO() : uniqueInstance;
     }
 
     @Override
@@ -71,7 +68,7 @@ public class CategoryDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            categoryList = null;
+            return null;
         }
         return categoryList;
     }
@@ -105,7 +102,7 @@ public class CategoryDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            categoryList = null;
+            return null;
         }
         return categoryList;
     }

@@ -24,10 +24,7 @@ public class ProductDAO implements DAO {
     }
 
     public static synchronized ProductDAO getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new ProductDAO();
-        }
-        return uniqueInstance;
+        return uniqueInstance == null ? uniqueInstance = new ProductDAO() : uniqueInstance;
     }
 
     @Override
@@ -83,7 +80,7 @@ public class ProductDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            productList = null;
+            return null;
         }
         return productList;
     }
@@ -100,7 +97,7 @@ public class ProductDAO implements DAO {
             instrucaoSQL.setString(2, product.getMarca());
             instrucaoSQL.setFloat(3, product.getValor());
             instrucaoSQL.setInt(4, product.getQuantidade());
-            instrucaoSQL.setDate(5,  new java.sql.Date(product.getDate().getTime()));
+            instrucaoSQL.setDate(5, new java.sql.Date(product.getDate().getTime()));
             instrucaoSQL.setInt(6, Integer.valueOf(product.getUser()));
             instrucaoSQL.setString(7, product.getCategoria());
 
@@ -187,7 +184,7 @@ public class ProductDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            productList = null;
+            return null;
         }
         return productList;
     }

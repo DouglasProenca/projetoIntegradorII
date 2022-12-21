@@ -11,7 +11,6 @@ import javax.swing.JTextField;
 public class TextFieldNumber extends JTextField implements KeyListener {
 
     public TextFieldNumber() {
-        super();
         super.addKeyListener(this);
     }
 

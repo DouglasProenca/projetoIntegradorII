@@ -20,10 +20,7 @@ public class ClientDAO implements DAO {
     private static ClientDAO uniqueInstance;
 
     public static synchronized ClientDAO getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new ClientDAO();
-        }
-        return uniqueInstance;
+        return uniqueInstance == null ? uniqueInstance = new ClientDAO() : uniqueInstance;
     }
 
     @Override
@@ -57,7 +54,7 @@ public class ClientDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            clientList = null;
+            return null;
         }
         return clientList;
     }
@@ -123,9 +120,8 @@ public class ClientDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            ClientList = null;
+            return null;
         }
         return ClientList;
     }
-
 }

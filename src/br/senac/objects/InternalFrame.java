@@ -130,10 +130,4 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
     @Override
     public void internalFrameClosing(InternalFrameEvent e) {
     }
-
-    /**
-     * @author Douglas Proença load a table
-     */
-    protected void loadTable() {
-    }
 }

@@ -1,0 +1,8 @@
+#config.properties
+#Tue Dec 13 21:06:29 BRT 2022
+jdbc.database=cr7imports
+jdbc.server=DOUGLAS-PC\\CP_AL_2021
+lookandfeel.color=153,0,153
+jdbc.senha=banana
+jdbc.login=sa
+lookandfeel.name=FlatLaf Darcula

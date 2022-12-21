@@ -13,13 +13,12 @@ public class MenuBar extends JMenuBar {
     private final MenuHelp help = new MenuHelp();
 
     public MenuBar() {
-        super();
         this.initComponents();
     }
 
     private void initComponents() {
-        super.add(menu);
-        super.add(report);
-        super.add(help);
+        this.add(menu);
+        this.add(report);
+        this.add(help);
     }
 }

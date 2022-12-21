@@ -84,7 +84,6 @@ public class Excel {
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
             return (false);
         }
-
         return (true);
     }
 

@@ -165,13 +165,6 @@ public class MainMenu extends Menu {
         return sale;
     }
 
-    private String ColorToString(Color color) {
-        int r = color.getRed();
-        int g = color.getGreen();
-        int b = color.getBlue();
-        return r + "," + g + "," + b;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
@@ -194,7 +187,7 @@ public class MainMenu extends Menu {
                     if (newColor != null) {
                         MainScreen.desktopPane.setBackground(newColor);
                         PropertiesSystem ps = new PropertiesSystem();
-                        ps.setColor(ColorToString(newColor));
+                        ps.setColor(Utils.colorToString(newColor));
                     }
                     break;
                 case "backup":

@@ -31,7 +31,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -83,7 +82,7 @@ public class SaleScreen extends InternalFrame {
     private final String tblProducts[] = {"ID", "Nome", "Preço", "quantidade"};
     private float total = 0;
     private int id_cliente;
-    private SpinnerNumberInt spinner = new SpinnerNumberInt();
+    private final SpinnerNumberInt spinner = new SpinnerNumberInt();
 
     public SaleScreen() {
         super("Nova Venda", false, true, false, true, 800, 600);
@@ -298,17 +297,14 @@ public class SaleScreen extends InternalFrame {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-                spinner.addChangeListener(new ChangeListener() {
-                    @Override
-                    public void stateChanged(ChangeEvent e) {
-                        total = 0;
-                        for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
-                            float valor = (float) tblPanelFour.getValueAt(i, 2);
-                            int quantidade = (int) tblPanelFour.getModel().getValueAt(i, 3);
-                            total = total + (valor * quantidade);
-                        }
-                        txtTotalPanelFour.setText(String.valueOf(total));
+                spinner.addChangeListener((ChangeEvent e) -> {
+                    total = 0;
+                    for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
+                        float valor = (float) tblPanelFour.getValueAt(i, 2);
+                        int quantidade = (int) tblPanelFour.getModel().getValueAt(i, 3);
+                        total = total + (valor * quantidade);
                     }
+                    txtTotalPanelFour.setText(String.valueOf(total));
                 });
                 if (component instanceof JLabel) {
                     spinner.setValue(Integer.valueOf(((JLabel) component).getText()));

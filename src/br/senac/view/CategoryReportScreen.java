@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -65,56 +64,46 @@ public class CategoryReportScreen extends InternalFrame {
     }
 
     private JButton getBtnPesquisa() {
-        if (btnPesquisa == null) {
-            btnPesquisa = new JButton("Pesquisar");
-            btnPesquisa.addActionListener(this);
-            btnPesquisa.setActionCommand("find");
-            btnPesquisa.setPreferredSize(new Dimension(100, 30));
-        }
+        btnPesquisa = new JButton("Pesquisar");
+        btnPesquisa.addActionListener(this);
+        btnPesquisa.setActionCommand("find");
+        btnPesquisa.setPreferredSize(new Dimension(100, 30));
         return btnPesquisa;
     }
 
     private JTextField getTxtPesquisa() {
-        if (txtPesquisa == null) {
-            txtPesquisa = new JTextField();
-            txtPesquisa.setPreferredSize(new Dimension(200, 30));
-            txtPesquisa.addKeyListener(this);
-            txtPesquisa.setToolTipText("Procure por categoria ou digite Refresh, R e tecle enter para atualizar a tabela.");
-        }
+        txtPesquisa = new JTextField();
+        txtPesquisa.setPreferredSize(new Dimension(200, 30));
+        txtPesquisa.addKeyListener(this);
+        txtPesquisa.setToolTipText("Procure por categoria ou digite Refresh, R e tecle enter para atualizar a tabela.");
         return txtPesquisa;
     }
 
     private JButton getbtnExportar() {
-        if (btnExportar == null) {
-            btnExportar = new JButton("Exportar");
-            btnExportar.addActionListener(this);
-            btnExportar.setActionCommand("Exportar");
-            btnExportar.setPreferredSize(new Dimension(100, 30));
-            btnExportar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        }
+        btnExportar = new JButton("Exportar");
+        btnExportar.addActionListener(this);
+        btnExportar.setActionCommand("Exportar");
+        btnExportar.setPreferredSize(new Dimension(100, 30));
+        btnExportar.setAlignmentX(Component.CENTER_ALIGNMENT);
         return btnExportar;
     }
 
     private JButton getbtnExcluir() {
-        if (btnExcluir == null) {
-            btnExcluir = new JButton("Excluir");
-            btnExcluir.setAlignmentX(Component.CENTER_ALIGNMENT);
-            btnExcluir.setPreferredSize(new Dimension(100, 30));
-            btnExcluir.addActionListener(this);
-            btnExcluir.setActionCommand("excluir");
-            btnExcluir.setEnabled(false);
-        }
+        btnExcluir = new JButton("Excluir");
+        btnExcluir.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnExcluir.setPreferredSize(new Dimension(100, 30));
+        btnExcluir.addActionListener(this);
+        btnExcluir.setActionCommand("excluir");
+        btnExcluir.setEnabled(false);
         return btnExcluir;
     }
 
     private JButton getBtnIncluir() {
-        if (btnIncluir == null) {
-            btnIncluir = new JButton("Incluir");
-            btnIncluir.setPreferredSize(new Dimension(100, 30));
-            btnIncluir.addActionListener(this);
-            btnIncluir.setActionCommand("Incluir");
-            btnIncluir.setAlignmentX(Component.CENTER_ALIGNMENT);
-        }
+        btnIncluir = new JButton("Incluir");
+        btnIncluir.setPreferredSize(new Dimension(100, 30));
+        btnIncluir.addActionListener(this);
+        btnIncluir.setActionCommand("Incluir");
+        btnIncluir.setAlignmentX(Component.CENTER_ALIGNMENT);
         return btnIncluir;
     }
 
@@ -144,8 +133,7 @@ public class CategoryReportScreen extends InternalFrame {
         this.loadTable();
     }
 
-    @Override
-    protected void loadTable() {
+    public void loadTable() {
         DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras

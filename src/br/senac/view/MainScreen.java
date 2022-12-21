@@ -30,7 +30,6 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
     protected static MenuBar menubar = new MenuBar();
     private final LoginScreen loginScreen = new LoginScreen();
     private final DatabaseConnectionScreen bd = new DatabaseConnectionScreen(false, false);
-    private ImageIcon icone;
 
     public MainScreen() {
         super("CR7 Imports");
@@ -53,24 +52,24 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
     }
 
     private ImageIcon getIcone() {
-        icone = images.getInstance().imagemPrincipal();
-        return icone;
+        return images.getInstance().imagemPrincipal();
     }
 
-    private void getFirst() {
+    private Thread getFirst() {
         Thread t = new Thread(() -> {
             try {
                 Thread.sleep(800);
             } catch (InterruptedException ex) {
                 Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (ConnectionManager.getInstance().getConexao() == null) {
+            if (ConnectionManager.getInstance().getConexao() == null)  {
                 bd.setVisible(true);
             } else {
                 loginScreen.setVisible(true);
             }
         });
         t.start();
+        return t;
     }
 
     private JDesktopPane getDesktopPane() {
