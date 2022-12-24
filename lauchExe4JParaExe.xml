@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>D:\Projetos\projetoIntegradorII\dist\AllInOneJar.jar</jar>
+  <jar>C:\Users\Douglas\Desktop\system.jar</jar>
   <outfile>C:\Users\Douglas\Desktop\Sistema.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
