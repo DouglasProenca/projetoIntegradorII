@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -50,13 +51,19 @@ public class LookAndFeelScreen extends InternalFrame {
         for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
             comboLAF.addItem(info.getName());
         }
-        comboLAF.addItem(new FlatDarculaLaf().getName());
-        comboLAF.addItem(new FlatLightLaf().getName());
         comboLAF.setSelectedItem(UIManager.getLookAndFeel().getName());
         comboLAF.addItemListener(this);
         return comboLAF;
     }
 
+    
+    private static LookAndFeelInfo[] getLookAndFeels() {
+    	UIManager.installLookAndFeel(new FlatDarculaLaf().getName(), "com.formdev.flatlaf.FlatDarculaLaf");
+    	UIManager.installLookAndFeel(new FlatLightLaf().getName(), "com.formdev.flatlaf.FlatLightLaf");
+		return UIManager.getInstalledLookAndFeels();
+    	
+    }
+    
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -69,6 +76,8 @@ public class LookAndFeelScreen extends InternalFrame {
         }
     }
 
+
+    
     public static void initLookAndFeel() {
         try {
             PropertiesSystem sy = new PropertiesSystem();
@@ -76,16 +85,9 @@ public class LookAndFeelScreen extends InternalFrame {
             if (myLAF == null || myLAF.isEmpty()) {
                 sy.setLookAndFeel(UIManager.getLookAndFeel().getName());
             } else {
-                for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                for (UIManager.LookAndFeelInfo info : getLookAndFeels()) {
                     if (myLAF.equalsIgnoreCase(info.getName())) {
                         UIManager.setLookAndFeel(info.getClassName());
-                        break;
-                    }
-                    if (myLAF.equals("FlatLaf Darcula")) {
-                        UIManager.setLookAndFeel(new FlatDarculaLaf());
-                        break;
-                    } else if (myLAF.equals("FlatLaf Light")) {
-                        UIManager.setLookAndFeel(new FlatLightLaf());
                         break;
                     }
                 }

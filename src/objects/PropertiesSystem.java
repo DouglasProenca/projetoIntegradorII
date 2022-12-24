@@ -54,9 +54,17 @@ public class PropertiesSystem extends Properties {
     public String getDatabase() {
         return this.getProperty("jdbc.database");
     }
+    
+    public String getPort() {
+        return this.getProperty("jdbc.port");
+    }
 
     public void setDatabase(String database) {
         gravar("jdbc.database", database);
+    }
+    
+    public void setPort(String port) {
+        gravar("jdbc.port", port);
     }
 
     public String getLogin() {

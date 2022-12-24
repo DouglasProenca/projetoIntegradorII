@@ -125,7 +125,7 @@ public class SaleScreen extends InternalFrame {
     }
 
     private TextField getTxtPanelOneName() {
-        txtPanelOneName = new TextField(false);
+        txtPanelOneName = new TextField("Letter");
         txtPanelOneName.setBounds(50, 40, 250, 20);
         txtPanelOneName.addKeyListener(this);
         return txtPanelOneName;
@@ -208,7 +208,7 @@ public class SaleScreen extends InternalFrame {
     }
 
     private TextField getTxtFilterPanelThree() {
-        txtFilterPanelThree = new TextField(false);
+        txtFilterPanelThree = new TextField();
         txtFilterPanelThree.setToolTipText("Pesquise por codigo ou Nome");
         txtFilterPanelThree.setBounds(10, 35, 184, 20);
         txtFilterPanelThree.addKeyListener(this);
@@ -238,7 +238,7 @@ public class SaleScreen extends InternalFrame {
     }
 
     private TextField getTxtClientPanelThree() {
-        txtClientPanelThree = new TextField(false);
+        txtClientPanelThree = new TextField();
         txtClientPanelThree.setEnabled(false);
         txtClientPanelThree.setBounds(60, 10, 240, 20);
         return txtClientPanelThree;
@@ -251,7 +251,7 @@ public class SaleScreen extends InternalFrame {
     }
 
     private TextField getTxtCPFPanelThree() {
-        txtCPFPanelThree = new TextField(false);
+        txtCPFPanelThree = new TextField();
         txtCPFPanelThree.setEnabled(false);
         txtCPFPanelThree.setBounds(60, 34, 240, 20);
         return txtCPFPanelThree;
@@ -317,7 +317,7 @@ public class SaleScreen extends InternalFrame {
     }
 
     private TextField getTxtTotalPanelFour() {
-        txtTotalPanelFour = new TextField(false);
+        txtTotalPanelFour = new TextField();
         txtTotalPanelFour.setEnabled(false);
         txtTotalPanelFour.setBounds(655, 5, 100, 20);
         return txtTotalPanelFour;

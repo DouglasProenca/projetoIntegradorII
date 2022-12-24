@@ -15,7 +15,6 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -65,7 +64,7 @@ public class RegistrationClientScreen extends InternalFrame {
     }
 
     private TextField getTxtName() {
-        txtName = new TextField(false);
+        txtName = new TextField("Letter");
         txtName.setBounds(100, 30, 350, 25);
         txtName.getDocument().addDocumentListener(new DocListner());
         return txtName;
@@ -120,7 +119,7 @@ public class RegistrationClientScreen extends InternalFrame {
 
     @Override
     public void internalFrameOpened(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
+        InternalFrame frame = (InternalFrame) e.getSource();
         this.centralizaForm(frame);
     }
 

@@ -79,20 +79,20 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
 
     @Override
     public void internalFrameClosed(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
+        InternalFrame frame = (InternalFrame) e.getSource();
         frame.setClosable(true);
         MainScreen.jToolBar.remove(frame.getDesktopIcon());
     }
 
     @Override
     public void internalFrameIconified(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
+        InternalFrame frame = (InternalFrame) e.getSource();
         MainScreen.jToolBar.add(frame.getDesktopIcon());
     }
 
     @Override
     public void internalFrameDeiconified(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
+        InternalFrame frame = (InternalFrame) e.getSource();
         frame.setIconifiable(true);
         MainScreen.desktopPane.add(frame);
     }

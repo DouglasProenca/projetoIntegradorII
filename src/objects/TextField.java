@@ -7,24 +7,34 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class TextField extends JTextField implements KeyListener {
 
-	private boolean number = false;
+	private String type = "All";
 
-	public TextField(boolean number) {
+	public TextField(String type) {
 		super.addKeyListener(this);
-		this.number = number;
+		this.type = type;
 	}
-	
-	public TextField(boolean number,String text) {
+
+	public TextField() {
+
+	}
+
+	public TextField(String type, String text) {
 		super(text);
 		super.addKeyListener(this);
-		this.number = number;
+		this.type = type;
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		if (number) {
-			String caracteres = "0987654321.";
+		String caracteres = "0987654321.";
+		switch (type) {
+		case "Number":
 			if (!caracteres.contains(e.getKeyChar() + "")) {
+				e.consume();// aciona esse propriedade para eliminar a ação do evento
+			}
+			break;
+		case "Letter":
+			if (caracteres.contains(e.getKeyChar() + "")) {
 				e.consume();// aciona esse propriedade para eliminar a ação do evento
 			}
 		}

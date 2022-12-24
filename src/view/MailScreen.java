@@ -83,14 +83,14 @@ public class MailScreen extends InternalFrame {
     }
 
     private TextField getTxtDestinatario() {
-        txtDestinatario = new TextField(false);
+        txtDestinatario = new TextField();
         txtDestinatario.setPreferredSize(new Dimension(200, 30));
         txtDestinatario.addFocusListener(this);
         return txtDestinatario;
     }
 
     private TextField getTxtAssunto() {
-        txtAssunto = new TextField(false);
+        txtAssunto = new TextField();
         txtAssunto.setPreferredSize(new Dimension(200, 30));
         txtAssunto.addKeyListener(this);
         return txtAssunto;
@@ -110,7 +110,7 @@ public class MailScreen extends InternalFrame {
     }
 
     private TextField getTxtCaminhoFile() {
-        txtCaminhoFile = new TextField(false);
+        txtCaminhoFile = new TextField();
         txtCaminhoFile.setPreferredSize(new Dimension(200, 30));
         txtCaminhoFile.addKeyListener(this);
         txtCaminhoFile.setEnabled(false);

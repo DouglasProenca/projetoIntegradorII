@@ -7,7 +7,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -117,7 +116,7 @@ public class RegistrationBrandScreen extends InternalFrame {
     }
 
     private TextField getTxtBrand() {
-        txtBrand = new TextField(false);
+        txtBrand = new TextField();
         txtBrand.setBounds(100, 30, 350, 25);
         txtBrand.getDocument().addDocumentListener(new DocListner());
         return txtBrand;
@@ -258,7 +257,7 @@ public class RegistrationBrandScreen extends InternalFrame {
 
     @Override
     public void internalFrameOpened(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
+        InternalFrame frame = (InternalFrame) e.getSource();
         this.centralizaForm(frame);
     }
 

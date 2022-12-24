@@ -72,7 +72,7 @@ public class BackupScreen extends InternalFrame {
     }
 
     private TextField getJcbTipo() {
-        jcbTipo = new TextField(false,"Microsoft SQL Server");
+        jcbTipo = new TextField("All","Microsoft SQL Server");
         jcbTipo.setBounds(30, 140, 280, 20);
         jcbTipo.setEnabled(false);
         return jcbTipo;

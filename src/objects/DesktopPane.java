@@ -15,12 +15,13 @@ public class DesktopPane extends JDesktopPane {
     @Override
     public void paintComponent(Graphics y) {
         PropertiesSystem ps = new PropertiesSystem();
-        String cores = ps.getColor();
-        cores = cores == null ? "63,100,129" : cores;
-        Color color = Utils.convertColor(cores);
+        Color color = Utils.convertColor(getColor(ps));
         super.paintComponent(y);
         y.setColor(color);
         y.fillRect(0, 0, getWidth(), getHeight());
     }
-
+    
+    private String getColor(PropertiesSystem ps) {
+    	return ps.getColor() == null ? "63,100,129" : ps.getColor();
+    }
 };

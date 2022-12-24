@@ -18,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -182,7 +181,7 @@ public class RegistrationCepScreen extends InternalFrame {
 
     @Override
     public void internalFrameOpened(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
+        InternalFrame frame = (InternalFrame) e.getSource();
         this.centralizaForm(frame);
     }
 

@@ -4,6 +4,8 @@ import objects.images;
 import objects.ConnectionManager;
 import objects.InternalFrame;
 import objects.PropertiesSystem;
+import objects.TextField;
+
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import javax.swing.Icon;
@@ -12,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
@@ -25,15 +26,17 @@ public class DatabaseConnectionScreen extends InternalFrame {
     private JLabel lblLogin;
     private JLabel lblSenha;
     private JLabel lblImagem;
+    private JLabel lblPort;
     private JPanel painel;
-    private JTextField txtDriver;
+    private TextField txtDriver;
     private JButton btnTestar;
     private JButton btnSalvar;
     private JButton btnCancelar;
     private JPasswordField txtSenha;
-    private JTextField txtLogin;
-    private JTextField txtDatabase;
-    private JTextField txtServer;
+    private TextField txtPort;
+    private TextField txtLogin;
+    private TextField txtDatabase;
+    private TextField txtServer;
     private final ConnectionManager connectionManager = ConnectionManager.getInstance();
     private final PropertiesSystem ps = new PropertiesSystem();
 
@@ -82,37 +85,50 @@ public class DatabaseConnectionScreen extends InternalFrame {
         lblSenha.setBounds(25, 145, 50, 15);
         return lblSenha;
     }
+    
+    private JLabel getLbLPort() {
+        lblPort = new JLabel("Porta:");
+        lblPort.setBounds(305, 50, 50, 20);
+        return lblPort;
+    }
 
-    private JTextField getTxtLogin() {
-        txtLogin = new JTextField();
+    private TextField getTxtLogin() {
+        txtLogin = new TextField();
         txtLogin.setBounds(90, 110, 300, 20);
         txtLogin.setText(ps.getLogin());
         return txtLogin;
     }
 
-    private JTextField getTxtDatabase() {
-        txtDatabase = new JTextField();
+    private TextField getTxtDatabase() {
+        txtDatabase = new TextField();
         txtDatabase.setBounds(90, 80, 300, 20);
         txtDatabase.setText(ps.getDatabase());
         return txtDatabase;
     }
 
-    private JTextField getTxtSenha() {
+    private JPasswordField getTxtSenha() {
         txtSenha = new JPasswordField();
         txtSenha.setBounds(90, 140, 300, 20);
         txtSenha.setText(ps.getSenha());
         return txtSenha;
     }
 
-    private JTextField getTxtServer() {
-        txtServer = new JTextField();
-        txtServer.setBounds(90, 50, 300, 20);
+    private TextField getTxtServer() {
+        txtServer = new TextField();
+        txtServer.setBounds(90, 50, 200, 20);
         txtServer.setText(ps.getServer());
         return txtServer;
     }
+    
+    private TextField getTxtPort() {
+        txtPort = new TextField("Number");
+        txtPort.setBounds(340, 50, 50, 20);
+        txtPort.setText(ps.getPort());
+        return txtPort;
+    }
 
-    private JTextField getTxtDriver() {
-        txtDriver = new JTextField("Microsoft SQL Server");
+    private TextField getTxtDriver() {
+        txtDriver = new TextField("All","Microsoft SQL Server");
         txtDriver.setBounds(90, 20, 300, 20);
         txtDriver.setEnabled(false);
         return txtDriver;
@@ -165,6 +181,8 @@ public class DatabaseConnectionScreen extends InternalFrame {
         painel.add(getBtnSalvar());
         painel.add(getLblImagem());
         painel.add(getBtnTestar());
+        painel.add(getTxtPort());
+        painel.add(getLbLPort());
         return painel;
     }
     
@@ -182,6 +200,7 @@ public class DatabaseConnectionScreen extends InternalFrame {
             case "save":
                 PropertiesSystem ps = new PropertiesSystem();
                 ps.setDatabase(txtDatabase.getText());
+                ps.setPort(txtPort.getText());
                 ps.setLogin(txtLogin.getText());
                 ps.setServer(txtServer.getText());
                 ps.setSenha(String.valueOf(txtSenha.getPassword()));
@@ -190,7 +209,7 @@ public class DatabaseConnectionScreen extends InternalFrame {
                 break;
             case "test":
                 Connection conexao = connectionManager.getConexaoTest(txtLogin.getText(), String.valueOf(txtSenha.getPassword()),
-                        txtDatabase.getText(), txtServer.getText());
+                        txtDatabase.getText(), txtPort.getText(), txtServer.getText());
                 if (conexao != null) {
                     this.setLblImagem(images.getInstance().conectionSucess());
                 } else {

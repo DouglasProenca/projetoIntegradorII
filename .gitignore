@@ -1,12 +1,17 @@
 ##############################
-## NetBeans
+## Eclipse
 ##############################
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-nbactions.xml
-nb-configuration.xml
-ProjetoIntegradorII/nbproject/private/
-config.properties
+.settings/
+bin/
+tmp/
+.metadata
+.classpath
+.project
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.factorypath
+.properties

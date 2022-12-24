@@ -22,5 +22,5 @@ public abstract interface ConnectionDB {
      * @param server
      * @return connection
      */
-    public abstract Connection getConexaoTest(String user, String password, String database, String server);
+    public abstract Connection getConexaoTest(String user, String password, String database, String port, String server);
 }

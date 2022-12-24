@@ -26,12 +26,10 @@ import jxl.write.WriteException;
  */
 public class Excel {
 
-    private WritableFont fontbol;
     private WritableCellFormat cellFormat;
 
     private WritableFont getFontbol(boolean bold) {
-        fontbol = new WritableFont(WritableFont.ARIAL, 10, bold ? WritableFont.BOLD : WritableFont.NO_BOLD);
-        return fontbol;
+        return new WritableFont(WritableFont.ARIAL, 10, bold ? WritableFont.BOLD : WritableFont.NO_BOLD);
     }
 
     private WritableCellFormat getCellFormat(boolean bold, boolean color) throws WriteException {

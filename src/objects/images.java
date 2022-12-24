@@ -7,10 +7,6 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author Douglas
- */
 public abstract class images {
 
     private static images uniqueInstance;

@@ -50,7 +50,7 @@ public class LoginScreen extends InternalFrame {
     }
 
     private TextField getTxtUsuario() {
-        txtUsuario = new TextField(false);
+        txtUsuario = new TextField();
         txtUsuario.setBounds(110, 50, 240, 26);
         txtUsuario.addKeyListener(this);
         return txtUsuario;

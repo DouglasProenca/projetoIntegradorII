@@ -12,7 +12,6 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -83,7 +82,7 @@ public class RegisterUserScreen extends InternalFrame {
     }
 
     private TextField getTxtUser() {
-        txtUser = new TextField(false);
+        txtUser = new TextField("Letter");
         txtUser.setBounds(100, 30, 230, 25);
         txtUser.getDocument().addDocumentListener(new DocListner());
         return txtUser;
@@ -103,7 +102,7 @@ public class RegisterUserScreen extends InternalFrame {
     }
 
     private TextField getTxtMail() {
-        txtMail = new TextField(false);
+        txtMail = new TextField();
         txtMail.setBounds(100, 100, 230, 25);
         txtMail.addFocusListener(this);
         txtMail.getDocument().addDocumentListener(new DocListner());
@@ -165,7 +164,7 @@ public class RegisterUserScreen extends InternalFrame {
 
     @Override
     public void internalFrameOpened(InternalFrameEvent e) {
-        JInternalFrame frame = (JInternalFrame) e.getSource();
+        InternalFrame frame = (InternalFrame) e.getSource();
         this.centralizaForm(frame);
     }
 

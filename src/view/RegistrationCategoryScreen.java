@@ -15,7 +15,6 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -110,7 +109,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
 	}
 
 	private TextField getTxtBrand() {
-		txtBrand = new TextField(false);
+		txtBrand = new TextField();
 		txtBrand.setBounds(120, 30, 330, 25);
 		txtBrand.getDocument().addDocumentListener(new DocListner());
 		return txtBrand;
@@ -240,7 +239,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
 
 	@Override
 	public void internalFrameOpened(InternalFrameEvent e) {
-		JInternalFrame frame = (JInternalFrame) e.getSource();
+		InternalFrame frame = (InternalFrame) e.getSource();
 		this.centralizaForm(frame);
 	}
 
