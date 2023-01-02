@@ -19,10 +19,6 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
-/**
- *
- * @author Douglas
- */
 @SuppressWarnings("serial")
 public class MainScreen extends JFrame implements KeyListener, WindowStateListener {
 

@@ -202,7 +202,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
 			JFileChooser fc = new JFileChooser();
 			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-			if (fc.showOpenDialog(null) != 1) {
+			if (fc.showOpenDialog(this) != 1) {
 				String dados[][] = excel.importExcel(fc.getSelectedFile(), tblExcel);
 				for (int i = 0; i < dados.length; i++) {
 					if (dados[i][0] != null) {

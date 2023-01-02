@@ -1,8 +1,6 @@
 package view;
 
-import java.awt.Event;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 
@@ -28,6 +26,7 @@ public class CategoryReportScreen extends BrandReportScreen {
 		this.loadTable();
 	}
 
+	@Override
 	public JTable getTblResultado() {
 		tblResultado = new JTable(new TableModel(new String[] {"ID","Categoria","Data","Usuário"}, 0));
 		tblResultado.getSelectionModel().addListSelectionListener(this);
@@ -35,6 +34,16 @@ public class CategoryReportScreen extends BrandReportScreen {
 		tblResultado.addMouseListener(this);
 		return tblResultado;
 	}
+	
+	@Override
+    public void loadTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+        modelo.setRowCount(0);
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
+        CategoryDAO.getInstance().getAll().forEach((p) -> {
+           modelo.addRow(new Object[]{p.getId(), p.getCategoria(), sdf1.format(p.getDate()), p.getUser()});
+        });
+    }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -55,7 +64,7 @@ public class CategoryReportScreen extends BrandReportScreen {
 		case "Exportar":
 			JFileChooser fc = new JFileChooser();
 			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			if (fc.showSaveDialog(null) != 1) {
+			if (fc.showSaveDialog(this) != 1) {
 				excel.exportExcel(fc.getSelectedFile(), dao.getAll(), "Categorias", tblResultado);
 			}
 			break;
@@ -84,19 +93,6 @@ public class CategoryReportScreen extends BrandReportScreen {
 			RegistrationCategoryScreen rbs = new RegistrationCategoryScreen(brand);
 			this.getParent().add(rbs);
 			rbs.setVisible(true);
-		}
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == Event.ENTER) {
-			if (txtPesquisa.getText().toLowerCase().equals("refresh")
-					|| txtPesquisa.getText().toLowerCase().equals("r")) {
-				this.loadTable();
-			} else {
-				ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "find");
-				this.actionPerformed(z);
-			}
 		}
 	}
 }

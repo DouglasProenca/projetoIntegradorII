@@ -162,7 +162,7 @@ public class BrandReportScreen extends InternalFrame {
 		case "Exportar":
 			JFileChooser fc = new JFileChooser();
 			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			if (fc.showSaveDialog(null) != 1) {
+			if (fc.showSaveDialog(this) != 1) {
 				excel.exportExcel(fc.getSelectedFile(), dao.getAll(), "Marcas", tblResultado);
 			}
 			break;

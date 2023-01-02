@@ -1,8 +1,6 @@
 package view;
 
-import java.awt.Event;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 
@@ -30,11 +28,14 @@ public class ProductReportScreen extends BrandReportScreen {
 
 	@Override
 	public JTable getTblResultado() {
-		tblResultado = new JTable(new TableModel(new String[]{ "ID", "Produto", "Marca", "Categoria", "Valor", "Quantidade", "Data",
-		"Usuário" }, 0));
+		tblResultado = new JTable(new TableModel(new String[] { "ID", "Produto", "Marca", "Categoria", "Valor",
+				"Quantidade", "Data", "Usuário", "Imagem" }, 0));
 		tblResultado.getSelectionModel().addListSelectionListener(this);
 		tblResultado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblResultado.addMouseListener(this);
+		tblResultado.getColumnModel().getColumn(8).setMaxWidth(0);
+		tblResultado.getColumnModel().getColumn(8).setMinWidth(0);
+		tblResultado.getColumnModel().getColumn(8).setPreferredWidth(0);
 		return tblResultado;
 	}
 
@@ -43,9 +44,10 @@ public class ProductReportScreen extends BrandReportScreen {
 		DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
 		modelo.setRowCount(0);
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
+
 		ProductDAO.getInstance().getAll().forEach((p) -> {
 			modelo.addRow(new Object[] { p.getId(), p.getNome(), p.getMarca(), p.getCategoria(), p.getValor(),
-					p.getQuantidade(), sdf1.format(p.getDate()), p.getUser() });
+					p.getQuantidade(), sdf1.format(p.getDate()), p.getUser(), p.getImagem() });
 		});
 	}
 
@@ -68,7 +70,7 @@ public class ProductReportScreen extends BrandReportScreen {
 		case "Exportar":
 			JFileChooser fc = new JFileChooser();
 			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			if (fc.showSaveDialog(null) != 1) {
+			if (fc.showSaveDialog(this) != 1) {
 				excel.exportExcel(fc.getSelectedFile(), dao.getAll(), "Produtos", tblResultado);
 			}
 			break;
@@ -82,7 +84,7 @@ public class ProductReportScreen extends BrandReportScreen {
 				SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
 				ProductDAO.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
 					modelo.addRow(new Object[] { p.getId(), p.getNome(), p.getMarca(), p.getCategoria(), p.getValor(),
-							p.getQuantidade(), sdf1.format(p.getDate()), p.getUser() });
+							p.getQuantidade(), sdf1.format(p.getDate()), p.getUser(), p.getImagem()});
 				});
 				break;
 			}
@@ -101,25 +103,13 @@ public class ProductReportScreen extends BrandReportScreen {
 			String value = tblResultado.getModel().getValueAt(lineNumber, 4).toString();
 			String quantity = tblResultado.getModel().getValueAt(lineNumber, 5).toString();
 			String user = tblResultado.getModel().getValueAt(lineNumber, 6).toString();
+			byte[] imagem = (byte[])tblResultado.getModel().getValueAt(lineNumber, 8);
 
 			Product product = new Product(product_name, Float.parseFloat(value), Integer.parseInt(quantity), category,
-					id, brand, null, null, user);
+					id, brand, null, null, user, imagem);
 			RegistrationProductScreen rbs = new RegistrationProductScreen(product);
 			this.getParent().add(rbs);
 			rbs.setVisible(true);
-		}
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == Event.ENTER) {
-			if (txtPesquisa.getText().toLowerCase().equals("refresh")
-					|| txtPesquisa.getText().toLowerCase().equals("r")) {
-				loadTable();
-			} else {
-				ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "find");
-				this.actionPerformed(z);
-			}
 		}
 	}
 }
