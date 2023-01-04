@@ -40,7 +40,7 @@ import objects.Utils;
 import objects.images;
 
 @SuppressWarnings("serial")
-public class RegistrationProductScreen extends InternalFrame {
+public class RegistrationProductScreen extends InternalFrame implements DocumentListener {
 
 	private JTabbedPane painelAbas;
 	private JPanel panelCadastro;
@@ -136,7 +136,7 @@ public class RegistrationProductScreen extends InternalFrame {
 	private TextField getTxtProduct() {
 		txtProduct = new TextField();
 		txtProduct.setBounds(100, 30, 230, 25);
-		txtProduct.getDocument().addDocumentListener(new DocListner());
+		txtProduct.getDocument().addDocumentListener(this);
 		return txtProduct;
 	}
 
@@ -199,7 +199,7 @@ public class RegistrationProductScreen extends InternalFrame {
 	private TextField getTxtValor() {
 		txtValor = new TextField("Number");
 		txtValor.setBounds(410, 100, 230, 25);
-		txtValor.getDocument().addDocumentListener(new DocListner());
+		txtValor.getDocument().addDocumentListener(this);
 		return txtValor;
 	}
 
@@ -374,29 +374,26 @@ public class RegistrationProductScreen extends InternalFrame {
 		}
 	}
 
-	private class DocListner implements DocumentListener {
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		btnCheck.setEnabled(warn());
+	}
 
-		@Override
-		public void insertUpdate(DocumentEvent e) {
-			btnCheck.setEnabled(warn());
-		}
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		btnCheck.setEnabled(warn());
+	}
 
-		@Override
-		public void removeUpdate(DocumentEvent e) {
-			btnCheck.setEnabled(warn());
-		}
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		btnCheck.setEnabled(warn());
+	}
 
-		@Override
-		public void changedUpdate(DocumentEvent e) {
-			btnCheck.setEnabled(warn());
+	private boolean warn() {
+		if (txtProduct.getText().length() >= 1 && txtValor.getText().length() >= 1
+				&& txtQuantidade.getValue().toString().length() >= 1) {
+			return true;
 		}
-
-		private boolean warn() {
-			if (txtProduct.getText().length() >= 1 && txtValor.getText().length() >= 1
-					&& txtQuantidade.getValue().toString().length() >= 1) {
-				return true;
-			}
-			return false;
-		}
+		return false;
 	}
 }

@@ -29,7 +29,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class RegistrationCategoryScreen extends InternalFrame {
+public class RegistrationCategoryScreen extends InternalFrame implements DocumentListener {
 
 	private JTabbedPane painelAbas;
 	private JLabel lblBrand;
@@ -111,7 +111,7 @@ public class RegistrationCategoryScreen extends InternalFrame {
 	private TextField getTxtBrand() {
 		txtBrand = new TextField();
 		txtBrand.setBounds(120, 30, 330, 25);
-		txtBrand.getDocument().addDocumentListener(new DocListner());
+		txtBrand.getDocument().addDocumentListener(this);
 		return txtBrand;
 	}
 
@@ -251,25 +251,22 @@ public class RegistrationCategoryScreen extends InternalFrame {
 		}
 	}
 
-	private class DocListner implements DocumentListener {
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		btnCheck.setEnabled(warn());
+	}
 
-		@Override
-		public void insertUpdate(DocumentEvent e) {
-			btnCheck.setEnabled(warn());
-		}
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		btnCheck.setEnabled(warn());
+	}
 
-		@Override
-		public void removeUpdate(DocumentEvent e) {
-			btnCheck.setEnabled(warn());
-		}
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		btnCheck.setEnabled(warn());
+	}
 
-		@Override
-		public void changedUpdate(DocumentEvent e) {
-			btnCheck.setEnabled(warn());
-		}
-
-		private boolean warn() {
-			return txtBrand.getText().length() >= 1;
-		}
+	private boolean warn() {
+		return txtBrand.getText().length() >= 1;
 	}
 }
