@@ -161,8 +161,7 @@ public class BrandReportScreen extends InternalFrame {
 			break;
 		case "Exportar":
 			JFileChooser fc = new JFileChooser();
-			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			if (fc.showSaveDialog(this) != 1) {
+			if (fc.showSaveDialog(this) == JFileChooser.FILES_ONLY) {
 				excel.exportExcel(fc.getSelectedFile(), dao.getAll(), "Marcas", tblResultado);
 			}
 			break;
@@ -199,8 +198,7 @@ public class BrandReportScreen extends InternalFrame {
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if (!e.getValueIsAdjusting()) {
-			boolean rowsAreSelected = tblResultado.getSelectedRowCount() > 0;
-			btnExcluir.setEnabled(rowsAreSelected);
+			btnExcluir.setEnabled(tblResultado.getSelectedRowCount() > 0);
 		}
 	}
 
@@ -211,8 +209,7 @@ public class BrandReportScreen extends InternalFrame {
 					|| txtPesquisa.getText().toLowerCase().equals("r")) {
 				loadTable();
 			} else {
-				ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "find");
-				actionPerformed(z);
+				this.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "find"));
 			}
 		}
 	}

@@ -121,8 +121,7 @@ public class BackupScreen extends InternalFrame {
 
                     JFileChooser fc = new JFileChooser();
                     fc.setSelectedFile(new File("Backup Sistema.bak"));
-                    fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                    if (fc.showSaveDialog(null) != 1) {
+                    if (fc.showSaveDialog(null) == JFileChooser.FILES_ONLY) {
                         File arquivo = fc.getSelectedFile();
                         try {
                             Connection conexao = connectionManager.getConexao();
@@ -149,8 +148,7 @@ public class BackupScreen extends InternalFrame {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Confirmar");
-            actionPerformed(z);
+            actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Confirmar"));
         }
     }
 }
