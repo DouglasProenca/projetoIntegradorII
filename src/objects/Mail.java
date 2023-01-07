@@ -20,69 +20,77 @@ import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 
 public class Mail {
-    
-    private Properties props;
-    
-    private Properties getProps() {
-        props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.ssl.protocols", "TLSv1.2"); //isso fez funcionar
-        props.put("mail.smtp.port", "465");
-        return props;
-    }
 
-    public boolean enviarGmail(String emailDestinatario, String assunto, String msg, String filename) {
-        Session s = Session.getDefaultInstance(getProps(),
-                new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
+	private Properties props;
 
-                return new PasswordAuthentication(User.getInstance().getMail(), User.getInstance().getMailPassword());//email e senha usuÃ¡rio 
-            } 
-        });
- 
-        try {
-            MimeMessage message = new MimeMessage(s);
-            message.setFrom(new InternetAddress(User.getInstance().getMail()));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailDestinatario));
-            message.setSubject(assunto);
+	private Properties getProps() {
+		props = new Properties();
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.ssl.protocols", "TLSv1.2"); // isso fez funcionar
+		props.put("mail.smtp.port", "465");
+		return props;
+	}
 
-            // cria a primeira parte da mensagem
-            MimeBodyPart mbp1 = new MimeBodyPart();
-            mbp1.setText(msg);
+	private Session getSession() {
+		Session s = Session.getDefaultInstance(getProps(), new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
 
-            Multipart mp = new MimeMultipart();
-            mp.addBodyPart(mbp1);
+				return new PasswordAuthentication(User.getInstance().getMail(), User.getInstance().getMailPassword());// email
+																														// e
+																														// senha
+																														// usuÃ¡rio
+			}
+		});
+		return s;
+	}
 
-            if (!filename.equals("")) {
-                // cria a segunda parte da mensage
-                MimeBodyPart mbp2 = new MimeBodyPart();
+	private MimeMessage getMessage(String emailDestinatario, String assunto,Multipart mp) {
+		MimeMessage message = new MimeMessage(getSession());
+		try {
+			message.setFrom(new InternetAddress(User.getInstance().getMail()));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailDestinatario));
+			message.setSubject(assunto);
+			message.setSentDate(new Date());
+			message.setContent(mp);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		return message;
+	}
 
-                // anexa o arquivo na mensagem
-                FileDataSource fds = new FileDataSource(filename);
-                mbp2.setDataHandler(new DataHandler(fds));
-                mbp2.setFileName(fds.getName());
-                mp.addBodyPart(mbp2);
-            }
-            
-            // cria a Multipart
+	public boolean enviarGmail(String emailDestinatario, String assunto, String msg, String filename) {
+		try {
 
-            message.setContent(mp);
+			// cria a primeira parte da mensagem
+			MimeBodyPart mbp1 = new MimeBodyPart();
+			mbp1.setText(msg);
 
-            // configura a data: cabecalho
-            message.setSentDate(new Date());
+			Multipart mp = new MimeMultipart();
+			mp.addBodyPart(mbp1);
 
-            //send message  
-            Transport.send(message);
-        } catch (MessagingException e) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), e.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return (false);
-        }
+			if (!filename.equals("")) {
+				// cria a segunda parte da mensage
+				MimeBodyPart mbp2 = new MimeBodyPart();
 
-        return (true);
-    }
+				// anexa o arquivo na mensagem
+				FileDataSource fds = new FileDataSource(filename);
+				mbp2.setDataHandler(new DataHandler(fds));
+				mbp2.setFileName(fds.getName());
+				mp.addBodyPart(mbp2);
+			}
+
+			// send message
+			Transport.send(getMessage(emailDestinatario,assunto,mp));
+		} catch (MessagingException e) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), e.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+			return (false);
+		}
+
+		return (true);
+	}
 }

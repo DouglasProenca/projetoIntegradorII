@@ -17,9 +17,7 @@ public class JasperViewer extends JRViewer {
     public JasperViewer(JasperPrint jasperPrint) {
         super(jasperPrint);
     }
-
-    
-    
+ 
     @Override
     protected JRViewerToolbar createToolbar() {
         JasperToolBar toolbar = new JasperToolBar(super.viewerContext);

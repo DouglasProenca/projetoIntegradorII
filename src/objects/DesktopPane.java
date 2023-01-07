@@ -8,20 +8,23 @@ import javax.swing.JDesktopPane;
 @SuppressWarnings("serial")
 public class DesktopPane extends JDesktopPane {
 
-    public DesktopPane(Dimension dimension) {
-        super.setPreferredSize(dimension);
-    }
+	public DesktopPane(Dimension dimension) {
+		super.setPreferredSize(dimension);
+	}
 
-    @Override
-    public void paintComponent(Graphics y) {
-        PropertiesSystem ps = new PropertiesSystem();
-        Color color = Utils.convertColor(getColor(ps));
-        super.paintComponent(y);
-        y.setColor(color);
-        y.fillRect(0, 0, getWidth(), getHeight());
-    }
-    
-    private String getColor(PropertiesSystem ps) {
-    	return ps.getColor() == null ? "63,100,129" : ps.getColor();
-    }
+	@Override
+	public void paintComponent(Graphics y) {
+		PropertiesSystem ps = new PropertiesSystem();
+		super.paintComponent(y);
+		y.setColor(getColor(ps));
+		y.fillRect(0, 0, getWidth(), getHeight());
+	}
+
+	private Color getColor(PropertiesSystem ps) {
+		return Utils.convertColor(getColorString(ps));
+	}
+
+	private String getColorString(PropertiesSystem ps) {
+		return ps.getColor() == null ? "63,100,129" : ps.getColor();
+	}
 };

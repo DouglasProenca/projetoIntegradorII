@@ -2,10 +2,6 @@ package model;
 
 import java.util.Date;
 
-/**
- *
- * @author Douglas
- */
 public class Sale {
 
     private int id;

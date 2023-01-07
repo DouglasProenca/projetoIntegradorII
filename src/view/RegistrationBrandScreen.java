@@ -40,7 +40,6 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	private JButton btnClose;
 	private int id;
 	private TextField txtBrand;
-	private final String colunas[] = { "Marca", "Pais" };
 	private JComboBox<String> jboCountry;
 	private JPanel panel;
 	private JTable tblExcel;
@@ -90,7 +89,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	}
 
 	private JTable getTblExcel() {
-		tblExcel = new JTable(new TableModel(colunas, 0));
+		tblExcel = new JTable(new TableModel(new String[] { "Marca", "Pais" }, 0));
 		tblExcel.getSelectionModel().addListSelectionListener(this);
 		tblExcel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		return tblExcel;

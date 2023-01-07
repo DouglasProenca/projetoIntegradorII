@@ -35,7 +35,7 @@ from rc_produto]]>
 	<pageHeader>
 		<band height="21">
 			<staticText>
-				<reportElement uuid="c7c0c64f-6fea-431d-859f-f008f54f128f" mode="Opaque" x="5" y="0" width="258" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="c7c0c64f-6fea-431d-859f-f008f54f128f" mode="Opaque" x="0" y="0" width="275" height="20" backcolor="#CCCCCC"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
