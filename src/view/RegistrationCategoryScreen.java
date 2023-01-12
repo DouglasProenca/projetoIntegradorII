@@ -38,7 +38,6 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 	private JButton btnClose;
 	private int id;
 	private TextField txtBrand;
-	private final String colunas[] = { "Categoria" };
 	private JPanel panel;
 	private JTable tblExcel;
 	private JScrollPane scroll;
@@ -86,7 +85,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 	}
 
 	private JTable getTblExcel() {
-		tblExcel = new JTable(new TableModel(colunas, 0));
+		tblExcel = new JTable(new TableModel(new String[] { "Categoria" }, 0));
 		tblExcel.getSelectionModel().addListSelectionListener(this);
 		tblExcel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		return tblExcel;
@@ -163,17 +162,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 		return btnImportExcel;
 	}
 
-	private void CarregarJTable(ArrayList<Category> productsList, boolean excluir) {
-		if (excluir) {
-			int row = tblExcel.getSelectedRow();
-			String nome = tblExcel.getModel().getValueAt(row, 0).toString();
-			for (int i = 0; i < productsList.toArray().length; i++) {
-				if (productsList.get(i).getCategoria().equals(nome)) {
-					productsList.remove(i);
-					break;
-				}
-			}
-		}
+	private void CarregarJTable(ArrayList<Category> productsList) {
 		DefaultTableModel modelo = (DefaultTableModel) tblExcel.getModel();
 		modelo.setRowCount(0);
 		productsList.forEach((p) -> {
@@ -200,9 +189,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 			break;
 		case "import":
 			JFileChooser fc = new JFileChooser();
-			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-			if (fc.showOpenDialog(this) != 1) {
+			if (fc.showOpenDialog(this) == JFileChooser.FILES_ONLY) {
 				String dados[][] = excel.importExcel(fc.getSelectedFile(), tblExcel);
 				for (int i = 0; i < dados.length; i++) {
 					if (dados[i][0] != null) {
@@ -211,21 +198,18 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 						categoryList.add(p);
 					}
 				}
-				CarregarJTable(categoryList, false);
+				CarregarJTable(categoryList);
 			}
 			break;
 		case "delete":
-			this.CarregarJTable(categoryList, true);
+			String nome = tblExcel.getModel().getValueAt(tblExcel.getSelectedRow(), 0).toString();
+			categoryList.removeIf(c -> c.getCategoria().equals(nome));
+			this.CarregarJTable(categoryList);
 			break;
 		case "saveExcel":
-			boolean ret = false;
 			if (categoryList != null) {
-				for (int i = 0; i < categoryList.toArray().length; i++) {
-					ret = dao.save(categoryList.get(i));
-				}
-				if (ret) {
-					JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
-				}
+				categoryList.forEach((c) -> {dao.save(c);});
+				JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
 			} else {
 				JOptionPane.showMessageDialog(this, "Selecione uma importação para continuar", "Aviso de Falha",
 						JOptionPane.ERROR_MESSAGE);
@@ -246,8 +230,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if (!e.getValueIsAdjusting()) {
-			boolean rowsAreSelected = tblExcel.getSelectedRowCount() > 0;
-			btnExcluirExcel.setEnabled(rowsAreSelected);
+			btnExcluirExcel.setEnabled(tblExcel.getSelectedRowCount() > 0);
 		}
 	}
 

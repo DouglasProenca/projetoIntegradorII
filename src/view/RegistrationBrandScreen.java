@@ -183,17 +183,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 		return btnImportExcel;
 	}
 
-	private void CarregarJTable(ArrayList<Brand> productsList, boolean excluir) {
-		if (excluir) {
-			int row = tblExcel.getSelectedRow();
-			String nome = tblExcel.getModel().getValueAt(row, 0).toString();
-			for (int i = 0; i < productsList.toArray().length; i++) {
-				if (productsList.get(i).getMarca().equals(nome)) {
-					productsList.remove(i);
-					break;
-				}
-			}
-		}
+	private void CarregarJTable(ArrayList<Brand> productsList) {
 		DefaultTableModel modelo = (DefaultTableModel) tblExcel.getModel();
 		modelo.setRowCount(0);
 		productsList.forEach((p) -> {
@@ -220,8 +210,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 			break;
 		case "import":
 			JFileChooser fc = new JFileChooser();
-			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			if (fc.showOpenDialog(this) != 1) {
+			if (fc.showOpenDialog(this) == JFileChooser.FILES_ONLY) {
 				String dados[][] = excel.importExcel(fc.getSelectedFile(), tblExcel);
 				for (int i = 0; i < dados.length; i++) {
 					if (dados[i][0] != null) {
@@ -230,21 +219,18 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 						brandList.add(p);
 					}
 				}
-				CarregarJTable(brandList, false);
+				CarregarJTable(brandList);
 			}
 			break;
 		case "delete":
-			this.CarregarJTable(brandList, true);
+			String nome = tblExcel.getModel().getValueAt(tblExcel.getSelectedRow(), 0).toString();
+			brandList.removeIf(p -> p.getMarca().equals(nome));
+			this.CarregarJTable(brandList);
 			break;
 		case "saveExcel":
-			boolean ret = false;
 			if (brandList != null) {
-				for (int i = 0; i < brandList.toArray().length; i++) {
-					ret = dao.save(brandList.get(i));
-				}
-				if (ret) {
-					JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
-				}
+				brandList.forEach((b) -> {dao.save(b);});
+				JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
 			} else {
 				JOptionPane.showMessageDialog(this, "Selecione uma importação para continuar", "Aviso de Falha",
 						JOptionPane.ERROR_MESSAGE);

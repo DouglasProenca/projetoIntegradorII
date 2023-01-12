@@ -19,158 +19,153 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 
-
 @SuppressWarnings("serial")
 public class MailScreen extends InternalFrame {
 
-    private JButton btnsend;
-    private JButton btnAnexFile;
-    private TextField txtDestinatario;
-    private TextField txtCaminhoFile;
-    private TextField txtAssunto;
-    private JTextArea txtCorpo;
-    private final JLabel lblDestinatario = new JLabel("Destinatario:");
-    private final JLabel lblAssunto = new JLabel("Assunto:");
-    private JPanel panelNorth;
-    private JPanel panelPageEnd;
-    private final Mail mail = new Mail();
-    private JProgressBar progressBar;
+	private JButton btnsend;
+	private JButton btnAnexFile;
+	private TextField txtDestinatario;
+	private TextField txtCaminhoFile;
+	private TextField txtAssunto;
+	private JTextArea txtCorpo;
+	private final JLabel lblDestinatario = new JLabel("Destinatario:");
+	private final JLabel lblAssunto = new JLabel("Assunto:");
+	private JPanel panelNorth;
+	private JPanel panelPageEnd;
+	private final Mail mail = new Mail();
+	private JProgressBar progressBar;
 
-    public MailScreen() {
-        super("Tela de E-mail", false, true, true, true, 707, 400);
-        this.initComponents();
-    }
+	public MailScreen() {
+		super("Tela de E-mail", false, true, true, true, 707, 400);
+		this.initComponents();
+	}
 
-    private boolean isValidEmailAddress(String email) {
-        try {
-            InternetAddress emailAddr = new InternetAddress(email);
-            emailAddr.validate();
-        } catch (AddressException ex) {
-            return (false);
-        }
-        return (true);
-    }
+	private boolean isValidEmailAddress(String email) {
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+		} catch (AddressException ex) {
+			return (false);
+		}
+		return (true);
+	}
 
-    private JPanel getPanelNorth() {
-        panelNorth = new JPanel(new FlowLayout(10, 10, 10));
-        panelNorth.add(lblDestinatario);
-        panelNorth.add(getTxtDestinatario());
-        panelNorth.add(lblAssunto);
-        panelNorth.add(getTxtAssunto());
-        return panelNorth;
-    }
+	private JPanel getPanelNorth() {
+		panelNorth = new JPanel(new FlowLayout(10, 10, 10));
+		panelNorth.add(lblDestinatario);
+		panelNorth.add(getTxtDestinatario());
+		panelNorth.add(lblAssunto);
+		panelNorth.add(getTxtAssunto());
+		return panelNorth;
+	}
 
-    private JPanel getPanelPageEnd() {
-        panelPageEnd = new JPanel(new FlowLayout(10, 10, 10));
-        panelPageEnd.add(getBtnAnexFile());
-        panelPageEnd.add(getTxtCaminhoFile());
-        panelPageEnd.add(getBtnsend());
-        panelPageEnd.add(getProgressBar());
-        return panelPageEnd;
-    }
+	private JPanel getPanelPageEnd() {
+		panelPageEnd = new JPanel(new FlowLayout(10, 10, 10));
+		panelPageEnd.add(getBtnAnexFile());
+		panelPageEnd.add(getTxtCaminhoFile());
+		panelPageEnd.add(getBtnsend());
+		panelPageEnd.add(getProgressBar());
+		return panelPageEnd;
+	}
 
-    private void initComponents() {
-        this.add(BorderLayout.NORTH, getPanelNorth());
-        this.add(BorderLayout.CENTER, getTxtCorpo());
-        this.add(BorderLayout.PAGE_END, getPanelPageEnd());
-    }
+	private void initComponents() {
+		this.add(BorderLayout.NORTH, getPanelNorth());
+		this.add(BorderLayout.CENTER, getTxtCorpo());
+		this.add(BorderLayout.PAGE_END, getPanelPageEnd());
+	}
 
-    private JProgressBar getProgressBar() {
-        progressBar = new JProgressBar();
-        progressBar.setIndeterminate(true);
-        progressBar.setVisible(false);
-        return progressBar;
-    }
+	private JProgressBar getProgressBar() {
+		progressBar = new JProgressBar();
+		progressBar.setIndeterminate(true);
+		progressBar.setVisible(false);
+		return progressBar;
+	}
 
-    private TextField getTxtDestinatario() {
-        txtDestinatario = new TextField();
-        txtDestinatario.setPreferredSize(new Dimension(200, 30));
-        txtDestinatario.addFocusListener(this);
-        return txtDestinatario;
-    }
+	private TextField getTxtDestinatario() {
+		txtDestinatario = new TextField();
+		txtDestinatario.setPreferredSize(new Dimension(200, 30));
+		txtDestinatario.addFocusListener(this);
+		return txtDestinatario;
+	}
 
-    private TextField getTxtAssunto() {
-        txtAssunto = new TextField();
-        txtAssunto.setPreferredSize(new Dimension(200, 30));
-        txtAssunto.addKeyListener(this);
-        return txtAssunto;
-    }
+	private TextField getTxtAssunto() {
+		txtAssunto = new TextField();
+		txtAssunto.setPreferredSize(new Dimension(200, 30));
+		txtAssunto.addKeyListener(this);
+		return txtAssunto;
+	}
 
-    private JTextArea getTxtCorpo() {
-        txtCorpo = new JTextArea(10, 10);
-        return txtCorpo;
-    }
+	private JTextArea getTxtCorpo() {
+		txtCorpo = new JTextArea(10, 10);
+		return txtCorpo;
+	}
 
-    private JButton getBtnAnexFile() {
-        btnAnexFile = new JButton("Anexar");
-        btnAnexFile.addActionListener(this);
-        btnAnexFile.setActionCommand("find");
-        btnAnexFile.setPreferredSize(new Dimension(100, 30));
-        return btnAnexFile;
-    }
+	private JButton getBtnAnexFile() {
+		btnAnexFile = new JButton("Anexar");
+		btnAnexFile.addActionListener(this);
+		btnAnexFile.setActionCommand("find");
+		btnAnexFile.setPreferredSize(new Dimension(100, 30));
+		return btnAnexFile;
+	}
 
-    private TextField getTxtCaminhoFile() {
-        txtCaminhoFile = new TextField();
-        txtCaminhoFile.setPreferredSize(new Dimension(200, 30));
-        txtCaminhoFile.addKeyListener(this);
-        txtCaminhoFile.setEnabled(false);
-        return txtCaminhoFile;
-    }
+	private TextField getTxtCaminhoFile() {
+		txtCaminhoFile = new TextField();
+		txtCaminhoFile.setPreferredSize(new Dimension(200, 30));
+		txtCaminhoFile.addKeyListener(this);
+		txtCaminhoFile.setEnabled(false);
+		return txtCaminhoFile;
+	}
 
-    private JButton getBtnsend() {
-        btnsend = new JButton("Enviar");
-        btnsend.addActionListener(this);
-        btnsend.setActionCommand("enviar");
-        btnsend.setEnabled(false);
-        btnsend.setPreferredSize(new Dimension(100, 30));
-        return btnsend;
-    }
+	private JButton getBtnsend() {
+		btnsend = new JButton("Enviar");
+		btnsend.addActionListener(this);
+		btnsend.setActionCommand("enviar");
+		btnsend.setEnabled(false);
+		btnsend.setPreferredSize(new Dimension(100, 30));
+		return btnsend;
+	}
 
-    @Override
-    public void focusLost(FocusEvent e) {
-        TextField src = (TextField) e.getSource();
-        if (txtDestinatario.getText().length() > 0) {
-            boolean validate = this.isValidEmailAddress(src.getText());
-            btnsend.setEnabled(validate);
-            if (!validate) {
-                JOptionPane.showMessageDialog(this, "E-mail inválido!",
-                        "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
+	@Override
+	public void focusLost(FocusEvent e) {
+		TextField src = (TextField) e.getSource();
+		if (txtDestinatario.getText().length() > 0) {
+			boolean validate = this.isValidEmailAddress(src.getText());
+			btnsend.setEnabled(validate);
+			if (!validate) {
+				JOptionPane.showMessageDialog(this, "E-mail inválido!", "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "enviar":
-                boolean ret = false;
-                if (!txtAssunto.getText().equals("")
-                        && !txtCorpo.getText().equals("")) {
-                    progressBar.setVisible(true);
-                    Thread t = new Thread(() -> {
-                        mail.enviarGmail(txtDestinatario.getText(), txtAssunto.getText(),
-                                txtCorpo.getText(), txtCaminhoFile.getText());
-                    });
-                    t.start();
-                    ret = true;
-                } else {
-                    JOptionPane.showMessageDialog(this, "Campos de Assunto e "
-                            + "Corpo do E-mail não podem estar Vazios!",
-                            "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-                    progressBar.setVisible(false);
-                }
-                if (ret) {
-                    JOptionPane.showMessageDialog(this, "Email enviado com sucesso!");
-                    progressBar.setVisible(false);
-                }
-                break;
-            case "find":
-                JFileChooser fc = new JFileChooser();
-                fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                if (fc.showOpenDialog(null) != 1) {
-                    txtCaminhoFile.setText(fc.getSelectedFile().getAbsolutePath());
-                }
-                break;
-        }
-    }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		switch (e.getActionCommand()) {
+		case "enviar":
+			boolean ret = false;
+			if (!txtAssunto.getText().equals("") && !txtCorpo.getText().equals("")) {
+				progressBar.setVisible(true);
+				Thread t = new Thread(() -> {
+					mail.enviarGmail(txtDestinatario.getText(), txtAssunto.getText(), txtCorpo.getText(),
+							txtCaminhoFile.getText());
+				});
+				t.start();
+				ret = true;
+			} else {
+				JOptionPane.showMessageDialog(this, "Campos de Assunto e " + "Corpo do E-mail não podem estar Vazios!",
+						"Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+				progressBar.setVisible(false);
+			}
+			if (ret) {
+				JOptionPane.showMessageDialog(this, "Email enviado com sucesso!");
+				progressBar.setVisible(false);
+			}
+			break;
+		case "find":
+			JFileChooser fc = new JFileChooser();
+			if (fc.showOpenDialog(null) == JFileChooser.FILES_ONLY) {
+				txtCaminhoFile.setText(fc.getSelectedFile().getAbsolutePath());
+			}
+			break;
+		}
+	}
 }

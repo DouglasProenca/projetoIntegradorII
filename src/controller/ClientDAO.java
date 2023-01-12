@@ -11,10 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Douglas
- */
 public class ClientDAO implements DAO {
 
     private static ClientDAO uniqueInstance;
@@ -106,7 +102,6 @@ public class ClientDAO implements DAO {
                     + "where c.nome like ?\n"
                     + " or c.cpf like ?");
 
-            //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, "%" + key + '%');
             instrucaoSQL.setString(2, "%" + key + '%');
 

@@ -7,8 +7,8 @@ public final class Sistema {
     public static void main(String[] args) {
         Runnable r = () -> {
             LookAndFeelScreen.initLookAndFeel();
-            MainScreen t = new MainScreen();
-            t.setVisible(true);
+            MainScreen mainScreen = new MainScreen();
+            mainScreen.setVisible(true);
         };
         SwingUtilities.invokeLater(r);
     }

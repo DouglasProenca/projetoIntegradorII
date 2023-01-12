@@ -301,8 +301,7 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 			break;
 		case "import":
 			JFileChooser fc = new JFileChooser();
-			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			if (fc.showOpenDialog(this) != 1) {
+			if (fc.showOpenDialog(this) == JFileChooser.FILES_ONLY) {
 				String dados[][] = excel.importExcel(fc.getSelectedFile(), tblExcel);
 				for (int i = 0; i < dados.length; i++) {
 					if (dados[i][0] != null) {
@@ -312,22 +311,21 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 						productsList.add(p);
 					}
 				}
-				CarregarJTable(productsList, false);
+				CarregarJTable(productsList);
 			}
 			break;
 		case "delete":
-			CarregarJTable(productsList, true);
+			String nome = tblExcel.getModel().getValueAt(tblExcel.getSelectedRow(), 0).toString();
+			productsList.removeIf((p) -> p.getNome().equals(nome));
+			CarregarJTable(productsList);
 			break;
 		case "saveExcel":
-			boolean ret = false;
 			if (productsList != null) {
-				for (int i = 0; i < productsList.toArray().length; i++) {
-					ret = daop.save(productsList.get(i));
-				}
-				if (ret) {
-					JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
-					this.dispose();
-				}
+				productsList.forEach((p) -> {
+					daop.save(p);
+				});
+				JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
+				this.dispose();
 			} else {
 				JOptionPane.showMessageDialog(this, "Selecione uma importação para continuar", "Aviso de Falha",
 						JOptionPane.ERROR_MESSAGE);
@@ -339,17 +337,7 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 		}
 	}
 
-	private void CarregarJTable(ArrayList<Product> productsList, boolean excluir) {
-		if (excluir) {
-			int row = tblExcel.getSelectedRow();
-			String nome = tblExcel.getModel().getValueAt(row, 0).toString();
-			for (int i = 0; i < productsList.toArray().length; i++) {
-				if (productsList.get(i).getNome().equals(nome)) {
-					productsList.remove(i);
-					break;
-				}
-			}
-		}
+	private void CarregarJTable(ArrayList<Product> productsList) {
 		DefaultTableModel modelo = (DefaultTableModel) tblExcel.getModel();
 		modelo.setRowCount(0);
 		productsList.forEach((p) -> {
@@ -392,8 +380,8 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 	private boolean warn() {
 		if (txtProduct.getText().length() >= 1 && txtValor.getText().length() >= 1
 				&& txtQuantidade.getValue().toString().length() >= 1) {
-			return true;
+			return (true);
 		}
-		return false;
+		return (false);
 	}
 }

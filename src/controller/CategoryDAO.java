@@ -11,10 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Douglas
- */
 public class CategoryDAO implements DAO {
 
     private static CategoryDAO uniqueInstance;

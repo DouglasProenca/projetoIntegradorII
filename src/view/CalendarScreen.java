@@ -12,7 +12,7 @@ public class CalendarScreen extends InternalFrame {
     }
 
     private void initComponents() {
-        super.getContentPane().add(new JCalendar());
+        this.getContentPane().add(new JCalendar());
         super.pack();
     }
 }

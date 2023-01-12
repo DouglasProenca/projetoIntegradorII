@@ -69,8 +69,7 @@ public class ProductReportScreen extends BrandReportScreen {
 			break;
 		case "Exportar":
 			JFileChooser fc = new JFileChooser();
-			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			if (fc.showSaveDialog(this) != 1) {
+			if (fc.showSaveDialog(this) == JFileChooser.FILES_ONLY) {
 				excel.exportExcel(fc.getSelectedFile(), dao.getAll(), "Produtos", tblResultado);
 			}
 			break;

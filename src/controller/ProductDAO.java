@@ -12,10 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Douglas
- */
 public class ProductDAO implements DAO {
 
 	private static ProductDAO uniqueInstance;
@@ -53,24 +49,16 @@ public class ProductDAO implements DAO {
 			Connection conexao = ConnectionManager.getInstance().getConexao();
 
 			PreparedStatement instrucaoSQL = conexao.prepareStatement("select p.id\n"
-					+ "                    	 , p.nome\n" 
-					+ "                     	 , m.marca\n"
-					+ "                     	 , p.valor\n" 
-					+ "                     	 , p.quantidade\n"
-					+ "                     	 , p.[date]\n" 
-					+ "                     	 , u.[user]\n"
-					+ "                    	 , m.pais\n" 
-					+ "						 , c.categoria\n"
-					+ "                      , p.imagem\n" 
-					+ "                    from rc_produto p\n"
-					+ "                    inner join rc_marca m\n" 
-					+ "                     	on m.id = p.marca\n"
-					+ "                     inner join rc_categoria c\n" 
-					+ "                      on p.categoria = c.id"
-					+ "                     inner join rc_user u\n" 
-					+ "                      on u.id = p.[user]");
+					+ "                    	 , p.nome\n" + "                     	 , m.marca\n"
+					+ "                     	 , p.valor\n" + "                     	 , p.quantidade\n"
+					+ "                     	 , p.[date]\n" + "                     	 , u.[user]\n"
+					+ "                    	 , m.pais\n" + "						 , c.categoria\n"
+					+ "                      , p.imagem\n" + "                    from rc_produto p\n"
+					+ "                    inner join rc_marca m\n" + "                     	on m.id = p.marca\n"
+					+ "                     inner join rc_categoria c\n" + "                      on p.categoria = c.id"
+					+ "                     inner join rc_user u\n" + "                      on u.id = p.[user]");
 
-			ResultSet rs = instrucaoSQL.executeQuery(); 
+			ResultSet rs = instrucaoSQL.executeQuery();
 			while (rs.next()) {
 				Product p = new Product(rs.getString("nome"), rs.getFloat("valor"), rs.getInt("quantidade"),
 						rs.getString("categoria"), rs.getInt("id"), rs.getString("marca"), rs.getString("pais"),

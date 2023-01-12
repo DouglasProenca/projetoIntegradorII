@@ -13,10 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Douglas
- */
+
 public class UserDAO implements DAO {
 
     private static UserDAO uniqueInstance;

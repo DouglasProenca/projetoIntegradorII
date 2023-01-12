@@ -1,21 +1,16 @@
-package view;
+ package view;
 
-import model.Cep;
-import objects.InternalFrame;
-import objects.images;
-import com.google.gson.Gson;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -23,6 +18,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.text.MaskFormatter;
+
+import com.google.gson.Gson;
+
+import model.Cep;
+import objects.InternalFrame;
+import objects.images;
 
 @SuppressWarnings("serial")
 public class RegistrationCepScreen extends InternalFrame {
@@ -147,7 +148,6 @@ public class RegistrationCepScreen extends InternalFrame {
     private JTextField getTxtComplemento() {
         txtComplemento = new JTextField();
         txtComplemento.setBounds(100, 150, 170, 30);
-        txtComplemento.setEnabled(false);
         return txtComplemento;
     }
 
@@ -188,8 +188,7 @@ public class RegistrationCepScreen extends InternalFrame {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == Event.ENTER) {
-            ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Find");
-            this.actionPerformed(z);
+            this.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Find"));
         }
     }
 
@@ -197,13 +196,10 @@ public class RegistrationCepScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Find":
-                URL url;
                 try {
-                    url = new URL("https://viacep.com.br/ws/" + txtInfoCep.getText().replace("-", "") + "/json/");
-                    URLConnection urlConnection = url.openConnection();
+                	URL url = new URL("https://viacep.com.br/ws/" + txtInfoCep.getText().replace("-", "") + "/json/");
 
-                    InputStream is = urlConnection.getInputStream();
-                    BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream(), "UTF-8"));
 
                     String cepAux = "";
                     StringBuilder jsonCep = new StringBuilder();

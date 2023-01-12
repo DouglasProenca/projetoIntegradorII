@@ -507,12 +507,10 @@ public class SaleScreen extends InternalFrame {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if ((e.getKeyCode() == Event.ENTER) && e.getSource().equals(txtFilterPanelThree)) {
-			ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "findProduct");
-			actionPerformed(z);
+			actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "findProduct"));
 		} else if ((e.getKeyCode() == Event.ENTER) && e.getSource().equals(txtPanelOneCPF)
 				|| e.getSource().equals(txtPanelOneName)) {
-			ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "findClient");
-			actionPerformed(z);
+			actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "findClient"));
 		}
 	}
 }

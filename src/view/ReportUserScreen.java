@@ -134,9 +134,8 @@ public class ReportUserScreen extends InternalFrame {
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
-            boolean rowsAreSelected = tblResultado.getSelectedRowCount() > 0;
-            btnRemove.setEnabled(rowsAreSelected);
-            btnEdit.setEnabled(rowsAreSelected);
-        }
+            btnRemove.setEnabled(tblResultado.getSelectedRowCount() > 0);
+            btnEdit.setEnabled(tblResultado.getSelectedRowCount() > 0);
+        } 
     }
 }

@@ -12,10 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Douglas
- */
+
 public final class BrandDao implements DAO {
 
     private static BrandDao uniqueInstance;

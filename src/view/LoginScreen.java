@@ -110,8 +110,7 @@ public class LoginScreen extends InternalFrame {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             System.exit(0);
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            ActionEvent z = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Confirmar");
-            actionPerformed(z);
+            actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Confirmar"));
         }
     }
 }
