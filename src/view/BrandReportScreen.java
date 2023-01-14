@@ -28,7 +28,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
 public class BrandReportScreen extends InternalFrame {
@@ -135,7 +134,7 @@ public class BrandReportScreen extends InternalFrame {
 	}
 
 	public void loadTable() {
-		DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+		TableModel modelo = (TableModel) tblResultado.getModel();
 		modelo.setRowCount(0);
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
 		BrandDao.getInstance().getAll().forEach((p) -> {
@@ -148,7 +147,7 @@ public class BrandReportScreen extends InternalFrame {
 		switch (e.getActionCommand()) {
 		case "excluir":
 			int lineNumber = tblResultado.getSelectedRow();
-			int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
+			int id = Integer.parseInt(tblResultado.getValueAt(lineNumber, 0).toString());
 			if (BrandDao.getInstance().delete(id)) {
 				JOptionPane.showMessageDialog(this, "Marca excluída com sucesso!");
 			}
@@ -166,7 +165,7 @@ public class BrandReportScreen extends InternalFrame {
 			}
 			break;
 		case "find":
-			DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+			TableModel modelo = (TableModel) tblResultado.getModel();
 			modelo.setRowCount(0);
 			SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
 			BrandDao.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
@@ -182,10 +181,10 @@ public class BrandReportScreen extends InternalFrame {
 		if (e.getClickCount() == 2) {
 			int lineNumber = tblResultado.getSelectedRow();
 
-			int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
-			String brand_name = tblResultado.getModel().getValueAt(lineNumber, 1).toString();
-			String pais = tblResultado.getModel().getValueAt(lineNumber, 2).toString();
-			String user = tblResultado.getModel().getValueAt(lineNumber, 4).toString();
+			int id = Integer.parseInt(tblResultado.getValueAt(lineNumber, 0).toString());
+			String brand_name = tblResultado.getValueAt(lineNumber, 1).toString();
+			String pais = tblResultado.getValueAt(lineNumber, 2).toString();
+			String user = tblResultado.getValueAt(lineNumber, 4).toString();
 
 			Brand brand = new Brand(id, brand_name, pais, new Date(), user);
 
