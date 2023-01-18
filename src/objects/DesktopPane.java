@@ -7,9 +7,12 @@ import javax.swing.JDesktopPane;
 
 @SuppressWarnings("serial")
 public class DesktopPane extends JDesktopPane {
+	
+	private final PopUpMenu popUpMenu = new PopUpMenu(); 
 
 	public DesktopPane(Dimension dimension) {
 		super.setPreferredSize(dimension);
+		this.setComponentPopupMenu(popUpMenu);
 	}
 
 	@Override

@@ -14,10 +14,6 @@ import javax.swing.Icon;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
-/**
- *
- * @author Douglas
- */
 public abstract class Utils {
 
 	public static Color convertColor(String cor) {
@@ -107,20 +103,19 @@ public abstract class Utils {
 		try {
 			ImageIO.write(image, "JPEG", baos);
 		} catch (IOException ex) {
-			// handle it here.... not implemented yet...
+			ex.printStackTrace();
 		}
-
-		// InputStream is = new ByteArrayInputStream(baos.toByteArray())
 		return baos.toByteArray();
 	}
 
 	public static BufferedImage exibiImagemLabel(byte[] minhaimagem) {
+		BufferedImage img = null;
 		try {
-			return minhaimagem != null ? ImageIO.read(new ByteArrayInputStream(minhaimagem)) : null;
+			img = minhaimagem != null ? ImageIO.read(new ByteArrayInputStream(minhaimagem)) : img;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return img;
 	}
 
 	public static BufferedImage iconToBufferedImage(Icon icon) {

@@ -62,14 +62,12 @@ public class Excel {
                 labelTitulo.setCellFormat(getCellFormat(true, true));
             }
             //Para os Dados
-            int contador = 1;
             for (int i = 0; i < dados.size(); i++) {
                 String[] aux = dados.get(i).toString().split(";");
                 for (int j = 0; j < aux.length; j++) {
-                    Label label1 = new Label(j, contador, aux[j]);
+                    Label label1 = new Label(j, i+1, aux[j]);
                     sheet.addCell(label1);
                 }
-                contador++;
             }
 
             //escrevendo o arquivo em disco

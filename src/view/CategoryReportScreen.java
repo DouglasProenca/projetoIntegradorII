@@ -8,7 +8,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 import controller.CategoryDAO;
 import model.Category;
@@ -37,7 +36,7 @@ public class CategoryReportScreen extends BrandReportScreen {
 	
 	@Override
     public void loadTable() {
-        DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+        TableModel modelo = (TableModel) tblResultado.getModel();
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
         CategoryDAO.getInstance().getAll().forEach((p) -> {
@@ -68,7 +67,7 @@ public class CategoryReportScreen extends BrandReportScreen {
 			}
 			break;
 		case "find":
-			DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+			TableModel modelo = (TableModel) tblResultado.getModel();
 			modelo.setRowCount(0);
 			SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
 			dao.getBy(txtPesquisa.getText()).forEach((p) -> {

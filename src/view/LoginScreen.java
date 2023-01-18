@@ -4,8 +4,11 @@ import controller.UserDAO;
 import model.User;
 import objects.InternalFrame;
 import objects.Menu;
+import objects.PopUpMenu;
 import objects.TextField;
 import objects.Utils;
+import objects.images;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
@@ -35,6 +38,7 @@ public class LoginScreen extends InternalFrame {
         super.getContentPane().add(getTxtSenha());
         super.getContentPane().add(getBtnConfirmar());
         this.lockMenu(false);
+        PopUpMenu.lockMenu(false);
     }
 
     private JLabel getLblUsuario() {
@@ -64,7 +68,7 @@ public class LoginScreen extends InternalFrame {
     }
 
     private JButton getBtnConfirmar() {
-        btnConfirmar = new JButton("Confirmar");
+        btnConfirmar = new JButton("Confirmar",images.getInstance().imagemCheck());
         btnConfirmar.setBounds(40, 200, 311, 46);
         btnConfirmar.addActionListener(this);
         btnConfirmar.setActionCommand("Confirmar");
@@ -96,6 +100,7 @@ public class LoginScreen extends InternalFrame {
                 }
                 if (senhaOk) {
                     lockMenu(true);
+                    PopUpMenu.lockMenu(true);
                     super.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Aviso de Falha de Acesso",

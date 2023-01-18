@@ -8,7 +8,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 import controller.ProductDAO;
 import model.Product;
@@ -41,7 +40,7 @@ public class ProductReportScreen extends BrandReportScreen {
 
 	@Override
 	public void loadTable() {
-		DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+		TableModel modelo = (TableModel) tblResultado.getModel();
 		modelo.setRowCount(0);
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
 
@@ -56,7 +55,7 @@ public class ProductReportScreen extends BrandReportScreen {
 		switch (e.getActionCommand()) {
 		case "excluir":
 			int lineNumber = tblResultado.getSelectedRow();
-			int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
+			int id = Integer.parseInt(tblResultado.getValueAt(lineNumber, 0).toString());
 			if (ProductDAO.getInstance().delete(id)) {
 				JOptionPane.showMessageDialog(this, "Produto Excluido com Sucesso!");
 			}
@@ -78,7 +77,7 @@ public class ProductReportScreen extends BrandReportScreen {
 					|| txtPesquisa.getText().toLowerCase().equals("r")) {
 				loadTable();
 			} else {
-				DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+				TableModel modelo = (TableModel) tblResultado.getModel();
 				modelo.setRowCount(0);
 				SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
 				ProductDAO.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
@@ -95,14 +94,14 @@ public class ProductReportScreen extends BrandReportScreen {
 		if (e.getClickCount() == 2) {
 			int lineNumber = tblResultado.getSelectedRow();
 
-			int id = Integer.parseInt(tblResultado.getModel().getValueAt(lineNumber, 0).toString());
-			String product_name = tblResultado.getModel().getValueAt(lineNumber, 1).toString();
-			String brand = tblResultado.getModel().getValueAt(lineNumber, 2).toString();
-			String category = tblResultado.getModel().getValueAt(lineNumber, 3).toString();
-			String value = tblResultado.getModel().getValueAt(lineNumber, 4).toString();
-			String quantity = tblResultado.getModel().getValueAt(lineNumber, 5).toString();
-			String user = tblResultado.getModel().getValueAt(lineNumber, 6).toString();
-			byte[] imagem = (byte[])tblResultado.getModel().getValueAt(lineNumber, 8);
+			int id = Integer.parseInt(tblResultado.getValueAt(lineNumber, 0).toString());
+			String product_name = tblResultado.getValueAt(lineNumber, 1).toString();
+			String brand = tblResultado.getValueAt(lineNumber, 2).toString();
+			String category = tblResultado.getValueAt(lineNumber, 3).toString();
+			String value = tblResultado.getValueAt(lineNumber, 4).toString();
+			String quantity = tblResultado.getValueAt(lineNumber, 5).toString();
+			String user = tblResultado.getValueAt(lineNumber, 6).toString();
+			byte[] imagem = (byte[])tblResultado.getValueAt(lineNumber, 8);
 
 			Product product = new Product(product_name, Float.parseFloat(value), Integer.parseInt(quantity), category,
 					id, brand, null, null, user, imagem);
