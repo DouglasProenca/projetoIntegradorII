@@ -102,8 +102,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
             } catch (InterruptedException ex) {
                 Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
-            int qtd = comp.length;
-            for (int i = 0; i < qtd; i++) {
+            for (int i = 0; i < comp.length; i++) {
                 jToolBar.add(comp[i]);
             }
             jToolBar.validate();

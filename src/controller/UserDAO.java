@@ -53,7 +53,7 @@ public class UserDAO implements DAO {
 
             ResultSet rs = instrucaoSQL.executeQuery();
             while (rs.next()) {
-                User p = new User(rs.getInt("id"), rs.getString("mail"), rs.getString("mailpassword"),
+                User p = new User(rs.getInt("id"), rs.getString("mail"), Utils.decodeString(rs.getString("mailpassword")),
                         rs.getString("user"), rs.getString("password"), rs.getDate("data"));
                 userList.add(p);
             }
@@ -77,7 +77,7 @@ public class UserDAO implements DAO {
             instrucaoSQL.setString(1, user.getUser());
             instrucaoSQL.setString(2, Utils.gerarhashSenha(user.getPassword()));
             instrucaoSQL.setString(3, user.getMail());
-            instrucaoSQL.setString(4, user.getMailPassword());
+            instrucaoSQL.setString(4, Utils.codeString(user.getMailPassword()));
             instrucaoSQL.setDate(5, new Date(user.getDate().getTime()));
 
             instrucaoSQL.executeUpdate();
@@ -103,7 +103,7 @@ public class UserDAO implements DAO {
             //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, user.getUser());
             instrucaoSQL.setString(2, user.getMail());
-            instrucaoSQL.setString(3, user.getMailPassword());
+            instrucaoSQL.setString(3, Utils.codeString(user.getMailPassword()));
             instrucaoSQL.setDate(4, new Date(user.getDate().getTime()));
             instrucaoSQL.setInt(5, user.getId());
 
@@ -133,7 +133,7 @@ public class UserDAO implements DAO {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String mail = rs.getString("mail");
-                String mailPassword = rs.getString("mailPassword");
+                String mailPassword = Utils.decodeString(rs.getString("mailPassword"));
                 String user = rs.getString("user");
                 String password = rs.getString("password");
 

@@ -23,7 +23,7 @@ public class LookAndFeelScreen extends InternalFrame {
 
 	private JPanel painel;
 	private JComboBox<String> comboLAF;
-	private PropertiesSystem prop = new PropertiesSystem();
+	private static PropertiesSystem prop = new PropertiesSystem();
 
 	public LookAndFeelScreen() {
 		super("Look And Feel", false, true, false, true, 324, 232);
@@ -77,10 +77,9 @@ public class LookAndFeelScreen extends InternalFrame {
 
 	public static void initLookAndFeel() {
 		try {
-			PropertiesSystem sy = new PropertiesSystem();
-			String myLAF = sy.getLookAndFeel();
+			String myLAF = prop.getLookAndFeel();
 			if (myLAF == null || myLAF.isEmpty()) {
-				sy.setLookAndFeel(UIManager.getLookAndFeel().getName());
+				prop.setLookAndFeel(UIManager.getLookAndFeel().getName());
 			} else {
 				for (UIManager.LookAndFeelInfo info : getLookAndFeels()) {
 					if (myLAF.equalsIgnoreCase(info.getName())) {

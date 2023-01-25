@@ -36,7 +36,7 @@ public class PropertiesSystem extends Properties {
     }
 
     public String getLookAndFeel() {
-        return this.getProperty("lookandfeel.name");
+        return this.getProperty(Utils.codeString("lookandfeel.name"));
     }
 
     public void setLookAndFeel(String stylus) {
@@ -44,7 +44,7 @@ public class PropertiesSystem extends Properties {
     }
 
     public String getServer() {
-        return this.getProperty("jdbc.server");
+        return this.getProperty(Utils.codeString("jdbc.server"));
     }
 
     public void setServer(String server) {
@@ -52,11 +52,11 @@ public class PropertiesSystem extends Properties {
     }
 
     public String getDatabase() {
-        return this.getProperty("jdbc.database");
+        return this.getProperty(Utils.codeString("jdbc.database"));
     }
     
     public String getPort() {
-        return this.getProperty("jdbc.port");
+        return this.getProperty(Utils.codeString("jdbc.port"));
     }
 
     public void setDatabase(String database) {
@@ -68,7 +68,7 @@ public class PropertiesSystem extends Properties {
     }
 
     public String getLogin() {
-        return this.getProperty("jdbc.login");
+        return this.getProperty(Utils.codeString("jdbc.login"));
     }
 
     public void setLogin(String login) {
@@ -76,7 +76,7 @@ public class PropertiesSystem extends Properties {
     }
 
     public String getSenha() {
-        return this.getProperty("jdbc.senha");
+        return this.getProperty(Utils.codeString("jdbc.senha"));
     }
 
     public void setSenha(String password) {
@@ -84,7 +84,7 @@ public class PropertiesSystem extends Properties {
     }
 
     public String getColor() {
-        return this.getProperty("lookandfeel.color");
+        return this.getProperty(Utils.codeString("lookandfeel.color"));
     }
 
     public void setColor(String color) {
@@ -100,11 +100,11 @@ public class PropertiesSystem extends Properties {
     @Override
     public String getProperty(String key) {
         LoadPropertiesFile();
-        return super.getProperty(key);
+        return Utils.decodeString(super.getProperty(key));
     }
 
     private void gravar(String key, String value) {
-        this.setProperty(key,value);
+        this.setProperty(Utils.codeString(key),Utils.codeString(value));
         try {
             this.store(new FileOutputStream(path), name);
         } catch (IOException ex) {

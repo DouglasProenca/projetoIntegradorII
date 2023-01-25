@@ -64,7 +64,7 @@ public abstract class images {
     }
 
     public ImageIcon imagemLookAndFeel() {
-        return new ImageIcon(readImg("/resources/Calendar-icon.png"));
+        return new ImageIcon(readImg("/resources/Look-n-feel-icon.png"));
     }
 
     public ImageIcon imagemProduct() {
