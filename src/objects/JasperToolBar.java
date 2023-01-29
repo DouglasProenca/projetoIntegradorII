@@ -8,6 +8,6 @@ public class JasperToolBar extends JRViewerToolbar{
     
     public JasperToolBar(JRViewerController viewerContext) {
         super(viewerContext);
-       //btnReload.setVisible(false);
+       btnReload.setVisible(false);
     }
 }

@@ -118,6 +118,10 @@ public abstract class images {
     public ImageIcon category() {
         return new ImageIcon(readImg("/resources/sql-join-right-icon.png"));
     }
+    
+    public ImageIcon reload() {
+        return new ImageIcon(readImg("/resources/reload.GIF"));
+    }
 
     private BufferedImage readImg(String adress) {
         try {

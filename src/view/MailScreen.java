@@ -162,7 +162,7 @@ public class MailScreen extends InternalFrame {
 			break;
 		case "find":
 			JFileChooser fc = new JFileChooser();
-			if (fc.showOpenDialog(null) == JFileChooser.FILES_ONLY) {
+			if (fc.showOpenDialog(this) == JFileChooser.FILES_ONLY) {
 				txtCaminhoFile.setText(fc.getSelectedFile().getAbsolutePath());
 			}
 			break;
