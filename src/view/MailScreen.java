@@ -151,7 +151,7 @@ public class MailScreen extends InternalFrame {
 				t.start();
 				ret = true;
 			} else {
-				JOptionPane.showMessageDialog(this, "Campos de Assunto e " + "Corpo do E-mail não podem estar Vazios!",
+				JOptionPane.showMessageDialog(this, "Campos de Assunto e Corpo do E-mail não podem estar Vazios!",
 						"Aviso de Falha", JOptionPane.ERROR_MESSAGE);
 				progressBar.setVisible(false);
 			}

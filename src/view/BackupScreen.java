@@ -121,7 +121,7 @@ public class BackupScreen extends InternalFrame {
 
                     JFileChooser fc = new JFileChooser();
                     fc.setSelectedFile(new File("Backup Sistema.bak"));
-                    if (fc.showSaveDialog(null) == JFileChooser.FILES_ONLY) {
+                    if (fc.showSaveDialog(this) == JFileChooser.FILES_ONLY) {
                         File arquivo = fc.getSelectedFile();
                         try {
                             Connection conexao = connectionManager.getConexao();

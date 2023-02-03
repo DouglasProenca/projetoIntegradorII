@@ -123,6 +123,10 @@ public abstract class images {
         return new ImageIcon(readImg("/resources/reload.GIF"));
     }
 
+    public ImageIcon intro() {
+        return new ImageIcon(readImg("/resources/intro.png"));
+    }
+    
     private BufferedImage readImg(String adress) {
         try {
             return ImageIO.read(getClass().getResource(adress));

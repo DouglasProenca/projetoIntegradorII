@@ -178,7 +178,7 @@ public class MainMenu extends Menu {
 				laf.setVisible(true);
 				break;
 			case "CanvasBackground":
-				Color newColor = JColorChooser.showDialog(null, "Cor de Fundo", new Color(60, 96, 124));
+				Color newColor = JColorChooser.showDialog(MainScreen.desktopPane, "Cor de Fundo", new Color(60, 96, 124));
 				if (newColor != null) {
 					MainScreen.desktopPane.setBackground(newColor);
 					PropertiesSystem ps = new PropertiesSystem();
