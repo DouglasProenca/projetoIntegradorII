@@ -3,8 +3,6 @@ package objects;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.swing.JButton;
-
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.swing.JRViewer;
 import net.sf.jasperreports.swing.JRViewerToolbar;
