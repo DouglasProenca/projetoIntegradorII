@@ -15,15 +15,15 @@
       ,format(min(valor),'R$ #,##0.00','pt-br') as menor_valor
       ,format(AVG(valor),'R$ #,##0.00','pt-br') as media
       ,format(((SELECT MAX(valor) FROM
-   (SELECT TOP 50 PERCENT valor FROM rc_produto ORDER BY valor) AS BottomHalf)
+   (SELECT TOP 50 PERCENT valor FROM rc_cliente ORDER BY valor) AS BottomHalf)
  +
- (SELECT MIN(valor) FROM
-   (SELECT TOP 50 PERCENT valor FROM rc_produto ORDER BY valor DESC) AS TopHalf)
+ (SELECT MIN(rc_cliente) FROM
+   (SELECT TOP 50 PERCENT valor FROM rc_cliente ORDER BY valor DESC) AS TopHalf)
 ) / 2,'R$ #,##0.00','pt-br') AS mediana
       ,format(STDEVP(valor),'#,##0.00','pt-br') desvio_padrao
 	  , count(id) as quantidade
 	  , format(sum(valor),'R$ #,##0.00','pt-br') as valor_total
-from rc_produto]]>
+from rc_cliente]]>
 	</queryString>
 	<field name="maior_valor" class="java.lang.String"/>
 	<field name="menor_valor" class="java.lang.String"/>
@@ -111,9 +111,9 @@ from rc_produto]]>
 				<reportElement uuid="e0edc63c-6341-4dfa-bf9b-4e1459ca9aa3" x="5" y="99" width="258" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="be99bed7-b9d4-436b-9c29-42d69caa759a" x="5" y="100" width="100" height="20"/>
+				<reportElement uuid="be99bed7-b9d4-436b-9c29-42d69caa759a" x="5" y="100" width="112" height="20"/>
 				<textElement verticalAlignment="Bottom"/>
-				<text><![CDATA[Quantidade de Peças]]></text>
+				<text><![CDATA[Quantidade de Clientes]]></text>
 			</staticText>
 			<line>
 				<reportElement uuid="e0edc63c-6341-4dfa-bf9b-4e1459ca9aa3" x="5" y="119" width="258" height="1"/>

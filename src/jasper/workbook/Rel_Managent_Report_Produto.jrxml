@@ -35,8 +35,11 @@ order by valor desc]]>
 	<columnFooter>
 		<band height="179">
 			<pieChart>
-				<chart>
-					<reportElement uuid="247c15b4-e73f-4619-931d-00e3a472e120" x="0" y="11" width="275" height="168"/>
+				<chart customizerClass="objects.PizzaChart">
+					<reportElement uuid="247c15b4-e73f-4619-931d-00e3a472e120" x="0" y="11" width="275" height="168">
+						<property name="linkVisible" value="true"/>
+						<property name="legendVisible" value="true"/>
+					</reportElement>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>

@@ -37,7 +37,7 @@ order by valor desc]]>
 			<componentElement>
 				<reportElement uuid="b12315ce-a519-45ab-b540-2000c4edc521" x="0" y="0" width="275" height="168"/>
 				<sc:spiderChart xmlns:sc="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<sc:chartSettings isShowLegend="false">
+					<sc:chartSettings isShowLegend="false" customizerClass="">
 						<chartTitle/>
 						<chartSubtitle/>
 						<chartLegend/>
@@ -49,7 +49,7 @@ order by valor desc]]>
 							<valueExpression><![CDATA[$F{valor}]]></valueExpression>
 						</categorySeries>
 					</sc:spiderDataset>
-					<sc:spiderPlot isWebFilled="true"/>
+					<sc:spiderPlot isWebFilled="true" backcolor="#FFFFFF"/>
 				</sc:spiderChart>
 			</componentElement>
 		</band>

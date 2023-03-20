@@ -35,8 +35,10 @@ group by m.marca
 	<columnFooter>
 		<band height="168">
 			<barChart>
-				<chart isShowLegend="false">
-					<reportElement uuid="6c736dfa-2483-4c43-b421-b3716b8a4c89" x="0" y="0" width="275" height="168"/>
+				<chart isShowLegend="false" customizerClass="objects.BarChart">
+					<reportElement uuid="6c736dfa-2483-4c43-b421-b3716b8a4c89" x="0" y="0" width="275" height="168">
+						<property name="gridLinesVisible" value="false"/>
+					</reportElement>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -68,6 +70,12 @@ group by m.marca
 						<seriesColor seriesOrder="14" color="#50005C"/>
 					</plot>
 					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat axisLineColor="#FFFFFF"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat axisLineColor="#FFFFFF"/>
+					</valueAxisFormat>
 				</barPlot>
 			</barChart>
 		</band>
