@@ -6,6 +6,7 @@ import objects.ThreadCustom;
 import objects.DesktopPane;
 import objects.InternalFrame;
 import objects.images;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -33,17 +34,16 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 	}
 
 	private void initComponents() {
-		super.addWindowStateListener(this);
-		super.setSize(new Dimension(800, 500));
-		super.setMinimumSize(new Dimension(800, 500));
-		super.setExtendedState(MAXIMIZED_BOTH);
-		super.setLocationRelativeTo(null);
-		super.addKeyListener(this);
-		super.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		super.add(getDesktopPane(), BorderLayout.CENTER);
-		super.add(getJToolBar(), BorderLayout.PAGE_END);
-		super.setIconImage(getIcone().getImage());
-		super.setJMenuBar(menubar);
+		this.addWindowStateListener(this);
+		this.setMinimumSize(new Dimension(800, 500));
+		this.setExtendedState(MAXIMIZED_BOTH);
+		this.setLocationRelativeTo(null);
+		this.addKeyListener(this);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.add(getDesktopPane(), BorderLayout.CENTER);
+		this.add(getJToolBar(), BorderLayout.PAGE_END);
+		this.setIconImage(getIcone().getImage());
+		this.setJMenuBar(menubar);
 		this.getFirst();
 	}
 
@@ -118,17 +118,17 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 
 	@Override
 	public void windowStateChanged(WindowEvent e) {
-		int s1 = e.getNewState();
-		int qtd = desktopPane.getComponentCount();
-
-		for (int i = 0; i < qtd; i++) {
+		for (int i = 0; i < desktopPane.getComponentCount(); i++) {
 			if (desktopPane.getComponent(i) instanceof InternalFrame) {
 				InternalFrame frame = (InternalFrame) desktopPane.getComponent(i);
 				Dimension jInternalFrameSize = frame.getSize();
-				if (s1 == MainScreen.MAXIMIZED_BOTH) {
-					frame.setLocation((1300 - jInternalFrameSize.width) / 2, (600 - jInternalFrameSize.height) / 2);
-				} else {
-					frame.setLocation(400 - jInternalFrameSize.width / 2, (400 - jInternalFrameSize.height) / 2);
+
+				if (!(e.getOldState() == 6 && e.getNewState() == 7 || e.getOldState() == 7 && e.getNewState() == 6)) {
+					if (e.getNewState() == MainScreen.MAXIMIZED_BOTH) {
+						frame.setLocation((1300 - jInternalFrameSize.width) / 2, (656 - jInternalFrameSize.height) / 2);
+					} else {
+						frame.setLocation(400 - jInternalFrameSize.width / 2, (400 - jInternalFrameSize.height) / 2);
+					}
 				}
 			}
 		}
