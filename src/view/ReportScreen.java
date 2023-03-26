@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentEvent;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,13 +20,15 @@ import objects.images;
 
 @SuppressWarnings("serial")
 public class ReportScreen extends InternalFrame {
-	
+
 	private final JasperManager jasperManager = new JasperManager();
 	private Object[] parameters;
 	private JButton btnRefresh;
-	
+	private JasperViewer jr;
+
 	public ReportScreen(String titulo, Object[] params) {
 		super(titulo, true, true, true, true, 707, 400);
+		this.addComponentListener(this);
 		parameters = params;
 		try {
 			this.initComponents(params);
@@ -39,7 +43,7 @@ public class ReportScreen extends InternalFrame {
 	}
 
 	private JasperViewer getJRViewer(JasperPrint jasperprint) {
-		JasperViewer jr = new JasperViewer(jasperprint);
+		jr = new JasperViewer(jasperprint);
 		jr.setZoomRatio((float) 0.5);
 		jr.getJasperToolbar().add(getBtnRefresh(), 3);
 		return jr;
@@ -55,17 +59,16 @@ public class ReportScreen extends InternalFrame {
 			return getJRViewer(jasperManager.gerarAnalyticalReport(params));
 		}
 	}
-	
+
 	private JButton getBtnRefresh() {
 		btnRefresh = new JButton();
 		btnRefresh.setIcon(images.getInstance().reload());
-		btnRefresh.setPreferredSize(new Dimension(23,23));
+		btnRefresh.setPreferredSize(new Dimension(23, 23));
 		btnRefresh.addActionListener(this);
 		btnRefresh.setActionCommand("reload");
 		return btnRefresh;
 	}
-	
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -80,5 +83,15 @@ public class ReportScreen extends InternalFrame {
 			break;
 		}
 
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		InternalFrame intfr = (InternalFrame) e.getSource();
+		if (intfr.getWidth() == 707 && intfr.getHeight() == 400) {
+			jr.setZoomRatio((float) 0.5);
+		} else {
+			jr.setZoomRatio((float) 1);
+		}
 	}
 }
