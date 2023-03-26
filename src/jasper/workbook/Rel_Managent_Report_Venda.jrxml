@@ -33,12 +33,13 @@ order by [data] asc]]>
 	<columnFooter>
 		<band height="168">
 			<timeSeriesChart>
-				<chart isShowLegend="false" customizerClass="objects.TimeSeriesChart">
+				<chart isShowLegend="true" customizerClass="objects.XYChart">
 					<reportElement uuid="a624309e-9ff9-44b2-b975-9fa3870de474" x="0" y="0" width="556" height="168">
 						<property name="rangeGridlinesVisible" value="false"/>
 						<property name="domainGridlinesVisible" value="false"/>
 						<property name="horTickMarksVisible" value="false"/>
 						<property name="vertTickMarksVisible" value="false"/>
+						<property name="legendVisible" value="false"/>
 					</reportElement>
 					<chartTitle>
 						<font size="12" isBold="true"/>

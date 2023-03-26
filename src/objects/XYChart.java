@@ -7,12 +7,13 @@ import net.sf.jasperreports.engine.JRChart;
 import net.sf.jasperreports.engine.JRChartCustomizer;
 import net.sf.jasperreports.engine.JRPropertiesMap;
 
-public class TimeSeriesChart implements JRChartCustomizer {
+public class XYChart implements JRChartCustomizer {
 
 	private boolean rangeGridlinesVisible = true;
 	private boolean domainGridlinesVisible = true;
 	private boolean horTickMarksVisible = true;
 	private boolean vertTickMarksVisible = true;
+	private boolean legendVisible = true;
 
 	@Override
 	public void customize(JFreeChart chart, JRChart jasperChart) {
@@ -31,6 +32,9 @@ public class TimeSeriesChart implements JRChartCustomizer {
 			if (pm.getProperty("vertTickMarksVisible") != null) {
 				vertTickMarksVisible = Boolean.parseBoolean(pm.getProperty("vertTickMarksVisible"));
 			}
+			if (pm.getProperty("legendVisible") != null) {
+				legendVisible = Boolean.parseBoolean(pm.getProperty("legendVisible"));
+			}
 		}
 
 		XYPlot plot = (XYPlot) chart.getPlot();
@@ -38,6 +42,9 @@ public class TimeSeriesChart implements JRChartCustomizer {
 		plot.setDomainGridlinesVisible(domainGridlinesVisible);
 		plot.getRangeAxis().setTickMarksVisible(horTickMarksVisible);
 		plot.getDomainAxis().setTickMarksVisible(vertTickMarksVisible);
+		
+		chart.getLegend().setVisible(legendVisible);
+		chart.getLegend().setBorder(0, 0, 0, 0);
 	}
 
 }

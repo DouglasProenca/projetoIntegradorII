@@ -12,7 +12,8 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select m.marca
-	  ,max(p.valor) valor
+	  ,avg(p.valor) valor
+	  ,count(*) quantidade
 from rc_produto p
 inner join rc_marca m
 	on m.id = p.marca
@@ -21,6 +22,7 @@ order by valor desc]]>
 	</queryString>
 	<field name="marca" class="java.lang.String"/>
 	<field name="valor" class="java.lang.Double"/>
+	<field name="quantidade" class="java.lang.Integer"/>
 	<title>
 		<band height="20">
 			<staticText>
@@ -28,30 +30,36 @@ order by valor desc]]>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Máxima de Valores por Marca]]></text>
+				<text><![CDATA[Média Valor X Quantidade]]></text>
 			</staticText>
 		</band>
 	</title>
 	<columnFooter>
 		<band height="168">
-			<componentElement>
-				<reportElement uuid="b12315ce-a519-45ab-b540-2000c4edc521" x="0" y="0" width="275" height="168"/>
-				<sc:spiderChart xmlns:sc="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<sc:chartSettings isShowLegend="false" customizerClass="">
-						<chartTitle/>
-						<chartSubtitle/>
-						<chartLegend/>
-					</sc:chartSettings>
-					<sc:spiderDataset>
-						<categorySeries>
-							<seriesExpression><![CDATA["1"]]></seriesExpression>
-							<categoryExpression><![CDATA[$F{marca}]]></categoryExpression>
-							<valueExpression><![CDATA[$F{valor}]]></valueExpression>
-						</categorySeries>
-					</sc:spiderDataset>
-					<sc:spiderPlot isWebFilled="true" backcolor="#FFFFFF"/>
-				</sc:spiderChart>
-			</componentElement>
+			<scatterChart>
+				<chart isShowLegend="true" customizerClass="objects.XYChart">
+					<reportElement uuid="9211114f-675f-4bc9-b8d5-f26777ed8018" x="0" y="0" width="275" height="168">
+						<property name="rangeGridlinesVisible" value="false"/>
+						<property name="domainGridlinesVisible" value="false
+"/>
+						<property name="horTickMarksVisible" value="false"/>
+						<property name="vertTickMarksVisible" value="false"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<xyDataset>
+					<xySeries>
+						<seriesExpression><![CDATA[$F{marca}]]></seriesExpression>
+						<xValueExpression><![CDATA[$F{quantidade}]]></xValueExpression>
+						<yValueExpression><![CDATA[$F{valor}]]></yValueExpression>
+					</xySeries>
+				</xyDataset>
+				<scatterPlot>
+					<plot/>
+				</scatterPlot>
+			</scatterChart>
 		</band>
 	</columnFooter>
 </jasperReport>
