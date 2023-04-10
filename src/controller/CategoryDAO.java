@@ -64,7 +64,6 @@ public class CategoryDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return null;
         }
         return categoryList;
     }
@@ -98,7 +97,6 @@ public class CategoryDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return null;
         }
         return categoryList;
     }

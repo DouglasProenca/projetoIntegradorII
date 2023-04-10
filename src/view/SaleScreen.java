@@ -19,8 +19,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -81,12 +79,12 @@ public class SaleScreen extends InternalFrame {
 	private int id_cliente;
 	private final SpinnerNumberInt spinner = new SpinnerNumberInt();
 
-	public SaleScreen() {
+	public SaleScreen() throws ParseException {
 		super("Nova Venda", false, true, false, true, 800, 600);
 		this.initComponents();
 	}
 
-	private void initComponents() {
+	private void initComponents() throws ParseException {
 		this.setLayout(null);
 		this.add(getPanelOne());
 		this.add(getPanelTwo());
@@ -97,7 +95,7 @@ public class SaleScreen extends InternalFrame {
 		this.loadTable("All");
 	}
 
-	private JPanel getPanelOne() {
+	private JPanel getPanelOne() throws ParseException {
 		panelOne = new JPanel(null);
 		panelOne.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
 		panelOne.setBounds(10, 10, 310, 150);
@@ -137,12 +135,8 @@ public class SaleScreen extends InternalFrame {
 		return lblPanelOneCPF;
 	}
 
-	private JFormattedTextField getTxtPanelOneCPF() {
-		try {
-			txtPanelOneCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
-		} catch (ParseException ex) {
-			Logger.getLogger(SaleScreen.class.getName()).log(Level.SEVERE, null, ex);
-		}
+	private JFormattedTextField getTxtPanelOneCPF() throws ParseException {
+		txtPanelOneCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
 		txtPanelOneCPF.setBounds(50, 70, 250, 20);
 		return txtPanelOneCPF;
 	}

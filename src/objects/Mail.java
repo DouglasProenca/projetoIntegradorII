@@ -48,17 +48,13 @@ public class Mail {
 		return s;
 	}
 
-	private MimeMessage getMessage(String emailDestinatario, String assunto,Multipart mp) {
+	private MimeMessage getMessage(String emailDestinatario, String assunto, Multipart mp) throws MessagingException {
 		MimeMessage message = new MimeMessage(getSession());
-		try {
-			message.setFrom(new InternetAddress(User.getInstance().getMail()));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailDestinatario));
-			message.setSubject(assunto);
-			message.setSentDate(new Date());
-			message.setContent(mp);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
+		message.setFrom(new InternetAddress(User.getInstance().getMail()));
+		message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailDestinatario));
+		message.setSubject(assunto);
+		message.setSentDate(new Date());
+		message.setContent(mp);
 		return message;
 	}
 
@@ -84,7 +80,7 @@ public class Mail {
 			}
 
 			// send message
-			Transport.send(getMessage(emailDestinatario,assunto,mp));
+			Transport.send(getMessage(emailDestinatario, assunto, mp));
 		} catch (MessagingException e) {
 			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), e.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);

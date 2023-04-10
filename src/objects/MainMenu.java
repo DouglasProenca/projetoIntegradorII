@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JColorChooser;
@@ -212,7 +213,7 @@ public class MainMenu extends Menu {
 				userScreen.setVisible(true);
 				break;
 			}
-		} catch (IOException ex) {
+		} catch (IOException | ParseException ex) {
 			Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_Managent_Report_Venda" pageWidth="555" pageHeight="556" orientation="Landscape" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1137c2e6-a2bc-4f82-819d-a5e36ec54b64">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="0.75"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="cabecalho" class="java.lang.String"/>
@@ -11,14 +11,50 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select count(*) quantidade
-      , [data]
+		<![CDATA[exec('
+declare @minData datetime
+	  , @maxData datetime
+	  , @contador int
+	  , @aux int
+
+select @minData = min([data])
+	 , @maxData = max([data])
 from rc_venda
-group by [data]
-order by [data] asc]]>
+
+select @contador = DATEDIFF(m,@minData,@maxData)
+
+select @maxData [data]
+into #datas
+
+while @contador > 0
+begin
+
+insert #datas
+select DATEADD(MONTH,-@contador,@maxData)
+
+select @contador = @contador - 1
+
+end
+
+select isnull(count(v.id),0) quantidade
+      , max(d.[data]) [data]
+	  , isnull(sum(total),0) valor
+from rc_venda v
+right join #datas d
+	on month(d.[data]) = month(v.[data])
+	and year(d.[data]) = year(v.[data])
+group by month(d.[data])
+	  , year(d.[data])
+	  , d.[data]
+order by month(d.[data]) asc
+	  , year(d.[data]) asc
+
+drop table #datas
+')]]>
 	</queryString>
 	<field name="data" class="java.util.Date"/>
 	<field name="quantidade" class="java.lang.Integer"/>
+	<field name="valor" class="java.math.BigDecimal"/>
 	<title>
 		<band height="20">
 			<staticText>
@@ -32,34 +68,83 @@ order by [data] asc]]>
 	</title>
 	<columnFooter>
 		<band height="168">
-			<timeSeriesChart>
-				<chart isShowLegend="true" customizerClass="objects.XYChart">
-					<reportElement uuid="a624309e-9ff9-44b2-b975-9fa3870de474" x="0" y="0" width="556" height="168">
-						<property name="rangeGridlinesVisible" value="false"/>
-						<property name="domainGridlinesVisible" value="false"/>
-						<property name="horTickMarksVisible" value="false"/>
-						<property name="vertTickMarksVisible" value="false"/>
-						<property name="legendVisible" value="false"/>
-					</reportElement>
-					<chartTitle>
-						<font size="12" isBold="true"/>
-					</chartTitle>
+			<multiAxisChart>
+				<chart>
+					<reportElement uuid="c31fb7cd-0d7d-43e4-965f-e8c5fff7635b" x="0" y="0" width="555" height="168"/>
+					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
-				<timeSeriesDataset timePeriod="Month">
-					<timeSeries>
-						<seriesExpression><![CDATA["1"]]></seriesExpression>
-						<timePeriodExpression><![CDATA[$F{data}]]></timePeriodExpression>
-						<valueExpression><![CDATA[$F{quantidade}]]></valueExpression>
-					</timeSeries>
-				</timeSeriesDataset>
-				<timeSeriesPlot isShowShapes="false">
-					<plot>
-						<seriesColor seriesOrder="0" color="#50005C"/>
-					</plot>
-				</timeSeriesPlot>
-			</timeSeriesChart>
+				<multiAxisPlot>
+					<plot/>
+					<axis position="leftOrTop">
+						<timeSeriesChart>
+							<chart customizerClass="objects.XYChart">
+								<reportElement uuid="33145540-8fb5-4ffb-88d8-b73e63251b20" x="0" y="0" width="0" height="0" backcolor="#FFFFFF">
+									<property name="rangeGridlinesVisible" value="false"/>
+									<property name="domainGridlinesVisible" value="false"/>
+									<property name="horTickMarksVisible" value="false"/>
+									<property name="vertTickMarksVisible" value="false"/>
+									<property name="legendVisible" value="false"/>
+									<property name="label" value="Quantidade"/>
+								</reportElement>
+								<chartTitle color="#000000"/>
+								<chartSubtitle color="#000000"/>
+								<chartLegend textColor="#000000" backgroundColor="#FFFFFF"/>
+							</chart>
+							<timeSeriesDataset timePeriod="Month">
+								<timeSeries>
+									<seriesExpression><![CDATA["1"]]></seriesExpression>
+									<timePeriodExpression><![CDATA[$F{data}]]></timePeriodExpression>
+									<valueExpression><![CDATA[$F{quantidade}]]></valueExpression>
+								</timeSeries>
+							</timeSeriesDataset>
+							<timeSeriesPlot isShowShapes="false">
+								<plot>
+									<seriesColor seriesOrder="0" color="#702254"/>
+									<seriesColor seriesOrder="1" color="#A8337D"/>
+									<seriesColor seriesOrder="2" color="#E669B9"/>
+									<seriesColor seriesOrder="3" color="#EC8FCA"/>
+									<seriesColor seriesOrder="4" color="#F3B4DC"/>
+								</plot>
+							</timeSeriesPlot>
+						</timeSeriesChart>
+					</axis>
+					<axis position="rightOrBottom">
+						<timeSeriesChart>
+							<chart customizerClass="objects.XYChart">
+								<reportElement uuid="941c1109-ea60-4933-9087-c287b9f75b70" x="0" y="0" width="0" height="0" backcolor="#FFFFFF">
+									<property name="xyRenderer" value="true"/>
+									<property name="vertTickMarksVisible" value="false"/>
+									<property name="horTickMarksVisible" value="false"/>
+									<property name="domainGridlinesVisible" value="false"/>
+									<property name="rangeGridlinesVisible" value="false"/>
+									<property name="legendVisible" value="false"/>
+									<property name="label" value="Valor"/>
+								</reportElement>
+								<chartTitle color="#000000"/>
+								<chartSubtitle color="#000000"/>
+								<chartLegend textColor="#000000" backgroundColor="#FFFFFF"/>
+							</chart>
+							<timeSeriesDataset timePeriod="Month">
+								<timeSeries>
+									<seriesExpression><![CDATA["1"]]></seriesExpression>
+									<timePeriodExpression><![CDATA[$F{data}]]></timePeriodExpression>
+									<valueExpression><![CDATA[$F{valor}]]></valueExpression>
+								</timeSeries>
+							</timeSeriesDataset>
+							<timeSeriesPlot isShowShapes="false">
+								<plot>
+									<seriesColor seriesOrder="0" color="#A8337D"/>
+									<seriesColor seriesOrder="1" color="#E669B9"/>
+									<seriesColor seriesOrder="2" color="#EC8FCA"/>
+									<seriesColor seriesOrder="3" color="#F3B4DC"/>
+								</plot>
+							</timeSeriesPlot>
+						</timeSeriesChart>
+					</axis>
+				</multiAxisPlot>
+			</multiAxisChart>
 		</band>
 	</columnFooter>
 </jasperReport>

@@ -81,7 +81,7 @@ public class MenuHelp extends Menu {
                     CalendarScreen calendar = new CalendarScreen();
                     calendar.setVisible(true);
             }
-        } catch (URISyntaxException | IOException ex) {
+        } catch ( URISyntaxException | IOException ex) {
             Logger.getLogger(MenuHelp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

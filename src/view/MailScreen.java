@@ -20,7 +20,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 
 @SuppressWarnings("serial")
-public class MailScreen extends InternalFrame {
+public class MailScreen extends InternalFrame implements Runnable {
 
 	private JButton btnsend;
 	private JButton btnAnexFile;
@@ -141,22 +141,15 @@ public class MailScreen extends InternalFrame {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "enviar":
-			boolean ret = false;
 			if (!txtAssunto.getText().equals("") && !txtCorpo.getText().equals("")) {
 				progressBar.setVisible(true);
-				Thread t = new Thread(() -> {
-					mail.enviarGmail(txtDestinatario.getText(), txtAssunto.getText(), txtCorpo.getText(),
-							txtCaminhoFile.getText());
-				});
-				t.start();
-				ret = true;
+				new Thread(this).start();
+				
+				JOptionPane.showMessageDialog(this, "Email enviado com sucesso!");
+				progressBar.setVisible(false);
 			} else {
 				JOptionPane.showMessageDialog(this, "Campos de Assunto e Corpo do E-mail não podem estar Vazios!",
 						"Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-				progressBar.setVisible(false);
-			}
-			if (ret) {
-				JOptionPane.showMessageDialog(this, "Email enviado com sucesso!");
 				progressBar.setVisible(false);
 			}
 			break;
@@ -167,5 +160,11 @@ public class MailScreen extends InternalFrame {
 			}
 			break;
 		}
+	}
+
+	@Override
+	public void run() {
+		mail.enviarGmail(txtDestinatario.getText(), txtAssunto.getText(), txtCorpo.getText(),
+				txtCaminhoFile.getText());
 	}
 }

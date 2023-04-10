@@ -40,8 +40,7 @@ order by valor desc]]>
 				<chart isShowLegend="true" customizerClass="objects.XYChart">
 					<reportElement uuid="9211114f-675f-4bc9-b8d5-f26777ed8018" x="0" y="0" width="275" height="168">
 						<property name="rangeGridlinesVisible" value="false"/>
-						<property name="domainGridlinesVisible" value="false
-"/>
+						<property name="domainGridlinesVisible" value="false "/>
 						<property name="horTickMarksVisible" value="false"/>
 						<property name="vertTickMarksVisible" value="false"/>
 					</reportElement>
@@ -57,7 +56,13 @@ order by valor desc]]>
 					</xySeries>
 				</xyDataset>
 				<scatterPlot>
-					<plot/>
+					<plot>
+						<seriesColor seriesOrder="0" color="#702254"/>
+						<seriesColor seriesOrder="1" color="#A8337D"/>
+						<seriesColor seriesOrder="2" color="#E669B9"/>
+						<seriesColor seriesOrder="3" color="#EC8FCA"/>
+						<seriesColor seriesOrder="4" color="#F3B4DC"/>
+					</plot>
 				</scatterPlot>
 			</scatterChart>
 		</band>

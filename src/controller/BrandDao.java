@@ -32,7 +32,7 @@ public final class BrandDao implements DAO {
             PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_marca WHERE id = ?");
             instrucaoSQL.setInt(1, id);
 
-            instrucaoSQL.executeUpdate();
+             instrucaoSQL.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
@@ -60,7 +60,6 @@ public final class BrandDao implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return null;
         }
         return listCountry;
     }
@@ -144,7 +143,6 @@ public final class BrandDao implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return null;
         }
         return brandList;
     }
@@ -181,7 +179,6 @@ public final class BrandDao implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return null;
         }
         return listaClientes;
     }

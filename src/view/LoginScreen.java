@@ -89,27 +89,25 @@ public class LoginScreen extends InternalFrame {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Confirmar":
-                UserDAO.getInstance().getBy(txtUsuario.getText());
-                boolean senhaOk;
-                try {
-                    senhaOk = Utils.verificarSenha((String.valueOf(txtSenha.getPassword())), User.getInstance().getPassword());
-                } catch (NullPointerException ex) {
-                    JOptionPane.showMessageDialog(this, "Usuário não encontrado", "Aviso de Falha de Acesso",
-                            JOptionPane.ERROR_MESSAGE);
-                    break;
-                }
-                if (senhaOk) {
+            	    UserDAO.getInstance().getBy(txtUsuario.getText());
+                	if(User.getInstance().getPassword() == null) {
+                		 JOptionPane.showMessageDialog(this,"Usuário não encontrado!", "Aviso de Falha de Acesso",
+                                 JOptionPane.ERROR_MESSAGE);
+                		 return;
+                	}
+                    if(!Utils.verificarSenha((String.valueOf(txtSenha.getPassword())), User.getInstance().getPassword())) {
+                    	JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Aviso de Falha de Acesso",
+                                JOptionPane.ERROR_MESSAGE);
+                    	return;
+                    }
+                    
                     lockMenu(true);
                     PopUpMenu.lockMenu(true);
-                    super.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Aviso de Falha de Acesso",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+                    this.dispose();
                 break;
         }
     }
-
+    
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {

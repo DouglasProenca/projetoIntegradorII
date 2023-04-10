@@ -3,6 +3,7 @@ package view;
 import objects.images;
 import objects.ConnectionManager;
 import objects.InternalFrame;
+import objects.PropertiesSystem;
 import objects.TextField;
 
 import java.awt.Color;
@@ -36,6 +37,7 @@ public class BackupScreen extends InternalFrame {
     private JLabel lblImagem;
     private JPanel painel;
     private final ConnectionManager connectionManager = ConnectionManager.getInstance();
+    private final PropertiesSystem ps = new PropertiesSystem();
 
     public BackupScreen() {
         super("Backup Banco de Dados", false, true, false, true, 379, 325);
@@ -126,7 +128,7 @@ public class BackupScreen extends InternalFrame {
                         try {
                             Connection conexao = connectionManager.getConexao();
                             PreparedStatement instrucaoSQL = conexao.prepareStatement(
-                                    "BACKUP DATABASE [cr7imports] TO  DISK = N'" + arquivo + "' WITH NOFORMAT, NOINIT,  NAME = N'sistema-Completo Banco de Dados Backup', SKIP, NOREWIND, NOUNLOAD,  STATS = 10");
+                                    "BACKUP DATABASE ["+ps.getDatabase()+"] TO  DISK = '" + arquivo + "' WITH FORMAT NAME = 'Backup'");
                             instrucaoSQL.executeUpdate();
                             progbarProgresso.setMaximum(2);
                             progbarProgresso.setValue(100);

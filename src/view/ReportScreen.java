@@ -44,7 +44,7 @@ public class ReportScreen extends InternalFrame {
 
 	private JasperViewer getJRViewer(JasperPrint jasperprint) {
 		jr = new JasperViewer(jasperprint);
-		jr.setZoomRatio((float) 0.5);
+		zoomJasper(jr, this.getWidth(), this.getHeight());
 		jr.getJasperToolbar().add(getBtnRefresh(), 3);
 		return jr;
 	}
@@ -69,6 +69,14 @@ public class ReportScreen extends InternalFrame {
 		return btnRefresh;
 	}
 
+	private void zoomJasper(JasperViewer jasperViwer, int width, int height) {
+		if (width == 707 && height == 400) {
+			jasperViwer.setZoomRatio((float) 0.5);
+		} else {
+			jasperViwer.setZoomRatio((float) 1);
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -88,10 +96,6 @@ public class ReportScreen extends InternalFrame {
 	@Override
 	public void componentResized(ComponentEvent e) {
 		InternalFrame intfr = (InternalFrame) e.getSource();
-		if (intfr.getWidth() == 707 && intfr.getHeight() == 400) {
-			jr.setZoomRatio((float) 0.5);
-		} else {
-			jr.setZoomRatio((float) 1);
-		}
+		zoomJasper(jr, intfr.getWidth(), intfr.getHeight());
 	}
 }

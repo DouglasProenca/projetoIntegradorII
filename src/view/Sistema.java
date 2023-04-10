@@ -9,7 +9,7 @@ public final class Sistema {
             LookAndFeelScreen.initLookAndFeel();
             IntroScreen introScreen = new IntroScreen();
             introScreen.setVisible(true);
-        };
+        }; 
         SwingUtilities.invokeLater(r);
     }
 }

@@ -167,7 +167,6 @@ public class ProductDAO implements DAO {
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
-			return null;
 		}
 		return productList;
 	}

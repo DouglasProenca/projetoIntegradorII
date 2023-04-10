@@ -60,7 +60,6 @@ public class UserDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return null;
         }
         return userList;
     }
@@ -146,7 +145,6 @@ public class UserDAO implements DAO {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
                     "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return null;
         }
         return listaUser;
     }

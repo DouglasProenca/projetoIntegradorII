@@ -2,6 +2,7 @@ package objects;
 
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYAreaRenderer;
 
 import net.sf.jasperreports.engine.JRChart;
 import net.sf.jasperreports.engine.JRChartCustomizer;
@@ -14,6 +15,8 @@ public class XYChart implements JRChartCustomizer {
 	private boolean horTickMarksVisible = true;
 	private boolean vertTickMarksVisible = true;
 	private boolean legendVisible = true;
+	private boolean xyRenderer = false;
+	private String label = "";
 
 	@Override
 	public void customize(JFreeChart chart, JRChart jasperChart) {
@@ -35,14 +38,24 @@ public class XYChart implements JRChartCustomizer {
 			if (pm.getProperty("legendVisible") != null) {
 				legendVisible = Boolean.parseBoolean(pm.getProperty("legendVisible"));
 			}
+			if (pm.getProperty("xyRenderer") != null) {
+				xyRenderer = Boolean.parseBoolean(pm.getProperty("xyRenderer"));
+			}
+			if (pm.getProperty("label") != null) {
+				label = pm.getProperty("label");
+			}
 		}
 
 		XYPlot plot = (XYPlot) chart.getPlot();
+		if (xyRenderer) {
+			plot.setRenderer(new XYAreaRenderer());
+		}
 		plot.setRangeGridlinesVisible(rangeGridlinesVisible);
 		plot.setDomainGridlinesVisible(domainGridlinesVisible);
 		plot.getRangeAxis().setTickMarksVisible(horTickMarksVisible);
 		plot.getDomainAxis().setTickMarksVisible(vertTickMarksVisible);
-		
+		plot.getRangeAxis().setLabel(label);
+
 		chart.getLegend().setVisible(legendVisible);
 		chart.getLegend().setBorder(0, 0, 0, 0);
 	}

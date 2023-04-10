@@ -60,7 +60,6 @@ public class LookAndFeelScreen extends InternalFrame {
 		UIManager.installLookAndFeel(new FlatDarculaLaf().getName(), "com.formdev.flatlaf.FlatDarculaLaf");
 		UIManager.installLookAndFeel(new FlatLightLaf().getName(), "com.formdev.flatlaf.FlatLightLaf");
 		return UIManager.getInstalledLookAndFeels();
-
 	}
 
 	@Override

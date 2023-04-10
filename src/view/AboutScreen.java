@@ -19,13 +19,9 @@ public class AboutScreen extends InternalFrame {
 	protected JTable tblResultado;
 	private LinkedHashMap<String, Object> infos;
 
-	public AboutScreen() {
+	public AboutScreen() throws UnknownHostException {
 		super("Informações", false, true, true, true, 549, 260);
-		try {
-			initComponents();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
+		initComponents();
 	}
 
 	private void initComponents() throws UnknownHostException {
@@ -63,5 +59,4 @@ public class AboutScreen extends InternalFrame {
 			modelo.addRow(new Object[] { entry.getKey(), entry.getValue() });
 		};
 	}
-
 }
