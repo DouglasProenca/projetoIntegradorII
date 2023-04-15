@@ -142,7 +142,6 @@ public class MailScreen extends InternalFrame implements Runnable {
 		switch (e.getActionCommand()) {
 		case "enviar":
 			if (!txtAssunto.getText().equals("") && !txtCorpo.getText().equals("")) {
-				progressBar.setVisible(true);
 				new Thread(this).start();
 				
 				JOptionPane.showMessageDialog(this, "Email enviado com sucesso!");
@@ -164,6 +163,7 @@ public class MailScreen extends InternalFrame implements Runnable {
 
 	@Override
 	public void run() {
+		progressBar.setVisible(true);
 		mail.enviarGmail(txtDestinatario.getText(), txtAssunto.getText(), txtCorpo.getText(),
 				txtCaminhoFile.getText());
 	}

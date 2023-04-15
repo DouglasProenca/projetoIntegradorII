@@ -3,6 +3,8 @@ package view;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -50,6 +52,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	private JButton btnImportExcel;
 	private final Excel excel = new Excel();
 	private final BrandDao dao = BrandDao.getInstance();
+	Vector<Integer> id_pais = new Vector<Integer>();
 
 	public RegistrationBrandScreen() {
 		super("Cadastrar", false, true, false, false, 500, 400);
@@ -129,8 +132,10 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	private JComboBox<String> getJboCountry() {
 		jboCountry = new JComboBox<>();
 		jboCountry.setBounds(100, 80, 350, 25);
-		dao.AllCountry().stream().map((p) -> p.getPais()).forEachOrdered((String usu) -> {
-			jboCountry.addItem(usu);
+		
+		dao.AllCountry().stream().forEachOrdered((p) -> {
+			id_pais.addElement(p.getId());
+			jboCountry.addItem(p.getPais());
 		});
 		return jboCountry;
 	}
@@ -195,7 +200,8 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "save":
-			Brand objMarca = new Brand(0, txtBrand.getText(), jboCountry.getSelectedItem().toString(), new Date(),
+			
+			Brand objMarca = new Brand(0, txtBrand.getText(), String.valueOf(id_pais.get(jboCountry.getSelectedIndex())), new Date(),
 					String.valueOf(User.getInstance().getId()));
 			if (dao.save(objMarca)) {
 				JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
@@ -203,7 +209,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 			}
 			break;
 		case "alter":
-			Brand objMarcaAlt = new Brand(id, txtBrand.getText(), jboCountry.getSelectedItem().toString(), new Date(),
+			Brand objMarcaAlt = new Brand(id, txtBrand.getText(),String.valueOf(id_pais.get(jboCountry.getSelectedIndex())), new Date(),
 					String.valueOf(User.getInstance().getId()));
 			dao.alter(objMarcaAlt);
 			this.dispose();

@@ -61,7 +61,16 @@ public class Brand extends Object {
 	public void setUser(String user) {
 		this.user = user;
 	}
+	
+	public String ComboboxPais() {
+		return pais;
+	}
 
+
+	public String tooString() {
+		return id + ";" + marca + ";" + pais + ";" + date + ";" + user + ";";
+	}
+	
 	@Override
 	public String toString() {
 		return id + ";" + marca + ";" + pais + ";" + date + ";" + user + ";";

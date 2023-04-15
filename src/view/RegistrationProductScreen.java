@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -71,6 +72,8 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 	private final Excel excel = new Excel();
 	private JLabel lblFoto;
 	private JLabel lblImagem;
+	Vector<Integer> id_marca = new Vector<Integer>();
+	Vector<Integer> id_categoria = new Vector<Integer>();
 
 	public RegistrationProductScreen() {
 		super("Cadastrar", false, true, false, false, 700, 400);
@@ -149,8 +152,9 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 	private JComboBox<String> getJboBrand() {
 		jboBrand = new JComboBox<>();
 		jboBrand.setBounds(410, 30, 230, 25);
-		dao.getAll().stream().map((p) -> p.getMarca()).forEachOrdered((usu) -> {
-			jboBrand.addItem(usu);
+		dao.getAll().stream().forEachOrdered((usu) -> {
+			id_marca.addElement(usu.getId());
+			jboBrand.addItem(usu.getMarca());
 		});
 		return jboBrand;
 	}
@@ -158,8 +162,10 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 	private JComboBox<String> getJboCategoria() {
 		jboCategoria = new JComboBox<>();
 		jboCategoria.setBounds(100, 100, 230, 25);
-		daoc.getAll().stream().map((p) -> p.getCategoria()).forEachOrdered((usu) -> {
-			jboCategoria.addItem(usu);
+
+		daoc.getAll().stream().forEachOrdered((usu) -> {
+			id_categoria.addElement(usu.getId());
+			jboCategoria.addItem(usu.getCategoria());
 		});
 		return jboCategoria;
 	}
@@ -281,9 +287,10 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 		switch (e.getActionCommand()) {
 		case "save":
 			Product objProduct = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()),
-					Integer.parseInt(txtQuantidade.getValue().toString()), jboCategoria.getSelectedItem().toString(), 0,
-					jboBrand.getSelectedItem().toString(), null, new Date(), String.valueOf(User.getInstance().getId()),
-					lblImagem.getIcon() == null ? null
+					Integer.parseInt(txtQuantidade.getValue().toString()),
+					String.valueOf(id_categoria.get(jboCategoria.getSelectedIndex())), 0,
+					String.valueOf(id_marca.get(jboBrand.getSelectedIndex())), null, new Date(),
+					String.valueOf(User.getInstance().getId()), lblImagem.getIcon() == null ? null
 							: Utils.getImgBytes(Utils.iconToBufferedImage(lblImagem.getIcon())));
 			if (daop.save(objProduct)) {
 				JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
@@ -292,8 +299,9 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 			break;
 		case "alter":
 			Product objMarcaAlt = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()),
-					Integer.parseInt(txtQuantidade.getValue().toString()), jboCategoria.getSelectedItem().toString(),
-					id, jboBrand.getSelectedItem().toString(), null, new Date(),
+					Integer.parseInt(txtQuantidade.getValue().toString()),
+					String.valueOf(id_categoria.get(jboCategoria.getSelectedIndex())), id,
+					String.valueOf(id_marca.get(jboBrand.getSelectedIndex())), null, new Date(),
 					String.valueOf(User.getInstance().getId()), lblImagem.getIcon() == null ? null
 							: Utils.getImgBytes(Utils.iconToBufferedImage(lblImagem.getIcon())));
 			daop.alter(objMarcaAlt);

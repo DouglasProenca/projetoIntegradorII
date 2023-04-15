@@ -81,15 +81,15 @@ public class ProductDAO implements DAO {
 			Connection conexao = ConnectionManager.getInstance().getConexao();
 
 			PreparedStatement instrucaoSQL = conexao.prepareStatement(
-					"insert into rc_produto values(?,(select id from rc_marca where marca = ?),?,?,?,?,(select id from rc_categoria where categoria = ?),?)");
+					"insert into rc_produto values(?,?,?,?,?,?,?,?)");
 
 			instrucaoSQL.setString(1, product.getNome());
-			instrucaoSQL.setString(2, product.getMarca());
+			instrucaoSQL.setInt(2, Integer.valueOf(product.getMarca()));
 			instrucaoSQL.setFloat(3, product.getValor());
 			instrucaoSQL.setInt(4, product.getQuantidade());
 			instrucaoSQL.setDate(5, new java.sql.Date(product.getDate().getTime()));
 			instrucaoSQL.setInt(6, Integer.valueOf(product.getUser()));
-			instrucaoSQL.setString(7, product.getCategoria());
+			instrucaoSQL.setInt(7, Integer.valueOf(product.getCategoria()));
 			instrucaoSQL.setBytes(8, product.getImagem());
 
 			instrucaoSQL.executeUpdate();
@@ -110,15 +110,15 @@ public class ProductDAO implements DAO {
 			Connection conexao = ConnectionManager.getInstance().getConexao();
 
 			PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_produto SET nome=?\n"
-					+ ",marca=(select id from rc_marca where marca=?),valor=?,quantidade=?,\n"
-					+ "categoria = (select id from rc_categoria where categoria=?),[user]=?, imagem=?\n"
+					+ ",marca= ?,valor=?,quantidade=?,\n"
+					+ "categoria = ?,[user]=?, imagem=?\n"
 					+ "WHERE id = ?");
 
 			instrucaoSQL.setString(1, product.getNome());
-			instrucaoSQL.setString(2, product.getMarca());
+			instrucaoSQL.setInt(2, Integer.valueOf(product.getMarca()));
 			instrucaoSQL.setFloat(3, product.getValor());
 			instrucaoSQL.setInt(4, product.getQuantidade());
-			instrucaoSQL.setString(5, product.getCategoria());
+			instrucaoSQL.setInt(5, Integer.valueOf(product.getCategoria()));
 			instrucaoSQL.setInt(6, Integer.valueOf(product.getUser()));
 			instrucaoSQL.setBytes(7, product.getImagem());
 			instrucaoSQL.setInt(8, product.getId());
