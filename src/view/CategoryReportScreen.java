@@ -40,7 +40,7 @@ public class CategoryReportScreen extends BrandReportScreen {
         modelo.setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
         CategoryDAO.getInstance().getAll().forEach((p) -> {
-           modelo.addRow(new Object[]{p.getId(), p.getCategoria(), sdf1.format(p.getDate()), p.getUser()});
+           modelo.addRow(new Object[]{p.getCategory_id(), p.getCategory_name(), sdf1.format(p.getDate()), p.getUser()});
         });
     }
 
@@ -71,7 +71,7 @@ public class CategoryReportScreen extends BrandReportScreen {
 			modelo.setRowCount(0);
 			SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
 			dao.getBy(txtPesquisa.getText()).forEach((p) -> {
-				modelo.addRow(new Object[] { p.getId(), p.getCategoria(), sdf1.format(p.getDate()), p.getUser() });
+				modelo.addRow(new Object[] { p.getCategory_id(), p.getCategory_name(), sdf1.format(p.getDate()), p.getUser() });
 			});
 			break;
 		}

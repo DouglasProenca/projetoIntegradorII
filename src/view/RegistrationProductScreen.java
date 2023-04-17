@@ -83,13 +83,13 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 	public RegistrationProductScreen(Product product) {
 		super("Alterar", false, true, false, false, 700, 400);
 		this.initComponents(true);
-		this.txtProduct.setText(product.getNome());
-		this.jboBrand.setSelectedItem(product.getMarca());
-		this.txtValor.setText(String.valueOf(product.getValor()));
-		this.txtQuantidade.setValue(product.getQuantidade());
-		this.id = product.getId();
-		this.lblImagem.setIcon(
-				product.getImagem() == null ? null : new ImageIcon(Utils.exibiImagemLabel(product.getImagem())));
+		this.txtProduct.setText(product.getProduct_name());
+		this.jboBrand.setSelectedItem(product.getBrand_name());
+		this.txtValor.setText(String.valueOf(product.getProduct_valor()));
+		this.txtQuantidade.setValue(product.getProduct_qtd());
+		this.id = product.getProduct_id();
+		this.lblImagem.setIcon(product.getProduct_img() == null ? null
+				: new ImageIcon(Utils.exibiImagemLabel(product.getProduct_img())));
 	}
 
 	private void initComponents(boolean type) {
@@ -152,9 +152,9 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 	private JComboBox<String> getJboBrand() {
 		jboBrand = new JComboBox<>();
 		jboBrand.setBounds(410, 30, 230, 25);
-		dao.getAll().stream().forEachOrdered((usu) -> {
-			id_marca.addElement(usu.getId());
-			jboBrand.addItem(usu.getMarca());
+		dao.getAll().stream().forEachOrdered((brand) -> {
+			id_marca.addElement(brand.getBrand_id());
+			jboBrand.addItem(brand.getBrand_name());
 		});
 		return jboBrand;
 	}
@@ -163,9 +163,9 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 		jboCategoria = new JComboBox<>();
 		jboCategoria.setBounds(100, 100, 230, 25);
 
-		daoc.getAll().stream().forEachOrdered((usu) -> {
-			id_categoria.addElement(usu.getId());
-			jboCategoria.addItem(usu.getCategoria());
+		daoc.getAll().stream().forEachOrdered((cate) -> {
+			id_categoria.addElement(cate.getCategory_id());
+			jboCategoria.addItem(cate.getCategory_name());
 		});
 		return jboCategoria;
 	}
@@ -288,20 +288,20 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 		case "save":
 			Product objProduct = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()),
 					Integer.parseInt(txtQuantidade.getValue().toString()),
-					String.valueOf(id_categoria.get(jboCategoria.getSelectedIndex())), 0,
-					String.valueOf(id_marca.get(jboBrand.getSelectedIndex())), null, new Date(),
-					String.valueOf(User.getInstance().getId()), lblImagem.getIcon() == null ? null
+					id_categoria.get(jboCategoria.getSelectedIndex()), id_marca.get(jboBrand.getSelectedIndex()),
+					new Date(), String.valueOf(User.getInstance().getId()), lblImagem.getIcon() == null ? null
 							: Utils.getImgBytes(Utils.iconToBufferedImage(lblImagem.getIcon())));
+
 			if (daop.save(objProduct)) {
 				JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
 				this.dispose();
 			}
 			break;
 		case "alter":
-			Product objMarcaAlt = new Product(txtProduct.getText(), Float.parseFloat(txtValor.getText()),
+			Product objMarcaAlt = new Product(id,txtProduct.getText(), Float.parseFloat(txtValor.getText()),
 					Integer.parseInt(txtQuantidade.getValue().toString()),
-					String.valueOf(id_categoria.get(jboCategoria.getSelectedIndex())), id,
-					String.valueOf(id_marca.get(jboBrand.getSelectedIndex())), null, new Date(),
+					id_categoria.get(jboCategoria.getSelectedIndex()),
+					id_marca.get(jboBrand.getSelectedIndex()), new Date(),
 					String.valueOf(User.getInstance().getId()), lblImagem.getIcon() == null ? null
 							: Utils.getImgBytes(Utils.iconToBufferedImage(lblImagem.getIcon())));
 			daop.alter(objMarcaAlt);
@@ -324,7 +324,7 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 			break;
 		case "delete":
 			String nome = tblExcel.getModel().getValueAt(tblExcel.getSelectedRow(), 0).toString();
-			productsList.removeIf((p) -> p.getNome().equals(nome));
+			productsList.removeIf((p) -> p.getProduct_name().equals(nome));
 			CarregarJTable(productsList);
 			break;
 		case "saveExcel":
@@ -349,8 +349,8 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 		DefaultTableModel modelo = (DefaultTableModel) tblExcel.getModel();
 		modelo.setRowCount(0);
 		productsList.forEach((p) -> {
-			modelo.addRow(
-					new Object[] { p.getNome(), p.getValor(), p.getMarca(), p.getCategoria(), p.getQuantidade() });
+			modelo.addRow(new Object[] { p.getProduct_name(), p.getProduct_valor(), p.getBrand_name(),
+					p.getCategory_name(), p.getProduct_qtd() });
 		});
 	}
 

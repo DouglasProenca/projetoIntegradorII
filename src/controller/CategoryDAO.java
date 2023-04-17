@@ -109,7 +109,7 @@ public class CategoryDAO implements DAO {
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_categoria values(?,?,?)");
 
-            instrucaoSQL.setString(1, category.getCategoria().toUpperCase());
+            instrucaoSQL.setString(1, category.getCategory_name().toUpperCase());
             instrucaoSQL.setDate(2, new java.sql.Date(category.getDate().getTime()));
             instrucaoSQL.setInt(3, Integer.valueOf(category.getUser()));
 
@@ -132,9 +132,9 @@ public class CategoryDAO implements DAO {
             PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_categoria SET categoria=?,[user]=?\n"
                     + "WHERE id = ?");
 
-            instrucaoSQL.setString(1, category.getCategoria().toUpperCase());
+            instrucaoSQL.setString(1, category.getCategory_name().toUpperCase());
             instrucaoSQL.setInt(2, Integer.valueOf(category.getUser()));
-            instrucaoSQL.setInt(3, category.getId());
+            instrucaoSQL.setInt(3, category.getCategory_id());
 
             instrucaoSQL.executeUpdate();
 

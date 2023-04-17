@@ -6,6 +6,7 @@ import view.MainScreen;
 import objects.ConnectionManager;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -83,14 +84,14 @@ public class ProductDAO implements DAO {
 			PreparedStatement instrucaoSQL = conexao.prepareStatement(
 					"insert into rc_produto values(?,?,?,?,?,?,?,?)");
 
-			instrucaoSQL.setString(1, product.getNome());
-			instrucaoSQL.setInt(2, Integer.valueOf(product.getMarca()));
-			instrucaoSQL.setFloat(3, product.getValor());
-			instrucaoSQL.setInt(4, product.getQuantidade());
-			instrucaoSQL.setDate(5, new java.sql.Date(product.getDate().getTime()));
+			instrucaoSQL.setString(1, product.getProduct_name());
+			instrucaoSQL.setInt(2, product.getBrand_id());
+			instrucaoSQL.setFloat(3, product.getProduct_valor());
+			instrucaoSQL.setInt(4, product.getProduct_qtd());
+			instrucaoSQL.setDate(5, new Date(product.getDate().getTime()));
 			instrucaoSQL.setInt(6, Integer.valueOf(product.getUser()));
-			instrucaoSQL.setInt(7, Integer.valueOf(product.getCategoria()));
-			instrucaoSQL.setBytes(8, product.getImagem());
+			instrucaoSQL.setInt(7, product.getCategory_id());
+			instrucaoSQL.setBytes(8, product.getProduct_img());
 
 			instrucaoSQL.executeUpdate();
 
@@ -114,14 +115,14 @@ public class ProductDAO implements DAO {
 					+ "categoria = ?,[user]=?, imagem=?\n"
 					+ "WHERE id = ?");
 
-			instrucaoSQL.setString(1, product.getNome());
-			instrucaoSQL.setInt(2, Integer.valueOf(product.getMarca()));
-			instrucaoSQL.setFloat(3, product.getValor());
-			instrucaoSQL.setInt(4, product.getQuantidade());
-			instrucaoSQL.setInt(5, Integer.valueOf(product.getCategoria()));
+			instrucaoSQL.setString(1, product.getProduct_name());
+			instrucaoSQL.setInt(2, product.getBrand_id());
+			instrucaoSQL.setFloat(3, product.getProduct_valor());
+			instrucaoSQL.setInt(4, product.getProduct_qtd());
+			instrucaoSQL.setInt(5, product.getCategory_id());
 			instrucaoSQL.setInt(6, Integer.valueOf(product.getUser()));
-			instrucaoSQL.setBytes(7, product.getImagem());
-			instrucaoSQL.setInt(8, product.getId());
+			instrucaoSQL.setBytes(7, product.getProduct_img());
+			instrucaoSQL.setInt(8, product.getProduct_id());
 
 			// Mando executar a instrução SQL
 			instrucaoSQL.executeUpdate();

@@ -2,6 +2,7 @@ package controller;
 
 import interfaces.DAO;
 import model.Brand;
+import model.Country;
 import view.MainScreen;
 import objects.ConnectionManager;
 import java.sql.Connection;
@@ -41,9 +42,9 @@ public final class BrandDao implements DAO {
         return (true);
     }
 
-    public ArrayList<Brand> AllCountry() {
+    public ArrayList<Country> AllCountry() {
 
-        ArrayList<Brand> listCountry = new ArrayList<>();
+        ArrayList<Country> listCountry = new ArrayList<>();
 
         try {
             Connection conexao = ConnectionManager.getInstance().getConexao();
@@ -53,9 +54,9 @@ public final class BrandDao implements DAO {
 
             ResultSet rs = instrucaoSQL.executeQuery();
             while (rs.next()) {
-                Brand p = new Brand();
-                p.setId(rs.getInt("paisId"));
-                p.setPais(rs.getString("paisNome"));
+            	Country p = new Country();
+                p.setCountry_id(rs.getInt("paisId"));
+                p.setCountry_nome(rs.getString("paisNome"));
                 listCountry.add(p);
             }
         } catch (SQLException ex) {
@@ -74,8 +75,8 @@ public final class BrandDao implements DAO {
 
             PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_marca values(?,?,?,?)");
 
-            instrucaoSQL.setString(1, brand.getMarca());
-            instrucaoSQL.setInt(2, Integer.valueOf(brand.getPais()));
+            instrucaoSQL.setString(1, brand.getBrand_name());
+            instrucaoSQL.setInt(2, (brand.getCountry_id()));
             instrucaoSQL.setDate(3, new Date(brand.getDate().getTime()));
             instrucaoSQL.setInt(4, Integer.valueOf(brand.getUser()));
 
@@ -100,10 +101,10 @@ public final class BrandDao implements DAO {
                     + "WHERE id = ?");
 
             //Adiciono os parâmetros ao meu comando SQL
-            instrucaoSQL.setString(1, brand.getMarca());
-            instrucaoSQL.setInt(2, Integer.valueOf(brand.getPais()));
+            instrucaoSQL.setString(1, brand.getBrand_name());
+            instrucaoSQL.setInt(2, brand.getCountry_id());
             instrucaoSQL.setInt(3, Integer.valueOf(brand.getUser()));
-            instrucaoSQL.setInt(4, brand.getId());
+            instrucaoSQL.setInt(4, brand.getBrand_id());
 
             //Mando executar a instrução SQL
             instrucaoSQL.executeUpdate();

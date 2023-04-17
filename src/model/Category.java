@@ -2,33 +2,47 @@ package model;
 
 import java.util.Date;
 
-/**
- *
- * @author Douglas
- */
 public class Category extends Brand {
 
-    private String Categoria;
+	private int category_id;
+    private String category_name;
 
     public Category() {
     }
 
-    public Category(String Categoria, int id, String marca, String pais, Date date, String user) {
-        super(id, marca, pais, date, user);
-        this.Categoria = Categoria;
+    public Category(String category_name, int id, String brand_name, String country_name, Date date, String user) {
+        super(brand_name, country_name, date, user);
+        this.category_id = id;
+        this.category_name = category_name;
+    }
+    
+    public Category(int id, int brand_id, Date date, String user) {
+        super(brand_id, date, user);
+        this.category_id = id;
+    }
+    
+    public Category(String category_name, int id, Date date, String user) {
+        super(date, user);
+        this.category_id = id;
+        this.category_name = category_name;
     }
 
-    public String getCategoria() {
-        return Categoria;
+    public Category(String category_name, Date date, String user) {
+        super(date, user);
+        this.category_name = category_name;
     }
+    
+    public int getCategory_id() {
+		return category_id;
+	}
 
-    public void setCategoria(String Categoria) {
-        this.Categoria = Categoria;
-    }
+	public String getCategory_name() {
+		return category_name;
+	}
 
-    @Override
+	@Override
     public String toString() {
-        return getId() + ";" + Categoria + ";" + getDate() + ";" + getUser();
+        return category_id + ";" + category_name + ";" + getDate() + ";" + getUser();
     }
 
 }

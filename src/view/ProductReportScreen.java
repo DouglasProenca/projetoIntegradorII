@@ -45,8 +45,8 @@ public class ProductReportScreen extends BrandReportScreen {
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
 
 		ProductDAO.getInstance().getAll().forEach((p) -> {
-			modelo.addRow(new Object[] { p.getId(), p.getNome(), p.getMarca(), p.getCategoria(), p.getValor(),
-					p.getQuantidade(), sdf1.format(p.getDate()), p.getUser(), p.getImagem() });
+			modelo.addRow(new Object[] { p.getProduct_id(), p.getProduct_name(), p.getBrand_name(), p.getCategory_name(), p.getProduct_valor(),
+					p.getProduct_qtd(), sdf1.format(p.getDate()), p.getUser(), p.getProduct_img() });
 		});
 	}
 
@@ -81,8 +81,8 @@ public class ProductReportScreen extends BrandReportScreen {
 				modelo.setRowCount(0);
 				SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
 				ProductDAO.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
-					modelo.addRow(new Object[] { p.getId(), p.getNome(), p.getMarca(), p.getCategoria(), p.getValor(),
-							p.getQuantidade(), sdf1.format(p.getDate()), p.getUser(), p.getImagem()});
+					modelo.addRow(new Object[] { p.getProduct_id(), p.getProduct_name(), p.getBrand_name(), p.getCategory_name(), p.getProduct_valor(),
+							p.getProduct_qtd(), sdf1.format(p.getDate()), p.getUser(), p.getProduct_img()});
 				});
 				break;
 			}

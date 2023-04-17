@@ -56,8 +56,8 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 	public RegistrationCategoryScreen(Category category) {
 		super("Alterar", false, true, false, false, 500, 400);
 		this.initComponents(true);
-		this.txtBrand.setText(category.getCategoria());
-		this.id = category.getId();
+		this.txtBrand.setText(category.getCategory_name());
+		this.id = category.getCategory_id();
 	}
 
 	private void initComponents(boolean type) {
@@ -166,7 +166,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 		DefaultTableModel modelo = (DefaultTableModel) tblExcel.getModel();
 		modelo.setRowCount(0);
 		productsList.forEach((p) -> {
-			modelo.addRow(new Object[] { p.getCategoria() });
+			modelo.addRow(new Object[] { p.getCategory_name() });
 		});
 	}
 
@@ -174,7 +174,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "save":
-			Category objMarca = new Category(txtBrand.getText(), 0, null, null, new Date(),
+			Category objMarca = new Category(txtBrand.getText(), new Date(),
 					String.valueOf(User.getInstance().getId()));
 			if (dao.save(objMarca)) {
 				JOptionPane.showMessageDialog(this, "Categoria Salva Com Sucesso!");
@@ -182,7 +182,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 			}
 			break;
 		case "alter":
-			Category objMarcaAlt = new Category(txtBrand.getText(), id, null, null, new Date(),
+			Category objMarcaAlt = new Category(txtBrand.getText(), id, new Date(),
 					String.valueOf(User.getInstance().getId()));
 			dao.alter(objMarcaAlt);
 			this.dispose();
@@ -193,7 +193,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 				String dados[][] = excel.importExcel(fc.getSelectedFile(), tblExcel);
 				for (int i = 0; i < dados.length; i++) {
 					if (dados[i][0] != null) {
-						Category p = new Category(dados[i][0], 0, null, null, new Date(),
+						Category p = new Category(dados[i][0], 0, new Date(),
 								String.valueOf(User.getInstance().getId()));
 						categoryList.add(p);
 					}
@@ -203,12 +203,14 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 			break;
 		case "delete":
 			String nome = tblExcel.getModel().getValueAt(tblExcel.getSelectedRow(), 0).toString();
-			categoryList.removeIf(c -> c.getCategoria().equals(nome));
+			categoryList.removeIf(c -> c.getCategory_name().equals(nome));
 			this.CarregarJTable(categoryList);
 			break;
 		case "saveExcel":
 			if (categoryList != null) {
-				categoryList.forEach((c) -> {dao.save(c);});
+				categoryList.forEach((c) -> {
+					dao.save(c);
+				});
 				JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
 			} else {
 				JOptionPane.showMessageDialog(this, "Selecione uma importação para continuar", "Aviso de Falha",

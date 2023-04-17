@@ -2,11 +2,10 @@ package model;
 
 import java.util.Date;
 
-public class Brand extends Object {
+public class Brand extends Country {
 
-	private int id;
-	private String marca;
-	private String pais;
+	private int brand_id;
+	private String brand_name;
 	private Date date;
 	private String user;
 
@@ -14,66 +13,68 @@ public class Brand extends Object {
 
 	}
 
-	public Brand(int id, String marca, String pais, Date date, String user) {
-		this.id = id;
-		this.marca = marca;
-		this.pais = pais;
+	public Brand(int brand_id, String brand_name, String country_nome, Date date, String user) {
+		super(country_nome);
+		this.brand_id = brand_id;
+		this.brand_name = brand_name;
 		this.date = date;
 		this.user = user;
 	}
-
-	public int getId() {
-		return id;
+	
+	public Brand(String brand_name, String country_nome, Date date, String user) {
+		super(country_nome);
+		this.brand_name = brand_name;
+		this.date = date;
+		this.user = user;
+	}
+	
+	public Brand(int brand_id, String brand_name, int country_id, Date date, String user) {
+		super(country_id);
+		this.brand_id = brand_id;
+		this.brand_name = brand_name;
+		this.date = date;
+		this.user = user;
+	}
+	
+	public Brand(String brand_name, int country_id, Date date, String user) {
+		super(country_id);
+		this.brand_name = brand_name;
+		this.date = date;
+		this.user = user;
+	}
+	
+	public Brand(int brand_id, Date date, String user) {
+		this.brand_id = brand_id;
+		this.date = date;
+		this.user = user;
+	}
+	
+	public Brand(Date date, String user) {
+		this.date = date;
+		this.user = user;
+	}
+	
+	public int getBrand_id() {
+		return brand_id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public String getBrand_name() {
+		return brand_name;
 	}
-
-	public String getMarca() {
-		return marca;
-	}
-
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
-
-	public String getPais() {
-		return pais;
-	}
-
-	public void setPais(String pais) {
-		this.pais = pais;
-	}
+	
 
 	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
 
 	public String getUser() {
 		return user;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
-	}
-	
-	public String ComboboxPais() {
-		return pais;
-	}
-
-
-	public String tooString() {
-		return id + ";" + marca + ";" + pais + ";" + date + ";" + user + ";";
-	}
-	
 	@Override
 	public String toString() {
-		return id + ";" + marca + ";" + pais + ";" + date + ";" + user + ";";
+		return brand_id + ";" + brand_name + ";" + getCountry_nome() + ";" + date + ";" + user + ";";
 	}
 
 }

@@ -10,8 +10,6 @@ import objects.ValidateCpf;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
@@ -36,17 +34,17 @@ public class RegistrationClientScreen extends InternalFrame implements DocumentL
 	private final ValidateCpf valCPF = new ValidateCpf();
 	private JCheckBox checkCEP;
 
-	public RegistrationClientScreen() {
+	public RegistrationClientScreen() throws ParseException {
 		super("Cadastrar Cliente", false, true, false, false, 500, 400);
 		this.initComponents();
 	}
 
-	private void initComponents() {
+	private void initComponents() throws ParseException {
 		this.setLayout(null);
 		this.getContentPane().add(getPanelCadastro());
 	}
 
-	private JPanel getPanelCadastro() {
+	private JPanel getPanelCadastro() throws ParseException {
 		panel = new JPanel(null);
 		panel.add(getTxtName());
 		panel.setBounds(10, 10, 480, 380);
@@ -72,13 +70,8 @@ public class RegistrationClientScreen extends InternalFrame implements DocumentL
 		return lblName;
 	}
 
-	private JFormattedTextField getTxtCPF() {
-		txtCPF = new JFormattedTextField();
-		try {
-			txtCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
-		} catch (ParseException ex) {
-			Logger.getLogger(SaleScreen.class.getName()).log(Level.SEVERE, null, ex);
-		}
+	private JFormattedTextField getTxtCPF() throws ParseException {
+	    txtCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
 		txtCPF.setBounds(100, 80, 350, 25);
 		txtCPF.getDocument().addDocumentListener(this);
 		return txtCPF;

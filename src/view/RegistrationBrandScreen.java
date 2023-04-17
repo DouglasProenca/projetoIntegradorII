@@ -62,9 +62,9 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	public RegistrationBrandScreen(Brand brand) {
 		super("Alterar", false, true, false, false, 500, 400);
 		this.initComponents(true);
-		this.txtBrand.setText(brand.getMarca());
-		this.jboCountry.setSelectedItem(brand.getPais());
-		this.id = brand.getId();
+		this.txtBrand.setText(brand.getBrand_name());
+		this.jboCountry.setSelectedItem(brand.getCountry_nome());
+		this.id = brand.getBrand_id();
 	}
 
 	private void initComponents(boolean type) {
@@ -134,8 +134,8 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 		jboCountry.setBounds(100, 80, 350, 25);
 		
 		dao.AllCountry().stream().forEachOrdered((p) -> {
-			id_pais.addElement(p.getId());
-			jboCountry.addItem(p.getPais());
+			id_pais.addElement(p.getCountry_id());
+			jboCountry.addItem(p.getCountry_nome());
 		});
 		return jboCountry;
 	}
@@ -192,7 +192,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 		DefaultTableModel modelo = (DefaultTableModel) tblExcel.getModel();
 		modelo.setRowCount(0);
 		productsList.forEach((p) -> {
-			modelo.addRow(new Object[] { p.getMarca(), p.getPais() });
+			modelo.addRow(new Object[] { p.getBrand_name(), p.getCountry_nome() });
 		});
 	}
 
@@ -201,15 +201,15 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 		switch (e.getActionCommand()) {
 		case "save":
 			
-			Brand objMarca = new Brand(0, txtBrand.getText(), String.valueOf(id_pais.get(jboCountry.getSelectedIndex())), new Date(),
+			Brand objMarca = new Brand(txtBrand.getText(), id_pais.get(jboCountry.getSelectedIndex()), new Date(),
 					String.valueOf(User.getInstance().getId()));
 			if (dao.save(objMarca)) {
 				JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
-				this.dispose();
+				this.dispose(); 
 			}
 			break;
 		case "alter":
-			Brand objMarcaAlt = new Brand(id, txtBrand.getText(),String.valueOf(id_pais.get(jboCountry.getSelectedIndex())), new Date(),
+			Brand objMarcaAlt = new Brand(id, txtBrand.getText(),id_pais.get(jboCountry.getSelectedIndex()), new Date(),
 					String.valueOf(User.getInstance().getId()));
 			dao.alter(objMarcaAlt);
 			this.dispose();
@@ -230,7 +230,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 			break;
 		case "delete":
 			String nome = tblExcel.getModel().getValueAt(tblExcel.getSelectedRow(), 0).toString();
-			brandList.removeIf(p -> p.getMarca().equals(nome));
+			brandList.removeIf(p -> p.getBrand_name().equals(nome));
 			this.CarregarJTable(brandList);
 			break;
 		case "saveExcel":

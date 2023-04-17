@@ -35,10 +35,6 @@ public class User {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public int getId() {
         return id;
     }

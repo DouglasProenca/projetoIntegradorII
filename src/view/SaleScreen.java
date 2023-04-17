@@ -138,6 +138,7 @@ public class SaleScreen extends InternalFrame {
 	private JFormattedTextField getTxtPanelOneCPF() throws ParseException {
 		txtPanelOneCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
 		txtPanelOneCPF.setBounds(50, 70, 250, 20);
+		txtPanelOneCPF.addKeyListener(this);
 		return txtPanelOneCPF;
 	}
 
@@ -361,28 +362,28 @@ public class SaleScreen extends InternalFrame {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		switch (e.getActionCommand()) {
-		case "adicionar":
-			RegistrationClientScreen rbs = new RegistrationClientScreen();
-			MainScreen.desktopPane.add(rbs);
-			rbs.setVisible(true);
-			break;
-		case "delete":
-			DefaultTableModel dtm = (DefaultTableModel) tblPanelFour.getModel();
-			if (tblPanelFour.getSelectedRow() >= 0) {
-				float preco = Float
-						.parseFloat(tblPanelThree.getModel().getValueAt(tblPanelFour.getSelectedRow(), 2).toString());
-				int quantidade = (int) tblPanelFour.getModel().getValueAt(tblPanelFour.getSelectedRow(), 3);
-				total = total - (preco * quantidade);
-				txtTotalPanelFour.setText(String.valueOf(total >= 0 ? total : 0.00));
-				dtm.removeRow(tblPanelFour.getSelectedRow());
-			} else {
-				JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");
-			}
-			break;
-		case "conclude":
-			tblPanelFour.getSelectionModel().clearSelection();
-			try {
+		try {
+			switch (e.getActionCommand()) {
+			case "adicionar":
+				RegistrationClientScreen rbs = new RegistrationClientScreen();
+				MainScreen.desktopPane.add(rbs);
+				rbs.setVisible(true);
+				break;
+			case "delete":
+				DefaultTableModel dtm = (DefaultTableModel) tblPanelFour.getModel();
+				if (tblPanelFour.getSelectedRow() >= 0) {
+					float preco = Float.parseFloat(
+							tblPanelThree.getModel().getValueAt(tblPanelFour.getSelectedRow(), 2).toString());
+					int quantidade = (int) tblPanelFour.getModel().getValueAt(tblPanelFour.getSelectedRow(), 3);
+					total = total - (preco * quantidade);
+					txtTotalPanelFour.setText(String.valueOf(total >= 0 ? total : 0.00));
+					dtm.removeRow(tblPanelFour.getSelectedRow());
+				} else {
+					JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");
+				}
+				break;
+			case "conclude":
+				tblPanelFour.getSelectionModel().clearSelection();
 				Sale sale = new Sale(0, id_cliente, Float.parseFloat(txtTotalPanelFour.getText()),
 						chooserDatePanelFour.getDate(), User.getInstance().getId());
 				if (tblPanelFour.getRowCount() != 0) {
@@ -402,35 +403,36 @@ public class SaleScreen extends InternalFrame {
 				} else {
 					JOptionPane.showMessageDialog(this, "Selecione pelo menos um produto para venda!");
 				}
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-						"Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-			}
-			break;
-		case "findProduct":
-			if (txtFilterPanelThree.getText().length() > 0) {
-				DefaultTableModel modelo = (DefaultTableModel) tblPanelThree.getModel();
+				break;
+			case "findProduct":
+				if (txtFilterPanelThree.getText().length() > 0) {
+					DefaultTableModel modelo = (DefaultTableModel) tblPanelThree.getModel();
+					modelo.setRowCount(0);
+					ProductDAO.getInstance().getBy(txtFilterPanelThree.getText()).forEach((p) -> {
+						modelo.addRow(new Object[] { p.getProduct_id(), p.getProduct_name(), p.getProduct_valor(),
+								p.getProduct_valor() });
+					});
+				} else {
+					JOptionPane.showMessageDialog(this, "Digite o nome de um produto para pesquisar!");
+				}
+				break;
+			case "findClient":
+				DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
 				modelo.setRowCount(0);
-				ProductDAO.getInstance().getBy(txtFilterPanelThree.getText()).forEach((p) -> {
-					modelo.addRow(new Object[] { p.getId(), p.getNome(), p.getValor(), p.getQuantidade() });
-				});
-			} else {
-				JOptionPane.showMessageDialog(this, "Digite o nome de um produto para pesquisar!");
+				if (txtPanelOneName.getText().length() > 1) {
+					ClientDAO.getInstance().getBy(txtPanelOneName.getText()).forEach((p) -> {
+						modelo.addRow(new Object[] { p.getId(), p.getCpf(), p.getNome() });
+					});
+				} else {
+					ClientDAO.getInstance().getBy(txtPanelOneCPF.getText()).forEach((p) -> {
+						modelo.addRow(new Object[] { p.getId(), p.getCpf(), p.getNome() });
+					});
+				}
+				break;
 			}
-			break;
-		case "findClient":
-			DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
-			modelo.setRowCount(0);
-			if (txtPanelOneName.getText().length() > 1) {
-				ClientDAO.getInstance().getBy(txtPanelOneName.getText()).forEach((p) -> {
-					modelo.addRow(new Object[] { p.getId(), p.getCpf(), p.getNome() });
-				});
-			} else {
-				ClientDAO.getInstance().getBy(txtPanelOneCPF.getText()).forEach((p) -> {
-					modelo.addRow(new Object[] { p.getId(), p.getCpf(), p.getNome() });
-				});
-			}
-			break;
+		} catch (NumberFormatException | ParseException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -449,8 +451,9 @@ public class SaleScreen extends InternalFrame {
 			DefaultTableModel modeloTabelThree = (DefaultTableModel) tblPanelThree.getModel();
 			modeloTabelThree.setRowCount(0);
 			ProductDAO.getInstance().getAll().forEach((p) -> {
-				if (p.getQuantidade() >= 1) {
-					modeloTabelThree.addRow(new Object[] { p.getId(), p.getNome(), p.getValor(), p.getQuantidade() });
+				if (p.getProduct_qtd() >= 1) {
+					modeloTabelThree.addRow(new Object[] { p.getProduct_id(), p.getProduct_name(), p.getProduct_valor(),
+							p.getProduct_qtd() });
 				}
 			});
 		}
@@ -488,6 +491,12 @@ public class SaleScreen extends InternalFrame {
 	public void keyTyped(KeyEvent e) {
 		if (e.getSource().equals(txtPanelOneName)) {
 			if (txtPanelOneName.getText().length() == 0) {
+				loadTable("Client");
+			}
+		}
+		if (e.getSource().equals(txtPanelOneCPF)) {
+			if (txtPanelOneCPF.getText().replaceAll("\\.", "").replaceAll("\\-", "").replaceAll(" ", "")
+					.length() == 0) {
 				loadTable("Client");
 			}
 		}

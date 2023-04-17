@@ -138,7 +138,7 @@ public class BrandReportScreen extends InternalFrame {
 		modelo.setRowCount(0);
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
 		BrandDao.getInstance().getAll().forEach((p) -> {
-			modelo.addRow(new Object[] { p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser() });
+			modelo.addRow(new Object[] { p.getBrand_id(), p.getBrand_name(), p.getCountry_nome(), sdf1.format(p.getDate()), p.getUser() });
 		});
 	}
 
@@ -170,7 +170,7 @@ public class BrandReportScreen extends InternalFrame {
 			SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
 			BrandDao.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
 				modelo.addRow(
-						new Object[] { p.getId(), p.getMarca(), p.getPais(), sdf1.format(p.getDate()), p.getUser() });
+						new Object[] { p.getBrand_id(), p.getBrand_name(), p.getCountry_nome(), sdf1.format(p.getDate()), p.getUser() });
 			});
 			break;
 		}
