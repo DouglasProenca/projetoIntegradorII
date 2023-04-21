@@ -74,7 +74,7 @@ group by m.marca
 						<axisFormat axisLineColor="#FFFFFF"/>
 					</categoryAxisFormat>
 					<valueAxisFormat>
-						<axisFormat axisLineColor="#FFFFFF"/>
+						<axisFormat tickLabelMask="#,##0" verticalTickLabels="false" axisLineColor="#FFFFFF"/>
 					</valueAxisFormat>
 				</barPlot>
 			</barChart>
