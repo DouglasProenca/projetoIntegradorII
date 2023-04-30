@@ -11,10 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Douglas
- */
 public class SaleDAO implements DAO {
 
     private static SaleDAO uniqueInstance;

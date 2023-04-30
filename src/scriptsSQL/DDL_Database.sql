@@ -99,7 +99,7 @@ ALTER TABLE rc_lista_venda ADD CONSTRAINT fk_listaVenda_user FOREIGN KEY ([user]
 CREATE TABLE rc_endereco_cliente(
     id INT PRIMARY KEY IDENTITY,
     id_cliente INT NOT NULL,
-    cep int NOT NULL,
+    cep VARCHAR(500) NOT NULL,
     logradouro VARCHAR(500),
     bairro VARCHAR(500),
     localidade VARCHAR(500),
@@ -127,3 +127,57 @@ INSERT INTO rc_lista_venda VALUES (@id_venda,@id_produto, @quantidade,@valor,GET
 
 END
 GO
+
+create procedure sp_insert_rc_endereco_cliente 
+	(@cep varchar(100), 
+	@logradouro varchar(100),
+	@bairro varchar(100),
+	@localidade varchar(100),
+	@uf char(2),
+	@numero int,
+	@complemento varchar(500),
+	@user int)
+as
+begin
+
+declare @idcliente int = (select max(id) from rc_cliente)
+
+insert into rc_endereco_cliente values (@idcliente,@cep,@logradouro,@bairro,@localidade,@uf,@numero,@complemento,GETDATE(),@user)
+
+end
+GO
+
+create view vmrc_marca
+as
+
+select m.id
+        , m.marca
+        , p.paisNome
+        , m.[date]
+        , u.[user]
+from rc_marca m
+inner join rc_pais p
+    on p.paisId = m.pais
+inner join rc_user u
+    on u.id = m.[user]
+
+create view vmrc_produto 
+as
+
+select p.id
+	    , p.nome                     	 
+		, m.marca
+	    , p.valor                     	 
+		, p.quantidade
+	    , p.[date]                     	 
+		, u.[user]
+	    , m.pais					 
+		, c.categoria
+	    , p.imagem                   
+from rc_produto p
+inner join rc_marca m                    	
+	on m.id = p.marca
+inner join rc_categoria c                     
+	on p.categoria = c.id
+inner join rc_user u                     
+	on u.id = p.[user]

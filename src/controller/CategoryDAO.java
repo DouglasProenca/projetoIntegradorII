@@ -5,6 +5,7 @@ import model.Category;
 import objects.ConnectionManager;
 import view.MainScreen;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,136 +14,124 @@ import javax.swing.JOptionPane;
 
 public class CategoryDAO implements DAO {
 
-    private static CategoryDAO uniqueInstance;
+	private static CategoryDAO uniqueInstance;
 
-    private CategoryDAO() {
+	private CategoryDAO() {
 
-    }
+	}
 
-    public static synchronized CategoryDAO getInstance() {
-        return uniqueInstance == null ? uniqueInstance = new CategoryDAO() : uniqueInstance;
-    }
+	public static synchronized CategoryDAO getInstance() {
+		return uniqueInstance == null ? uniqueInstance = new CategoryDAO() : uniqueInstance;
+	}
 
-    @Override
-    public boolean delete(int id) {
-        try {
-            Connection conexao = ConnectionManager.getInstance().getConexao();
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_categoria WHERE id = ?");
-            instrucaoSQL.setInt(1, id);
+	@Override
+	public boolean delete(int id) {
+		try {
+			Connection conexao = ConnectionManager.getInstance().getConexao();
+			PreparedStatement instrucaoSQL = conexao.prepareStatement("DELETE FROM rc_categoria WHERE id = ?");
+			instrucaoSQL.setInt(1, id);
 
-            instrucaoSQL.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return (false);
-        }
-        return (true);
-    }
+			instrucaoSQL.executeUpdate();
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+			return (false);
+		}
+		return (true);
+	}
 
-    @Override
-    public ArrayList<Category> getAll() {
-        ArrayList<Category> categoryList = new ArrayList<>();
+	@Override
+	public ArrayList<Category> getAll() {
+		ArrayList<Category> categoryList = new ArrayList<>();
 
-        try {
+		try {
 
-            Connection conexao = ConnectionManager.getInstance().getConexao();
+			Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("select c.id\n"
-                    + "	  ,c.categoria\n"
-                    + "	  ,c.[data]\n"
-                    + "	  ,u.[user]\n"
-                    + "from rc_categoria c\n"
-                    + "inner join rc_user u\n"
-                    + "   on c.[user] = u.id");
+			PreparedStatement instrucaoSQL = conexao.prepareStatement("select * from vmrc_categoria");
 
-            ResultSet rs = instrucaoSQL.executeQuery();
-            while (rs.next()) {
-                Category p = new Category(rs.getString("categoria"), rs.getInt("id"), null, null,
-                        rs.getDate("data"), rs.getString("user"));
-                categoryList.add(p);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-        }
-        return categoryList;
-    }
+			ResultSet rs = instrucaoSQL.executeQuery();
+			while (rs.next()) {
+				Category p = new Category(rs.getString("categoria"), rs.getInt("id"), rs.getDate("data"),
+						rs.getString("user"));
+				categoryList.add(p);
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return categoryList;
+	}
 
-    @Override
-    public ArrayList<Category> getBy(String key) {
-        ArrayList<Category> categoryList = new ArrayList<>();
+	@Override
+	public ArrayList<Category> getBy(String key) {
+		ArrayList<Category> categoryList = new ArrayList<>();
 
-        try {
+		try {
 
-            Connection conexao = ConnectionManager.getInstance().getConexao();
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("select c.id\n"
-                    + "	  ,c.categoria\n"
-                    + "	  ,c.[data]\n"
-                    + "	  ,u.[user]\n"
-                    + "from rc_categoria c\n"
-                    + "inner join rc_user u\n"
-                    + "   on c.[user] = u.id\n"
-                    + " where c.categoria like ?");
+			Connection conexao = ConnectionManager.getInstance().getConexao();
+			PreparedStatement instrucaoSQL = conexao
+					.prepareStatement("select * from wmrc_categoria where categoria like ?");
 
-            //Adiciono os parâmetros ao meu comando SQL
-            instrucaoSQL.setString(1, "%" + key + '%');
+			// Adiciono os parâmetros ao meu comando SQL
+			instrucaoSQL.setString(1, "%" + key + '%');
 
-            ResultSet rs = instrucaoSQL.executeQuery();
+			ResultSet rs = instrucaoSQL.executeQuery();
 
-            while (rs.next()) {
-                Category p = new Category(rs.getString("categoria"), rs.getInt("id"), null, null,
-                        rs.getDate("data"), rs.getString("user"));
-                categoryList.add(p);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-        }
-        return categoryList;
-    }
+			while (rs.next()) {
+				Category p = new Category(rs.getString("categoria"), rs.getInt("id"), rs.getDate("data"),
+						rs.getString("user"));
+				categoryList.add(p);
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return categoryList;
+	}
 
-    @Override
-    public boolean save(Object object) {
-        try {
-            Category category = (Category) object;
-            Connection conexao = ConnectionManager.getInstance().getConexao();
+	@Override
+	public boolean save(Object object) {
+		try {
+			Category category = (Category) object;
+			Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_categoria values(?,?,?)");
+			PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_categoria values(?,?,?)");
 
-            instrucaoSQL.setString(1, category.getCategory_name().toUpperCase());
-            instrucaoSQL.setDate(2, new java.sql.Date(category.getDate().getTime()));
-            instrucaoSQL.setInt(3, Integer.valueOf(category.getUser()));
+			instrucaoSQL.setString(1, category.getCategory_name().toUpperCase());
+			instrucaoSQL.setDate(2, new Date(category.getDate().getTime()));
+			instrucaoSQL.setInt(3, Integer.valueOf(category.getUser()));
 
-            instrucaoSQL.executeUpdate();
+			instrucaoSQL.executeUpdate();
 
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return (false);
-        }
-        return (true);
-    }
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+			return (false);
+		}
+		return (true);
+	}
 
-    @Override
-    public boolean alter(Object object) {
-        try {
-            Category category = (Category) object;
-            Connection conexao = ConnectionManager.getInstance().getConexao();
+	@Override
+	public boolean alter(Object object) {
+		try {
+			Category category = (Category) object;
+			Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_categoria SET categoria=?,[user]=?\n"
-                    + "WHERE id = ?");
+			PreparedStatement instrucaoSQL = conexao
+					.prepareStatement("UPDATE rc_categoria SET categoria=?,[user]=?\n" + "WHERE id = ?");
 
-            instrucaoSQL.setString(1, category.getCategory_name().toUpperCase());
-            instrucaoSQL.setInt(2, Integer.valueOf(category.getUser()));
-            instrucaoSQL.setInt(3, category.getCategory_id());
+			instrucaoSQL.setString(1, category.getCategory_name().toUpperCase());
+			instrucaoSQL.setInt(2, Integer.valueOf(category.getUser()));
+			instrucaoSQL.setInt(3, category.getCategory_id());
 
-            instrucaoSQL.executeUpdate();
+			instrucaoSQL.executeUpdate();
 
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return (false);
-        }
-        return (true);
-    }
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+			return (false);
+		}
+		return (true);
+	}
 }

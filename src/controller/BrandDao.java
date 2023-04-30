@@ -125,16 +125,7 @@ public final class BrandDao implements DAO {
 
             Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
-                    + "	 , m.marca\n"
-                    + "	 , p.paisNome\n"
-                    + "	 , m.[date]\n"
-                    + "	 , u.[user]\n"
-                    + "from rc_marca m\n"
-                    + "inner join rc_pais p\n"
-                    + "	on p.paisId = m.pais\n"
-                    + "inner join rc_user u\n"
-                    + "	on u.id = m.[user]");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("select * from vmrc_marca");
 
             ResultSet rs = instrucaoSQL.executeQuery();
             while (rs.next()) {
@@ -156,17 +147,7 @@ public final class BrandDao implements DAO {
         try {
 
             Connection conexao = ConnectionManager.getInstance().getConexao();
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("select m.id\n"
-                    + "	  , m.marca\n"
-                    + "	  , p.paisNome\n"
-                    + "	  , m.[date]\n"
-                    + "	  , u.[user]\n"
-                    + "from rc_marca m\n"
-                    + "inner join rc_pais p\n"
-                    + "	on p.paisId = m.pais\n"
-                    + "inner join rc_user u\n"
-                    + "	on u.id = m.[user]\n"
-                    + "where m.marca like ?");
+            PreparedStatement instrucaoSQL = conexao.prepareStatement("select * from vmrc_marca where marca like ?");
 
             //Adiciono os parâmetros ao meu comando SQL
             instrucaoSQL.setString(1, "%" + key + '%');

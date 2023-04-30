@@ -49,15 +49,7 @@ public class ProductDAO implements DAO {
 
 			Connection conexao = ConnectionManager.getInstance().getConexao();
 
-			PreparedStatement instrucaoSQL = conexao.prepareStatement("select p.id\n"
-					+ "                    	 , p.nome\n" + "                     	 , m.marca\n"
-					+ "                     	 , p.valor\n" + "                     	 , p.quantidade\n"
-					+ "                     	 , p.[date]\n" + "                     	 , u.[user]\n"
-					+ "                    	 , m.pais\n" + "						 , c.categoria\n"
-					+ "                      , p.imagem\n" + "                    from rc_produto p\n"
-					+ "                    inner join rc_marca m\n" + "                     	on m.id = p.marca\n"
-					+ "                     inner join rc_categoria c\n" + "                      on p.categoria = c.id"
-					+ "                     inner join rc_user u\n" + "                      on u.id = p.[user]");
+			PreparedStatement instrucaoSQL = conexao.prepareStatement("select * from vmrc_produto");
 
 			ResultSet rs = instrucaoSQL.executeQuery();
 			while (rs.next()) {
@@ -81,8 +73,7 @@ public class ProductDAO implements DAO {
 			Product product = (Product) object;
 			Connection conexao = ConnectionManager.getInstance().getConexao();
 
-			PreparedStatement instrucaoSQL = conexao.prepareStatement(
-					"insert into rc_produto values(?,?,?,?,?,?,?,?)");
+			PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_produto values(?,?,?,?,?,?,?,?)");
 
 			instrucaoSQL.setString(1, product.getProduct_name());
 			instrucaoSQL.setInt(2, product.getBrand_id());
@@ -111,9 +102,7 @@ public class ProductDAO implements DAO {
 			Connection conexao = ConnectionManager.getInstance().getConexao();
 
 			PreparedStatement instrucaoSQL = conexao.prepareStatement("UPDATE rc_produto SET nome=?\n"
-					+ ",marca= ?,valor=?,quantidade=?,\n"
-					+ "categoria = ?,[user]=?, imagem=?\n"
-					+ "WHERE id = ?");
+					+ ",marca= ?,valor=?,quantidade=?,\n" + "categoria = ?,[user]=?, imagem=?\n" + "WHERE id = ?");
 
 			instrucaoSQL.setString(1, product.getProduct_name());
 			instrucaoSQL.setInt(2, product.getBrand_id());
@@ -142,16 +131,7 @@ public class ProductDAO implements DAO {
 		try {
 
 			Connection conexao = ConnectionManager.getInstance().getConexao();
-			PreparedStatement instrucaoSQL = conexao.prepareStatement("select p.id\n"
-					+ "                    	 , p.nome\n" + "                     	 , m.marca\n"
-					+ "                     	 , p.valor\n" + "                     	 , p.quantidade\n"
-					+ "                     	 , p.[date]\n" + "                     	 , u.[user]\n"
-					+ "                     	 , p.imagem\n" + "                    	 , m.pais\n"
-					+ "                      , c.categoria\n" + "                    from rc_produto p\n"
-					+ "                    inner join rc_marca m\n" + "                     	on m.id = p.marca\n"
-					+ "                     inner join rc_categoria c\n" + "                      on p.categoria = c.id"
-					+ "                     inner join rc_user u\n" + "                      on u.id = p.[user]\n"
-					+ "                     where p.nome like ?\n" + "                      or p.id like ?");
+			PreparedStatement instrucaoSQL = conexao.prepareStatement("select * from vmrc_produto where nome like ? or id like ?");
 			// Adiciono os parâmetros ao meu comando SQL
 			instrucaoSQL.setString(1, "%" + key + '%');
 			instrucaoSQL.setString(2, "%" + key + '%');

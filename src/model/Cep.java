@@ -1,9 +1,5 @@
 package model;
 
-/**
- *
- * @author Douglas
- */
 public class Cep {
 
     private String cep;
