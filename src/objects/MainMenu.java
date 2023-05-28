@@ -9,6 +9,8 @@ import view.LoginScreen;
 import view.MailScreen;
 import view.ReportUserScreen;
 import view.SaleScreen;
+import view.ReportNotesScreen;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -172,7 +174,9 @@ public class MainMenu extends Menu {
 			case "exit":
 				System.exit(0);
 			case "notes":
-				Runtime.getRuntime().exec("C:\\windows\\System32\\notepad.exe");
+				//Runtime.getRuntime().exec("C:\\windows\\System32\\notepad.exe");
+				ReportNotesScreen rns = new ReportNotesScreen();
+				rns.setVisible(true);
 				break;
 			case "lookAndFeel":
 				LookAndFeelScreen laf = new LookAndFeelScreen();
