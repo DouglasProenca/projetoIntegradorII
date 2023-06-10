@@ -1,29 +1,24 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.swing.JButton;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.swing.JRViewer;
 import objects.InternalFrame;
 import objects.JasperManager;
+import objects.JasperToolBar;
 import objects.JasperViewer;
-import objects.images;
 
 @SuppressWarnings("serial")
 public class ReportScreen extends InternalFrame {
 
 	private final JasperManager jasperManager = new JasperManager();
 	private Object[] parameters;
-	private JButton btnRefresh;
 	private JasperViewer jr;
 
 	public ReportScreen(String titulo, Object[] params) {
@@ -45,8 +40,18 @@ public class ReportScreen extends InternalFrame {
 	private JasperViewer getJRViewer(JasperPrint jasperprint) {
 		jr = new JasperViewer(jasperprint);
 		zoomJasper(jr, this.getWidth(), this.getHeight());
-		jr.getJasperToolbar().add(getBtnRefresh(), 3);
+		getJasperToolbar().setBtnRefreshActionListener(this);
 		return jr;
+	}
+	
+	public JasperToolBar getJasperToolbar() {
+		for (int i = 0; i < jr.getComponentCount(); i++) {
+			if (jr.getComponent(i) instanceof JasperToolBar) {
+				System.out.println(i);
+				return (JasperToolBar) jr.getComponent(i);
+			}
+		}
+		return null;
 	}
 
 	private JRViewer jasper(JasperManager jasperManager, Object[] params) throws JRException {
@@ -60,15 +65,6 @@ public class ReportScreen extends InternalFrame {
 		}
 	}
 
-	private JButton getBtnRefresh() {
-		btnRefresh = new JButton();
-		btnRefresh.setIcon(images.getInstance().reload());
-		btnRefresh.setPreferredSize(new Dimension(23, 23));
-		btnRefresh.addActionListener(this);
-		btnRefresh.setActionCommand("reload");
-		return btnRefresh;
-	}
-
 	private void zoomJasper(JasperViewer jasperViwer, int width, int height) {
 		if (width == 707 && height == 400) {
 			jasperViwer.setZoomRatio((float) 0.5);
@@ -76,6 +72,7 @@ public class ReportScreen extends InternalFrame {
 			jasperViwer.setZoomRatio((float) 1);
 		}
 	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

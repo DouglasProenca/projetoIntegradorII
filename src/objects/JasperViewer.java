@@ -19,19 +19,10 @@ public class JasperViewer extends JRViewer {
 		super(jasperPrint);
 	}
 
-	public JRViewerToolbar getJasperToolbar() {
-		for (int i = 0; i < this.getComponentCount(); i++) {
-			if (this.getComponent(i) instanceof JRViewerToolbar) {
-				return (JRViewerToolbar) this.getComponent(i);
-			}
-		}
-		return null;
-	}
-
 	@Override
 	protected JRViewerToolbar createToolbar() {
 		JasperToolBar toolbar = new JasperToolBar(super.viewerContext);
-
+		
 		Locale locale = viewerContext.getLocale();
 		ResourceBundle resBundle = viewerContext.getResourceBundle();
 		JRPdfSaveContributor pdf = new JRPdfSaveContributor(locale, resBundle);
