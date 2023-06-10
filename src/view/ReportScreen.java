@@ -52,7 +52,7 @@ public class ReportScreen extends InternalFrame {
 	private JRViewer jasper(JasperManager jasperManager, Object[] params) throws JRException {
 		switch (this.getTitle()) {
 		case "Relatório Gerencial":
-			return getJRViewer(jasperManager.gerarManagetmentReport(params));
+			return getJRViewer(jasperManager.gerarManagetmentReport());
 		case "Relatório Sintetico":
 			return getJRViewer(jasperManager.gerarSyntheticReport(params));
 		default:

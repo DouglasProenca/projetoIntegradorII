@@ -20,7 +20,7 @@ public class PizzaChart implements JRChartCustomizer {
 		JRPropertiesMap pm = jasperChart.getPropertiesMap();
 
 		if (pm != null) {
-			if (pm.getProperty("linkVisible") != null) {
+ 			if (pm.getProperty("linkVisible") != null) {
 				linkVisible = Boolean.parseBoolean(pm.getProperty("linkVisible"));
 			}
 			if (pm.getProperty("legendVisible") != null) {

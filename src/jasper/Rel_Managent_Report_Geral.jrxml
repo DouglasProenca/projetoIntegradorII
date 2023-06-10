@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_Managent_Report_Geral" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="1137c2e6-a2bc-4f82-819d-a5e36ec54b64">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="c5db74e9-d86a-46c8-a9e1-f28d674843ac"/>
+	<parameter name="cabecalho" class="java.lang.String"/>
+	<parameter name="data1" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data2" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select 1 quantidade]]>
+	</queryString>
+	<field name="quantidade" class="java.lang.String"/>
+	<title>
+		<band height="137" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="38" width="555" height="48" forecolor="#000000" uuid="106b04e7-2635-4c8e-8180-0748e639481e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Gerencial]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="602">
+			<subreport>
+				<reportElement x="0" y="17" width="275" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="data1">
+					<subreportParameterExpression><![CDATA[$P{data1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cabecalho">
+					<subreportParameterExpression><![CDATA[$P{cabecalho}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="data2">
+					<subreportParameterExpression><![CDATA[$P{data2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Rel_Managent_Report_Marcas.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="219" width="275" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc"/>
+				<subreportParameter name="data2">
+					<subreportParameterExpression><![CDATA[$P{data2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Rel_Managent_Report_Produto.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="434" width="555" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc"/>
+				<subreportParameter name="data2">
+					<subreportParameterExpression><![CDATA[$P{data2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Rel_Managent_Report_Venda.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="281" y="17" width="275" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc"/>
+				<subreportParameter name="data2">
+					<subreportParameterExpression><![CDATA[$P{data2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Rel_Managent_Report_Tabela.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="281" y="219" width="275" height="168" uuid="cacbee07-0c92-4d0d-bb33-6fd86c3da3cc"/>
+				<subreportParameter name="data2">
+					<subreportParameterExpression><![CDATA[$P{data2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Rel_Managent_Report_Produto_Pais.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</columnHeader>
+</jasperReport>
