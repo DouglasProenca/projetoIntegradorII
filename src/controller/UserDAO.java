@@ -44,7 +44,7 @@ public class UserDAO implements DAO {
 
     @Override
     public ArrayList<User> getAll() {
-        ArrayList<User> userList = new ArrayList<>();
+        ArrayList<User> userList = new ArrayList<User>();
         try {
 
             Connection conexao = ConnectionManager.getInstance().getConexao();
@@ -119,7 +119,7 @@ public class UserDAO implements DAO {
 
     @Override
     public ArrayList<User> getBy(String key) {
-        ArrayList<User> listaUser = new ArrayList<>();
+        ArrayList<User> listaUser = new ArrayList<User>();
 
         try {
 

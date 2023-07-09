@@ -3,7 +3,7 @@ package view;
 import controller.UserDAO;
 import model.User;
 import objects.InternalFrame;
-import objects.TableModel;
+import objects.Table;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,10 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.table.DefaultTableModel;
 
 
 @SuppressWarnings("serial")
@@ -28,7 +26,7 @@ public class ReportUserScreen extends InternalFrame {
     private JButton btnRemove;
     private JPanel panelNorth;
     private final String colunas[] = {"ID", "Nome", "Email", "Senha Email", "Data"};
-    private JTable tblResultado;
+    private Table tblResultado;
     private JScrollPane scroll;
     private int lineNumber;
 
@@ -77,8 +75,8 @@ public class ReportUserScreen extends InternalFrame {
         return btnRemove;
     }
 
-    private JTable getTblResultado() {
-        tblResultado = new JTable(new TableModel(colunas, 0));
+    private Table getTblResultado() {
+        tblResultado = new Table(colunas, 0);
         tblResultado.getSelectionModel().addListSelectionListener(this);
         tblResultado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tblResultado.addMouseListener(this);
@@ -123,11 +121,10 @@ public class ReportUserScreen extends InternalFrame {
     }
 
     public void loadTable() {
-        DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
-        modelo.setRowCount(0);
+    	tblResultado.getModel().setRowCount(0);
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
         UserDAO.getInstance().getAll().forEach((p) -> {
-            modelo.addRow(new Object[]{p.getId(), p.getUser(), p.getMail(), p.getMailPassword(), sdf1.format(p.getDate())});
+        	tblResultado.getModel().addRow(new Object[]{p.getId(), p.getUser(), p.getMail(), p.getMailPassword(), sdf1.format(p.getDate())});
         });
     }
 

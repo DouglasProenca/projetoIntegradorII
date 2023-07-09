@@ -10,10 +10,14 @@ import javax.swing.table.TableCellEditor;
 @SuppressWarnings("serial")
 public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
 
-    final SpinnerNumberInt spinner = new SpinnerNumberInt();
+    private SpinnerNumberInt spinner = new SpinnerNumberInt();
 
     public SpinnerEditor() {
 
+    }
+    
+    public SpinnerEditor(int value, int minimum, int maximum) {
+    	spinner = new SpinnerNumberInt(value,minimum, maximum);
     }
 
     @Override
@@ -35,4 +39,6 @@ public class SpinnerEditor extends AbstractCellEditor implements TableCellEditor
     public Object getCellEditorValue() {
         return spinner.getValue();
     }
+    
+    
 }

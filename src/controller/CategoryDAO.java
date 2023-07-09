@@ -71,7 +71,7 @@ public class CategoryDAO implements DAO {
 
 			Connection conexao = ConnectionManager.getInstance().getConexao();
 			PreparedStatement instrucaoSQL = conexao
-					.prepareStatement("select * from wmrc_categoria where categoria like ?");
+					.prepareStatement("select * from vmrc_categoria where categoria like ?");
 
 			// Adiciono os parâmetros ao meu comando SQL
 			instrucaoSQL.setString(1, "%" + key + '%');

@@ -4,7 +4,7 @@ import controller.BrandDao;
 import objects.Excel;
 import model.Brand;
 import objects.InternalFrame;
-import objects.TableModel;
+import objects.Table;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -24,7 +24,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -40,10 +39,11 @@ public class BrandReportScreen extends InternalFrame {
 	private JButton btnExcluir;
 	private JButton btnExportar;
 	private JButton btnIncluir;
-	protected JTable tblResultado;
+	protected Table tblResultado;
 	private JScrollPane scroll;
 	private final Excel excel = new Excel();
 	private final BrandDao dao = BrandDao.getInstance();
+	private final SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
 
 	public BrandReportScreen() {
         super("Relatório Marcas", true, true, true, true, 707, 400);
@@ -57,8 +57,8 @@ public class BrandReportScreen extends InternalFrame {
 		this.loadTable();
 	}
 
-	public JTable getTblResultado() {
-		tblResultado = new JTable(new TableModel(new String[] { "ID", "Marca", "Pais", "Data", "Usuário" }, 0));
+	public Table getTblResultado() {
+		tblResultado = new Table(new String[] { "ID", "Marca", "Pais", "Data", "Usuário" }, 0);
 		tblResultado.getSelectionModel().addListSelectionListener(this);
 		tblResultado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblResultado.addMouseListener(this);
@@ -134,11 +134,9 @@ public class BrandReportScreen extends InternalFrame {
 	}
 
 	public void loadTable() {
-		TableModel modelo = (TableModel) tblResultado.getModel();
-		modelo.setRowCount(0);
-		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
+		tblResultado.getModel().setRowCount(0);		
 		BrandDao.getInstance().getAll().forEach((p) -> {
-			modelo.addRow(new Object[] { p.getBrand_id(), p.getBrand_name(), p.getCountry_nome(), sdf1.format(p.getDate()), p.getUser() });
+			tblResultado.getModel().addRow(new Object[] { p.getBrand_id(), p.getBrand_name(), p.getCountry_nome(), sdf1.format(p.getDate()), p.getUser() });
 		});
 	}
 
@@ -165,11 +163,9 @@ public class BrandReportScreen extends InternalFrame {
 			}
 			break;
 		case "find":
-			TableModel modelo = (TableModel) tblResultado.getModel();
-			modelo.setRowCount(0);
-			SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
+			tblResultado.getModel().setRowCount(0);			
 			BrandDao.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
-				modelo.addRow(
+			tblResultado.getModel().addRow(
 						new Object[] { p.getBrand_id(), p.getBrand_name(), p.getCountry_nome(), sdf1.format(p.getDate()), p.getUser() });
 			});
 			break;

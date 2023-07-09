@@ -6,12 +6,12 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import controller.CategoryDAO;
 import model.Category;
 import objects.Excel;
+import objects.Table;
 import objects.TableModel;
 
 @SuppressWarnings("serial")
@@ -26,8 +26,8 @@ public class CategoryReportScreen extends BrandReportScreen {
 	}
 
 	@Override
-	public JTable getTblResultado() {
-		tblResultado = new JTable(new TableModel(new String[] {"ID","Categoria","Data","Usuário"}, 0));
+	public Table getTblResultado() {
+		tblResultado = new Table(new String[] {"ID","Categoria","Data","Usuário"}, 0);
 		tblResultado.getSelectionModel().addListSelectionListener(this);
 		tblResultado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblResultado.addMouseListener(this);
@@ -68,8 +68,8 @@ public class CategoryReportScreen extends BrandReportScreen {
 			break;
 		case "find":
 			TableModel modelo = (TableModel) tblResultado.getModel();
-			modelo.setRowCount(0);
-			SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
+			modelo.setRowCount(0);		
+			SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
 			dao.getBy(txtPesquisa.getText()).forEach((p) -> {
 				modelo.addRow(new Object[] { p.getCategory_id(), p.getCategory_name(), sdf1.format(p.getDate()), p.getUser() });
 			});

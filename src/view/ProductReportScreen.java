@@ -6,12 +6,12 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import controller.ProductDAO;
 import model.Product;
 import objects.Excel;
+import objects.Table;
 import objects.TableModel;
 
 @SuppressWarnings("serial")
@@ -26,9 +26,9 @@ public class ProductReportScreen extends BrandReportScreen {
 	}
 
 	@Override
-	public JTable getTblResultado() {
-		tblResultado = new JTable(new TableModel(new String[] { "ID", "Produto", "Marca", "Categoria", "Valor",
-				"Quantidade", "Data", "Usuário", "Imagem" }, 0));
+	public Table getTblResultado() {
+		tblResultado = new Table(new String[] { "ID", "Produto", "Marca", "Categoria", "Valor",
+				"Quantidade", "Data", "Usuário", "Imagem" }, 0);
 		tblResultado.getSelectionModel().addListSelectionListener(this);
 		tblResultado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblResultado.addMouseListener(this);

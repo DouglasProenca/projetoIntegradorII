@@ -209,7 +209,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 		case "saveExcel":
 			if (categoryList != null) {
 				categoryList.forEach((c) -> {
-					dao.save(c);
+						dao.save(c);
 				});
 				JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
 			} else {
