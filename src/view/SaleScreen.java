@@ -8,7 +8,7 @@ import model.User;
 import objects.InternalFrame;
 import objects.SpinnerEditor;
 import objects.SpinnerNumberInt;
-import objects.TableModel;
+import objects.Table;
 import objects.TextField;
 
 import com.toedter.calendar.JDateChooser;
@@ -31,7 +31,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
 
@@ -50,7 +49,7 @@ public class SaleScreen extends InternalFrame {
 	// 2º Painel
 	private JPanel panelTwo;
 	private JScrollPane scrollPanelTwoClientTable;
-	private JTable tblPanelTwo;
+	private Table tblPanelTwo;
 	// 3º Painel
 	private JPanel panelThree;
 	private JLabel lblClientPanelThree;
@@ -62,7 +61,7 @@ public class SaleScreen extends InternalFrame {
 	private JButton btnFilterPanelThreeFind;
 	private JPanel paneltblPanelThree;
 	private JScrollPane scrollPanelThreeTbl;
-	private JTable tblPanelThree;
+	private Table tblPanelThree;
 	// 4º Painel
 	private JPanel panelFour;
 	private JDateChooser chooserDatePanelFour;
@@ -70,7 +69,7 @@ public class SaleScreen extends InternalFrame {
 	private JLabel lblTotalPanelFour;
 	private TextField txtTotalPanelFour;
 	private JScrollPane scrollTblPanelFour;
-	private JTable tblPanelFour;
+	private Table tblPanelFour;
 	// Internal Frame
 	private JButton btnConcluir;
 	private JButton btnExcluir;
@@ -166,8 +165,8 @@ public class SaleScreen extends InternalFrame {
 		return panelTwo;
 	}
 
-	private JTable getTblPanelTwo() {
-		tblPanelTwo = new JTable(new TableModel(new String[] { "ID", "CPF", "Nome" }, 0));
+	private Table getTblPanelTwo() {
+		tblPanelTwo = new Table(new String[] { "ID", "CPF", "Nome" }, 0);
 		tblPanelTwo.addMouseListener(this);
 		tblPanelTwo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		return tblPanelTwo;
@@ -258,8 +257,8 @@ public class SaleScreen extends InternalFrame {
 		return scrollPanelThreeTbl;
 	}
 
-	private JTable getTblPanelThree() {
-		tblPanelThree = new JTable(new TableModel(tblProducts, 0));
+	private Table getTblPanelThree() {
+		tblPanelThree = new Table(tblProducts, 0);
 		tblPanelThree.getSelectionModel().addListSelectionListener(this);
 		tblPanelThree.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblPanelThree.addMouseListener(this);
@@ -278,38 +277,12 @@ public class SaleScreen extends InternalFrame {
 		return panelFour;
 	}
 
-	private JTable getTblPanelFour() {
-		tblPanelFour = new JTable(new TableModel(tblProducts, 0, new boolean[] { false, false, false, true }));
+	private Table getTblPanelFour() {
+		tblPanelFour = new Table(tblProducts, 0, new boolean[] { false, false, false, true });
 		tblPanelFour.getSelectionModel().addListSelectionListener(this);
 		tblPanelFour.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblPanelFour.addMouseListener(this);
-		TableColumn column = tblPanelFour.getColumnModel().getColumn(3);
 		tblPanelFour.setRowHeight(25);
-		column.setCellRenderer(new DefaultTableCellRenderer() {
-			@Override
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
-						column);
-
-				spinner.addChangeListener((ChangeEvent e) -> {
-					total = 0;
-					for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
-						float valor = (float) tblPanelFour.getValueAt(i, 2);
-						int quantidade = (int) tblPanelFour.getModel().getValueAt(i, 3);
-						total = total + (valor * quantidade);
-					}
-					txtTotalPanelFour.setText(String.valueOf(total));
-				});
-				if (component instanceof JLabel) {
-					spinner.setValue(Integer.valueOf(((JLabel) component).getText()));
-				} else if (value != null) {
-					spinner.setValue(Integer.valueOf(value.toString()));
-				}
-				return spinner;
-			}
-		});
-		column.setCellEditor(new SpinnerEditor());
 		return tblPanelFour;
 	}
 
@@ -370,16 +343,16 @@ public class SaleScreen extends InternalFrame {
 				rbs.setVisible(true);
 				break;
 			case "delete":
-				DefaultTableModel dtm = (DefaultTableModel) tblPanelFour.getModel();
 				if (tblPanelFour.getSelectedRow() >= 0) {
 					float preco = Float.parseFloat(
 							tblPanelThree.getModel().getValueAt(tblPanelFour.getSelectedRow(), 2).toString());
 					int quantidade = (int) tblPanelFour.getModel().getValueAt(tblPanelFour.getSelectedRow(), 3);
 					total = total - (preco * quantidade);
 					txtTotalPanelFour.setText(String.valueOf(total >= 0 ? total : 0.00));
-					dtm.removeRow(tblPanelFour.getSelectedRow());
+					tblPanelFour.getModel().removeRow(tblPanelFour.getSelectedRow());
 				} else {
-					JOptionPane.showMessageDialog(null, "Favor selecionar uma linha");
+					JOptionPane.showMessageDialog(this, "Favor selecionar uma linha!", "Aviso de Falha",
+							JOptionPane.ERROR_MESSAGE);
 				}
 				break;
 			case "conclude":
@@ -401,31 +374,30 @@ public class SaleScreen extends InternalFrame {
 						this.dispose();
 					}
 				} else {
-					JOptionPane.showMessageDialog(this, "Selecione pelo menos um produto para venda!");
+					JOptionPane.showMessageDialog(this, "Selecione pelo menos um produto para venda!", "Aviso de Falha",
+							JOptionPane.ERROR_MESSAGE);
 				}
 				break;
 			case "findProduct":
 				if (txtFilterPanelThree.getText().length() > 0) {
-					DefaultTableModel modelo = (DefaultTableModel) tblPanelThree.getModel();
-					modelo.setRowCount(0);
+					tblPanelThree.getModel().setRowCount(0);
 					ProductDAO.getInstance().getBy(txtFilterPanelThree.getText()).forEach((p) -> {
-						modelo.addRow(new Object[] { p.getProduct_id(), p.getProduct_name(), p.getProduct_valor(),
-								p.getProduct_valor() });
+						tblPanelThree.getModel().addRow(new Object[] { p.getProduct_id(), p.getProduct_name(),
+								p.getProduct_valor(), p.getProduct_valor() });
 					});
 				} else {
 					JOptionPane.showMessageDialog(this, "Digite o nome de um produto para pesquisar!");
 				}
 				break;
 			case "findClient":
-				DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
-				modelo.setRowCount(0);
+				tblPanelTwo.getModel().setRowCount(0);
 				if (txtPanelOneName.getText().length() > 1) {
 					ClientDAO.getInstance().getBy(txtPanelOneName.getText()).forEach((p) -> {
-						modelo.addRow(new Object[] { p.getId(), p.getCpf(), p.getNome() });
+						tblPanelTwo.getModel().addRow(new Object[] { p.getId(), p.getCpf(), p.getNome() });
 					});
 				} else {
 					ClientDAO.getInstance().getBy(txtPanelOneCPF.getText()).forEach((p) -> {
-						modelo.addRow(new Object[] { p.getId(), p.getCpf(), p.getNome() });
+						tblPanelTwo.getModel().addRow(new Object[] { p.getId(), p.getCpf(), p.getNome() });
 					});
 				}
 				break;
@@ -438,22 +410,20 @@ public class SaleScreen extends InternalFrame {
 
 	protected void loadTable(String command) {
 		if (command.equals("All") || command.equals("Client")) {
-			DefaultTableModel modelo = (DefaultTableModel) tblPanelTwo.getModel();
-			modelo.setRowCount(0);
+			tblPanelTwo.getModel().setRowCount(0);
 			tblPanelTwo.getColumnModel().getColumn(0).setMaxWidth(0);
 			tblPanelTwo.getColumnModel().getColumn(0).setMinWidth(0);
 			tblPanelTwo.getColumnModel().getColumn(0).setPreferredWidth(0); // ID
 			ClientDAO.getInstance().getAll().forEach((p) -> {
-				modelo.addRow(new Object[] { p.getId(), p.getCpf(), p.getNome() });
+				tblPanelTwo.getModel().addRow(new Object[] { p.getId(), p.getCpf(), p.getNome() });
 			});
 		}
 		if (command.equals("All") || command.equals("Product")) {
-			DefaultTableModel modeloTabelThree = (DefaultTableModel) tblPanelThree.getModel();
-			modeloTabelThree.setRowCount(0);
+			tblPanelThree.getModel().setRowCount(0);
 			ProductDAO.getInstance().getAll().forEach((p) -> {
 				if (p.getProduct_qtd() >= 1) {
-					modeloTabelThree.addRow(new Object[] { p.getProduct_id(), p.getProduct_name(), p.getProduct_valor(),
-							p.getProduct_qtd() });
+					tblPanelThree.getModel().addRow(new Object[] { p.getProduct_id(), p.getProduct_name(),
+							p.getProduct_valor(), p.getProduct_qtd() });
 				}
 			});
 		}
@@ -469,11 +439,60 @@ public class SaleScreen extends InternalFrame {
 				float preco = Float.parseFloat(tblPanelThree.getModel().getValueAt(numeroLinha, 2).toString());
 				int quantidade = Integer.parseInt(tblPanelThree.getModel().getValueAt(numeroLinha, 3).toString());
 
-				total = total + (preco * quantidade);
-				txtTotalPanelFour.setText(String.valueOf(total));
+				boolean newRegister = true;
+				for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
+					if (id == Integer.parseInt(tblPanelFour.getModel().getValueAt(i, 0).toString())) {
+						if ((1 + Integer.parseInt(tblPanelFour.getModel().getValueAt(i, 3).toString())) <= quantidade) {
+							tblPanelFour.getModel().setValueAt(
+									(1 + (Integer.parseInt(tblPanelFour.getModel().getValueAt(i, 3).toString()))), i,
+									3);
+							total = total
+									+ (preco * Integer.parseInt(tblPanelFour.getModel().getValueAt(i, 3).toString()));
+							txtTotalPanelFour.setText(String.valueOf(total));
+							newRegister = false;
+						} else {
+							newRegister = false;
+							JOptionPane.showMessageDialog(this, "Número máximo de estoque já incluido na compra!",
+									"Aviso de Falha", JOptionPane.ERROR_MESSAGE);
+						}
+						break;
+					}
+				}
 
-				DefaultTableModel modelo = (DefaultTableModel) tblPanelFour.getModel();
-				modelo.addRow(new Object[] { id, nome, preco, quantidade });
+				if (newRegister == true) {
+					tblPanelFour.getModel().addRow(new Object[] { id, nome, preco, 1 });
+					total = total + (preco * 1);
+					txtTotalPanelFour.setText(String.valueOf(total));
+					
+					TableColumn column = tblPanelFour.getColumnModel().getColumn(3);
+					column.setCellRenderer(new DefaultTableCellRenderer() {
+						@Override
+						public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+								boolean hasFocus, int row, int column) {
+							Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
+									column);
+
+							spinner.addChangeListener((ChangeEvent e) -> {
+								total = 0;
+								for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
+
+									float valor = (float) tblPanelFour.getValueAt(i, 2);
+									int quantidade = (int) tblPanelFour.getModel().getValueAt(i, 3);
+									total = total + (valor * quantidade);
+								}
+								txtTotalPanelFour.setText(String.valueOf(total));
+							});
+							if (component instanceof JLabel) {
+								spinner.setValue(Integer.valueOf(((JLabel) component).getText()));
+							} else if (value != null) {
+								spinner.setValue(Integer.valueOf(value.toString()));
+							}
+							return spinner;
+						}
+					});
+					column.setCellEditor(new SpinnerEditor(1,1,quantidade));
+				}
+
 			} else if (e.getSource().equals(tblPanelTwo)) {
 				int numeroLinha = tblPanelTwo.getSelectedRow();
 				id_cliente = Integer.parseInt(tblPanelTwo.getModel().getValueAt(numeroLinha, 0).toString());
