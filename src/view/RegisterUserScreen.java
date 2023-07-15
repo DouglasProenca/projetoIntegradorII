@@ -38,20 +38,22 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 
 	public RegisterUserScreen() {
 		super("Cadastrar Usuário", false, true, false, false, 700, 400);
-		this.initComponents(false);
+		this.initComponents();
 	}
 
 	public RegisterUserScreen(User user) {
 		super("Editar Usuário", false, true, false, false, 700, 400);
-		this.initComponents(true);
+		this.initComponents();
 		this.id = user.getId();
 		this.txtUser.setText(user.getUser());
 		this.txtMail.setText(user.getMail());
 		this.txtPasswordMail.setText(user.getMailPassword());
+		this.panelCadastro.setBorder(BorderFactory.createTitledBorder("Alterar Usuário"));
+		this.btnCheck.setActionCommand("alter");
 	}
 
-	private void initComponents(boolean type) {
-		this.getContentPane().add(getPanelCadastro(type));
+	private void initComponents() {
+		this.getContentPane().add(getPanelCadastro());
 	}
 
 	private boolean isValidEmailAddress(String email) {
@@ -64,16 +66,16 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 		return (true);
 	}
 
-	private JPanel getPanelCadastro(boolean type) {
+	private JPanel getPanelCadastro() {
 		panelCadastro = new JPanel(null);
-		panelCadastro.setBorder(BorderFactory.createTitledBorder(!type ? "Cadastrar Usuário" : "Alterar Usuário"));
+		panelCadastro.setBorder(BorderFactory.createTitledBorder("Cadastrar Usuário"));
 		panelCadastro.add(getLblUser());
 		panelCadastro.add(getTxtUser());
 		panelCadastro.add(getLblPassword());
 		panelCadastro.add(getTxtPassword());
 		panelCadastro.add(getLblPassordMail());
 		panelCadastro.add(getTxtPasswordMail());
-		panelCadastro.add(getBtnCheck(type));
+		panelCadastro.add(getBtnCheck());
 		panelCadastro.add(getBtnClose());
 		panelCadastro.add(getLblMail());
 		panelCadastro.add(getTxtMail());
@@ -141,11 +143,11 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 		return btnClose;
 	}
 
-	private JButton getBtnCheck(boolean newCad) {
+	private JButton getBtnCheck() {
 		btnCheck = new JButton("Salvar", images.getInstance().imagemCheck());
 		btnCheck.setBounds(25, 250, 250, 40);
 		btnCheck.addActionListener(this);
-		btnCheck.setActionCommand(!newCad ? "save" : "alter");
+		btnCheck.setActionCommand("save");
 		btnCheck.setEnabled(false);
 		return btnCheck;
 	}

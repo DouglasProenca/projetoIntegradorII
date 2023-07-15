@@ -56,29 +56,30 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 
 	public RegistrationBrandScreen() {
 		super("Cadastrar", false, true, false, false, 500, 400);
-		this.initComponents(false);
+		this.initComponents();
 	}
 
 	public RegistrationBrandScreen(Brand brand) {
 		super("Alterar", false, true, false, false, 500, 400);
-		this.initComponents(true);
+		this.initComponents();
 		this.txtBrand.setText(brand.getBrand_name());
 		this.jboCountry.setSelectedItem(brand.getCountry_nome());
 		this.id = brand.getBrand_id();
+		this.painelAbas.remove(1);
+		this.panel.setBorder(BorderFactory.createTitledBorder("Alterar Marca"));
+		this.btnCheck.setActionCommand("alter");
 	}
 
-	private void initComponents(boolean type) {
+	private void initComponents() {
 		this.setLayout(null);
-		this.getContentPane().add(getPainelAbas(type));
+		this.getContentPane().add(getPainelAbas());
 	}
 
-	private JTabbedPane getPainelAbas(boolean type) {
+	private JTabbedPane getPainelAbas() {
 		painelAbas = new JTabbedPane();
 		painelAbas.setBounds(10, 10, 470, 350);
-		painelAbas.add("Cadastro", getPanelCadastro(type));
-		if (!type) {
-			painelAbas.add("Excel", getPanelExcel());
-		}
+		painelAbas.add("Cadastro", getPanelCadastro());
+		painelAbas.add("Excel", getPanelExcel());
 		return painelAbas;
 	}
 
@@ -104,15 +105,15 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 		return scroll;
 	}
 
-	public JPanel getPanelCadastro(boolean type) {
+	public JPanel getPanelCadastro() {
 		panel = new JPanel(null);
-		panel.setBorder(BorderFactory.createTitledBorder(!type ? "Cadastrar Marca" : "Alterar Marca"));
+		panel.setBorder(BorderFactory.createTitledBorder("Cadastrar Marca"));
 		panel.add(getTxtBrand());
 		panel.add(getLblBrand());
 		panel.add(getJboCountry());
 		panel.add(getLblpais());
 		panel.add(getBtnClose());
-		panel.add(getBtnCheck(type));
+		panel.add(getBtnCheck());
 		return panel;
 	}
 
@@ -154,11 +155,11 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 		return btnClose;
 	}
 
-	private JButton getBtnCheck(boolean type) {
+	private JButton getBtnCheck() {
 		btnCheck = new JButton("Salvar", images.getInstance().imagemCheck());
 		btnCheck.setBounds(20, 250, 200, 40);
 		btnCheck.addActionListener(this);
-		btnCheck.setActionCommand(!type ? "save" : "alter");
+		btnCheck.setActionCommand("save");
 		btnCheck.setEnabled(false);
 		return btnCheck;
 	}

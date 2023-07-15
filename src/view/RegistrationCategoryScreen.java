@@ -50,28 +50,29 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 
 	public RegistrationCategoryScreen() {
 		super("Cadastrar", false, true, false, false, 500, 400);
-		this.initComponents(false);
+		this.initComponents();
 	}
 
 	public RegistrationCategoryScreen(Category category) {
 		super("Alterar", false, true, false, false, 500, 400);
-		this.initComponents(true);
+		this.initComponents();
 		this.txtBrand.setText(category.getCategory_name());
 		this.id = category.getCategory_id();
+		this.btnCheck.setActionCommand("alter");
+		this.panel.setBorder(BorderFactory.createTitledBorder("Alterar Categoria"));
+		this.painelAbas.remove(1);
 	}
 
-	private void initComponents(boolean type) {
+	private void initComponents() {
 		this.setLayout(null);
-		this.getContentPane().add(getPainelAbas(type));
+		this.getContentPane().add(getPainelAbas());
 	}
 
-	private JTabbedPane getPainelAbas(boolean type) {
+	private JTabbedPane getPainelAbas() {
 		painelAbas = new JTabbedPane();
 		painelAbas.setBounds(10, 10, 470, 350);
-		painelAbas.add("Cadastro", getPanelCadastro(type));
-		if (!type) {
-			painelAbas.add("Excel", getPanelExcel());
-		}
+		painelAbas.add("Cadastro", getPanelCadastro());
+		painelAbas.add("Excel", getPanelExcel());
 		return painelAbas;
 	}
 
@@ -97,13 +98,13 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 		return scroll;
 	}
 
-	private JPanel getPanelCadastro(boolean type) {
+	private JPanel getPanelCadastro() {
 		panel = new JPanel(null);
-		panel.setBorder(BorderFactory.createTitledBorder(!type ? "Cadastrar Categoria" : "Alterar Categoria"));
+		panel.setBorder(BorderFactory.createTitledBorder("Cadastrar Categoria"));
 		panel.add(getTxtBrand());
 		panel.add(getLblBrand());
 		panel.add(getBtnClose());
-		panel.add(getBtnCheck(type));
+		panel.add(getBtnCheck());
 		return panel;
 	}
 
@@ -128,11 +129,11 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 		return btnClose;
 	}
 
-	private JButton getBtnCheck(boolean type) {
+	private JButton getBtnCheck() {
 		btnCheck = new JButton("Salvar", images.getInstance().imagemCheck());
 		btnCheck.setBounds(20, 250, 200, 40);
 		btnCheck.addActionListener(this);
-		btnCheck.setActionCommand(!type ? "save" : "alter");
+		btnCheck.setActionCommand("save");
 		btnCheck.setEnabled(false);
 		return btnCheck;
 	}
