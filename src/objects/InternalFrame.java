@@ -29,7 +29,7 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
 	public InternalFrame(String titulo, boolean resizable, boolean closabe, boolean maximizable, boolean iconifiable,
 			int width, int height) {
 		super(titulo, resizable, closabe, maximizable, iconifiable);
-		super.setFrameIcon(images.getInstance().imagemPrincipal());
+		super.setFrameIcon(Images.SYSTEM.getImage());
 		super.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		super.setSize(new Dimension(width, height));
 		super.setMinimumSize(new Dimension(width, height));

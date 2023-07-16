@@ -21,7 +21,7 @@ public class JasperToolBar extends JRViewerToolbar{
     
 	private JButton getBtnRefresh() {
 		btnRefresh = new JButton();
-		btnRefresh.setIcon(images.getInstance().reload());
+		btnRefresh.setIcon(Images.RELOAD.getImage());
 		btnRefresh.setPreferredSize(new Dimension(23, 23));
 		btnRefresh.setActionCommand("reload");
 		return btnRefresh;

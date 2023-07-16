@@ -44,7 +44,7 @@ public class MainMenu extends Menu {
 	private JMenuItem canvas;
 
 	protected MainMenu() {
-		super("Menu", images.getInstance().imagemMenu());
+		super("Menu", Images.MENU.getImage());
 		this.initComponents();
 	}
 
@@ -63,7 +63,7 @@ public class MainMenu extends Menu {
 
 	private JMenu getMenuUser() {
 		menuUser = new JMenu("Usuário");
-		menuUser.setIcon(images.getInstance().imagemAdministrator());
+		menuUser.setIcon(Images.USER.getImage());
 		menuUser.add(getUser());
 		menuUser.add(getLogout());
 		return menuUser;
@@ -85,7 +85,7 @@ public class MainMenu extends Menu {
 
 	private JMenu getMenuDatabase() {
 		MenuDatabase = new JMenu("Banco de Dados");
-		MenuDatabase.setIcon(images.getInstance().imagemDatabase());
+		MenuDatabase.setIcon(Images.DATABASE.getImage());
 		MenuDatabase.add(getBackup());
 		MenuDatabase.add(getJDBC());
 		return MenuDatabase;
@@ -106,14 +106,14 @@ public class MainMenu extends Menu {
 	}
 
 	private JMenuItem getNotes() {
-		notes = new JMenuItem("Bloco de Notas", images.getInstance().imagemBlocoNotas());
+		notes = new JMenuItem("Bloco de Notas", Images.NOTES.getImage());
 		notes.addActionListener(this);
 		notes.setActionCommand("notes");
 		return notes;
 	}
 
 	private JMenuItem getCalculator() {
-		calculator = new JMenuItem("Calculadora", images.getInstance().imagemCalculadora());
+		calculator = new JMenuItem("Calculadora", Images.CALCULATOR.getImage());
 		calculator.addActionListener(this);
 		calculator.setActionCommand("calculator");
 		return calculator;
@@ -121,7 +121,7 @@ public class MainMenu extends Menu {
 
 	private JMenu getMenuLookAndFeel() {
 		menuLookAndFeel = new JMenu("Look And Feel");
-		menuLookAndFeel.setIcon(images.getInstance().imagemLookAndFeel());
+		menuLookAndFeel.setIcon(Images.LOOK_AND_FEEL.getImage());
 		menuLookAndFeel.add(getLookAndFeel());
 		menuLookAndFeel.add(getCanvasBackground());
 		return menuLookAndFeel;
@@ -142,7 +142,7 @@ public class MainMenu extends Menu {
 	}
 
 	private JMenuItem getExit() {
-		exit = new JMenuItem("Sair", images.getInstance().imagemSair());
+		exit = new JMenuItem("Sair", Images.EXIT.getImage());
 		exit.addActionListener(this);
 		exit.setActionCommand("exit");
 		exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK));
@@ -150,14 +150,14 @@ public class MainMenu extends Menu {
 	}
 
 	private JMenuItem getMail() {
-		mail = new JMenuItem("E-mail", images.getInstance().imagemMail());
+		mail = new JMenuItem("E-mail", Images.MAIL.getImage());
 		mail.addActionListener(this);
 		mail.setActionCommand("mail");
 		return mail;
 	}
 
 	private JMenuItem getSale() {
-		sale = new JMenuItem("Venda", images.getInstance().imagemSale());
+		sale = new JMenuItem("Venda", Images.SALE.getImage());
 		sale.addActionListener(this);
 		sale.setActionCommand("sale");
 		sale.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.ALT_MASK));

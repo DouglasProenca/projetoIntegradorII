@@ -2,9 +2,9 @@ package view;
 
 import controller.UserDAO;
 import model.User;
+import objects.Images;
 import objects.InternalFrame;
 import objects.TextField;
-import objects.images;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.util.Date;
@@ -136,7 +136,7 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 	}
 
 	private JButton getBtnClose() {
-		btnClose = new JButton("Cancelar", images.getInstance().imagemClose());
+		btnClose = new JButton("Cancelar", Images.CLOSE.getImage());
 		btnClose.setBounds(400, 250, 250, 40);
 		btnClose.addActionListener(this);
 		btnClose.setActionCommand("close");
@@ -144,7 +144,7 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 	}
 
 	private JButton getBtnCheck() {
-		btnCheck = new JButton("Salvar", images.getInstance().imagemCheck());
+		btnCheck = new JButton("Salvar", Images.CHECK.getImage());
 		btnCheck.setBounds(25, 250, 250, 40);
 		btnCheck.addActionListener(this);
 		btnCheck.setActionCommand("save");

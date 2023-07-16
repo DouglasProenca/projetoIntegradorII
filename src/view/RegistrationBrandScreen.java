@@ -28,8 +28,8 @@ import controller.BrandDao;
 import model.Brand;
 import model.User;
 import objects.Excel;
+import objects.Images;
 import objects.InternalFrame;
-import objects.images;
 
 @SuppressWarnings("serial")
 public class RegistrationBrandScreen extends InternalFrame implements DocumentListener {
@@ -148,7 +148,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	}
 
 	private JButton getBtnClose() {
-		btnClose = new JButton("Cancelar", images.getInstance().imagemClose());
+		btnClose = new JButton("Cancelar", Images.CLOSE.getImage());
 		btnClose.setBounds(250, 250, 200, 40);
 		btnClose.addActionListener(this);
 		btnClose.setActionCommand("close");
@@ -156,7 +156,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	}
 
 	private JButton getBtnCheck() {
-		btnCheck = new JButton("Salvar", images.getInstance().imagemCheck());
+		btnCheck = new JButton("Salvar", Images.CHECK.getImage());
 		btnCheck.setBounds(20, 250, 200, 40);
 		btnCheck.addActionListener(this);
 		btnCheck.setActionCommand("save");

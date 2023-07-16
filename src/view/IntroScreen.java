@@ -7,8 +7,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import objects.Images;
 import objects.ThreadCustom;
-import objects.images;
 
 @SuppressWarnings("serial")
 public class IntroScreen extends JDialog implements Runnable {
@@ -19,7 +19,7 @@ public class IntroScreen extends JDialog implements Runnable {
 		setLocationRelativeTo(null);
 		setUndecorated(true);
 		setBackground(new Color(0f, 0f, 0f, 0f));
-		add(new JLabel(images.getInstance().intro()), BorderLayout.CENTER);
+		add(new JLabel(Images.INTRO.getImage()), BorderLayout.CENTER);
 		getIntro().start();
 	}
 

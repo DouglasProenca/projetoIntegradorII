@@ -1,10 +1,10 @@
 package view;
 
 import controller.CategoryDAO;
-import objects.images;
 import model.Category;
 import model.User;
 import objects.Excel;
+import objects.Images;
 import objects.InternalFrame;
 import objects.TableModel;
 import objects.TextField;
@@ -122,7 +122,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 	}
 
 	private JButton getBtnClose() {
-		btnClose = new JButton("Cancelar", images.getInstance().imagemClose());
+		btnClose = new JButton("Cancelar", Images.CLOSE.getImage());
 		btnClose.setBounds(250, 250, 200, 40);
 		btnClose.addActionListener(this);
 		btnClose.setActionCommand("close");
@@ -130,7 +130,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 	}
 
 	private JButton getBtnCheck() {
-		btnCheck = new JButton("Salvar", images.getInstance().imagemCheck());
+		btnCheck = new JButton("Salvar", Images.CHECK.getImage());
 		btnCheck.setBounds(20, 250, 200, 40);
 		btnCheck.addActionListener(this);
 		btnCheck.setActionCommand("save");

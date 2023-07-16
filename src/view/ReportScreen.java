@@ -47,7 +47,6 @@ public class ReportScreen extends InternalFrame {
 	public JasperToolBar getJasperToolbar() {
 		for (int i = 0; i < jr.getComponentCount(); i++) {
 			if (jr.getComponent(i) instanceof JasperToolBar) {
-				System.out.println(i);
 				return (JasperToolBar) jr.getComponent(i);
 			}
 		}

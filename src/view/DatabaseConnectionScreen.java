@@ -1,7 +1,7 @@
 package view;
 
-import objects.images;
 import objects.ConnectionManager;
+import objects.Images;
 import objects.InternalFrame;
 import objects.PropertiesSystem;
 import objects.TextField;
@@ -135,7 +135,7 @@ public class DatabaseConnectionScreen extends InternalFrame {
     }
 
     private JButton getBtnCancelar() {
-        btnCancelar = new JButton("Cancelar", images.getInstance().imagemClose());
+        btnCancelar = new JButton("Cancelar", Images.CLOSE.getImage());
         btnCancelar.setBounds(280, 270, 125, 48);
         btnCancelar.addActionListener(this);
         btnCancelar.setActionCommand("close");
@@ -143,7 +143,7 @@ public class DatabaseConnectionScreen extends InternalFrame {
     }
 
     private JButton getBtnSalvar() {
-        btnSalvar = new JButton("Salvar", images.getInstance().imagemCheck());
+        btnSalvar = new JButton("Salvar", Images.CHECK.getImage());
         btnSalvar.setBounds(145, 270, 125, 48);
         btnSalvar.addActionListener(this);
         btnSalvar.setActionCommand("save");
@@ -151,7 +151,7 @@ public class DatabaseConnectionScreen extends InternalFrame {
     }
 
     private JButton getBtnTestar() {
-        btnTestar = new JButton("Testar", images.getInstance().imagemRefresh());
+        btnTestar = new JButton("Testar", Images.REFRESH.getImage());
         btnTestar.setBounds(10, 270, 125, 48);
         btnTestar.addActionListener(this);
         btnTestar.setActionCommand("test");
@@ -211,9 +211,9 @@ public class DatabaseConnectionScreen extends InternalFrame {
                 Connection conexao = connectionManager.getConexaoTest(txtLogin.getText(), String.valueOf(txtSenha.getPassword()),
                         txtDatabase.getText(), txtPort.getText(), txtServer.getText());
                 if (conexao != null) {
-                    this.setLblImagem(images.getInstance().conectionSucess());
+                    this.setLblImagem(Images.CONECTION_SUCESS.getImage());
                 } else {
-                    this.setLblImagem(images.getInstance().conectionError());
+                    this.setLblImagem(Images.CONECTION_UNSUCESS.getImage());
                 }
                 break;
         }

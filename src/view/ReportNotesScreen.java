@@ -28,8 +28,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import objects.Images;
 import objects.InternalFrame;
-import objects.images;
 
 @SuppressWarnings("serial")
 public class ReportNotesScreen extends InternalFrame {
@@ -61,7 +61,7 @@ public class ReportNotesScreen extends InternalFrame {
 
 	private JMenu getMenuArquivo() {
 		menuArquivo = new JMenu("Arquivo");
-		menuArquivo.setIcon(images.getInstance().imagemBlocoNotas());
+		menuArquivo.setIcon(Images.NOTES.getImage());
 		menuArquivo.add(getMenuItemOpen());
 		menuArquivo.add(getMenuItemSave());
 		menuArquivo.add(getMenuItemPrint());

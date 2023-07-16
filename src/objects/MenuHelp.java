@@ -23,7 +23,7 @@ public class MenuHelp extends Menu {
     private JMenuItem site;
     
     protected MenuHelp() {
-        super("Ajuda",images.getInstance().imagemHelp());
+        super("Ajuda",Images.INFO.getImage());
         this.initComponents();
     }
 
@@ -36,28 +36,28 @@ public class MenuHelp extends Menu {
     }
 
     private JMenuItem getCalendar() {
-        calendar = new JMenuItem("Calendário", images.getInstance().imagemCalendar());
+        calendar = new JMenuItem("Calendário", Images.CALENDAR.getImage());
         calendar.addActionListener(this);
         calendar.setActionCommand("calendar");
         return calendar;
     }
 
     private JMenuItem getAbout() {
-        about = new JMenuItem("Sobre", images.getInstance().imagemHelp());
+        about = new JMenuItem("Sobre", Images.INFO.getImage());
         about.addActionListener(this);
         about.setActionCommand("about");
         return about;
     }
 
     private JMenuItem getVersion() {
-        version = new JMenuItem("Versão", images.getInstance().imagemVersion());
+        version = new JMenuItem("Versão", Images.VERSION.getImage());
         version.addActionListener(this);
         version.setActionCommand("version");
         return version;
     }
 
     private JMenuItem getSite() {
-        site = new JMenuItem("Site", images.getInstance().imagemSite());
+        site = new JMenuItem("Site", Images.SITE.getImage());
         site.addActionListener(this);
         site.setActionCommand("site");
         return site;

@@ -33,12 +33,12 @@ import controller.ProductDAO;
 import model.Product;
 import model.User;
 import objects.Excel;
+import objects.Images;
 import objects.InternalFrame;
 import objects.SpinnerNumberInt;
 import objects.TableModel;
 import objects.TextField;
 import objects.Utils;
-import objects.images;
 
 @SuppressWarnings("serial")
 public class RegistrationProductScreen extends InternalFrame implements DocumentListener {
@@ -223,7 +223,7 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 	}
 
 	private JButton getBtnClose() {
-		btnClose = new JButton("Cancelar", images.getInstance().imagemClose());
+		btnClose = new JButton("Cancelar", Images.CLOSE.getImage());
 		btnClose.setBounds(400, 250, 250, 40);
 		btnClose.addActionListener(this);
 		btnClose.setActionCommand("close");
@@ -231,7 +231,7 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 	}
 
 	private JButton getBtnCheck() {
-		btnCheck = new JButton("Salvar", images.getInstance().imagemCheck());
+		btnCheck = new JButton("Salvar", Images.CHECK.getImage());
 		btnCheck.setBounds(25, 250, 250, 40);
 		btnCheck.addActionListener(this);
 		btnCheck.setActionCommand("save");

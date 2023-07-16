@@ -4,8 +4,8 @@ import objects.ConnectionManager;
 import objects.MenuBar;
 import objects.ThreadCustom;
 import objects.DesktopPane;
+import objects.Images;
 import objects.InternalFrame;
-import objects.images;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -48,7 +48,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 	}
 
 	private ImageIcon getIcone() {
-		return images.getInstance().imagemPrincipal();
+		return Images.SYSTEM.getImage();
 	}
 
 	private ThreadCustom getFirst() {

@@ -27,7 +27,7 @@ public class MenuReport extends Menu {
 	private JMenuItem analyticalRep;
 
 	protected MenuReport() {
-		super("Relatório", images.getInstance().imagemReport());
+		super("Relatório", Images.REPORT.getImage());
 		this.initComponents();
 	}
 
@@ -41,7 +41,7 @@ public class MenuReport extends Menu {
 
 	private JMenu getMenuReport() {
 		report = new JMenu("Relatórios");
-		report.setIcon(images.getInstance().imagemManagement());
+		report.setIcon(Images.MANAGEMENT.getImage());
 		report.add(getAnalyticalRep());
 		report.add(getSyntheticRep());
 		report.add(new JSeparator());
@@ -50,7 +50,7 @@ public class MenuReport extends Menu {
 	}
 
 	private JMenuItem getCategory() {
-		category = new JMenuItem("Categoria", images.getInstance().category());
+		category = new JMenuItem("Categoria", Images.CATEGORY.getImage());
 		category.addActionListener(this);
 		category.setActionCommand("category");
 		return category;
@@ -78,14 +78,14 @@ public class MenuReport extends Menu {
 	}
 
 	private JMenuItem getProduct() {
-		product = new JMenuItem("Produto", images.getInstance().imagemProduct());
+		product = new JMenuItem("Produto", Images.PRODUCT.getImage());
 		product.addActionListener(this);
 		product.setActionCommand("product");
 		return product;
 	}
 
 	private JMenuItem getBrand() {
-		marca = new JMenuItem("Marca", images.getInstance().imagemBrand());
+		marca = new JMenuItem("Marca", Images.BRAND.getImage());
 		marca.addActionListener(this);
 		marca.setActionCommand("brand");
 		return marca;

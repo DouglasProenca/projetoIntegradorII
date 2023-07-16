@@ -2,12 +2,12 @@ package view;
 
 import controller.UserDAO;
 import model.User;
+import objects.Images;
 import objects.InternalFrame;
 import objects.Menu;
 import objects.PopUpMenu;
 import objects.TextField;
 import objects.Utils;
-import objects.images;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -68,7 +68,7 @@ public class LoginScreen extends InternalFrame {
     }
 
     private JButton getBtnConfirmar() {
-        btnConfirmar = new JButton("Confirmar",images.getInstance().imagemCheck());
+        btnConfirmar = new JButton("Confirmar",Images.CHECK.getImage());
         btnConfirmar.setBounds(40, 200, 311, 46);
         btnConfirmar.addActionListener(this);
         btnConfirmar.setActionCommand("Confirmar");

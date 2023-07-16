@@ -24,8 +24,8 @@ import com.google.gson.Gson;
 
 import controller.CepDAO;
 import model.Cep;
+import objects.Images;
 import objects.InternalFrame;
-import objects.images;
 
 @SuppressWarnings("serial")
 public class RegistrationCepScreen extends InternalFrame {
@@ -175,7 +175,7 @@ public class RegistrationCepScreen extends InternalFrame {
 	}
 
 	private JButton getBtnSave() {
-		btnSave = new JButton("Salvar", images.getInstance().imagemCheck());
+		btnSave = new JButton("Salvar", Images.CHECK.getImage());
 		btnSave.setBounds(10, 200, 370, 50);
 		btnSave.addActionListener(this);
 		btnSave.setActionCommand("save");

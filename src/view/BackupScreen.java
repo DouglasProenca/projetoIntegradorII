@@ -1,6 +1,6 @@
 package view;
 
-import objects.images;
+import objects.Images;
 import objects.ConnectionManager;
 import objects.InternalFrame;
 import objects.PropertiesSystem;
@@ -81,7 +81,7 @@ public class BackupScreen extends InternalFrame {
     }
 
     private JLabel getLblImagem() {
-        lblImagem = new JLabel(images.getInstance().backup());
+        lblImagem = new JLabel(Images.BACKUP.getImage());
         lblImagem.setBounds(140, 20, 50, 70);
         return lblImagem;
     }
@@ -100,7 +100,7 @@ public class BackupScreen extends InternalFrame {
     }
 
     private JButton getbtnCancelar() {
-        btnCancelar = new JButton("Cancelar", images.getInstance().imagemClose());
+        btnCancelar = new JButton("Cancelar", Images.CLOSE.getImage());
         btnCancelar.setBounds(180, 220, 130, 40);
         btnCancelar.addActionListener(this);
         btnCancelar.setActionCommand("Cancelar");
@@ -108,7 +108,7 @@ public class BackupScreen extends InternalFrame {
     }
 
     private JButton getBtnCheck() {
-        btnCheck = new JButton("Confirmar", images.getInstance().imagemCheck());
+        btnCheck = new JButton("Confirmar", Images.CHECK.getImage());
         btnCheck.setBounds(30, 220, 130, 40);
         btnCheck.addActionListener(this);
         btnCheck.setActionCommand("Confirmar");
