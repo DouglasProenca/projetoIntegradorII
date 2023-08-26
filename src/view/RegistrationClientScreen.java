@@ -120,8 +120,12 @@ public class RegistrationClientScreen extends InternalFrame implements DocumentL
 			if (valCPF.isCPF(cpf)) {
 				Client client = new Client(0, txtName.getText(), valCPF.imprimeCPF(cpf),
 						String.valueOf(User.getInstance().getId()), new Date());
-				ClientDAO.getInstance().save(client);
+				boolean save = ClientDAO.getInstance().save(client);
+				if (save) {
 				JOptionPane.showMessageDialog(this, "Cliente salvo com sucesso!");
+				} else {
+					break;
+				}
 				if (checkCEP.isSelected()) {
 					RegistrationCepScreen rbs = new RegistrationCepScreen();
 					getParent().add(rbs);
@@ -155,7 +159,7 @@ public class RegistrationClientScreen extends InternalFrame implements DocumentL
 
 	private boolean warn() {
 		if (txtName.getText().length() >= 1
-				&& txtCPF.getText().replaceAll("\\.", "").replaceAll("\\-", "").replaceAll(" ", "").length() >= 11) {
+				&& txtCPF.getText().replaceAll("\\.", "").replaceAll("\\-", "").trim().length() >= 11) {
 			return true;
 		}
 		return (false);

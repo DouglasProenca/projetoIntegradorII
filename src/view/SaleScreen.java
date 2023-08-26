@@ -74,7 +74,6 @@ public class SaleScreen extends InternalFrame {
 	private JButton btnConcluir;
 	private JButton btnExcluir;
 	private final String tblProducts[] = { "ID", "Nome", "Preço", "quantidade" };
-	private float total = 0;
 	private int id_cliente;
 	private final SpinnerNumberInt spinner = new SpinnerNumberInt();
 
@@ -344,12 +343,8 @@ public class SaleScreen extends InternalFrame {
 				break;
 			case "delete":
 				if (tblPanelFour.getSelectedRow() >= 0) {
-					float preco = Float.parseFloat(
-							tblPanelThree.getModel().getValueAt(tblPanelFour.getSelectedRow(), 2).toString());
-					int quantidade = (int) tblPanelFour.getModel().getValueAt(tblPanelFour.getSelectedRow(), 3);
-					total = total - (preco * quantidade);
-					txtTotalPanelFour.setText(String.valueOf(total >= 0 ? total : 0.00));
 					tblPanelFour.getModel().removeRow(tblPanelFour.getSelectedRow());
+					this.setTxtTotalPanelFour();
 				} else {
 					JOptionPane.showMessageDialog(this, "Favor selecionar uma linha!", "Aviso de Falha",
 							JOptionPane.ERROR_MESSAGE);
@@ -446,9 +441,7 @@ public class SaleScreen extends InternalFrame {
 							tblPanelFour.getModel().setValueAt(
 									(1 + (Integer.parseInt(tblPanelFour.getModel().getValueAt(i, 3).toString()))), i,
 									3);
-							total = total
-									+ (preco * Integer.parseInt(tblPanelFour.getModel().getValueAt(i, 3).toString()));
-							txtTotalPanelFour.setText(String.valueOf(total));
+							setTxtTotalPanelFour();
 							newRegister = false;
 						} else {
 							newRegister = false;
@@ -461,26 +454,19 @@ public class SaleScreen extends InternalFrame {
 
 				if (newRegister == true) {
 					tblPanelFour.getModel().addRow(new Object[] { id, nome, preco, 1 });
-					total = total + (preco * 1);
-					txtTotalPanelFour.setText(String.valueOf(total));
-					
+					setTxtTotalPanelFour();
+
 					TableColumn column = tblPanelFour.getColumnModel().getColumn(3);
 					column.setCellRenderer(new DefaultTableCellRenderer() {
 						@Override
 						public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
 								boolean hasFocus, int row, int column) {
-							Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row,
-									column);
+							Component component = super.getTableCellRendererComponent(table, value, isSelected,
+									hasFocus, row, column);
 
 							spinner.addChangeListener((ChangeEvent e) -> {
-								total = 0;
-								for (int i = 0; i < tblPanelFour.getRowCount(); i++) {
 
-									float valor = (float) tblPanelFour.getValueAt(i, 2);
-									int quantidade = (int) tblPanelFour.getModel().getValueAt(i, 3);
-									total = total + (valor * quantidade);
-								}
-								txtTotalPanelFour.setText(String.valueOf(total));
+								setTxtTotalPanelFour();
 							});
 							if (component instanceof JLabel) {
 								spinner.setValue(Integer.valueOf(((JLabel) component).getText()));
@@ -490,7 +476,7 @@ public class SaleScreen extends InternalFrame {
 							return spinner;
 						}
 					});
-					column.setCellEditor(new SpinnerEditor(1,1,quantidade));
+					column.setCellEditor(new SpinnerEditor(1, 1, quantidade));
 				}
 
 			} else if (e.getSource().equals(tblPanelTwo)) {
@@ -504,6 +490,19 @@ public class SaleScreen extends InternalFrame {
 				tblPanelFour.clearSelection();
 			}
 		}
+	}
+
+	private void setTxtTotalPanelFour() {
+		float total = 0;
+		float preco = 0;
+		int quantidade = 0;
+
+		for (int i = 0; i < tblPanelFour.getModel().getRowCount(); i++) {
+			preco = Float.parseFloat(tblPanelFour.getModel().getValueAt(i, 2).toString());
+			quantidade = Integer.parseInt(tblPanelFour.getModel().getValueAt(i, 3).toString());
+			total = total + (preco * quantidade);
+		}
+		txtTotalPanelFour.setText(String.valueOf(total == 0 ? "" : total));
 	}
 
 	@Override
