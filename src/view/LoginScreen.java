@@ -18,9 +18,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
-@SuppressWarnings("serial")
+
 public class LoginScreen extends InternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JLabel lblUsuario;
 	private JLabel lblSenha;
 	private TextField txtUsuario;

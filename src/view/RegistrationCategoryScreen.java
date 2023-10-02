@@ -28,9 +28,10 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
-@SuppressWarnings("serial")
+
 public class RegistrationCategoryScreen extends InternalFrame implements DocumentListener {
 
+	private static final long serialVersionUID = 1L;
 	private JTabbedPane painelAbas;
 	private JLabel lblBrand;
 	private JPanel panelExcel;

@@ -34,9 +34,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
 
-@SuppressWarnings("serial")
+
 public class SaleScreen extends InternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	// 1º Painel
 	private JPanel panelOne;
 	private JLabel lblPanelOneTitle;
@@ -424,6 +425,7 @@ public class SaleScreen extends InternalFrame {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {

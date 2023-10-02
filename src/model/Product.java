@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Product extends Category {
@@ -50,6 +52,17 @@ public class Product extends Category {
 		this.product_qtd = quantidade;
 		this.product_img = imagem;
 	}
+	
+
+	public Product(ResultSet rs) throws SQLException {
+		super(rs.getString("categoria"), 0, rs.getString("marca"), rs.getString("pais"), rs.getDate("date"), rs.getString("user"));
+		this.product_id = rs.getInt("id");
+		this.product_name = rs.getString("nome");
+		this.product_valor = rs.getFloat("valor");
+		this.product_qtd = rs.getInt("Quantidade");
+		this.product_img = rs.getBytes("imagem");
+	}
+
 
 	public int getProduct_id() {
 		return product_id;

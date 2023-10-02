@@ -198,7 +198,6 @@ public class DatabaseConnectionScreen extends InternalFrame {
                 this.dispose();
                 break;
             case "save":
-                PropertiesSystem ps = new PropertiesSystem();
                 ps.setDatabase(txtDatabase.getText());
                 ps.setPort(txtPort.getText());
                 ps.setLogin(txtLogin.getText());

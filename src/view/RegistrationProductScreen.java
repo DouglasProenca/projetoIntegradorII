@@ -27,7 +27,7 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
-import controller.BrandDao;
+import controller.BrandDAO;
 import controller.CategoryDAO;
 import controller.ProductDAO;
 import model.Product;
@@ -66,7 +66,7 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 	private int id;
 	private JComboBox<String> jboBrand;
 	private JComboBox<String> jboCategoria;
-	private final BrandDao dao = BrandDao.getInstance();
+	private final BrandDAO dao = BrandDAO.getInstance();
 	private final ProductDAO daop = ProductDAO.getInstance();
 	private final CategoryDAO daoc = CategoryDAO.getInstance();
 	private final Excel excel = new Excel();

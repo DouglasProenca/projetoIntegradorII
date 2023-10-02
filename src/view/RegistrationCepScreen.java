@@ -27,9 +27,10 @@ import model.Cep;
 import objects.Images;
 import objects.InternalFrame;
 
-@SuppressWarnings("serial")
+
 public class RegistrationCepScreen extends InternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JLabel lblInfoCep;
 	private JFormattedTextField txtInfoCep;
 	private JLabel lblLogradouro;
@@ -46,7 +47,6 @@ public class RegistrationCepScreen extends InternalFrame {
 	private JLabel lblNumber;
 	private JTextField txtNumber;
 	private JButton btnSave;
-	private CepDAO dao = CepDAO.getInstance();
 
 	public RegistrationCepScreen() {
 		super("Consulta CEP", true, true, false, true, 400, 300);
@@ -234,7 +234,7 @@ public class RegistrationCepScreen extends InternalFrame {
 		case "save":
 			Cep cep = new Cep(txtInfoCep.getText(), txtlogradouro.getText(), txtBairro.getText(), txtCidade.getText(),
 					txtUf.getText(), txtComplemento.getText());
-			if (dao.save(cep) == true) {
+			if (CepDAO.getInstance().save(cep) == true) {
 				JOptionPane.showMessageDialog(this, "Endereço Salvo com sucesso");
 			}
 			this.dispose();

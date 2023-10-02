@@ -7,9 +7,9 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-import interfaces.imagesInterface;
+import interfaces.ImagesInterface;
 
-public enum Images implements imagesInterface {
+public enum Images implements ImagesInterface {
 
 	BACKUP {
 

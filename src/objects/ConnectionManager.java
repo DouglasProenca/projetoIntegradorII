@@ -30,13 +30,13 @@ public abstract class ConnectionManager implements ConnectionDB {
 		String database = ps.getDatabase();
 		String port = ps.getPort();
 		String server = ps.getServer();
-		String url = "jdbc:sqlserver://127.0.0.1" + "\\" + server + ":" + port + ";databaseName=" + database;
+		String url = "jdbc:sqlserver://" + server + ":" + port + ";databaseName=" + database;
 		return connection(url, user, password);
 	}
 
 	@Override
 	public Connection getConexaoTest(String user, String password, String database, String port, String server) {
-		String url = "jdbc:sqlserver://127.0.0.1" + "\\" + server + ":"+ port +";databaseName=" + database;
+		String url = "jdbc:sqlserver://" + server + ":"+ port +";databaseName=" + database;
 		return connection(url, user, password);
 	}
 

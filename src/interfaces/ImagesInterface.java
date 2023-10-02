@@ -2,7 +2,7 @@ package interfaces;
 
 import javax.swing.ImageIcon;
 
-public interface imagesInterface {
+public interface ImagesInterface {
 
 	public ImageIcon getImage();
 }

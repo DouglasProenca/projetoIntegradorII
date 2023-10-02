@@ -10,8 +10,10 @@ import javax.swing.JLabel;
 import objects.Images;
 import objects.ThreadCustom;
 
-@SuppressWarnings("serial")
+
 public class IntroScreen extends JDialog implements Runnable {
+
+	private static final long serialVersionUID = 1L;
 
 	public IntroScreen() {
 		super(new JFrame());

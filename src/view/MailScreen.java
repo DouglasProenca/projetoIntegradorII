@@ -19,9 +19,10 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 
-@SuppressWarnings("serial")
+
 public class MailScreen extends InternalFrame implements Runnable {
 
+	private static final long serialVersionUID = 1L;
 	private JButton btnsend;
 	private JButton btnAnexFile;
 	private TextField txtDestinatario;

@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Client {
@@ -19,6 +21,14 @@ public class Client {
         this.cpf = cpf;
         this.user = user;
         this.data = data;
+    }
+    
+    public Client(ResultSet rs) throws SQLException {
+        this.id = rs.getInt("id");
+        this.nome = rs.getString("nome");
+        this.cpf = rs.getString("cpf");
+        this.user = rs.getString("user");
+        this.data = rs.getDate("data");
     }
 
     public String getUser() {

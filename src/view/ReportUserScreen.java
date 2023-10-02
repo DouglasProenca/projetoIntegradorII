@@ -18,10 +18,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 
 
-@SuppressWarnings("serial")
+
 public class ReportUserScreen extends InternalFrame {
 
-    private JButton btnNew;
+	private static final long serialVersionUID = 1L;
+	private JButton btnNew;
     private JButton btnEdit;
     private JButton btnRemove;
     private JPanel panelNorth;

@@ -24,7 +24,8 @@ import javax.swing.table.DefaultTableModel;
 
 import objects.TableModel;
 import objects.TextField;
-import controller.BrandDao;
+import controller.BrandDAO;
+import controller.CountryDAO;
 import model.Brand;
 import model.User;
 import objects.Excel;
@@ -51,7 +52,8 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	private JButton btnExcluirExcel;
 	private JButton btnImportExcel;
 	private final Excel excel = new Excel();
-	private final BrandDao dao = BrandDao.getInstance();
+	private final BrandDAO dao = BrandDAO.getInstance();
+	private final CountryDAO countryDao = CountryDAO.getInstance();
 	Vector<Integer> id_pais = new Vector<Integer>();
 
 	public RegistrationBrandScreen() {
@@ -134,7 +136,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 		jboCountry = new JComboBox<>();
 		jboCountry.setBounds(100, 80, 350, 25);
 		
-		dao.AllCountry().stream().forEachOrdered((p) -> {
+		countryDao.getAll().stream().forEachOrdered((p) -> {
 			id_pais.addElement(p.getCountry_id());
 			jboCountry.addItem(p.getCountry_nome());
 		});

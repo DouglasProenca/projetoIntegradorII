@@ -5,6 +5,7 @@ import model.Sale;
 import objects.ConnectionManager;
 import view.MainScreen;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,92 +14,97 @@ import javax.swing.JOptionPane;
 
 public class SaleDAO implements DAO {
 
-    private static SaleDAO uniqueInstance;
+	private static SaleDAO uniqueInstance;
+	
+	private SaleDAO() {
 
-    public static synchronized SaleDAO getInstance() {
-        return uniqueInstance == null ? uniqueInstance = new SaleDAO() : uniqueInstance;
-    }
+	}
 
-    @Override
-    public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	public static synchronized SaleDAO getInstance() {
+		return uniqueInstance == null ? uniqueInstance = new SaleDAO() : uniqueInstance;
+	}
 
-    @Override
-    public ArrayList<?> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	@Override
+	public boolean delete(int id) {
+		throw new UnsupportedOperationException("Not supported yet."); 
+	}
 
-    @Override
-    public boolean save(Object object) {
-        try {
-            Sale sale = (Sale) object;
+	@Override
+	public ArrayList<?> getAll() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-            Connection conexao = ConnectionManager.getInstance().getConexao();
+	@Override
+	public boolean save(Object object) {
+		Sale sale = (Sale) object;
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_venda values(?,?,?,?)");
+		Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            instrucaoSQL.setInt(1, sale.getId_cliente());
-            instrucaoSQL.setFloat(2, sale.getTotal());
-            instrucaoSQL.setDate(3, new java.sql.Date(sale.getData().getTime()));
-            instrucaoSQL.setInt(4, sale.getUser());
+		try {
+			PreparedStatement instrucaoSQL = conexao.prepareStatement("INSERT INTO rc_venda VALUES(?,?,?,?)");
+			instrucaoSQL.setInt(1, sale.getId_cliente());
+			instrucaoSQL.setFloat(2, sale.getTotal());
+			instrucaoSQL.setDate(3, new Date(sale.getData().getTime()));
+			instrucaoSQL.setInt(4, sale.getUser());
+			instrucaoSQL.executeUpdate();
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+			return (false);
+		}
+		return (true);
+	}
 
-            instrucaoSQL.executeUpdate();
+	@Override
+	public boolean alter(Object object) {
+		throw new UnsupportedOperationException("Not supported yet."); 
+	}
 
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return (false);
-        }
-        return (true);
-    }
+	@Override
+	public ArrayList<?> getBy(String key) {
+		throw new UnsupportedOperationException("Not supported yet."); 
+	}
 
-    @Override
-    public boolean alter(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	public boolean saveList(int produto, float valor, int quantidade, int user) {
+		Connection conexao = ConnectionManager.getInstance().getConexao();
+		
+		try {
+			PreparedStatement instrucaoSQL = conexao.prepareStatement("EXEC sp_insert_lista_venda ?,?,?,?");
+			instrucaoSQL.setInt(1, produto);
+			instrucaoSQL.setInt(2, quantidade);
+			instrucaoSQL.setFloat(3, valor);
+			instrucaoSQL.setInt(4, user);
+			instrucaoSQL.executeUpdate();
+		} catch (SQLException | IllegalArgumentException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+			return (false);
+		}
+		return (true);
+	}
 
-    @Override
-    public ArrayList<?> getBy(String key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	public int returnSale() {
+		int id = 0;
 
-    public boolean saveList(int produto, float valor, int quantidade, int user) {
-        try {
-            Connection conexao = ConnectionManager.getInstance().getConexao();
+		Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("execute sp_insert_lista_venda ?,?,?,?");
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT top(1)id ");
+		query.append("FROM rc_venda ");
+		query.append("ORDER BY id DESC");
 
-            instrucaoSQL.setInt(1, produto);
-            instrucaoSQL.setInt(2, quantidade);
-            instrucaoSQL.setFloat(3, valor);
-            instrucaoSQL.setInt(4, user);
+		try {
+			PreparedStatement instrucaoSQL = conexao.prepareStatement(query.toString());
 
-            instrucaoSQL.executeUpdate();
+			ResultSet rs = instrucaoSQL.executeQuery();
 
-        } catch (SQLException | IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return (false);
-        }
-        return (true);
-    }
-
-    public int returnSale() {
-        int id = 0;
-        try {
-            Connection conexao = ConnectionManager.getInstance().getConexao();
-
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("select top(1)id from rc_venda order by id desc");
-
-            ResultSet rs = instrucaoSQL.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt("id");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-        }
-        return id;
-    }
+			while (rs.next()) {
+				id = rs.getInt("id");
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return id;
+	}
 }

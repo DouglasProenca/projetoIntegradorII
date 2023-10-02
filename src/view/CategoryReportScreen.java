@@ -17,8 +17,8 @@ import objects.TableModel;
 @SuppressWarnings("serial")
 public class CategoryReportScreen extends BrandReportScreen {
 
-	private final CategoryDAO dao = CategoryDAO.getInstance();
 	private final Excel excel = new Excel();
+	private static final SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
 
 	public CategoryReportScreen() {
 		this.setTitle("Relatório Categorias");
@@ -27,22 +27,23 @@ public class CategoryReportScreen extends BrandReportScreen {
 
 	@Override
 	public Table getTblResultado() {
-		tblResultado = new Table(new String[] {"ID","Categoria","Data","Usuário"}, 0);
+		tblResultado = new Table(new String[] { "ID", "Categoria", "Data", "Usuário" }, 0);
 		tblResultado.getSelectionModel().addListSelectionListener(this);
 		tblResultado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblResultado.addMouseListener(this);
 		return tblResultado;
 	}
-	
+
 	@Override
-    public void loadTable() {
-        TableModel modelo = (TableModel) tblResultado.getModel();
-        modelo.setRowCount(0);
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
-        CategoryDAO.getInstance().getAll().forEach((p) -> {
-           modelo.addRow(new Object[]{p.getCategory_id(), p.getCategory_name(), sdf1.format(p.getDate()), p.getUser()});
-        });
-    }
+	public void loadTable() {
+		TableModel modelo = (TableModel) tblResultado.getModel();
+		modelo.setRowCount(0);
+
+		CategoryDAO.getInstance().getAll().forEach((p) -> {
+			modelo.addRow(
+					new Object[] { p.getCategory_id(), p.getCategory_name(), sdf1.format(p.getDate()), p.getUser() });
+		});
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -50,7 +51,7 @@ public class CategoryReportScreen extends BrandReportScreen {
 		case "excluir":
 			int numeroLinha = tblResultado.getSelectedRow();
 			int id = Integer.parseInt(tblResultado.getModel().getValueAt(numeroLinha, 0).toString());
-			if (dao.delete(id)) {
+			if (CategoryDAO.getInstance().delete(id)) {
 				JOptionPane.showMessageDialog(this, "Categoria excluída com sucesso!");
 			}
 			this.loadTable();
@@ -63,15 +64,16 @@ public class CategoryReportScreen extends BrandReportScreen {
 		case "Exportar":
 			JFileChooser fc = new JFileChooser();
 			if (fc.showSaveDialog(this) == JFileChooser.FILES_ONLY) {
-				excel.exportExcel(fc.getSelectedFile(), dao.getAll(), "Categorias", tblResultado);
+				excel.exportExcel(fc.getSelectedFile(), CategoryDAO.getInstance().getAll(), "Categorias", tblResultado);
 			}
 			break;
 		case "find":
 			TableModel modelo = (TableModel) tblResultado.getModel();
-			modelo.setRowCount(0);		
-			SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); //você pode usar outras máscaras
-			dao.getBy(txtPesquisa.getText()).forEach((p) -> {
-				modelo.addRow(new Object[] { p.getCategory_id(), p.getCategory_name(), sdf1.format(p.getDate()), p.getUser() });
+			modelo.setRowCount(0);
+
+			CategoryDAO.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
+				modelo.addRow(new Object[] { p.getCategory_id(), p.getCategory_name(), sdf1.format(p.getDate()),
+						p.getUser() });
 			});
 			break;
 		}

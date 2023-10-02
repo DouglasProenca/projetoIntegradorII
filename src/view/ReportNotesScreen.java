@@ -31,9 +31,10 @@ import javax.swing.JTextArea;
 import objects.Images;
 import objects.InternalFrame;
 
-@SuppressWarnings("serial")
+
 public class ReportNotesScreen extends InternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JMenuBar menubar;
 	private JMenu menuArquivo;
 	private JTextArea textArea;

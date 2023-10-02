@@ -13,9 +13,9 @@ import model.User;
 import objects.InternalFrame;
 import objects.TableModel;
 
-@SuppressWarnings("serial")
 public class AboutScreen extends InternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	protected JTable tblResultado;
 	private LinkedHashMap<String, Object> infos;
 

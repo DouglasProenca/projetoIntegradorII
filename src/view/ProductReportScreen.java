@@ -18,7 +18,7 @@ import objects.TableModel;
 public class ProductReportScreen extends BrandReportScreen {
 
 	private final Excel excel = new Excel();
-	private final ProductDAO dao = ProductDAO.getInstance();
+	private static SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
 
 	public ProductReportScreen() {
 		this.setTitle("Relatório Produtos");
@@ -27,8 +27,8 @@ public class ProductReportScreen extends BrandReportScreen {
 
 	@Override
 	public Table getTblResultado() {
-		tblResultado = new Table(new String[] { "ID", "Produto", "Marca", "Categoria", "Valor",
-				"Quantidade", "Data", "Usuário", "Imagem" }, 0);
+		tblResultado = new Table(new String[] { "ID", "Produto", "Marca", "Categoria", "Valor", "Quantidade", "Data",
+				"Usuário", "Imagem" }, 0);
 		tblResultado.getSelectionModel().addListSelectionListener(this);
 		tblResultado.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblResultado.addMouseListener(this);
@@ -42,11 +42,11 @@ public class ProductReportScreen extends BrandReportScreen {
 	public void loadTable() {
 		TableModel modelo = (TableModel) tblResultado.getModel();
 		modelo.setRowCount(0);
-		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
 
 		ProductDAO.getInstance().getAll().forEach((p) -> {
-			modelo.addRow(new Object[] { p.getProduct_id(), p.getProduct_name(), p.getBrand_name(), p.getCategory_name(), p.getProduct_valor(),
-					p.getProduct_qtd(), sdf1.format(p.getDate()), p.getUser(), p.getProduct_img() });
+			modelo.addRow(new Object[] { p.getProduct_id(), p.getProduct_name(), p.getBrand_name(),
+					p.getCategory_name(), p.getProduct_valor(), p.getProduct_qtd(), sdf1.format(p.getDate()),
+					p.getUser(), p.getProduct_img() });
 		});
 	}
 
@@ -69,7 +69,7 @@ public class ProductReportScreen extends BrandReportScreen {
 		case "Exportar":
 			JFileChooser fc = new JFileChooser();
 			if (fc.showSaveDialog(this) == JFileChooser.FILES_ONLY) {
-				excel.exportExcel(fc.getSelectedFile(), dao.getAll(), "Produtos", tblResultado);
+				excel.exportExcel(fc.getSelectedFile(), ProductDAO.getInstance().getAll(), "Produtos", tblResultado);
 			}
 			break;
 		case "find":
@@ -79,10 +79,11 @@ public class ProductReportScreen extends BrandReportScreen {
 			} else {
 				TableModel modelo = (TableModel) tblResultado.getModel();
 				modelo.setRowCount(0);
-				SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy"); // você pode usar outras máscaras
+
 				ProductDAO.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
-					modelo.addRow(new Object[] { p.getProduct_id(), p.getProduct_name(), p.getBrand_name(), p.getCategory_name(), p.getProduct_valor(),
-							p.getProduct_qtd(), sdf1.format(p.getDate()), p.getUser(), p.getProduct_img()});
+					modelo.addRow(new Object[] { p.getProduct_id(), p.getProduct_name(), p.getBrand_name(),
+							p.getCategory_name(), p.getProduct_valor(), p.getProduct_qtd(), sdf1.format(p.getDate()),
+							p.getUser(), p.getProduct_img() });
 				});
 				break;
 			}
@@ -101,7 +102,7 @@ public class ProductReportScreen extends BrandReportScreen {
 			String value = tblResultado.getValueAt(lineNumber, 4).toString();
 			String quantity = tblResultado.getValueAt(lineNumber, 5).toString();
 			String user = tblResultado.getValueAt(lineNumber, 6).toString();
-			byte[] imagem = (byte[])tblResultado.getValueAt(lineNumber, 8);
+			byte[] imagem = (byte[]) tblResultado.getValueAt(lineNumber, 8);
 
 			Product product = new Product(product_name, Float.parseFloat(value), Integer.parseInt(quantity), category,
 					id, brand, null, null, user, imagem);

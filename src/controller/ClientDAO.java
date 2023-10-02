@@ -5,6 +5,7 @@ import model.Client;
 import objects.ConnectionManager;
 import view.MainScreen;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,108 +14,114 @@ import javax.swing.JOptionPane;
 
 public class ClientDAO implements DAO {
 
-    private static ClientDAO uniqueInstance;
+	private static ClientDAO uniqueInstance;
+	
+	private ClientDAO() {
 
-    public static synchronized ClientDAO getInstance() {
-        return uniqueInstance == null ? uniqueInstance = new ClientDAO() : uniqueInstance;
-    }
+	}
 
-    @Override
-    public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
+	public static synchronized ClientDAO getInstance() {
+		return uniqueInstance == null ? uniqueInstance = new ClientDAO() : uniqueInstance;
+	}
 
-    @Override
-    public ArrayList<Client> getAll() {
-        ArrayList<Client> clientList = new ArrayList<>();
+	@Override
+	public boolean delete(int id) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-        try {
+	@Override
+	public ArrayList<Client> getAll() {
+		ArrayList<Client> clientList = new ArrayList<>();
 
-            Connection conexao = ConnectionManager.getInstance().getConexao();
+		Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("select c.id\n"
-                    + "	 , c.nome\n"
-                    + "	 , c.cpf\n"
-                    + "	 , c.[data]\n"
-                    + "	 , u.[user]\n"
-                    + "from rc_cliente c\n"
-                    + "inner join rc_user u\n"
-                    + "	on u.id = c.[user]");
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT c.id ");
+		query.append("	 , c.nome ");
+		query.append("	 , c.cpf ");
+		query.append("	 , c.[data] ");
+		query.append("	 , u.[user] ");
+		query.append("FROM rc_cliente c ");
+		query.append("INNER JOIN rc_user u ");
+		query.append("	ON u.id = c.[user]");
 
-            ResultSet rs = instrucaoSQL.executeQuery();
-            while (rs.next()) {
-                Client p = new Client(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"),
-                        rs.getString("user"), rs.getDate("data"));
-                clientList.add(p);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-        }
-        return clientList;
-    }
+		try {
+			PreparedStatement instrucaoSQL = conexao.prepareStatement(query.toString());
 
-    @Override
-    public boolean save(Object object) {
-        try {
-            Client client = (Client) object;
+			ResultSet rs = instrucaoSQL.executeQuery();
 
-            Connection conexao = ConnectionManager.getInstance().getConexao();
+			while (rs.next()) {
+				Client client = new Client(rs);
+				clientList.add(client);
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return clientList;
+	}
 
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("insert into rc_cliente values(?,?,?,?)");
+	@Override
+	public boolean save(Object object) {
+		Client client = (Client) object;
 
-            instrucaoSQL.setString(1, client.getNome());
-            instrucaoSQL.setString(2, client.getCpf());
-            instrucaoSQL.setInt(3, Integer.valueOf(client.getUser()));
-            instrucaoSQL.setDate(4, new java.sql.Date(client.getData().getTime()));
+		Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            instrucaoSQL.executeUpdate();
+		try {
+			PreparedStatement instrucaoSQL = conexao.prepareStatement("KNSERT INTO rc_cliente VALUES(?,?,?,?)");
 
-        } catch (SQLException | IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-            return (false);
-        } 
-        return (true);
-    }
+			instrucaoSQL.setString(1, client.getNome());
+			instrucaoSQL.setString(2, client.getCpf());
+			instrucaoSQL.setInt(3, Integer.valueOf(client.getUser()));
+			instrucaoSQL.setDate(4, new Date(client.getData().getTime()));
+			instrucaoSQL.executeUpdate();
+		} catch (SQLException | IllegalArgumentException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+			return (false);
+		}
+		return (true);
+	}
 
-    @Override
-    public boolean alter(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+	@Override
+	public boolean alter(Object object) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    @Override
-    public ArrayList<Client> getBy(String key) {
-        ArrayList<Client> ClientList = new ArrayList<>();
+	@Override
+	public ArrayList<Client> getBy(String key) {
+		ArrayList<Client> ClientList = new ArrayList<>();
 
-        try {
+		Connection conexao = ConnectionManager.getInstance().getConexao();
 
-            Connection conexao = ConnectionManager.getInstance().getConexao();
-            PreparedStatement instrucaoSQL = conexao.prepareStatement("select c.id\n"
-                    + "	 , c.nome\n"
-                    + "	 , c.cpf\n"
-                    + "	 , c.[data]\n"
-                    + "	 , u.[user]\n"
-                    + "from rc_cliente c\n"
-                    + "inner join rc_user u\n"
-                    + "	on u.id = c.[user]\n"
-                    + "where c.nome like ?\n"
-                    + " or c.cpf like ?");
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT c.id ");
+		query.append("	 , c.nome ");
+		query.append("	 , c.cpf ");
+		query.append("	 , c.[data] ");
+		query.append("	 , u.[user] ");
+		query.append("FROM rc_cliente c ");
+		query.append("INNER JOIN rc_user u ");
+		query.append("	ON u.id = c.[user] ");
+		query.append("WHERE c.nome LIKE ? ");
+		query.append("  OR c.cpf LIKE ? ");
 
-            instrucaoSQL.setString(1, "%" + key + '%');
-            instrucaoSQL.setString(2, "%" + key + '%');
+		try {
+			PreparedStatement instrucaoSQL = conexao.prepareStatement(query.toString());
 
-            ResultSet rs = instrucaoSQL.executeQuery();
+			instrucaoSQL.setString(1, "%" + key + '%');
+			instrucaoSQL.setString(2, "%" + key + '%');
 
-            while (rs.next()) {
-                Client p = new Client(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"),
-                        rs.getString("user"), rs.getDate("data"));
-                ClientList.add(p);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
-                    "Aviso de Falha", JOptionPane.ERROR_MESSAGE);
-        }
-        return ClientList;
-    }
+			ResultSet rs = instrucaoSQL.executeQuery();
+
+			while (rs.next()) {
+				Client client = new Client(rs);
+				ClientList.add(client);
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return ClientList;
+	}
 }

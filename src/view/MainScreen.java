@@ -19,9 +19,10 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
-@SuppressWarnings("serial")
+
 public class MainScreen extends JFrame implements KeyListener, WindowStateListener {
 
+	private static final long serialVersionUID = 1L;
 	public static DesktopPane desktopPane;
 	public static JToolBar jToolBar;
 	protected static MenuBar menubar = new MenuBar();

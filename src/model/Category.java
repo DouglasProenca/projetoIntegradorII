@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Category extends Brand {
@@ -30,6 +32,12 @@ public class Category extends Brand {
     public Category(String category_name, Date date, String user) {
         super(date, user);
         this.category_name = category_name;
+    }
+    
+    public Category(ResultSet rs) throws SQLException {
+        super(rs.getDate("data"), rs.getString("user"));
+        this.category_id = rs.getInt("id");
+        this.category_name = rs.getString("categoria");
     }
     
     public int getCategory_id() {

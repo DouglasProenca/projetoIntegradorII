@@ -21,9 +21,10 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.text.MaskFormatter;
 
-@SuppressWarnings("serial")
+
 public class RegistrationClientScreen extends InternalFrame implements DocumentListener {
 
+	private static final long serialVersionUID = 1L;
 	private JLabel lblName;
 	private JLabel lblCPF;
 	private JButton btnCheck;

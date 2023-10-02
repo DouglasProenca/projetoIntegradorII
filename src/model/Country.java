@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Country extends Object {
 
 	private int country_id;
@@ -22,6 +25,10 @@ public class Country extends Object {
 		this.country_nome = country_nome;
 	}
 
+	public Country(ResultSet rs) throws SQLException{
+		this.country_id = rs.getInt("paisId");
+		this.country_nome = rs.getString("paisNome");
+	}
 
 	public int getCountry_id() {
 		return country_id;

@@ -18,9 +18,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
-@SuppressWarnings("serial")
 public class LookAndFeelScreen extends InternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel painel;
 	private JComboBox<String> comboLAF;
 	private static PropertiesSystem prop = new PropertiesSystem();

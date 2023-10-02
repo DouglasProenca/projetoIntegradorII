@@ -20,9 +20,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.InternalFrameEvent;
 
-@SuppressWarnings("serial")
 public class RegisterUserScreen extends InternalFrame implements DocumentListener {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel panelCadastro;
 	private JLabel lblUser;
 	private TextField txtUser;

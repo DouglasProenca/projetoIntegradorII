@@ -1,6 +1,6 @@
 package view;
 
-import controller.BrandDao;
+import controller.BrandDAO;
 import objects.Excel;
 import model.Brand;
 import objects.InternalFrame;
@@ -42,7 +42,7 @@ public class BrandReportScreen extends InternalFrame {
 	protected Table tblResultado;
 	private JScrollPane scroll;
 	private final Excel excel = new Excel();
-	private final BrandDao dao = BrandDao.getInstance();
+	private final BrandDAO dao = BrandDAO.getInstance();
 	private final SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
 
 	public BrandReportScreen() {
@@ -135,7 +135,7 @@ public class BrandReportScreen extends InternalFrame {
 
 	public void loadTable() {
 		tblResultado.getModel().setRowCount(0);		
-		BrandDao.getInstance().getAll().forEach((p) -> {
+		BrandDAO.getInstance().getAll().forEach((p) -> {
 			tblResultado.getModel().addRow(new Object[] { p.getBrand_id(), p.getBrand_name(), p.getCountry_nome(), sdf1.format(p.getDate()), p.getUser() });
 		});
 	}
@@ -146,7 +146,7 @@ public class BrandReportScreen extends InternalFrame {
 		case "excluir":
 			int lineNumber = tblResultado.getSelectedRow();
 			int id = Integer.parseInt(tblResultado.getValueAt(lineNumber, 0).toString());
-			if (BrandDao.getInstance().delete(id)) {
+			if (BrandDAO.getInstance().delete(id)) {
 				JOptionPane.showMessageDialog(this, "Marca excluída com sucesso!");
 			}
 			this.loadTable();
@@ -164,7 +164,7 @@ public class BrandReportScreen extends InternalFrame {
 			break;
 		case "find":
 			tblResultado.getModel().setRowCount(0);			
-			BrandDao.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
+			BrandDAO.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
 			tblResultado.getModel().addRow(
 						new Object[] { p.getBrand_id(), p.getBrand_name(), p.getCountry_nome(), sdf1.format(p.getDate()), p.getUser() });
 			});

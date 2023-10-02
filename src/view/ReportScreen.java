@@ -14,10 +14,9 @@ import objects.JasperManager;
 import objects.JasperToolBar;
 import objects.JasperViewer;
 
-@SuppressWarnings("serial")
 public class ReportScreen extends InternalFrame {
 
-	private final JasperManager jasperManager = new JasperManager();
+	private static final long serialVersionUID = 1L;
 	private Object[] parameters;
 	private JasperViewer jr;
 
@@ -33,8 +32,7 @@ public class ReportScreen extends InternalFrame {
 	}
 
 	private void initComponents(Object[] params) throws JRException {
-		jasperManager.start();
-		this.getContentPane().add(jasper(jasperManager, params), BorderLayout.CENTER);
+		this.getContentPane().add(jasper(params), BorderLayout.CENTER);
 	}
 
 	private JasperViewer getJRViewer(JasperPrint jasperprint) {
@@ -53,14 +51,14 @@ public class ReportScreen extends InternalFrame {
 		return null;
 	}
 
-	private JRViewer jasper(JasperManager jasperManager, Object[] params) throws JRException {
+	private JRViewer jasper(Object[] params) throws JRException {
 		switch (this.getTitle()) {
 		case "Relatório Gerencial":
-			return getJRViewer(jasperManager.gerarManagetmentReport());
+			return getJRViewer(JasperManager.MANAGETMENT.getReport(params));
 		case "Relatório Sintetico":
-			return getJRViewer(jasperManager.gerarSyntheticReport(params));
+			return getJRViewer(JasperManager.SYNTHETIC.getReport(params));
 		default:
-			return getJRViewer(jasperManager.gerarAnalyticalReport(params));
+			return getJRViewer(JasperManager.ANAlYTICAL.getReport(params));
 		}
 	}
 
@@ -79,7 +77,7 @@ public class ReportScreen extends InternalFrame {
 		case "reload":
 			this.getContentPane().removeAll();
 			try {
-				this.getContentPane().add(jasper(jasperManager, parameters), BorderLayout.CENTER);
+				this.getContentPane().add(jasper(parameters), BorderLayout.CENTER);
 			} catch (JRException e1) {
 				e1.printStackTrace();
 			}

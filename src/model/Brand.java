@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Brand extends Country {
@@ -52,6 +54,14 @@ public class Brand extends Country {
 	public Brand(Date date, String user) {
 		this.date = date;
 		this.user = user;
+	}
+	
+	public Brand(ResultSet rs) throws SQLException {
+		super(rs.getString("paisNome"));
+		this.brand_id = rs.getInt("id");
+		this.brand_name = rs.getString("marca");
+		this.date = rs.getDate("date");
+		this.user = rs.getString("user");
 	}
 	
 	public int getBrand_id() {
