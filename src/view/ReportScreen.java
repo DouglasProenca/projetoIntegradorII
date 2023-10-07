@@ -3,36 +3,29 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.swing.JRViewer;
 import objects.InternalFrame;
-import objects.JasperManager;
 import objects.JasperToolBar;
 import objects.JasperViewer;
 
 public class ReportScreen extends InternalFrame {
 
 	private static final long serialVersionUID = 1L;
-	private Object[] parameters;
+	private JasperPrint parameters;
 	private JasperViewer jr;
 
-	public ReportScreen(String titulo, Object[] params) {
+	public ReportScreen(String titulo, JasperPrint report) throws JRException {
 		super(titulo, true, true, true, true, 707, 400);
 		this.addComponentListener(this);
-		parameters = params;
-		try {
-			this.initComponents(params);
-		} catch (JRException ex) {
-			Logger.getLogger(ReportScreen.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		parameters = report;
+		this.initComponents(report);
 	}
 
-	private void initComponents(Object[] params) throws JRException {
-		this.getContentPane().add(jasper(params), BorderLayout.CENTER);
+	private void initComponents(JasperPrint report) throws JRException {
+		this.getContentPane().add(jasper(report), BorderLayout.CENTER);
 	}
 
 	private JasperViewer getJRViewer(JasperPrint jasperprint) {
@@ -41,7 +34,7 @@ public class ReportScreen extends InternalFrame {
 		getJasperToolbar().setBtnRefreshActionListener(this);
 		return jr;
 	}
-	
+
 	public JasperToolBar getJasperToolbar() {
 		for (int i = 0; i < jr.getComponentCount(); i++) {
 			if (jr.getComponent(i) instanceof JasperToolBar) {
@@ -51,15 +44,8 @@ public class ReportScreen extends InternalFrame {
 		return null;
 	}
 
-	private JRViewer jasper(Object[] params) throws JRException {
-		switch (this.getTitle()) {
-		case "Relatório Gerencial":
-			return getJRViewer(JasperManager.MANAGETMENT.getReport(params));
-		case "Relatório Sintetico":
-			return getJRViewer(JasperManager.SYNTHETIC.getReport(params));
-		default:
-			return getJRViewer(JasperManager.ANAlYTICAL.getReport(params));
-		}
+	private JRViewer jasper(JasperPrint report) throws JRException {
+		return getJRViewer(report);
 	}
 
 	private void zoomJasper(JasperViewer jasperViwer, int width, int height) {
@@ -69,7 +55,6 @@ public class ReportScreen extends InternalFrame {
 			jasperViwer.setZoomRatio((float) 1);
 		}
 	}
-	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

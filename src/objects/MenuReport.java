@@ -5,19 +5,25 @@ import view.CategoryReportScreen;
 import view.ProductReportScreen;
 import view.ReportScreen;
 import com.toedter.calendar.JDateChooser;
+
+import net.sf.jasperreports.engine.JRException;
+
 import java.awt.event.ActionEvent;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 
-@SuppressWarnings("serial")
 public class MenuReport extends Menu {
 
+	private static final long serialVersionUID = 1L;
 	private JMenuItem category;
 	private ReportScreen reportScreen;
 	private JMenuItem product;
@@ -105,6 +111,7 @@ public class MenuReport extends Menu {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		try {
 		switch (e.getActionCommand()) {
 		case "brand":
 			BrandReportScreen br = new BrandReportScreen();
@@ -115,20 +122,20 @@ public class MenuReport extends Menu {
 			pr.setVisible(true);
 			break;
 		case "managementRep":
-			reportScreen = new ReportScreen("Relatório Gerencial", getParams());
+			reportScreen = new ReportScreen("Relatório Gerencial", JasperManager.MANAGETMENT.getReport(getParams()));
 			reportScreen.setVisible(true);
 			break;
 		case "analyticalRep":
 			Object vetor[] = getParams();
 			if (JOptionPane.showConfirmDialog(null, vetor, "Relatório Analitíco", JOptionPane.PLAIN_MESSAGE) == 0) {
-				reportScreen = new ReportScreen("Relatório Analitíco", vetor);
+				reportScreen = new ReportScreen("Relatório Analitíco", JasperManager.ANAlYTICAL.getReport(vetor));
 				reportScreen.setVisible(true);
 			}
 			break;
 		case "syntheticRep":
 			Object vet[] = getParams();
 			if (JOptionPane.showConfirmDialog(null, vet, "Relatório Sintetico", JOptionPane.PLAIN_MESSAGE) == 0) {
-				reportScreen = new ReportScreen("Relatório Sintetico", vet);
+				reportScreen = new ReportScreen("Relatório Sintetico", JasperManager.SYNTHETIC.getReport(vet));
 				reportScreen.setVisible(true);
 			}
 			break;
@@ -136,6 +143,9 @@ public class MenuReport extends Menu {
 			CategoryReportScreen ct = new CategoryReportScreen();
 			ct.setVisible(true);
 			break;
+		}
+		}catch (JRException ex){	
+			Logger.getLogger(ReportScreen.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 }
