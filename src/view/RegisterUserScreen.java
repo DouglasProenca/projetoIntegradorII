@@ -12,6 +12,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -35,6 +36,10 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 	private int id;
 	private JPasswordField txtPassword;
 	private TextField txtMail;
+	private JCheckBox checkBoxEnabled;
+	private JCheckBox checkBoxLocked;
+	private JCheckBox checkBokExpired;
+	private JCheckBox checkBokCredExpired;
 
 	public RegisterUserScreen() {
 		super("Cadastrar Usuário", false, true, false, false, 700, 400);
@@ -50,6 +55,10 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 		this.txtPasswordMail.setText(user.getMailPassword());
 		this.panelCadastro.setBorder(BorderFactory.createTitledBorder("Alterar Usuário"));
 		this.btnCheck.setActionCommand("alter");
+		this.checkBoxEnabled.setSelected(user.isEnabled());
+		this.checkBoxLocked.setSelected(user.isLocked());
+		this.checkBokExpired.setSelected(user.isExpired());
+		this.checkBokCredExpired.setSelected(user.isCredExpired());
 	}
 
 	private void initComponents() {
@@ -79,6 +88,10 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 		panelCadastro.add(getBtnClose());
 		panelCadastro.add(getLblMail());
 		panelCadastro.add(getTxtMail());
+		panelCadastro.add(getCheckBoxEnabled());
+		panelCadastro.add(getCheckBokExpired());
+		panelCadastro.add(getCheckBoxLocked());
+		panelCadastro.add(getCheckBokCredExpired());
 		return panelCadastro;
 	}
 
@@ -151,6 +164,30 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 		btnCheck.setEnabled(false);
 		return btnCheck;
 	}
+	
+	private JCheckBox getCheckBoxEnabled() {
+		checkBoxEnabled = new JCheckBox("Ativo");
+		checkBoxEnabled.setBounds(25, 150, 250, 40);
+		return checkBoxEnabled;
+	}
+	
+	private JCheckBox getCheckBokExpired() {
+		checkBokExpired = new JCheckBox("Expirado");
+		checkBokExpired.setBounds(25, 190, 250, 40);
+		return checkBokExpired;
+	}
+	
+	private JCheckBox getCheckBoxLocked() {
+		checkBoxLocked = new JCheckBox("Bloqueado");
+		checkBoxLocked.setBounds(350, 150, 250, 40);
+		return checkBoxLocked;
+	}
+	
+	private JCheckBox getCheckBokCredExpired() {
+		checkBokCredExpired = new JCheckBox("Cred. Expirado");
+		checkBokCredExpired.setBounds(350, 190, 250, 40);
+		return checkBokCredExpired;
+	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
@@ -173,7 +210,8 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 		switch (e.getActionCommand()) {
 		case "save":
 			User u = new User(0, txtMail.getText(), String.valueOf(txtPasswordMail.getPassword()), txtUser.getText(),
-					String.valueOf(txtPassword.getPassword()), new Date());
+					String.valueOf(txtPassword.getPassword()), new Date(),checkBoxEnabled.isSelected(),
+					checkBoxLocked.isSelected(), checkBokCredExpired.isSelected(), checkBokExpired.isSelected());
 			if (UserDAO.getInstance().save(u)) {
 				JOptionPane.showMessageDialog(null, "Usúario Cadastrado Com Sucesso!");
 				this.dispose();
@@ -181,7 +219,8 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 			break;
 		case "alter":
 			User user = new User(id, txtMail.getText(), String.valueOf(txtPasswordMail.getPassword()),
-					txtUser.getText(), String.valueOf(txtPassword.getPassword()), new Date());
+					txtUser.getText(), String.valueOf(txtPassword.getPassword()), new Date(),checkBoxEnabled.isSelected(),
+					checkBoxLocked.isSelected(), checkBokCredExpired.isSelected(), checkBokExpired.isSelected());
 			if (UserDAO.getInstance().alter(user)) {
 				JOptionPane.showMessageDialog(null, "Usúario Alterado Com Sucesso!");
 				this.dispose();

@@ -48,16 +48,27 @@ public class UserDAO implements DAO {
 
 		Connection conexao = ConnectionManager.getInstance().getConexao();
 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT id ");
+		query.append("    , [user] ");
+		query.append("    , [password] ");
+		query.append("    , mail ");
+		query.append("    , mailpassword ");
+		query.append("    , [data] ");
+		query.append("    , IIF(account_non_expired = 1,'false','true') expired ");
+		query.append("    , IIF(account_non_locked = 1,'false','true') locked ");
+		query.append("    , IIF(credentials_non_expired = 1,'false','true') cred_expired ");
+		query.append("    , IIF([enabled] = 1, 'true','false') [enabled] ");
+		query.append("FROM rc_user");
+		
 		try {
 
-			PreparedStatement instrucaoSQL = conexao.prepareStatement("SELECT * FROM rc_user");
+			PreparedStatement instrucaoSQL = conexao.prepareStatement(query.toString());
 
 			ResultSet rs = instrucaoSQL.executeQuery();
 
 			while (rs.next()) {
-				User p = new User(rs.getInt("id"), rs.getString("mail"),
-						Utils.decodeString(rs.getString("mailpassword")), rs.getString("user"),
-						rs.getString("password"), rs.getDate("data"));
+				User p = new User(rs);
 
 				userList.add(p);
 			}
@@ -75,12 +86,16 @@ public class UserDAO implements DAO {
 		Connection conexao = ConnectionManager.getInstance().getConexao();
 
 		try {
-			PreparedStatement instrucaoSQL = conexao.prepareStatement("INSERT INTO rc_user VALUES(?,?,?,?,?)");
+			PreparedStatement instrucaoSQL = conexao.prepareStatement("EXEC sp_insert_rc_user ?,?,?,?,?,?,?,?,?");
 			instrucaoSQL.setString(1, user.getUser());
 			instrucaoSQL.setString(2, Utils.gerarhashSenha(user.getPassword()));
 			instrucaoSQL.setString(3, user.getMail());
 			instrucaoSQL.setString(4, Utils.codeString(user.getMailPassword()));
 			instrucaoSQL.setDate(5, new Date(user.getDate().getTime()));
+			instrucaoSQL.setBoolean(6, user.isExpired());
+			instrucaoSQL.setBoolean(7, user.isLocked());
+			instrucaoSQL.setBoolean(8, user.isCredExpired());
+			instrucaoSQL.setBoolean(9, user.isEnabled());
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException | IllegalArgumentException ex) {
 			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
@@ -101,7 +116,10 @@ public class UserDAO implements DAO {
 		query.append("  , mail = ? ");
 		query.append("  , mailpassword = ? ");
 		query.append("  , [data] = ? ");
-		query.append("  , [data] = ? ");
+		query.append("  , [enabled] = IIF(? = 'true',1,0) ");
+		query.append("  , account_non_expired = IIF(? = 'false',1,0) ");
+		query.append("  , account_non_locked = IIF(? = 'false',1,0) ");
+		query.append("  , credentials_non_expired = IIF(? = 'false',1,0) ");
 		query.append("WHERE id = ?");
 
 		try {
@@ -110,7 +128,11 @@ public class UserDAO implements DAO {
 			instrucaoSQL.setString(2, user.getMail());
 			instrucaoSQL.setString(3, Utils.codeString(user.getMailPassword()));
 			instrucaoSQL.setDate(4, new Date(user.getDate().getTime()));
-			instrucaoSQL.setInt(5, user.getId());
+			instrucaoSQL.setBoolean(5, user.isEnabled());
+			instrucaoSQL.setBoolean(6, user.isExpired());
+			instrucaoSQL.setBoolean(7, user.isLocked());
+			instrucaoSQL.setBoolean(8, user.isCredExpired());
+			instrucaoSQL.setInt(9, user.getId());
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
@@ -126,8 +148,22 @@ public class UserDAO implements DAO {
 
 		Connection conexao = ConnectionManager.getInstance().getConexao();
 
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT id ");
+		query.append("    , [user] ");
+		query.append("    , [password] ");
+		query.append("    , mail ");
+		query.append("    , mailpassword ");
+		query.append("    , [data] ");
+		query.append("    , IIF(account_non_expired = 1,'false','true') expired ");
+		query.append("    , IIF(account_non_locked = 1,'false','true') locked ");
+		query.append("    , IIF(credentials_non_expired = 1,'false','true') cred_expired ");
+		query.append("    , IIF([enabled] = 1, 'true','false') [enabled] ");
+		query.append("FROM rc_user ");
+		query.append("WHERE [user] = ?");
+		
 		try {
-			PreparedStatement instrucaoSQL = conexao.prepareStatement("SELECT * FROM rc_user WHERE [user] = ?");
+			PreparedStatement instrucaoSQL = conexao.prepareStatement(query.toString());
 
 			instrucaoSQL.setString(1, key);
 

@@ -135,7 +135,7 @@ public final class BrandDAO implements DAO {
 		query.append("     , p.paisNome ");
 		query.append("     , m.[date] ");
 		query.append("     , u.[user] ");
-		query.append("FROM rc_marca m ");
+  		query.append("FROM rc_marca m ");
 		query.append("INNER JOIN rc_pais p ");
 		query.append("	on p.paisId = m.pais ");
 		query.append("INNER JOIN rc_user u");

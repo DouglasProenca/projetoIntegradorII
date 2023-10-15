@@ -1,5 +1,26 @@
 package view;
 
+import java.awt.Event;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.TableColumn;
+import javax.swing.text.MaskFormatter;
+
+import com.toedter.calendar.JDateChooser;
+
 import controller.ClientDAO;
 import controller.ProductDAO;
 import controller.SaleDAO;
@@ -9,30 +30,8 @@ import objects.InternalFrame;
 import objects.SpinnerEditor;
 import objects.SpinnerNumberInt;
 import objects.Table;
+import objects.TableCellRendererCustom;
 import objects.TextField;
-
-import com.toedter.calendar.JDateChooser;
-import java.awt.Component;
-import java.awt.Event;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.text.ParseException;
-import java.util.Date;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.text.MaskFormatter;
 
 
 public class SaleScreen extends InternalFrame {
@@ -425,7 +424,6 @@ public class SaleScreen extends InternalFrame {
 		}
 	}
 
-	@SuppressWarnings("serial")
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {
@@ -459,25 +457,7 @@ public class SaleScreen extends InternalFrame {
 					setTxtTotalPanelFour();
 
 					TableColumn column = tblPanelFour.getColumnModel().getColumn(3);
-					column.setCellRenderer(new DefaultTableCellRenderer() {
-						@Override
-						public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-								boolean hasFocus, int row, int column) {
-							Component component = super.getTableCellRendererComponent(table, value, isSelected,
-									hasFocus, row, column);
-
-							spinner.addChangeListener((ChangeEvent e) -> {
-
-								setTxtTotalPanelFour();
-							});
-							if (component instanceof JLabel) {
-								spinner.setValue(Integer.valueOf(((JLabel) component).getText()));
-							} else if (value != null) {
-								spinner.setValue(Integer.valueOf(value.toString()));
-							}
-							return spinner;
-						}
-					});
+					column.setCellRenderer(new TableCellRendererCustom(spinner));
 					column.setCellEditor(new SpinnerEditor(1, 1, quantidade));
 				}
 

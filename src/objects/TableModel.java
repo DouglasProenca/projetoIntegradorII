@@ -2,10 +2,11 @@ package objects;
 
 import javax.swing.table.DefaultTableModel;
 
-@SuppressWarnings("serial")
+
 public class TableModel extends DefaultTableModel {
 
-    private boolean[] canEdit;
+	private static final long serialVersionUID = 1L;
+	private boolean[] canEdit;
 
     public TableModel() {
     	this.setRowCount(0);
