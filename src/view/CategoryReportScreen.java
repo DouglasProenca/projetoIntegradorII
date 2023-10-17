@@ -14,9 +14,10 @@ import objects.Excel;
 import objects.Table;
 import objects.TableModel;
 
-@SuppressWarnings("serial")
+
 public class CategoryReportScreen extends BrandReportScreen {
 
+	private static final long serialVersionUID = 1L;
 	private final Excel excel = new Excel();
 	private static final SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
 
@@ -57,7 +58,7 @@ public class CategoryReportScreen extends BrandReportScreen {
 			this.loadTable();
 			break;
 		case "Incluir":
-			RegistrationCategoryScreen rbs = new RegistrationCategoryScreen();
+			RegistrationCategoryScreen rbs = new RegistrationCategoryScreen(this);
 			this.getParent().add(rbs);
 			rbs.setVisible(true);
 			break;
@@ -90,7 +91,7 @@ public class CategoryReportScreen extends BrandReportScreen {
 
 			Category brand = new Category(category, id, null, null, null, user);
 
-			RegistrationCategoryScreen rbs = new RegistrationCategoryScreen(brand);
+			RegistrationCategoryScreen rbs = new RegistrationCategoryScreen(brand,this);
 			this.getParent().add(rbs);
 			rbs.setVisible(true);
 		}

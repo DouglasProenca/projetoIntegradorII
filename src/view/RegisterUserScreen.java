@@ -40,13 +40,15 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 	private JCheckBox checkBoxLocked;
 	private JCheckBox checkBokExpired;
 	private JCheckBox checkBokCredExpired;
+	private ReportUserScreen reportUserScreen;
 
-	public RegisterUserScreen() {
+	public RegisterUserScreen(ReportUserScreen reportUserScreen) {
 		super("Cadastrar Usuário", false, true, false, false, 700, 400);
 		this.initComponents();
+		this.reportUserScreen = reportUserScreen;
 	}
 
-	public RegisterUserScreen(User user) {
+	public RegisterUserScreen(User user, ReportUserScreen reportUserScreen) {
 		super("Editar Usuário", false, true, false, false, 700, 400);
 		this.initComponents();
 		this.id = user.getId();
@@ -59,6 +61,7 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 		this.checkBoxLocked.setSelected(user.isLocked());
 		this.checkBokExpired.setSelected(user.isExpired());
 		this.checkBokCredExpired.setSelected(user.isCredExpired());
+		this.reportUserScreen = reportUserScreen;
 	}
 
 	private void initComponents() {
@@ -214,6 +217,7 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 					checkBoxLocked.isSelected(), checkBokCredExpired.isSelected(), checkBokExpired.isSelected());
 			if (UserDAO.getInstance().save(u)) {
 				JOptionPane.showMessageDialog(null, "Usúario Cadastrado Com Sucesso!");
+				reportUserScreen.loadTable();
 				this.dispose();
 			}
 			break;
@@ -223,6 +227,7 @@ public class RegisterUserScreen extends InternalFrame implements DocumentListene
 					checkBoxLocked.isSelected(), checkBokCredExpired.isSelected(), checkBokExpired.isSelected());
 			if (UserDAO.getInstance().alter(user)) {
 				JOptionPane.showMessageDialog(null, "Usúario Alterado Com Sucesso!");
+				reportUserScreen.loadTable();
 				this.dispose();
 			}
 			this.dispose();

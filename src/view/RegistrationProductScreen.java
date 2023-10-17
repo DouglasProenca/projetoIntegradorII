@@ -40,9 +40,10 @@ import objects.TableModel;
 import objects.TextField;
 import objects.Utils;
 
-@SuppressWarnings("serial")
+
 public class RegistrationProductScreen extends InternalFrame implements DocumentListener {
 
+	private static final long serialVersionUID = 1L;
 	private JTabbedPane painelAbas;
 	private JPanel panelCadastro;
 	private JPanel panelExcel;
@@ -74,13 +75,15 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 	private JLabel lblImagem;
 	Vector<Integer> id_marca = new Vector<Integer>();
 	Vector<Integer> id_categoria = new Vector<Integer>();
+	private ProductReportScreen productReportScreen;
 
-	public RegistrationProductScreen() {
+	public RegistrationProductScreen(ProductReportScreen productReportScreen) {
 		super("Cadastrar", false, true, false, false, 700, 400);
 		this.initComponents();
+		this.productReportScreen = productReportScreen;
 	}
 
-	public RegistrationProductScreen(Product product) {
+	public RegistrationProductScreen(Product product,ProductReportScreen productReportScreen) {
 		super("Alterar", false, true, false, false, 700, 400);
 		this.initComponents();
 		this.txtProduct.setText(product.getProduct_name());
@@ -93,6 +96,7 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 		this.painelAbas.remove(1);
 		this.panelCadastro.setBorder(BorderFactory.createTitledBorder("Alterar Produto"));
 		this.btnCheck.setActionCommand("alter");
+		this.productReportScreen = productReportScreen;
 	}
 
 	private void initComponents() {
@@ -295,6 +299,7 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 
 			if (daop.save(objProduct)) {
 				JOptionPane.showMessageDialog(this, "Produto Salvo Com Sucesso!");
+				productReportScreen.loadTable();
 				this.dispose();
 			}
 			break;
@@ -306,6 +311,7 @@ public class RegistrationProductScreen extends InternalFrame implements Document
 					String.valueOf(User.getInstance().getId()), lblImagem.getIcon() == null ? null
 							: Utils.getImgBytes(Utils.iconToBufferedImage(lblImagem.getIcon())));
 			daop.alter(objMarcaAlt);
+			productReportScreen.loadTable();
 			this.dispose();
 			break;
 		case "import":

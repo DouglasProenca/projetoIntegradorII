@@ -48,13 +48,15 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 	private JButton btnExcluirExcel;
 	private JButton btnImportExcel;
 	private final CategoryDAO dao = CategoryDAO.getInstance();
+	private CategoryReportScreen categoryReportScreen;
 
-	public RegistrationCategoryScreen() {
+	public RegistrationCategoryScreen(CategoryReportScreen categoryReportScreen) {
 		super("Cadastrar", false, true, false, false, 500, 400);
 		this.initComponents();
+		this.categoryReportScreen = categoryReportScreen;
 	}
 
-	public RegistrationCategoryScreen(Category category) {
+	public RegistrationCategoryScreen(Category category, CategoryReportScreen categoryReportScreen) {
 		super("Alterar", false, true, false, false, 500, 400);
 		this.initComponents();
 		this.txtBrand.setText(category.getCategory_name());
@@ -62,6 +64,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 		this.btnCheck.setActionCommand("alter");
 		this.panel.setBorder(BorderFactory.createTitledBorder("Alterar Categoria"));
 		this.painelAbas.remove(1);
+		this.categoryReportScreen = categoryReportScreen;
 	}
 
 	private void initComponents() {
@@ -180,6 +183,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 					String.valueOf(User.getInstance().getId()));
 			if (dao.save(objMarca)) {
 				JOptionPane.showMessageDialog(this, "Categoria Salva Com Sucesso!");
+				categoryReportScreen.loadTable();
 				this.dispose();
 			}
 			break;
@@ -187,6 +191,7 @@ public class RegistrationCategoryScreen extends InternalFrame implements Documen
 			Category objMarcaAlt = new Category(txtBrand.getText(), id, new Date(),
 					String.valueOf(User.getInstance().getId()));
 			dao.alter(objMarcaAlt);
+			categoryReportScreen.loadTable();
 			this.dispose();
 			break;
 		case "import":

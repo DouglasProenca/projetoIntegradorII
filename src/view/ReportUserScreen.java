@@ -96,7 +96,7 @@ public class ReportUserScreen extends InternalFrame {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "new":
-			RegisterUserScreen rbs = new RegisterUserScreen();
+			RegisterUserScreen rbs = new RegisterUserScreen(this);
 			this.getParent().add(rbs);
 			rbs.setVisible(true);
 			break;
@@ -114,7 +114,7 @@ public class ReportUserScreen extends InternalFrame {
 			
 			User user = new User(id_edit, email, email_pass, user_name, null, new Date(),enabled,locked,credExpired,expired);
 
-			RegisterUserScreen rbsE = new RegisterUserScreen(user);
+			RegisterUserScreen rbsE = new RegisterUserScreen(user,this);
 			this.getParent().add(rbsE);
 			rbsE.setVisible(true);
 			break;
@@ -128,7 +128,7 @@ public class ReportUserScreen extends InternalFrame {
 			break;
 		}
 	}
-
+	
 	public void loadTable() {
 		tblResultado.getModel().setRowCount(0);
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");

@@ -22,9 +22,11 @@ import javax.swing.event.InternalFrameListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-@SuppressWarnings("serial")
+
 public abstract class InternalFrame extends JInternalFrame implements ActionListener, MouseListener, KeyListener,
 		ListSelectionListener, InternalFrameListener, ItemListener, FocusListener, ComponentListener {
+
+	private static final long serialVersionUID = 1L;
 
 	public InternalFrame(String titulo, boolean resizable, boolean closabe, boolean maximizable, boolean iconifiable,
 			int width, int height) {

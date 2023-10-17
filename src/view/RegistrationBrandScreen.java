@@ -32,9 +32,9 @@ import objects.Excel;
 import objects.Images;
 import objects.InternalFrame;
 
-@SuppressWarnings("serial")
 public class RegistrationBrandScreen extends InternalFrame implements DocumentListener {
 
+	private static final long serialVersionUID = 1L;
 	private JTabbedPane painelAbas;
 	private JLabel lblBrand;
 	private JPanel panelExcel;
@@ -55,13 +55,15 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	private final BrandDAO dao = BrandDAO.getInstance();
 	private final CountryDAO countryDao = CountryDAO.getInstance();
 	Vector<Integer> id_pais = new Vector<Integer>();
+	private BrandReportScreen brandReportScreen;
 
-	public RegistrationBrandScreen() {
+	public RegistrationBrandScreen(BrandReportScreen brandReportScreen) {
 		super("Cadastrar", false, true, false, false, 500, 400);
 		this.initComponents();
+		this.brandReportScreen = brandReportScreen;
 	}
 
-	public RegistrationBrandScreen(Brand brand) {
+	public RegistrationBrandScreen(Brand brand,BrandReportScreen brandReportScreen) {
 		super("Alterar", false, true, false, false, 500, 400);
 		this.initComponents();
 		this.txtBrand.setText(brand.getBrand_name());
@@ -70,6 +72,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 		this.painelAbas.remove(1);
 		this.panel.setBorder(BorderFactory.createTitledBorder("Alterar Marca"));
 		this.btnCheck.setActionCommand("alter");
+		this.brandReportScreen = brandReportScreen;
 	}
 
 	private void initComponents() {
@@ -135,7 +138,7 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	private JComboBox<String> getJboCountry() {
 		jboCountry = new JComboBox<>();
 		jboCountry.setBounds(100, 80, 350, 25);
-		
+
 		countryDao.getAll().stream().forEachOrdered((p) -> {
 			id_pais.addElement(p.getCountry_id());
 			jboCountry.addItem(p.getCountry_nome());
@@ -203,18 +206,20 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "save":
-			
+
 			Brand objMarca = new Brand(txtBrand.getText(), id_pais.get(jboCountry.getSelectedIndex()), new Date(),
 					String.valueOf(User.getInstance().getId()));
 			if (dao.save(objMarca)) {
 				JOptionPane.showMessageDialog(this, "Marca Salva Com Sucesso!");
-				this.dispose(); 
+				this.brandReportScreen.loadTable();;
+				this.dispose();
 			}
 			break;
 		case "alter":
-			Brand objMarcaAlt = new Brand(id, txtBrand.getText(),id_pais.get(jboCountry.getSelectedIndex()), new Date(),
-					String.valueOf(User.getInstance().getId()));
+			Brand objMarcaAlt = new Brand(id, txtBrand.getText(), id_pais.get(jboCountry.getSelectedIndex()),
+					new Date(), String.valueOf(User.getInstance().getId()));
 			dao.alter(objMarcaAlt);
+			this.brandReportScreen.loadTable();
 			this.dispose();
 			break;
 		case "import":
@@ -238,7 +243,9 @@ public class RegistrationBrandScreen extends InternalFrame implements DocumentLi
 			break;
 		case "saveExcel":
 			if (brandList != null) {
-				brandList.forEach((b) -> {dao.save(b);});
+				brandList.forEach((b) -> {
+					dao.save(b);
+				});
 				JOptionPane.showMessageDialog(this, "Registros incluidos com sucesso!");
 			} else {
 				JOptionPane.showMessageDialog(this, "Selecione uma importação para continuar", "Aviso de Falha",

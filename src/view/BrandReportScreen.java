@@ -28,9 +28,9 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 
-@SuppressWarnings("serial")
 public class BrandReportScreen extends InternalFrame {
 
+	private static final long serialVersionUID = 1L;
 	private final JLabel lblNome = new JLabel("Nome:");
 	private JPanel panelNorth;
 	private JPanel panelWest;
@@ -152,7 +152,7 @@ public class BrandReportScreen extends InternalFrame {
 			this.loadTable();
 			break;
 		case "Incluir":
-			RegistrationBrandScreen rbs = new RegistrationBrandScreen();
+			RegistrationBrandScreen rbs = new RegistrationBrandScreen(this);
 			getParent().add(rbs);
 			rbs.setVisible(true);
 			break;
@@ -184,7 +184,7 @@ public class BrandReportScreen extends InternalFrame {
 
 			Brand brand = new Brand(id, brand_name, pais, new Date(), user);
 
-			RegistrationBrandScreen rbs = new RegistrationBrandScreen(brand);
+			RegistrationBrandScreen rbs = new RegistrationBrandScreen(brand,this);
 			this.getParent().add(rbs);
 			rbs.setVisible(true);
 		}
