@@ -2,10 +2,6 @@ package interfaces;
 
 import java.sql.Connection;
 
-/**
- *
- * @author Douglas
- */
 public abstract interface ConnectionDB {
 
     /**
