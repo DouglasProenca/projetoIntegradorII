@@ -33,7 +33,7 @@ public final class BrandDAO implements DAO {
 			instrucaoSQL.setInt(1, id);
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}
@@ -54,7 +54,7 @@ public final class BrandDAO implements DAO {
 			instrucaoSQL.setInt(4, Integer.valueOf(brand.getUser()));
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException | IllegalArgumentException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}
@@ -82,7 +82,7 @@ public final class BrandDAO implements DAO {
 			instrucaoSQL.setInt(4, brand.getBrand_id());
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}
@@ -117,7 +117,7 @@ public final class BrandDAO implements DAO {
 				brandList.add(brand);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return brandList;
@@ -155,7 +155,7 @@ public final class BrandDAO implements DAO {
 				listaClientes.add(brand);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return listaClientes;

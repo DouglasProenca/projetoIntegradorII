@@ -48,7 +48,7 @@ public class SaleDAO implements DAO {
 			instrucaoSQL.setInt(4, sale.getUser());
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}
@@ -76,7 +76,7 @@ public class SaleDAO implements DAO {
 			instrucaoSQL.setInt(4, user);
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException | IllegalArgumentException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}
@@ -102,7 +102,7 @@ public class SaleDAO implements DAO {
 				id = rs.getInt("id");
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return id;

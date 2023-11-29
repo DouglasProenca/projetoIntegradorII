@@ -183,9 +183,9 @@ public class MainMenu extends Menu {
 				laf.setVisible(true);
 				break;
 			case "CanvasBackground":
-				Color newColor = JColorChooser.showDialog(MainScreen.desktopPane, "Cor de Fundo", new Color(60, 96, 124));
+				Color newColor = JColorChooser.showDialog(MainScreen.getInstance().getDesktopPane(), "Cor de Fundo", new Color(60, 96, 124));
 				if (newColor != null) {
-					MainScreen.desktopPane.setBackground(newColor);
+					MainScreen.getInstance().getDesktopPane().setBackground(newColor);
 					PropertiesSystem ps = new PropertiesSystem();
 					ps.setColor(Utils.colorToString(newColor));
 				}
@@ -204,7 +204,7 @@ public class MainMenu extends Menu {
 				break;
 			case "logout":
 				LoginScreen login = new LoginScreen();
-				MainScreen.removeForms();
+				MainScreen.getInstance().removeForms();
 				User.getInstance().setEmpty();
 				login.setVisible(true);
 				break;

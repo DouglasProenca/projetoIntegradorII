@@ -6,10 +6,12 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 
 import controller.CategoryDAO;
 import model.Category;
+import objects.CategoryStackedBarChart;
 import objects.Excel;
 import objects.Table;
 import objects.TableModel;
@@ -72,12 +74,40 @@ public class CategoryReportScreen extends BrandReportScreen {
 			TableModel modelo = (TableModel) tblResultado.getModel();
 			modelo.setRowCount(0);
 
-			CategoryDAO.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
+			CategoryDAO.getInstance().getBy(getTxtPesquisa().getText()).forEach((p) -> {
 				modelo.addRow(new Object[] { p.getCategory_id(), p.getCategory_name(), sdf1.format(p.getDate()),
 						p.getUser() });
 			});
 			break;
+		case "switch":
+
+			cardLayout.show(cardPanel, "Gráfico");
+			getBtnSwitch().setActionCommand("switchTable");
+			getTxtPesquisa().setEnabled(false);
+			getBtnPesquisa().setEnabled(false);
+			getbtnExportar().setEnabled(false);
+			getBtnIncluir().setEnabled(false);
+
+			break;
+		case "switchTable":
+
+			cardLayout.show(cardPanel, "Tabela");
+			getBtnSwitch().setActionCommand("switch");
+			getTxtPesquisa().setEnabled(true);
+			getBtnPesquisa().setEnabled(true);
+			getbtnExportar().setEnabled(true);
+			getBtnIncluir().setEnabled(true);
+
+			break;
 		}
+	}
+	
+	@Override
+	public JPanel getCardPanel() {
+		cardPanel = new JPanel(cardLayout);
+		cardPanel.add(getScrollPane(), "Tabela");
+        cardPanel.add(new CategoryStackedBarChart(), "Gráfico");
+		return cardPanel;
 	}
 
 	@Override

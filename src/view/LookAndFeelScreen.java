@@ -67,8 +67,8 @@ public class LookAndFeelScreen extends InternalFrame {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 			String LAFSelected = (String) e.getItem();
 			prop.setLookAndFeel(LAFSelected);
-			SwingUtilities.updateComponentTreeUI(MainScreen.desktopPane);
-			JOptionPane.showMessageDialog(MainScreen.desktopPane,
+			SwingUtilities.updateComponentTreeUI(MainScreen.getInstance().getDesktopPane());
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane(),
 					"O Sistema será fechado para atualização de configurações!");
 			System.exit(0);
 		}
@@ -89,7 +89,7 @@ public class LookAndFeelScreen extends InternalFrame {
 			}
 		} catch (ClassNotFoundException | IllegalAccessException | InstantiationException
 				| UnsupportedLookAndFeelException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}

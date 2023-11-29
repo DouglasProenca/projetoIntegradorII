@@ -34,7 +34,7 @@ public class ProductDAO implements DAO {
 			instrucaoSQL.setInt(1, id);
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}
@@ -78,7 +78,7 @@ public class ProductDAO implements DAO {
 				productList.add(product);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
@@ -103,7 +103,7 @@ public class ProductDAO implements DAO {
 			instrucaoSQL.setBytes(8, product.getProduct_img());
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}
@@ -139,7 +139,7 @@ public class ProductDAO implements DAO {
 			instrucaoSQL.setInt(8, product.getProduct_id());
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}
@@ -185,7 +185,7 @@ public class ProductDAO implements DAO {
 				productList.add(product);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return productList;

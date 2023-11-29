@@ -16,7 +16,7 @@ import objects.TableModel;
 public class AboutScreen extends InternalFrame {
 
 	private static final long serialVersionUID = 1L;
-	protected JTable tblResultado;
+	private JTable tblResultado;
 	private LinkedHashMap<String, Object> infos;
 
 	public AboutScreen() throws UnknownHostException {

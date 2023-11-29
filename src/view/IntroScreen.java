@@ -35,7 +35,7 @@ public class IntroScreen extends JDialog implements Runnable {
 	@Override
 	public void run() {
 		this.dispose();
-		MainScreen mainScreen = new MainScreen();
+		MainScreen mainScreen = MainScreen.getInstance();
 		mainScreen.setVisible(true);	
 	}
 }

@@ -55,7 +55,7 @@ public abstract class ConnectionManager implements ConnectionDB {
 	}
 
 	private static void msg(Exception ex) {
-		JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+		JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 				JOptionPane.ERROR_MESSAGE);
 	}
 }

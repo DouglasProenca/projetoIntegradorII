@@ -55,7 +55,7 @@ public class CepDAO implements DAO {
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException | IllegalArgumentException ex) {
 			ex.printStackTrace();
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}

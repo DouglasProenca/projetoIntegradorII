@@ -68,7 +68,7 @@ public class MenuHelp extends Menu {
         try {
             switch (e.getActionCommand()) {
                 case "version":
-                    JOptionPane.showMessageDialog(MainScreen.desktopPane, "Versão 1.0", "Informação", 1);
+                    JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane(), "Versão 1.0", "Informação", 1);
                     break;
                 case "site":
                     Desktop.getDesktop().browse(new URI("www.linkedin.com/in/douglas-proença"));

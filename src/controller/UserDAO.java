@@ -34,7 +34,7 @@ public class UserDAO implements DAO {
 			instrucaoSQL.setInt(1, id);
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 
 			return (false);
@@ -73,7 +73,7 @@ public class UserDAO implements DAO {
 				userList.add(p);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return userList;
@@ -98,7 +98,7 @@ public class UserDAO implements DAO {
 			instrucaoSQL.setBoolean(9, user.isEnabled());
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException | IllegalArgumentException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}
@@ -135,7 +135,7 @@ public class UserDAO implements DAO {
 			instrucaoSQL.setInt(9, user.getId());
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}
@@ -183,7 +183,7 @@ public class UserDAO implements DAO {
 				User.getInstance().setPassword(password);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return listaUser;

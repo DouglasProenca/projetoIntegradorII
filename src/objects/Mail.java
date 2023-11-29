@@ -82,7 +82,7 @@ public class Mail {
 			// send message
 			Transport.send(getMessage(emailDestinatario, assunto, mp));
 		} catch (MessagingException e) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), e.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), e.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}

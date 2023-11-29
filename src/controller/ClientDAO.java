@@ -55,7 +55,7 @@ public class ClientDAO implements DAO {
 				clientList.add(client);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return clientList;
@@ -68,7 +68,7 @@ public class ClientDAO implements DAO {
 		Connection conexao = ConnectionManager.getInstance().getConexao();
 
 		try {
-			PreparedStatement instrucaoSQL = conexao.prepareStatement("KNSERT INTO rc_cliente VALUES(?,?,?,?)");
+			PreparedStatement instrucaoSQL = conexao.prepareStatement("INSERT INTO rc_cliente VALUES(?,?,?,?)");
 
 			instrucaoSQL.setString(1, client.getNome());
 			instrucaoSQL.setString(2, client.getCpf());
@@ -76,7 +76,7 @@ public class ClientDAO implements DAO {
 			instrucaoSQL.setDate(4, new Date(client.getData().getTime()));
 			instrucaoSQL.executeUpdate();
 		} catch (SQLException | IllegalArgumentException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 			return (false);
 		}
@@ -119,7 +119,7 @@ public class ClientDAO implements DAO {
 				ClientList.add(client);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		return ClientList;

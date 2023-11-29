@@ -2,9 +2,10 @@ package objects;
 
 import javax.swing.JPopupMenu;
 
-@SuppressWarnings("serial")
+
 public class PopUpMenu extends JPopupMenu {
 
+	private static final long serialVersionUID = 1L;
 	private static final MainMenu menu = new MainMenu();
 	private static final MenuReport report = new MenuReport();
 	private static final MenuHelp help = new MenuHelp();

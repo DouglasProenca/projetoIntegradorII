@@ -5,14 +5,22 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JDesktopPane;
 
-@SuppressWarnings("serial")
+
 public class DesktopPane extends JDesktopPane {
-	
-	private final PopUpMenu popUpMenu = new PopUpMenu(); 
+
+	private static final long serialVersionUID = 1L;
+	private PopUpMenu popUpMenu;
 
 	public DesktopPane(Dimension dimension) {
 		super.setPreferredSize(dimension);
-		this.setComponentPopupMenu(popUpMenu);
+		this.setComponentPopupMenu(getPopUpMenu());
+	}
+
+	public PopUpMenu getPopUpMenu() {
+		if (popUpMenu == null) {
+			popUpMenu = new PopUpMenu();
+		}
+		return popUpMenu;
 	}
 
 	@Override

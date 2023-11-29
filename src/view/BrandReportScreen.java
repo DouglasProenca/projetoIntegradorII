@@ -1,11 +1,14 @@
 package view;
 
 import controller.BrandDAO;
+import objects.BrandRingChart;
 import objects.Excel;
+import objects.Images;
 import model.Brand;
 import objects.InternalFrame;
 import objects.Table;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Event;
@@ -34,24 +37,27 @@ public class BrandReportScreen extends InternalFrame {
 	private final JLabel lblNome = new JLabel("Nome:");
 	private JPanel panelNorth;
 	private JPanel panelWest;
-	protected JTextField txtPesquisa;
+	private JTextField txtPesquisa;
 	private JButton btnPesquisa;
 	private JButton btnExcluir;
 	private JButton btnExportar;
 	private JButton btnIncluir;
+	private JButton btnSwitch;
 	protected Table tblResultado;
 	private JScrollPane scroll;
 	private final Excel excel = new Excel();
 	private final BrandDAO dao = BrandDAO.getInstance();
 	private final SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy");
+	protected JPanel cardPanel;
+	protected CardLayout cardLayout = new CardLayout();
 
 	public BrandReportScreen() {
-        super("Relatório Marcas", true, true, true, true, 707, 400);
-        initComponents();
-    }
+		super("Relatório Marcas", true, true, true, true, 707, 400);
+		initComponents();
+	}
 
 	private void initComponents() {
-		this.add(BorderLayout.CENTER, getScrollPane());
+		this.add(BorderLayout.CENTER, getCardPanel());
 		this.add(BorderLayout.NORTH, getPanelNorth());
 		this.add(BorderLayout.EAST, getPanelWest());
 		this.loadTable();
@@ -65,33 +71,57 @@ public class BrandReportScreen extends InternalFrame {
 		return tblResultado;
 	}
 
-	private JScrollPane getScrollPane() {
+	public JPanel getCardPanel() {
+		cardPanel = new JPanel(cardLayout);
+		cardPanel.add(getScrollPane(), "Tabela");
+		cardPanel.add(new BrandRingChart(), "Gráfico");
+		return cardPanel;
+	}
+
+	protected JScrollPane getScrollPane() {
 		scroll = new JScrollPane(getTblResultado());
 		return scroll;
 	}
 
-	private JButton getBtnPesquisa() {
-		btnPesquisa = new JButton("Pesquisar");
-		btnPesquisa.addActionListener(this);
-		btnPesquisa.setActionCommand("find");
-		btnPesquisa.setPreferredSize(new Dimension(100, 30));
+	protected JButton getBtnPesquisa() {
+		if (btnPesquisa == null) {
+			btnPesquisa = new JButton("Pesquisar");
+			btnPesquisa.addActionListener(this);
+			btnPesquisa.setActionCommand("find");
+			btnPesquisa.setPreferredSize(new Dimension(100, 30));
+		}
 		return btnPesquisa;
 	}
 
-	private JTextField getTxtPesquisa() {
-		txtPesquisa = new JTextField();
-		txtPesquisa.setPreferredSize(new Dimension(200, 30));
-		txtPesquisa.addKeyListener(this);
-		txtPesquisa.setToolTipText("Procure por marca ou digite Refresh, R e tecle enter para atualizar a tabela.");
+	protected JButton getBtnSwitch() {
+		if (btnSwitch == null) {
+			btnSwitch = new JButton(Images.CHART.getImage());
+			btnSwitch.addActionListener(this);
+			btnSwitch.setActionCommand("switch");
+			btnSwitch.setPreferredSize(new Dimension(60, 30));
+		}
+		return btnSwitch;
+
+	}
+
+	protected JTextField getTxtPesquisa() {
+		if (txtPesquisa == null) {
+			txtPesquisa = new JTextField();
+			txtPesquisa.setPreferredSize(new Dimension(200, 30));
+			txtPesquisa.addKeyListener(this);
+			txtPesquisa.setToolTipText("Procure por marca ou digite Refresh, R e tecle enter para atualizar a tabela.");
+		}
 		return txtPesquisa;
 	}
 
-	private JButton getbtnExportar() {
-		btnExportar = new JButton("Exportar");
-		btnExportar.addActionListener(this);
-		btnExportar.setActionCommand("Exportar");
-		btnExportar.setPreferredSize(new Dimension(100, 30));
-		btnExportar.setAlignmentX(Component.CENTER_ALIGNMENT);
+	protected JButton getbtnExportar() {
+		if (btnExportar == null) {
+			btnExportar = new JButton("Exportar");
+			btnExportar.addActionListener(this);
+			btnExportar.setActionCommand("Exportar");
+			btnExportar.setPreferredSize(new Dimension(100, 30));
+			btnExportar.setAlignmentX(Component.CENTER_ALIGNMENT);
+		}
 		return btnExportar;
 	}
 
@@ -105,12 +135,14 @@ public class BrandReportScreen extends InternalFrame {
 		return btnExcluir;
 	}
 
-	private JButton getBtnIncluir() {
-		btnIncluir = new JButton("Incluir");
-		btnIncluir.setPreferredSize(new Dimension(100, 30));
-		btnIncluir.addActionListener(this);
-		btnIncluir.setActionCommand("Incluir");
-		btnIncluir.setAlignmentX(Component.CENTER_ALIGNMENT);
+	protected JButton getBtnIncluir() {
+		if (btnIncluir == null) {
+			btnIncluir = new JButton("Incluir");
+			btnIncluir.setPreferredSize(new Dimension(100, 30));
+			btnIncluir.addActionListener(this);
+			btnIncluir.setActionCommand("Incluir");
+			btnIncluir.setAlignmentX(Component.CENTER_ALIGNMENT);
+		}
 		return btnIncluir;
 	}
 
@@ -130,13 +162,15 @@ public class BrandReportScreen extends InternalFrame {
 		panelNorth.add(lblNome);
 		panelNorth.add(getTxtPesquisa());
 		panelNorth.add(getBtnPesquisa());
+		panelNorth.add(getBtnSwitch());
 		return panelNorth;
 	}
 
 	public void loadTable() {
-		tblResultado.getModel().setRowCount(0);		
+		tblResultado.getModel().setRowCount(0);
 		BrandDAO.getInstance().getAll().forEach((p) -> {
-			tblResultado.getModel().addRow(new Object[] { p.getBrand_id(), p.getBrand_name(), p.getCountry_nome(), sdf1.format(p.getDate()), p.getUser() });
+			tblResultado.getModel().addRow(new Object[] { p.getBrand_id(), p.getBrand_name(), p.getCountry_nome(),
+					sdf1.format(p.getDate()), p.getUser() });
 		});
 	}
 
@@ -163,11 +197,33 @@ public class BrandReportScreen extends InternalFrame {
 			}
 			break;
 		case "find":
-			tblResultado.getModel().setRowCount(0);			
+			tblResultado.getModel().setRowCount(0);
 			BrandDAO.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
-			tblResultado.getModel().addRow(
-						new Object[] { p.getBrand_id(), p.getBrand_name(), p.getCountry_nome(), sdf1.format(p.getDate()), p.getUser() });
+				tblResultado.getModel().addRow(new Object[] { p.getBrand_id(), p.getBrand_name(), p.getCountry_nome(),
+						sdf1.format(p.getDate()), p.getUser() });
 			});
+			break;
+		case "switch":
+
+			cardLayout.show(cardPanel, "Gráfico");
+			btnSwitch.setActionCommand("switchTable");
+			txtPesquisa.setEnabled(false);
+			;
+			btnPesquisa.setEnabled(false);
+			btnExportar.setEnabled(false);
+			btnIncluir.setEnabled(false);
+
+			break;
+		case "switchTable":
+
+			cardLayout.show(cardPanel, "Tabela");
+			btnSwitch.setActionCommand("switch");
+			txtPesquisa.setEnabled(true);
+			;
+			btnPesquisa.setEnabled(true);
+			btnExportar.setEnabled(true);
+			btnIncluir.setEnabled(true);
+
 			break;
 		}
 	}
@@ -184,7 +240,7 @@ public class BrandReportScreen extends InternalFrame {
 
 			Brand brand = new Brand(id, brand_name, pais, new Date(), user);
 
-			RegistrationBrandScreen rbs = new RegistrationBrandScreen(brand,this);
+			RegistrationBrandScreen rbs = new RegistrationBrandScreen(brand, this);
 			this.getParent().add(rbs);
 			rbs.setVisible(true);
 		}

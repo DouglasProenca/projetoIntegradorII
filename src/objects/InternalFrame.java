@@ -1,7 +1,6 @@
 package objects;
 
 import view.MainScreen;
-import static view.MainScreen.desktopPane;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -86,20 +85,20 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
 	public void internalFrameClosed(InternalFrameEvent e) {
 		InternalFrame frame = (InternalFrame) e.getSource();
 		frame.setClosable(true);
-		MainScreen.jToolBar.remove(frame.getDesktopIcon());
+		MainScreen.getInstance().getToolBar().remove(frame.getDesktopIcon());
 	}
 
 	@Override
 	public void internalFrameIconified(InternalFrameEvent e) {
 		InternalFrame frame = (InternalFrame) e.getSource();
-		MainScreen.jToolBar.add(frame.getDesktopIcon());
+		MainScreen.getInstance().getToolBar().add(frame.getDesktopIcon());
 	}
 
 	@Override
 	public void internalFrameDeiconified(InternalFrameEvent e) {
 		InternalFrame frame = (InternalFrame) e.getSource();
 		frame.setIconifiable(true);
-		MainScreen.desktopPane.add(frame);
+		MainScreen.getInstance().getDesktopPane().add(frame);
 	}
 
 	@Override
@@ -114,12 +113,12 @@ public abstract class InternalFrame extends JInternalFrame implements ActionList
 	public void internalFrameOpened(InternalFrameEvent e) {
 		JInternalFrame frame = (JInternalFrame) e.getSource();
 		this.centralizaForm(frame);
-		MainScreen.desktopPane.add(frame);
-		MainScreen.jToolBar.add(frame.getDesktopIcon());
+		MainScreen.getInstance().getDesktopPane().add(frame);
+		MainScreen.getInstance().getToolBar().add(frame.getDesktopIcon());
 	}
 
 	public void centralizaForm(JInternalFrame frame) {
-		Dimension desktopSize = desktopPane.getSize();
+		Dimension desktopSize = MainScreen.getInstance().getDesktopPane().getSize();
 		Dimension jInternalFrameSize = frame.getSize();
 		frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
 				(desktopSize.height - jInternalFrameSize.height) / 2);

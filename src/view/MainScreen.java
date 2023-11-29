@@ -15,23 +15,26 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
-
 
 public class MainScreen extends JFrame implements KeyListener, WindowStateListener {
 
 	private static final long serialVersionUID = 1L;
-	public static DesktopPane desktopPane;
-	public static JToolBar jToolBar;
+	private static MainScreen uniqueInstance;
+	private DesktopPane desktopPane;
+	private JToolBar jToolBar;
 	protected static MenuBar menubar = new MenuBar();
 	private final LoginScreen loginScreen = new LoginScreen();
 	private final DatabaseConnectionScreen bd = new DatabaseConnectionScreen(false, false);
 
-	public MainScreen() {
+	private MainScreen() {
 		super("CR7 Imports");
 		this.initComponents();
+	}
+
+	public static synchronized MainScreen getInstance() {
+		return uniqueInstance == null ? uniqueInstance = new MainScreen() : uniqueInstance;
 	}
 
 	private void initComponents() {
@@ -42,7 +45,7 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 		this.addKeyListener(this);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.add(getDesktopPane(), BorderLayout.CENTER);
-		this.add(getJToolBar(), BorderLayout.PAGE_END);
+		this.add(getToolBar(), BorderLayout.PAGE_END);
 		this.setIconImage(getIcone().getImage());
 		this.setJMenuBar(menubar);
 		this.getFirst();
@@ -65,20 +68,24 @@ public class MainScreen extends JFrame implements KeyListener, WindowStateListen
 		return t;
 	}
 
-	private JDesktopPane getDesktopPane() {
-		desktopPane = new DesktopPane(new Dimension(this.getSize().width, this.getSize().height - 40));
+	public DesktopPane getDesktopPane() {
+		if (desktopPane == null) {
+			desktopPane = new DesktopPane(new Dimension(this.getWidth(), this.getHeight() - 40));
+		}
 		return desktopPane;
 	}
 
-	private JToolBar getJToolBar() {
-		jToolBar = new JToolBar();
-		jToolBar.setPreferredSize(new Dimension(this.getSize().width, 40));
-		jToolBar.setFloatable(false);
-		jToolBar.setRollover(false);
+	public JToolBar getToolBar() {
+		if (jToolBar == null) {
+			jToolBar = new JToolBar();
+			jToolBar.setPreferredSize(new Dimension(this.getWidth(), 40));
+			jToolBar.setFloatable(false);
+			jToolBar.setRollover(false);
+		}
 		return jToolBar;
 	}
 
-	public static void removeForms() {
+	public void removeForms() {
 		jToolBar.removeAll();
 		int qtd = desktopPane.getComponentCount();
 		for (int i = 0; i < qtd; i++) {

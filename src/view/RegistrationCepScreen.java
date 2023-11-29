@@ -210,7 +210,7 @@ public class RegistrationCepScreen extends InternalFrame {
 
 				while ((cepAux = br.readLine()) != null) {
 					if (cepAux.contains("\"erro\": true")) {
-						JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), "Cep Não existe!",
+						JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), "Cep Não existe!",
 								"Aviso de Falha", JOptionPane.ERROR_MESSAGE);
 						break;
 					} else {
@@ -227,7 +227,7 @@ public class RegistrationCepScreen extends InternalFrame {
 				txtComplemento.setText(cep.getComplemento());
 
 			} catch (IOException ex) {
-				JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(),
+				JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(),
 						"Aviso de Falha", JOptionPane.ERROR_MESSAGE);
 			}
 			break;

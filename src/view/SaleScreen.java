@@ -95,7 +95,7 @@ public class SaleScreen extends InternalFrame {
 
 	private JPanel getPanelOne() throws ParseException {
 		panelOne = new JPanel(null);
-		panelOne.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+		panelOne.setBorder(new LineBorder(MainScreen.getInstance().getDesktopPane().getBackground()));
 		panelOne.setBounds(10, 10, 310, 150);
 		panelOne.add(getLblPanelOneTitle());
 		panelOne.add(getLblPanelOneName());
@@ -158,7 +158,7 @@ public class SaleScreen extends InternalFrame {
 
 	public JPanel getPanelTwo() {
 		panelTwo = new JPanel(null);
-		panelTwo.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+		panelTwo.setBorder(new LineBorder(MainScreen.getInstance().getDesktopPane().getBackground()));
 		panelTwo.setBounds(350, 10, 425, 150);
 		panelTwo.add(getScrollPanelTwoClientTable());
 		return panelTwo;
@@ -179,7 +179,7 @@ public class SaleScreen extends InternalFrame {
 
 	public JPanel getPanelThree() {
 		panelThree = new JPanel(null);
-		panelThree.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+		panelThree.setBorder(new LineBorder(MainScreen.getInstance().getDesktopPane().getBackground()));
 		panelThree.setBounds(10, 175, 765, 150);
 		panelThree.add(getPaneltblPanelThree());
 		panelThree.add(getlblClientPanelThree());
@@ -193,7 +193,7 @@ public class SaleScreen extends InternalFrame {
 	private JPanel getFilterPanelThree() {
 		FilterPanelThree = new JPanel(null);
 		FilterPanelThree.setBorder(
-				new TitledBorder(new LineBorder(MainScreen.desktopPane.getBackground()), "Filtrar Produtos"));
+				new TitledBorder(new LineBorder(MainScreen.getInstance().getDesktopPane().getBackground()), "Filtrar Produtos"));
 		FilterPanelThree.setBounds(10, 60, 294, 86);
 		FilterPanelThree.add(getTxtFilterPanelThree());
 		FilterPanelThree.add(getbtnFilterPanelThreeFind());
@@ -218,7 +218,7 @@ public class SaleScreen extends InternalFrame {
 
 	private JPanel getPaneltblPanelThree() {
 		paneltblPanelThree = new JPanel(null);
-		paneltblPanelThree.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+		paneltblPanelThree.setBorder(new LineBorder(MainScreen.getInstance().getDesktopPane().getBackground()));
 		paneltblPanelThree.setBounds(340, 5, 422, 140);
 		paneltblPanelThree.add(getScrollPanelThreeTbl());
 		return paneltblPanelThree;
@@ -266,7 +266,7 @@ public class SaleScreen extends InternalFrame {
 
 	public JPanel getPanelFour() {
 		panelFour = new JPanel(null);
-		panelFour.setBorder(new LineBorder(MainScreen.desktopPane.getBackground()));
+		panelFour.setBorder(new LineBorder(MainScreen.getInstance().getDesktopPane().getBackground()));
 		panelFour.setBounds(10, 350, 765, 150);
 		panelFour.add(getScrollTblPanelFour());
 		panelFour.add(getTxtTotalPanelFour());
@@ -338,7 +338,7 @@ public class SaleScreen extends InternalFrame {
 			switch (e.getActionCommand()) {
 			case "adicionar":
 				RegistrationClientScreen rbs = new RegistrationClientScreen();
-				MainScreen.desktopPane.add(rbs);
+				MainScreen.getInstance().getDesktopPane().add(rbs);
 				rbs.setVisible(true);
 				break;
 			case "delete":
@@ -398,7 +398,7 @@ public class SaleScreen extends InternalFrame {
 				break;
 			}
 		} catch (NumberFormatException | ParseException ex) {
-			JOptionPane.showMessageDialog(MainScreen.desktopPane.getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
+			JOptionPane.showMessageDialog(MainScreen.getInstance().getDesktopPane().getSelectedFrame(), ex.getMessage(), "Aviso de Falha",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}

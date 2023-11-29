@@ -76,6 +76,20 @@ public enum Images implements ImagesInterface {
 		}
 
 	},
+	
+	CHART {
+
+		@Override
+		public ImageIcon getImage() {
+			try {
+				return new ImageIcon(ImageIO.read(getClass().getResource("/resources/Designcontest-Ecommerce-Business-Pie-chart.24.png")));
+			} catch (IOException e) {
+				Logger.getLogger(Images.class.getName()).log(Level.SEVERE, null, e);
+			}
+			return null;
+		}
+
+	},
 
 	CHECK {
 

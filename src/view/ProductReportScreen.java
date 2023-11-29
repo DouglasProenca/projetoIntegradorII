@@ -3,17 +3,17 @@ package view;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 
 import controller.ProductDAO;
 import model.Product;
 import objects.Excel;
+import objects.ProductWatterfallChart;
 import objects.Table;
 import objects.TableModel;
-
 
 public class ProductReportScreen extends BrandReportScreen {
 
@@ -52,6 +52,14 @@ public class ProductReportScreen extends BrandReportScreen {
 	}
 
 	@Override
+	public JPanel getCardPanel() {
+		cardPanel = new JPanel(cardLayout);
+		cardPanel.add(getScrollPane(), "Tabela");
+		cardPanel.add(new ProductWatterfallChart(), "Gráfico");
+		return cardPanel;
+	}
+
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "excluir":
@@ -74,20 +82,40 @@ public class ProductReportScreen extends BrandReportScreen {
 			}
 			break;
 		case "find":
-			if (txtPesquisa.getText().toLowerCase().equals("refresh")
-					|| txtPesquisa.getText().toLowerCase().equals("r")) {
+			if (getTxtPesquisa().getText().toLowerCase().equals("refresh")
+					|| getTxtPesquisa().getText().toLowerCase().equals("r")) {
 				loadTable();
 			} else {
 				TableModel modelo = (TableModel) tblResultado.getModel();
 				modelo.setRowCount(0);
 
-				ProductDAO.getInstance().getBy(txtPesquisa.getText()).forEach((p) -> {
+				ProductDAO.getInstance().getBy(getTxtPesquisa().getText()).forEach((p) -> {
 					modelo.addRow(new Object[] { p.getProduct_id(), p.getProduct_name(), p.getBrand_name(),
 							p.getCategory_name(), p.getProduct_valor(), p.getProduct_qtd(), sdf1.format(p.getDate()),
 							p.getUser(), p.getProduct_img() });
 				});
 				break;
 			}
+		case "switch":
+
+			cardLayout.show(cardPanel, "Gráfico");
+			getBtnSwitch().setActionCommand("switchTable");
+			getTxtPesquisa().setEnabled(false);
+			getBtnPesquisa().setEnabled(false);
+			getbtnExportar().setEnabled(false);
+			getBtnIncluir().setEnabled(false);
+
+			break;
+		case "switchTable":
+
+			cardLayout.show(cardPanel, "Tabela");
+			getBtnSwitch().setActionCommand("switch");
+			getTxtPesquisa().setEnabled(true);
+			getBtnPesquisa().setEnabled(true);
+			getbtnExportar().setEnabled(true);
+			getBtnIncluir().setEnabled(true);
+
+			break;
 		}
 	}
 
@@ -107,7 +135,7 @@ public class ProductReportScreen extends BrandReportScreen {
 
 			Product product = new Product(product_name, Float.parseFloat(value), Integer.parseInt(quantity), category,
 					id, brand, null, null, user, imagem);
-			RegistrationProductScreen rbs = new RegistrationProductScreen(product,this);
+			RegistrationProductScreen rbs = new RegistrationProductScreen(product, this);
 			this.getParent().add(rbs);
 			rbs.setVisible(true);
 		}

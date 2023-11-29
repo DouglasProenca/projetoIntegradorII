@@ -17,10 +17,10 @@ import javax.swing.JPasswordField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
-@SuppressWarnings("serial")
 public class DatabaseConnectionScreen extends InternalFrame {
 
-    private JLabel lblDriver;
+    private static final long serialVersionUID = 1L;
+	private JLabel lblDriver;
     private JLabel lblServer;
     private JLabel lblDatabase;
     private JLabel lblLogin;
