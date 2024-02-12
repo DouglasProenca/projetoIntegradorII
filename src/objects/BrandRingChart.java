@@ -20,7 +20,7 @@ public class BrandRingChart extends ChartPanel {
 
 	public BrandRingChart() {
 		super(criarChart());
-		this.setPreferredSize(new Dimension(560, 370));
+		this.setPreferredSize(new Dimension(40, 40));
 	}
 
 	private static JFreeChart criarChart() {

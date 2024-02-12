@@ -2,6 +2,7 @@ package objects;
 
 import view.BrandReportScreen;
 import view.CategoryReportScreen;
+import view.DashboardScreen;
 import view.ProductReportScreen;
 import view.ReportScreen;
 import com.toedter.calendar.JDateChooser;
@@ -9,6 +10,7 @@ import com.toedter.calendar.JDateChooser;
 import net.sf.jasperreports.engine.JRException;
 
 import java.awt.event.ActionEvent;
+import java.beans.PropertyVetoException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
@@ -31,6 +33,7 @@ public class MenuReport extends Menu {
 	private JMenu report;
 	private JMenuItem marca;
 	private JMenuItem analyticalRep;
+	private JMenuItem dashboard;
 
 	protected MenuReport() {
 		super("Relatório", Images.REPORT.getImage());
@@ -48,6 +51,7 @@ public class MenuReport extends Menu {
 	private JMenu getMenuReport() {
 		report = new JMenu("Relatórios");
 		report.setIcon(Images.MANAGEMENT.getImage());
+		report.add(getDashboard());
 		report.add(getAnalyticalRep());
 		report.add(getSyntheticRep());
 		report.add(new JSeparator());
@@ -62,6 +66,13 @@ public class MenuReport extends Menu {
 		return category;
 	}
 
+	private JMenuItem getDashboard() {
+		dashboard = new JMenuItem("Dashboard");
+		dashboard.addActionListener(this);
+		dashboard.setActionCommand("dashboard");
+		return dashboard;
+	}
+	
 	private JMenuItem getSyntheticRep() {
 		syntheticRep = new JMenuItem("Relatório Sintetico");
 		syntheticRep.addActionListener(this);
@@ -143,8 +154,13 @@ public class MenuReport extends Menu {
 			CategoryReportScreen ct = new CategoryReportScreen();
 			ct.setVisible(true);
 			break;
+		case "dashboard":
+			DashboardScreen dashboardScreen  = new DashboardScreen();
+			dashboardScreen.setVisible(true);
+			dashboardScreen.setMaximum(true);
+			break;	
 		}
-		}catch (JRException ex){	
+		}catch (JRException | PropertyVetoException ex){	
 			Logger.getLogger(ReportScreen.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
