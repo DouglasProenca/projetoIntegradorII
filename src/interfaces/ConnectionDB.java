@@ -2,7 +2,7 @@ package interfaces;
 
 import java.sql.Connection;
 
-public abstract interface ConnectionDB {
+public interface ConnectionDB {
 
     /**
      *

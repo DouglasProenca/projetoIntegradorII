@@ -4,7 +4,7 @@ import controller.CategoryDAO;
 import model.Category;
 import model.User;
 import objects.Excel;
-import objects.Images;
+import enums.Images;
 import objects.InternalFrame;
 import objects.TableModel;
 import objects.TextField;

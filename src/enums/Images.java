@@ -1,4 +1,4 @@
-package objects;
+package enums;
 
 import java.io.IOException;
 import java.util.logging.Level;

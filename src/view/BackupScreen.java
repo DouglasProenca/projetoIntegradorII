@@ -1,6 +1,5 @@
 package view;
 
-import objects.Images;
 import objects.ConnectionManager;
 import objects.InternalFrame;
 import objects.PropertiesSystem;
@@ -10,6 +9,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -22,6 +22,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JProgressBar;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
+
+import enums.Images;
 
 public class BackupScreen extends InternalFrame {
 
@@ -36,17 +38,17 @@ public class BackupScreen extends InternalFrame {
 	private JPanel painel;
 	private final PropertiesSystem ps = new PropertiesSystem();
 
-	public BackupScreen() {
+	public BackupScreen() throws IOException {
 		super("Backup Banco de Dados", false, true, false, true, 379, 325);
 		this.initComponents();
 	}
 
-	private void initComponents() {
+	private void initComponents() throws IOException {
 		this.setLayout(null);
 		this.getContentPane().add(getPainel());
 	}
 
-	private JPanel getPainel() {
+	private JPanel getPainel() throws IOException {
 		painel = new JPanel(null);
 		painel.setSize(350, 270);
 		painel.setLocation(10, 10);
@@ -77,7 +79,7 @@ public class BackupScreen extends InternalFrame {
 		return jcbTipo;
 	}
 
-	private JLabel getLblImagem() {
+	private JLabel getLblImagem() throws IOException {
 		lblImagem = new JLabel(Images.BACKUP.getImage());
 		lblImagem.setBounds(140, 20, 50, 70);
 		return lblImagem;

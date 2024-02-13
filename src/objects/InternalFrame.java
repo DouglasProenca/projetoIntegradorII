@@ -21,6 +21,8 @@ import javax.swing.event.InternalFrameListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import enums.Images;
+
 
 public abstract class InternalFrame extends JInternalFrame implements ActionListener, MouseListener, KeyListener,
 		ListSelectionListener, InternalFrameListener, ItemListener, FocusListener, ComponentListener {

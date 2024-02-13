@@ -4,7 +4,7 @@ import objects.ConnectionManager;
 import objects.MenuBar;
 import objects.ThreadCustom;
 import objects.DesktopPane;
-import objects.Images;
+import enums.Images;
 import objects.InternalFrame;
 
 import java.awt.BorderLayout;

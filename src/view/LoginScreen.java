@@ -2,12 +2,11 @@ package view;
 
 import controller.UserDAO;
 import model.User;
-import objects.Images;
+import enums.Images;
 import objects.InternalFrame;
 import objects.Menu;
 import objects.PopUpMenu;
 import objects.TextField;
-import objects.Utils;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -17,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+
+import bcrypt.Bcrypt;
 
 
 public class LoginScreen extends InternalFrame {
@@ -109,7 +110,7 @@ public class LoginScreen extends InternalFrame {
 		if (User.getInstance().getPassword() == null) {
 			throw new LoginException("Usuário não encontrado!");
 		}
-		if (!Utils.verificarSenha((String.valueOf(txtSenha.getPassword())), User.getInstance().getPassword())) {
+		if (!Bcrypt.verificarSenha((String.valueOf(txtSenha.getPassword())), User.getInstance().getPassword())) {
 			throw new LoginException("Usuário ou senha incorretos!");
 		}
 	}

@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+import bcrypt.Bcrypt;
+
 public class UserDAO implements DAO {
 
 	private static UserDAO uniqueInstance;
@@ -88,7 +90,7 @@ public class UserDAO implements DAO {
 		try {
 			PreparedStatement instrucaoSQL = conexao.prepareStatement("EXEC sp_insert_rc_user ?,?,?,?,?,?,?,?,?");
 			instrucaoSQL.setString(1, user.getUser());
-			instrucaoSQL.setString(2, Utils.gerarhashSenha(user.getPassword()));
+			instrucaoSQL.setString(2, Bcrypt.gerarhashSenha(user.getPassword()));
 			instrucaoSQL.setString(3, user.getMail());
 			instrucaoSQL.setString(4, Utils.codeString(user.getMailPassword()));
 			instrucaoSQL.setDate(5, new Date(user.getDate().getTime()));

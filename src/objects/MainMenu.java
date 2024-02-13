@@ -25,6 +25,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
+import enums.Images;
+
 @SuppressWarnings("serial")
 public class MainMenu extends Menu {
 	

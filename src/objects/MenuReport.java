@@ -7,6 +7,7 @@ import view.ProductReportScreen;
 import view.ReportScreen;
 import com.toedter.calendar.JDateChooser;
 
+import enums.Images;
 import net.sf.jasperreports.engine.JRException;
 
 import java.awt.event.ActionEvent;

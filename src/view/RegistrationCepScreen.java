@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 
 import controller.CepDAO;
 import model.Cep;
-import objects.Images;
+import enums.Images;
 import objects.InternalFrame;
 
 

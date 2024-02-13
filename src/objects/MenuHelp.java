@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import enums.Images;
+
 
 @SuppressWarnings("serial")
 public class MenuHelp extends Menu {

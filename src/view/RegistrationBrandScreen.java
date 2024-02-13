@@ -29,7 +29,7 @@ import controller.CountryDAO;
 import model.Brand;
 import model.User;
 import objects.Excel;
-import objects.Images;
+import enums.Images;
 import objects.InternalFrame;
 
 public class RegistrationBrandScreen extends InternalFrame implements DocumentListener {

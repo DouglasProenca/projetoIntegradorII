@@ -3,7 +3,7 @@ package view;
 import controller.ClientDAO;
 import model.Client;
 import model.User;
-import objects.Images;
+import enums.Images;
 import objects.InternalFrame;
 import objects.TextField;
 import objects.ValidateCpf;

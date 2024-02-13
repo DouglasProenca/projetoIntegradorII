@@ -13,8 +13,6 @@ import java.io.UnsupportedEncodingException;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
-
 public abstract class Utils {
 
 	public static Color convertColor(String cor) {
@@ -30,15 +28,6 @@ public abstract class Utils {
 		int g = color.getGreen();
 		int b = color.getBlue();
 		return r + "," + g + "," + b;
-	}
-
-	public static String gerarhashSenha(String senhaAberta) {
-		return BCrypt.withDefaults().hashToString(8, senhaAberta.toCharArray());
-	}
-
-	public static boolean verificarSenha(String senhaAberta, String senhaFechada) {
-		BCrypt.Result resultado = BCrypt.verifyer().verify(senhaAberta.toCharArray(), senhaFechada);
-		return resultado.verified;
 	}
 
 	public static BufferedImage setImagemDimensao(String caminhoImg, Integer imgLargura, Integer imgAltura) {

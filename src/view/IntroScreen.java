@@ -7,7 +7,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import objects.Images;
+import enums.Images;
 import objects.ThreadCustom;
 
 

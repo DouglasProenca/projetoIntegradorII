@@ -2,7 +2,7 @@ package view;
 
 import controller.UserDAO;
 import model.User;
-import objects.Images;
+import enums.Images;
 import objects.InternalFrame;
 import objects.TextField;
 import java.awt.event.ActionEvent;

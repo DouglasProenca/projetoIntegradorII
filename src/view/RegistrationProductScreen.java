@@ -33,7 +33,7 @@ import controller.ProductDAO;
 import model.Product;
 import model.User;
 import objects.Excel;
-import objects.Images;
+import enums.Images;
 import objects.InternalFrame;
 import objects.SpinnerNumberInt;
 import objects.TableModel;

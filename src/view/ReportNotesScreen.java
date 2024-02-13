@@ -28,7 +28,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import objects.Images;
+import enums.Images;
 import objects.InternalFrame;
 
 

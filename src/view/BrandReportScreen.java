@@ -3,7 +3,7 @@ package view;
 import controller.BrandDAO;
 import objects.BrandRingChart;
 import objects.Excel;
-import objects.Images;
+import enums.Images;
 import model.Brand;
 import objects.InternalFrame;
 import objects.Table;

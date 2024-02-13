@@ -1,7 +1,7 @@
 package view;
 
 import objects.ConnectionManager;
-import objects.Images;
+import enums.Images;
 import objects.InternalFrame;
 import objects.PropertiesSystem;
 import objects.TextField;
