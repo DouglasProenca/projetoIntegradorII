@@ -16,3 +16,4 @@ local.properties
 .factorypath
 .properties
 .sistemaExe.exe4j
+/target/
