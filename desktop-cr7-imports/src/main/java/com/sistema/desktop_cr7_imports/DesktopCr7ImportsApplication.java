@@ -2,8 +2,9 @@ package com.sistema.desktop_cr7_imports;
 
 import javax.swing.SwingUtilities;
 
-import com.sistema.desktop_cr7_imports.view.IntroScreen;
-import com.sistema.desktop_cr7_imports.view.LookAndFeelScreen;
+import com.sistema.desktop_cr7_imports.controller.IntroScreen;
+import com.sistema.desktop_cr7_imports.controller.LookAndFeelScreen;
+
 
 public class DesktopCr7ImportsApplication {
 

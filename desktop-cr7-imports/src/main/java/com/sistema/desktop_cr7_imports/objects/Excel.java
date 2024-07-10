@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import com.sistema.desktop_cr7_imports.view.MainScreen;
+import com.sistema.desktop_cr7_imports.controller.MainScreen;
 
 import jxl.Sheet;
 import jxl.Workbook;

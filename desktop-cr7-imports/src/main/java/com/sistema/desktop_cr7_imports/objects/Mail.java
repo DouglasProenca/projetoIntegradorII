@@ -17,9 +17,8 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 
+import com.sistema.desktop_cr7_imports.controller.MainScreen;
 import com.sistema.desktop_cr7_imports.model.User;
-import com.sistema.desktop_cr7_imports.view.MainScreen;
-
 public class Mail {
 
 	private Properties props;

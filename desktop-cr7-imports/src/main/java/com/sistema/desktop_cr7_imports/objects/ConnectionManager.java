@@ -6,8 +6,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
+import com.sistema.desktop_cr7_imports.controller.MainScreen;
 import com.sistema.desktop_cr7_imports.interfaces.ConnectionDB;
-import com.sistema.desktop_cr7_imports.view.MainScreen;
 
 public abstract class ConnectionManager implements ConnectionDB {
 

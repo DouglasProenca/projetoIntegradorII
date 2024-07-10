@@ -2,12 +2,12 @@ package com.sistema.desktop_cr7_imports.objects;
 
 
 
+import com.sistema.desktop_cr7_imports.controller.BrandReportScreen;
+import com.sistema.desktop_cr7_imports.controller.CategoryReportScreen;
+import com.sistema.desktop_cr7_imports.controller.DashboardScreen;
+import com.sistema.desktop_cr7_imports.controller.ProductReportScreen;
+import com.sistema.desktop_cr7_imports.controller.ReportScreen;
 import com.sistema.desktop_cr7_imports.enums.Images;
-import com.sistema.desktop_cr7_imports.view.BrandReportScreen;
-import com.sistema.desktop_cr7_imports.view.CategoryReportScreen;
-import com.sistema.desktop_cr7_imports.view.DashboardScreen;
-import com.sistema.desktop_cr7_imports.view.ProductReportScreen;
-import com.sistema.desktop_cr7_imports.view.ReportScreen;
 import com.toedter.calendar.JDateChooser;
 
 

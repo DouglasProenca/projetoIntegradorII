@@ -14,17 +14,18 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
+import com.sistema.desktop_cr7_imports.controller.BackupScreen;
+import com.sistema.desktop_cr7_imports.controller.DatabaseConnectionScreen;
+import com.sistema.desktop_cr7_imports.controller.LoginScreen;
+import com.sistema.desktop_cr7_imports.controller.LookAndFeelScreen;
+import com.sistema.desktop_cr7_imports.controller.MailScreen;
+import com.sistema.desktop_cr7_imports.controller.MainScreen;
+import com.sistema.desktop_cr7_imports.controller.ReportNotesScreen;
+import com.sistema.desktop_cr7_imports.controller.ReportUserScreen;
+import com.sistema.desktop_cr7_imports.controller.SaleScreen;
 import com.sistema.desktop_cr7_imports.enums.Images;
 import com.sistema.desktop_cr7_imports.model.User;
-import com.sistema.desktop_cr7_imports.view.BackupScreen;
-import com.sistema.desktop_cr7_imports.view.DatabaseConnectionScreen;
-import com.sistema.desktop_cr7_imports.view.LoginScreen;
-import com.sistema.desktop_cr7_imports.view.LookAndFeelScreen;
-import com.sistema.desktop_cr7_imports.view.MailScreen;
-import com.sistema.desktop_cr7_imports.view.MainScreen;
-import com.sistema.desktop_cr7_imports.view.ReportNotesScreen;
-import com.sistema.desktop_cr7_imports.view.ReportUserScreen;
-import com.sistema.desktop_cr7_imports.view.SaleScreen;
+
 
 @SuppressWarnings("serial")
 public class MainMenu extends Menu {

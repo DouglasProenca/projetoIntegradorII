@@ -21,8 +21,8 @@ import javax.swing.event.InternalFrameListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.sistema.desktop_cr7_imports.controller.MainScreen;
 import com.sistema.desktop_cr7_imports.enums.Images;
-import com.sistema.desktop_cr7_imports.view.MainScreen;
 
 
 

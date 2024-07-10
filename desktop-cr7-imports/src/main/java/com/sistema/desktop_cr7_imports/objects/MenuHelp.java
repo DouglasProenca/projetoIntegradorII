@@ -11,10 +11,10 @@ import java.util.logging.Logger;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import com.sistema.desktop_cr7_imports.controller.AboutScreen;
+import com.sistema.desktop_cr7_imports.controller.CalendarScreen;
+import com.sistema.desktop_cr7_imports.controller.MainScreen;
 import com.sistema.desktop_cr7_imports.enums.Images;
-import com.sistema.desktop_cr7_imports.view.AboutScreen;
-import com.sistema.desktop_cr7_imports.view.CalendarScreen;
-import com.sistema.desktop_cr7_imports.view.MainScreen;
 
 
 
